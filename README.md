@@ -1,2 +1,2 @@
 # HUAQI-2019Summer
-This the back end repository of the project.
+This is the backend repository of the project.

@@ -1,6 +1,6 @@
 package financial_management.entity;
 
-public class User {
+public class UserPO {
     /**
      * 用户ID
      */
@@ -86,14 +86,14 @@ public class User {
         this.password = password;
     }
 
-    public User() {
+    public UserPO() {
     }
 
-    public User(String username,
-                String identityNum,
-                String name,
-                String email,
-                String password) {
+    public UserPO(String username,
+                  String identityNum,
+                  String name,
+                  String email,
+                  String password) {
         this.username = username;
         this.identityNum = identityNum;
         this.name = name;

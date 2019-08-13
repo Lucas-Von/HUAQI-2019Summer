@@ -1,6 +1,6 @@
 package financial_management.entity;
 
-public class Article {
+public class ArticlePO {
     /**
      * 文章ID
      */
@@ -62,10 +62,10 @@ public class Article {
         this.category = category;
     }
 
-    public Article() {
+    public ArticlePO() {
     }
 
-    public Article(String title, String summary, String content, int category) {
+    public ArticlePO(String title, String summary, String content, int category) {
         this.title = title;
         this.summary = summary;
         this.content = content;

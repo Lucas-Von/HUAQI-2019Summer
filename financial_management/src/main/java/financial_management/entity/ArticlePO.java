@@ -4,7 +4,7 @@ public class ArticlePO {
     /**
      * 文章ID
      */
-    private long articleId;
+    private Long articleId;
     /**
      * 标题
      */
@@ -22,7 +22,7 @@ public class ArticlePO {
      */
     private int category;
 
-    public long getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 

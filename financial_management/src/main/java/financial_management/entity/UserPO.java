@@ -4,7 +4,7 @@ public class UserPO {
     /**
      * 用户ID
      */
-    private long userId;
+    private Long userId;
     /**
      * 昵称
      */
@@ -30,7 +30,7 @@ public class UserPO {
      */
     private String password;
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 

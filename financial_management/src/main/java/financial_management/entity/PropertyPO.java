@@ -9,12 +9,12 @@ public class PropertyPO {
     /**
      * 用户id
      */
-    private long usrId;
+    private Long usrId;
 
     /**
      * 管理员id
      */
-    private long adminId;
+    private Long adminId;
 
     /**
      * 用户请求查看的方式：最近30天【按天返回数据】 or 自注册起所有月份【按月返回数据】
@@ -48,7 +48,7 @@ public class PropertyPO {
         return new PropertyVO(assets, prefers);
     }
 
-    public long getUsrId() {
+    public Long getUsrId() {
         return usrId;
     }
 
@@ -56,7 +56,7 @@ public class PropertyPO {
         this.usrId = usrId;
     }
 
-    public long getAdminId() {
+    public Long getAdminId() {
         return adminId;
     }
 

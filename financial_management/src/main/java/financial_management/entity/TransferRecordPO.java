@@ -2,7 +2,7 @@ package financial_management.entity;
 
 import java.sql.Date;
 
-public class TransferRecord{
+public class TransferRecordPO{
     //调仓记录ID
     private Long ID;
 

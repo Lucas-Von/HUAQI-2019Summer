@@ -2,7 +2,7 @@ package financial_management.entity;
 
 import java.sql.Date;
 
-public class TradeRecord{
+public class TradeRecordPO{
     //交易记录ID
     private Long ID;
 

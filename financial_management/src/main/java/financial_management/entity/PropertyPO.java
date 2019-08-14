@@ -1,12 +1,9 @@
 package financial_management.entity;
 
-import lombok.Data;
-
 import financial_management.vo.PropertyVO;
 
 import java.util.ArrayList;
 
-@Data
 public class PropertyPO {
 
     /**
@@ -49,6 +46,62 @@ public class PropertyPO {
      */
     public PropertyVO getPropertyVO() {
         return new PropertyVO(assets, prefers);
+    }
+
+    public long getUsrId() {
+        return usrId;
+    }
+
+    public void setUsrId(long usrId) {
+        this.usrId = usrId;
+    }
+
+    public long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(long adminId) {
+        this.adminId = adminId;
+    }
+
+    public String getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(String viewType) {
+        this.viewType = viewType;
+    }
+
+    public String getProOrInvest() {
+        return proOrInvest;
+    }
+
+    public void setProOrInvest(String proOrInvest) {
+        this.proOrInvest = proOrInvest;
+    }
+
+    public String getAssetType() {
+        return assetType;
+    }
+
+    public void setAssetType(String assetType) {
+        this.assetType = assetType;
+    }
+
+    public ArrayList<Integer> getAssets() {
+        return assets;
+    }
+
+    public void setAssets(ArrayList<Integer> assets) {
+        this.assets = assets;
+    }
+
+    public ArrayList<String> getPrefers() {
+        return prefers;
+    }
+
+    public void setPrefers(ArrayList<String> prefers) {
+        this.prefers = prefers;
     }
 
 }

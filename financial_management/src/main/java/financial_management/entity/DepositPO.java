@@ -1,5 +1,7 @@
 package financial_management.entity;
 
+import java.util.List;
+
 /**
  * @Description 用户储蓄实体类
  * @Author 233loser
@@ -16,6 +18,19 @@ public class DepositPO {
      * @Description //所占总额的百分比
      **/
     Float percentage;
+
+    /**
+     * @Description //用户商品部分。不入库，调用时动态加载MyDepoPO
+     **/
+    List<MyDepoPO> depoProducts;
+
+    public List<MyDepoPO> getDepoProducts() {
+        return depoProducts;
+    }
+
+    public void setDepoProducts(List<MyDepoPO> depoProducts) {
+        this.depoProducts = depoProducts;
+    }
 
     public Float getAmount() {
         return amount;

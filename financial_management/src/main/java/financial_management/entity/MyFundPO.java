@@ -1,7 +1,5 @@
 package financial_management.entity;
 
-import lombok.Data;
-
 import java.util.Date;
 
 /**
@@ -29,6 +27,12 @@ public class MyFundPO {
      **/
     Date updateTime;
 
+    /**
+     * @Author jyh
+     * @Description //收益率，不入库，有FundPO所在库动态加载
+     **/
+    Float rate;
+
     public Long getUserId() {
         return userId;
     }
@@ -51,5 +55,13 @@ public class MyFundPO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Float getRate() {
+        return rate;
+    }
+
+    public void setRate(Float rate) {
+        this.rate = rate;
     }
 }

@@ -33,4 +33,28 @@ public class FundPO {
         this.rate = rate;
         this.time = time;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Float getRate() {
+        return rate;
+    }
+
+    public void setRate(Float rate) {
+        this.rate = rate;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 }

@@ -40,6 +40,7 @@ public class MyBondPO {
     /**
      * @Description //持有额
      **/
+    Float amount;
     public Long getUserId() {
         return userId;
     }
@@ -86,5 +87,13 @@ public class MyBondPO {
 
     public void setQuantity(Integer quantity) {
         Quantity = quantity;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
+    }
+
+    public Float getAmount() {
+        return amount;
     }
 }

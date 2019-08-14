@@ -1,5 +1,7 @@
 package financial_management.entity;
 
+import java.util.List;
+
 /**
  * @Description 用户持有的投资类
  * @Author 233loser
@@ -18,6 +20,18 @@ public class InvestmentPO {
      **/
     Float percentage;
 
+    /**
+     * @Author jyh
+     * @Description //用户的股票(国内、国外)、黄金、债券 在这个类中不入库
+     **/
+    List<MyStockPO> domStocks;
+
+    List<MyStockPO> forStocks;
+
+    List<MyGoldPO> gold;
+
+    List<MyBondPO> bonds;
+
     public Float getAmount() {
         return amount;
     }
@@ -32,5 +46,37 @@ public class InvestmentPO {
 
     public void setPercentage(Float percentage) {
         this.percentage = percentage;
+    }
+
+    public List<MyStockPO> getDomStocks() {
+        return domStocks;
+    }
+
+    public void setDomStocks(List<MyStockPO> domStocks) {
+        this.domStocks = domStocks;
+    }
+
+    public List<MyStockPO> getForStocks() {
+        return forStocks;
+    }
+
+    public void setForStocks(List<MyStockPO> forStocks) {
+        this.forStocks = forStocks;
+    }
+
+    public List<MyGoldPO> getGold() {
+        return gold;
+    }
+
+    public void setGold(List<MyGoldPO> gold) {
+        this.gold = gold;
+    }
+
+    public List<MyBondPO> getBonds() {
+        return bonds;
+    }
+
+    public void setBonds(List<MyBondPO> bonds) {
+        this.bonds = bonds;
     }
 }

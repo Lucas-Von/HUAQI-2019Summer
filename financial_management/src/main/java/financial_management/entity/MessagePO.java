@@ -2,7 +2,7 @@ package financial_management.entity;
 
 import java.sql.Date;
 
-public class Message {
+public class MessagePO {
     //消息ID
     private Long ID;
 

@@ -7,6 +7,7 @@ package financial_management.entity;
  * @Version 1.0
  **/
 public class CashPO {
+    Long userId;
     /**
      * @Description //现金的总额
      **/
@@ -16,6 +17,11 @@ public class CashPO {
      * @Description //所占总额的百分比
      **/
     Float percentage;
+
+    /**
+     * @Description //所占总额的百分比（不入库，调取时动态加载）
+     **/
+    MyFundPO fundPO;
 
     public Float getAmount() {
         return amount;
@@ -31,5 +37,21 @@ public class CashPO {
 
     public void setPercentage(Float percentage) {
         this.percentage = percentage;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public MyFundPO getFundPO() {
+        return fundPO;
+    }
+
+    public void setFundPO(MyFundPO fundPO) {
+        this.fundPO = fundPO;
     }
 }

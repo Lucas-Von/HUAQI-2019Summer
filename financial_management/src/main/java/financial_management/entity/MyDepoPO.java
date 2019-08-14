@@ -29,6 +29,15 @@ public class MyDepoPO {
      **/
     Date maturity;
 
+    /**
+     * @Description //类别，不入库，由productID sql加载
+     **/
+    String type;
+
+    /**
+     * @Description //名称，不入库，由productID sql加载
+     **/
+    String name;
     public Long getUserId() {
         return userId;
     }
@@ -59,5 +68,21 @@ public class MyDepoPO {
 
     public void setMaturity(Date maturity) {
         this.maturity = maturity;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

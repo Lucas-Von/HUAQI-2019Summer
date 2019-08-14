@@ -1,5 +1,7 @@
 package financial_management.entity;
 
+import java.util.List;
+
 /**
  * @Description 保险PO
  * @Author 233loser
@@ -17,6 +19,13 @@ public class InsurancePO {
      **/
     Float percentage;
 
+    /**
+     * @Description //我的商品，不入库
+     **/
+    List<MyInsPO> insuranceProducts;
+
+
+
     public Float getAmount() {
         return amount;
     }
@@ -31,5 +40,13 @@ public class InsurancePO {
 
     public void setPercentage(Float percentage) {
         this.percentage = percentage;
+    }
+
+    public List<MyInsPO> getInsuranceProducts() {
+        return insuranceProducts;
+    }
+
+    public void setInsuranceProducts(List<MyInsPO> insuranceProducts) {
+        this.insuranceProducts = insuranceProducts;
     }
 }

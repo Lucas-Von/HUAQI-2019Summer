@@ -30,7 +30,7 @@ public class UserPO {
      */
     private String password;
     /**
-     * 口令
+     * 登录权限控制
      */
     private String perms;
 

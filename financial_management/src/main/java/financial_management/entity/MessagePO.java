@@ -10,7 +10,7 @@ public class MessagePO {
     private Date time;
 
     //消息接收用户ID
-    private Integer userID;
+    private Long userID;
 
     //消息类型
     private Integer type;
@@ -40,11 +40,11 @@ public class MessagePO {
         this.time = time;
     }
 
-    public Integer getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 

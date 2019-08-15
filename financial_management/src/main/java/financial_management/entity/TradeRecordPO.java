@@ -31,7 +31,7 @@ public class TradeRecordPO{
     private Float total;
 
     //交易用户ID
-    private Integer userID;
+    private Long userID;
 
     //交易订单状态
     private Integer status;
@@ -111,11 +111,11 @@ public class TradeRecordPO{
         this.total = total;
     }
 
-    public Integer getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 

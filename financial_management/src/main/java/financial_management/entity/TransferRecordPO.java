@@ -19,7 +19,7 @@ public class TransferRecordPO{
     private Integer buyType;
 
     //调仓用户ID
-    private Integer userID;
+    private Long userID;
 
     //调仓状态
     private Integer status;
@@ -67,11 +67,11 @@ public class TransferRecordPO{
         this.buyType = buyType;
     }
 
-    public Integer getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 

@@ -29,12 +29,16 @@ public class UserPO {
      * 密码
      */
     private String password;
+    /**
+     * 口令
+     */
+    private String perms;
 
     public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -84,6 +88,14 @@ public class UserPO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
     }
 
     public UserPO() {

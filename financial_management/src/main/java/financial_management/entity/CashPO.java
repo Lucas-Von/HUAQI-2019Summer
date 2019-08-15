@@ -19,7 +19,7 @@ public class CashPO {
     Float percentage;
 
     /**
-     * @Description //所占总额的百分比（不入库，调取时动态加载）
+     * @Description //我的资产（不入库，调取时动态加载）
      **/
     MyFundPO fundPO;
 

@@ -9,7 +9,7 @@ public class PropertyPO {
     /**
      * 用户id
      */
-    private Long usrId;
+    private Long userId;
 
     /**
      * 管理员id
@@ -32,28 +32,24 @@ public class PropertyPO {
     private String assetType;
 
     /**
-     * 用户资产列表
-     */
-    private ArrayList<Integer> assets;
-
-    /**
      * 用户投资偏好
      */
-    private ArrayList<String> prefers;
+    private String prefers;
 
-    /**
-     * 用户填写的问卷信息
-     */
-    public PropertyVO getPropertyVO() {
-        return new PropertyVO(assets, prefers);
-    }
+//    TO DO
+//    /**
+//     * 用户填写的问卷信息
+//     */
+//    public PropertyVO getPropertyVO() {
+//        return new PropertyVO(assets, prefers);
+//    }
 
     public Long getUsrId() {
-        return usrId;
+        return userId;
     }
 
-    public void setUsrId(long usrId) {
-        this.usrId = usrId;
+    public void setUsrId(long userId) {
+        this.userId = userId;
     }
 
     public Long getAdminId() {
@@ -88,19 +84,11 @@ public class PropertyPO {
         this.assetType = assetType;
     }
 
-    public ArrayList<Integer> getAssets() {
-        return assets;
-    }
-
-    public void setAssets(ArrayList<Integer> assets) {
-        this.assets = assets;
-    }
-
-    public ArrayList<String> getPrefers() {
+    public String getPrefers() {
         return prefers;
     }
 
-    public void setPrefers(ArrayList<String> prefers) {
+    public void setPrefers(String prefers) {
         this.prefers = prefers;
     }
 

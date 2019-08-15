@@ -11,6 +11,11 @@ import java.util.List;
 public class InvestmentPO {
 
     /**
+     * @Description //用户ID
+     */
+    Long userId;
+
+    /**
      * @Description //投资的总额
      **/
     Float amount;
@@ -31,6 +36,14 @@ public class InvestmentPO {
     List<MyGoldPO> gold;
 
     List<MyBondPO> bonds;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Float getAmount() {
         return amount;

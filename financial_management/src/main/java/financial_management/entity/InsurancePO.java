@@ -9,6 +9,12 @@ import java.util.List;
  * @Version 1.0
  **/
 public class InsurancePO {
+
+    /**
+     * @Description //用户ID
+     */
+    Long userId;
+
     /**
      * @Description //保险的总额
      **/
@@ -24,7 +30,13 @@ public class InsurancePO {
      **/
     List<MyInsPO> insuranceProducts;
 
+    public Long getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Float getAmount() {
         return amount;

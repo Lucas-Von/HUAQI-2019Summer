@@ -27,7 +27,7 @@ public class InsProductPO {
     /**
      * @Description //当前最高保额
      **/
-    Float Compensation;
+    Float compensation;
 
     public String getName() {
         return name;
@@ -54,11 +54,11 @@ public class InsProductPO {
     }
 
     public Float getCompensation() {
-        return Compensation;
+        return compensation;
     }
 
     public void setCompensation(Float compensation) {
-        Compensation = compensation;
+        compensation = compensation;
     }
 
     public Long getId() {

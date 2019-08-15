@@ -38,6 +38,7 @@ public class MyDepoPO {
      * @Description //名称，不入库，由productID sql加载
      **/
     String name;
+
     public Long getUserId() {
         return userId;
     }

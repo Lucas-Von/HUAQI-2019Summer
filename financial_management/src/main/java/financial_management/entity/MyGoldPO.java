@@ -35,7 +35,7 @@ public class MyGoldPO {
     /**
      * @Description //持有数量
      **/
-    Integer Quantity;
+    Integer quantity;
 
     /**
      * @Description //持有额
@@ -83,11 +83,11 @@ public class MyGoldPO {
     }
 
     public Integer getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
     public void setQuantity(Integer quantity) {
-        Quantity = quantity;
+        quantity = quantity;
     }
 
     public Float getAmount() {

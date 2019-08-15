@@ -9,6 +9,12 @@ import java.util.List;
  * @Version 1.0
  **/
 public class DepositPO {
+
+    /**
+     * @Description //用户ID
+     */
+    Long userId;
+
     /**
      * @Description //储蓄的总额
      **/
@@ -23,6 +29,14 @@ public class DepositPO {
      * @Description //用户商品部分。不入库，调用时动态加载MyDepoPO
      **/
     List<MyDepoPO> depoProducts;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public List<MyDepoPO> getDepoProducts() {
         return depoProducts;

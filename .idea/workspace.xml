@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e1f50e1-b470-478f-92f8-d731517b0856" name="Default Changelist" comment="" />
+    <list default="true" id="9e1f50e1-b470-478f-92f8-d731517b0856" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/CardPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/CardPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/CashPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/CashPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/DepositPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/DepositPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/InsProductPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/InsProductPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/InsurancePO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/InsurancePO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/InvestmentPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/InvestmentPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/MyBondPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/MyBondPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/MyDepoPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/MyDepoPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/MyGoldPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/MyGoldPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/MyStockPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/MyStockPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/PropertyPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/entity/PropertyPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/vo/PropertyVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/financial_management/src/main/java/financial_management/vo/PropertyVO.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +66,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -92,7 +107,7 @@
       <updated>1565687432909</updated>
       <workItem from="1565687435629" duration="5237000" />
       <workItem from="1565701416683" duration="2770000" />
-      <workItem from="1565853479512" duration="278000" />
+      <workItem from="1565853479512" duration="4687000" />
     </task>
     <servers />
   </component>

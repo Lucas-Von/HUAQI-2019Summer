@@ -1,5 +1,10 @@
 package financial_management.entity;
 
+import financial_management.vo.UserSimpleInfoVO;
+import financial_management.vo.UserVO;
+
+import java.sql.Timestamp;
+
 public class UserPO {
     /**
      * 用户ID
@@ -33,6 +38,14 @@ public class UserPO {
      * 登录权限控制
      */
     private String perms;
+    /**
+     * 状态 0为未激活，1为已激活
+     */
+    private Integer status = 0;
+    /**
+     * 注册时间
+     */
+    private Timestamp time;
 
     public Long getUserId() {
         return userId;
@@ -96,6 +109,39 @@ public class UserPO {
 
     public void setPerms(String perms) {
         this.perms = perms;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
+    public UserSimpleInfoVO getUserSimpleInfoVO(){
+        return new UserSimpleInfoVO(username,
+                identityNum,
+                name,
+                email,
+                phoneNum);
+    }
+
+    public UserVO getUserVO(){
+        return new UserVO(userId,
+                username,
+                identityNum,
+                name,
+                email,
+                phoneNum);
     }
 
     public UserPO() {

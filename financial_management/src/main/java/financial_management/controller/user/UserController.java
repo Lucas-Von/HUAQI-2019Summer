@@ -76,4 +76,9 @@ public class UserController {
     public ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(Long userId){
         return userService.getCollections(userId);
     }
+
+    @GetMapping("/activate")
+    public ResponseEntity<String> activate(@RequestParam String email){
+        return userService.activate(email);
+    }
 }

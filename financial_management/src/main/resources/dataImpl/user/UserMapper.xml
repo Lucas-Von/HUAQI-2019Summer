@@ -11,9 +11,9 @@
         from user where identity_num = #{identityNum}
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into user(username,identity_num,name,email,phone_num,password,perms)
-        values(#{username},#{identityNum},#{name},#{email},#{phoneNum},#{password},#{perms})
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
+        insert into user(username,identity_num,name,email,phone_num,password,perms,status)
+        values(#{username},#{identityNum},#{name},#{email},#{phoneNum},#{password},#{perms},#{status})
     </insert>
 
     <select id="selectUserByEmail" resultMap="UserPO">
@@ -41,13 +41,23 @@
     </update>
 
     <select id="selectAllUsers" resultMap="UserPO">
-        select * from user
+        select * from user where status = 1
     </select>
 
     <select id="selectSimpleUser" resultMap="UserPO">
         select * from user
         where user_id = #{userId}
     </select>
+
+    <select id="ifExist" resultType="boolean">
+        select count(user_id)
+        from user where user_id = #{userId}
+    </select>
+
+    <update id="updateStatus">
+        update user set status = #{status}
+        where user_id = #{userId}
+    </update>
 
     <resultMap id="UserPO" type="financial_management.entity.UserPO">
         <result column="user_id" property="userId"></result>
@@ -58,5 +68,12 @@
         <result column="phone_num" property="phoneNum"></result>
         <result column="password" property="password"></result>
         <result column="perms" property="perms"></result>
+        <result column="status" property="status"></result>
+        <result column="time" property="time"></result>
     </resultMap>
+
+    <delete id="cleanInactive">
+        delete from user where minute(timediff(now(),time))>10 and status=0
+    </delete>
+
 </mapper>

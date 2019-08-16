@@ -88,4 +88,11 @@ public interface UserService {
      * @return
      */
     ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(Long userId);
+
+    /**
+     * 激活账号
+     * @param email
+     * @return
+     */
+    ResponseEntity<String> activate(String email);
 }

@@ -3,6 +3,7 @@ package financial_management.data.user;
 import financial_management.entity.UserPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
 
@@ -79,4 +80,24 @@ public interface UserMapper {
      * @return
      */
     UserPO selectSimpleUser(@Param("userId") Long userId);
+
+    /**
+     * 判断该用户是否存在
+     * @param userId
+     * @return
+     */
+    boolean ifExist(@Param("userId") Long userId);
+
+    /**
+     * 更新用户的状态
+     * @param userId
+     * @param status
+     */
+    void updateStatus(@Param("userId") Long userId, @Param("status") Integer status);
+
+    /**
+     * 定时判断是否有超过10分钟未激活的账号，有则注销
+     */
+    @Scheduled(cron = "0/1 * * * * ?")
+    void cleanInactive();
 }

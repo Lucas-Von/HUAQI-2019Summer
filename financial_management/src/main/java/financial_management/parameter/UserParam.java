@@ -1,5 +1,7 @@
 package financial_management.parameter;
 
+import financial_management.entity.UserPO;
+
 /**
  * @author xyh
  * @date 2019/8/16
@@ -58,6 +60,14 @@ public class UserParam {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserPO getUserPo(){
+        return new UserPO(username,
+                identityNum,
+                name,
+                email,
+                password);
     }
 
     public UserParam() {

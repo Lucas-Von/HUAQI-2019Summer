@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.user.UserMapper">
+    <select id="ifExistEmail" resultType="boolean">
+        select count(user_id)
+        from user where email = #{email}
+    </select>
+
+    <select id="ifExistIdentityNum" resultType="boolean">
+        select count(user_id)
+        from user where identity_num = #{identityNum}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into user(username,identity_num,name,email,phone_num,password,perms)
+        values(#{username},#{identityNum},#{name},#{email},#{phoneNum},#{password},#{perms})
+    </insert>
+
+    <select id="selectUserByEmail" resultMap="UserPO">
+        select * from user where email = #{email}
+    </select>
+
+    <update id="updateUsername">
+        update user set username = #{username}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateEmail">
+        update user set email = #{email}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updatePhoneNum">
+        update user set phone_num = #{phoneNum}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updatePassword">
+        update user set password = #{password}
+        where user_id = #{userId}
+    </update>
+
+    <select id="selectAllUsers" resultMap="UserPO">
+        select * from user
+    </select>
+
+    <select id="selectSimpleUser" resultMap="UserPO">
+        select * from user
+        where user_id = #{userId}
+    </select>
+
+    <resultMap id="UserPO" type="financial_management.entity.UserPO">
+        <result column="user_id" property="userId"></result>
+        <result column="username" property="username"></result>
+        <result column="identity_num" property="identityNum"></result>
+        <result column="name" property="name"></result>
+        <result column="email" property="email"></result>
+        <result column="phone_num" property="phoneNum"></result>
+        <result column="password" property="password"></result>
+        <result column="perms" property="perms"></result>
+    </resultMap>
+</mapper>

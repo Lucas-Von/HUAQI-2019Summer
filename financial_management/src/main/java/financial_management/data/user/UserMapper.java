@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author xyh
- * @date 2019/08/16
+ * @date 2019/8/16
  */
 @Mapper
 public interface UserMapper {

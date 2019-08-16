@@ -1,16 +1,15 @@
-package financial_management.parameter;
+package financial_management.vo;
 
 /**
  * @author xyh
  * @date 2019/8/16
  */
-public class UserParam {
+public class UserSimpleInfoVO {
     private String username;
     private String identityNum;
     private String name;
     private String email;
     private String phoneNum;
-    private String password;
 
     public String getUsername() {
         return username;
@@ -52,28 +51,18 @@ public class UserParam {
         this.phoneNum = phoneNum;
     }
 
-    public String getPassword() {
-        return password;
+    public UserSimpleInfoVO() {
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserParam() {
-    }
-
-    public UserParam(String username,
-                     String identityNum,
-                     String name,
-                     String email,
-                     String phoneNum,
-                     String password) {
+    public UserSimpleInfoVO(String username,
+                            String identityNum,
+                            String name,
+                            String email,
+                            String phoneNum) {
         this.username = username;
         this.identityNum = identityNum;
         this.name = name;
         this.email = email;
         this.phoneNum = phoneNum;
-        this.password = password;
     }
 }

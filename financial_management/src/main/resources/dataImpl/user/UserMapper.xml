@@ -26,8 +26,8 @@
     </update>
 
     <update id="updateEmail">
-        update user set email = #{email}
-        where user_id = #{userId}
+        update user set email = #{newEmail}
+        where email = #{oldEmail}
     </update>
 
     <update id="updatePhoneNum">
@@ -35,9 +35,14 @@
         where user_id = #{userId}
     </update>
 
-    <update id="updatePassword">
+    <update id="updatePasswordByUserId">
         update user set password = #{password}
         where user_id = #{userId}
+    </update>
+
+    <update id="updatePasswordByEmail">
+        update user set password = #{password}
+        where email = #{email}
     </update>
 
     <select id="selectAllUsers" resultMap="UserPO">

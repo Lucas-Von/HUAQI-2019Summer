@@ -5,15 +5,15 @@ package financial_management.parameter;
  * @date 2019/8/16
  */
 public class UserPasswordParam {
-    private Long userId;
+    private String email;
     private String password;
 
-    public Long getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -27,8 +27,8 @@ public class UserPasswordParam {
     public UserPasswordParam() {
     }
 
-    public UserPasswordParam(Long userId, String password) {
-        this.userId = userId;
+    public UserPasswordParam(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 }

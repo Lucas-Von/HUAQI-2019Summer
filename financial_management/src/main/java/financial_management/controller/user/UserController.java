@@ -2,6 +2,7 @@ package financial_management.controller.user;
 
 import financial_management.bl.user.UserService;
 import financial_management.parameter.*;
+import financial_management.util.JwtUtil;
 import financial_management.vo.ArticleSimpleInfoVO;
 import financial_management.vo.UserSimpleInfoVO;
 import financial_management.vo.UserVO;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -19,6 +21,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Autowired
     private UserService userService;
 
@@ -33,8 +38,8 @@ public class UserController {
     }
 
     @PostMapping("/update/username")
-    public ResponseEntity<String> updateUsername(@RequestBody UsernameParam usernameParam){
-        return userService.updateUsername(usernameParam);
+    public ResponseEntity<String> updateUsername(@RequestParam String username, HttpServletRequest request){
+        return userService.updateUsername(username, jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping("/update/email")
@@ -43,28 +48,33 @@ public class UserController {
     }
 
     @PostMapping("/update/phone")
-    public ResponseEntity<String> updatePhoneNum(@RequestBody UserPhoneNumParam userPhoneNumParam){
-        return userService.updatePhoneNum(userPhoneNumParam);
+    public ResponseEntity<String> updatePhoneNum(@RequestParam String phoneNum, HttpServletRequest request){
+        return userService.updatePhoneNum(phoneNum, jwtUtil.getIdFromRequest(request));
     }
 
-    @PostMapping("/update/password")
-    public ResponseEntity<String> updatePassword(@RequestBody UserPasswordParam userPasswordParam){
-        return userService.updatePassword(userPasswordParam);
+    @PostMapping("/update/password/id")
+    public ResponseEntity<String> updatePasswordByUserId(@RequestParam String password, HttpServletRequest request){
+        return userService.updatePasswordByUserId(password, jwtUtil.getIdFromRequest(request));
+    }
+
+    @PostMapping("/update/password/email")
+    public ResponseEntity<String> updatePasswordByEmail(@RequestBody UserPasswordParam userPasswordParam){
+        return userService.updatePasswordByEmail(userPasswordParam);
     }
 
     @PostMapping("/apply/email")
-    public ResponseEntity<String> applyForUpdateEmail(@RequestBody UserEmailParam userEmailParam){
-        return userService.applyForUpdateEmail(userEmailParam);
+    public ResponseEntity<String> applyForUpdateEmail(@RequestParam String email){
+        return userService.applyForUpdateEmail(email);
     }
 
-    @PostMapping("apply/password")
-    public ResponseEntity<String> applyForUpdatePassword(@RequestBody UserEmailParam userEmailParam){
-        return userService.applyForUpdatePassword(userEmailParam);
+    @PostMapping("/apply/password")
+    public ResponseEntity<String> applyForUpdatePassword(@RequestParam String email){
+        return userService.applyForUpdatePassword(email);
     }
 
     @GetMapping("/get")
-    public ResponseEntity<UserSimpleInfoVO> getSimpleUser(@RequestParam Long userId){
-        return userService.getSimpleUser(userId);
+    public ResponseEntity<UserSimpleInfoVO> getSimpleUser(HttpServletRequest request){
+        return userService.getSimpleUser(jwtUtil.getIdFromRequest(request));
     }
 
     @GetMapping("/getAll")
@@ -73,11 +83,11 @@ public class UserController {
     }
 
     @GetMapping("/collections/get")
-    public ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(Long userId){
-        return userService.getCollections(userId);
+    public ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(HttpServletRequest request){
+        return userService.getCollections(jwtUtil.getIdFromRequest(request));
     }
 
-    @GetMapping("/activate")
+    @PostMapping("/activate")
     public ResponseEntity<String> activate(@RequestParam String email){
         return userService.activate(email);
     }

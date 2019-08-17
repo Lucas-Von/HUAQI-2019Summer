@@ -28,11 +28,12 @@ public interface UserService {
     ResponseEntity<UsernameVO> loginByEmail(UserLoginParam userLoginParam);
 
     /**
-     * 修改用户的昵称
-     * @param usernameParam
+     * 修改用户昵称
+     * @param username
+     * @param userId
      * @return
      */
-    ResponseEntity<String> updateUsername(UsernameParam usernameParam);
+    ResponseEntity<String> updateUsername(String username, Long userId);
 
     /**
      * 修改用户邮箱（需要验证是否重复）
@@ -42,32 +43,41 @@ public interface UserService {
     ResponseEntity<String> updateEmail(UserEmailParam userEmailParam);
 
     /**
-     * 修改用户手机号（需要验证是否重复）
-     * @param userPhoneNumParam
+     * 修改用户手机号
+     * @param phoneNum
+     * @param userId
      * @return
      */
-    ResponseEntity<String> updatePhoneNum(UserPhoneNumParam userPhoneNumParam);
+    ResponseEntity<String> updatePhoneNum(String phoneNum, Long userId);
 
     /**
-     * 修改用户的密码
+     * 通过userId修改用户的密码
+     * @param userId
+     * @param password
+     * @return
+     */
+    ResponseEntity<String> updatePasswordByUserId(String password, Long userId);
+
+    /**
+     * 通过邮箱修改用户的密码
      * @param userPasswordParam
      * @return
      */
-    ResponseEntity<String> updatePassword(UserPasswordParam userPasswordParam);
+    ResponseEntity<String> updatePasswordByEmail(UserPasswordParam userPasswordParam);
 
     /**
      * 用户申请修改邮箱
-     * @param userEmailParam
+     * @param email
      * @return
      */
-    ResponseEntity<String> applyForUpdateEmail(UserEmailParam userEmailParam);
+    ResponseEntity<String> applyForUpdateEmail(String email);
 
     /**
      * 用户申请找回密码
-     * @param userEmailParam
+     * @param email
      * @return
      */
-    ResponseEntity<String> applyForUpdatePassword(UserEmailParam userEmailParam);
+    ResponseEntity<String> applyForUpdatePassword(String email);
 
     /**
      * 获取一个用户的基本信息

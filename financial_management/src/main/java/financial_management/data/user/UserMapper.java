@@ -49,10 +49,10 @@ public interface UserMapper {
 
     /**
      * 更新用户的邮箱信息
-     * @param userId
-     * @param email
+     * @param oldEmail
+     * @param newEmail
      */
-    void updateEmail(@Param("userId") Long userId, @Param("email") String email);
+    void updateEmail(@Param("oldEmail") String oldEmail, @Param("newEmail") String newEmail);
 
     /**
      * 更新用户的手机号信息
@@ -62,11 +62,18 @@ public interface UserMapper {
     void updatePhoneNum(@Param("userId") Long userId, @Param("phoneNum") String phoneNum);
 
     /**
-     * 更新用户的密码信息
+     * 通过userId更新用户的密码信息
      * @param userId
      * @param password
      */
-    void updatePassword(@Param("userId") Long userId, @Param("password") String password);
+    void updatePasswordByUserId(@Param("userId") Long userId, @Param("password") String password);
+
+    /**
+     * 通过邮箱更新用户的密码信息
+     * @param email
+     * @param password
+     */
+    void updatePasswordByEmail(@Param("email") String email, @Param("password") String password);
 
     /**
      * 获取所有的User对象

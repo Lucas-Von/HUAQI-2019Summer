@@ -5,30 +5,30 @@ package financial_management.parameter;
  * @date 2019/8/16
  */
 public class UserEmailParam {
-    private Long userId;
-    private String email;
+    private String oldEmail;
+    private String newEmail;
 
-    public Long getUserId() {
-        return userId;
+    public String getOldEmail() {
+        return oldEmail;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setOldEmail(String oldEmail) {
+        this.oldEmail = oldEmail;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNewEmail() {
+        return newEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
     }
 
     public UserEmailParam() {
     }
 
-    public UserEmailParam(Long userId, String email) {
-        this.userId = userId;
-        this.email = email;
+    public UserEmailParam(String oldEmail, String newEmail) {
+        this.oldEmail = oldEmail;
+        this.newEmail = newEmail;
     }
 }

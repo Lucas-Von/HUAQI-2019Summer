@@ -5,15 +5,15 @@ package financial_management.vo;
  * @date 2019/8/16
  */
 public class UsernameVO {
-    private Long userId;
+    private String token;
     private String username;
 
-    public Long getUserId() {
-        return userId;
+    public String getToken() {
+        return token;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getUsername() {
@@ -27,8 +27,8 @@ public class UsernameVO {
     public UsernameVO() {
     }
 
-    public UsernameVO(Long userId, String username) {
-        this.userId = userId;
+    public UsernameVO(String token, String username) {
+        this.token = token;
         this.username = username;
     }
 }

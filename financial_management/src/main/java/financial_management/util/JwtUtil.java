@@ -31,14 +31,20 @@ public class JwtUtil implements Serializable {
     private static final long serialVersionUID = -3301605591108950415L;
     private Clock clock = DefaultClock.INSTANCE;
 
-    @Value("${jwt.secret}")
-    private String secret; //这里需要重设
+    private String secret = "SecretForFinancial";
 
-    @Value("${jwt.expiration}")
-    private Long expiration;
 
-    public Long getIdFromRequest(HttpServletRequest request, String tokenHeader) {
-        String raw = request.getHeader(tokenHeader);
+    private static Long expiration = 604800L;
+
+    //这里因为采用yml配置，不清楚怎么导入头部 所以写死
+//    public Long getIdFromRequest(HttpServletRequest request, String tokenHeader) {
+//        String raw = request.getHeader(tokenHeader);
+//        if (raw.length() <= 7)
+//            return null;
+//        return getIdFromToken(raw.substring(7));
+//    }
+    public Long getIdFromRequest(HttpServletRequest request) {
+        String raw = request.getHeader("Authorization");
         if (raw.length() <= 7)
             return null;
         return getIdFromToken(raw.substring(7));

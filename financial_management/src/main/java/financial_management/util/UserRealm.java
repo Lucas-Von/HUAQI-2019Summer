@@ -1,6 +1,7 @@
 package financial_management.util;
 
 import financial_management.entity.UserPO;
+import financial_management.service.user.UserServiceImpl;
 import org.apache.catalina.security.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -20,6 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  **/
 public class UserRealm extends AuthorizingRealm {
 
+    @Autowired
+    JwtUtil jwtUtil;
+
+    @Autowired
+    UserServiceImpl userService;
 
     /**
      * @Author jyh
@@ -58,14 +64,26 @@ public class UserRealm extends AuthorizingRealm {
         //假设数据库的用户名和密码
 
 
-        //编写shiro判断逻辑，判断用户名和密码
-        UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
-        UserPO po = new UserPO();
-        String name = po.getName();
-        String password = po.getPassword();
-        if(!token.getUsername().equals(name)){
-            return null;//shiro的底层会抛出UnknownAccountException
-        }
-        return new SimpleAuthenticationInfo(po,po.getPassword(),"");//密码在这里会自动判断
+        //编写shiro判断逻辑，判断用户名和密码;但因为我们的密码是加密字符串且无法解码，故放弃密码验证，转为token验证
+//        UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
+//        UserPO po = new UserPO();
+//        String name = po.getName();
+//        String password = po.getPassword();
+//        if(!token.getUsername().equals(name)){
+//            return null;//shiro的底层会抛出UnknownAccountException
+//        }
+//        return new SimpleAuthenticationInfo(po,po.getPassword(),"");//密码在这里会自动判断
+//    }
+        String token = (String) authenticationToken.getPrincipal();
+        Long id = jwtUtil.getIdFromToken(token);
+        //这里使用原来的mapper与实体User，以后可能会需要更改
+        //如果user找不到，应该抛出一个异常
+        UserPO user = userService.getUser();
+        //认证失败应该抛出一个异常，因项目还未完善，暂不处理
+        if (!jwtUtil.validateToken(token, user))
+            throw new AuthenticationException("Username or password error");
+
+        //参考代码的返回写法是这样，还有待研究
+        return new SimpleAuthenticationInfo(token, token, "custom_realm");
     }
 }

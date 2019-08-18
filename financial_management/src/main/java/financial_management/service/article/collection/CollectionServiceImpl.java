@@ -38,7 +38,7 @@ public class CollectionServiceImpl implements CollectionService, CollectionServi
             collectionPO.setUserId(userId);
             collectionPO.setArticleId(articleId);
             collectionMapper.deleteCollection(collectionPO);
-            return ResponseEntity.ok().body("收藏成功！");
+            return ResponseEntity.ok().body("取消收藏成功！");
         }else {
             return ResponseEntity.status(403).body("该文章未被收藏！");
         }

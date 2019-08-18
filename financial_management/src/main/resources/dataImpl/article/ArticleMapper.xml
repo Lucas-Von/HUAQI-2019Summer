@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="financial_management.data.user.ArticleMapper">
+<mapper namespace="financial_management.data.article.ArticleMapper">
 
     <insert id="insertArticle" useGeneratedKeys="true" keyProperty="articleId">
         insert into article(title,summary,content,category,tags)

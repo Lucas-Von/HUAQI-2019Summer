@@ -12,12 +12,12 @@ public class PropertyVO {
     /**
      * 用户投资偏好
      */
-    private String prefers;
+    private ArrayList<String> prefers;
 
     public PropertyVO() {
     }
 
-    public PropertyVO(ArrayList<Integer> assets, String prefers) {
+    public PropertyVO(ArrayList<Integer> assets, ArrayList<String> prefers) {
         this.assets = assets;
         this.prefers = prefers;
     }

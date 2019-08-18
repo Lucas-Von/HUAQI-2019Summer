@@ -14,6 +14,11 @@ public class CashPO {
     Float amount;
 
     /**
+     * @Description //支付密码
+     **/
+    String paymentPassword;
+
+    /**
      * @Description //所占总额的百分比
      **/
     Float percentage;
@@ -53,5 +58,13 @@ public class CashPO {
 
     public void setFundPO(MyFundPO fundPO) {
         this.fundPO = fundPO;
+    }
+
+    public String getPaymentPassword() {
+        return paymentPassword;
+    }
+
+    public void setPaymentPassword(String paymentPassword) {
+        this.paymentPassword = paymentPassword;
     }
 }

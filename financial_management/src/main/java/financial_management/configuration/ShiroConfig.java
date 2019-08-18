@@ -50,6 +50,7 @@ public class ShiroConfig {
 //        filterMap.put("/Login","anon");
 //        //授权拦截。当授权拦截后，shiro自动跳转到未授权页面
 //        filterMap.put("/add","perms[user:add]");
+
         filterMap.put("/user/register","anon");
         filterMap.put("/user/login/email","anon");
         filterMap.put("/user/activate","anon");
@@ -58,6 +59,11 @@ public class ShiroConfig {
         filterMap.put("/*","anon");//通配
 
         shiroFilterFactoryBean.setLoginUrl("/user/login/email");
+
+//        filterMap.put("/user/login","anon");
+//        filterMap.put("/*","authc");//通配
+//        shiroFilterFactoryBean.setLoginUrl("/toLogin");
+
 //        shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;

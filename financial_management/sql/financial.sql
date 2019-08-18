@@ -70,6 +70,7 @@ CREATE TABLE `cash` (
   `user_id` bigint(255) NOT NULL,
   `amount` float DEFAULT NULL,
   `percentage` float DEFAULT NULL,
+  `payment_password` varchar(255),
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

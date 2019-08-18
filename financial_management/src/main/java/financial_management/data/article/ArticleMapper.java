@@ -41,5 +41,12 @@ public interface ArticleMapper {
      * 获得所有文章的全部信息
      * @return
      */
-    List<ArticlePO> selectAllArticles();
+    List<ArticlePO> selectAllArticles(@Param("category") Integer category);
+
+    /**
+     * 判断一篇文章是否存在
+     * @param articleId
+     * @return
+     */
+    boolean ifExist(@Param("articleId") Long articleId);
 }

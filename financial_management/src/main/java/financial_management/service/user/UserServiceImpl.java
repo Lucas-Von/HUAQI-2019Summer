@@ -2,8 +2,11 @@ package financial_management.service.user;
 
 import financial_management.bl.user.UserService;
 import financial_management.data.user.UserMapper;
+import financial_management.entity.ArticlePO;
 import financial_management.entity.UserPO;
 import financial_management.parameter.*;
+import financial_management.service.article.ArticleServiceForBl;
+import financial_management.service.article.collection.CollectionServiceForBl;
 import financial_management.util.JwtUtil;
 import financial_management.util.SendEmail;
 import financial_management.vo.ArticleSimpleInfoVO;
@@ -24,12 +27,16 @@ import java.util.List;
  * @date 2019/8/16
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserServiceForBl {
     @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CollectionServiceForBl collectionServiceForBl;
+    @Autowired
+    private ArticleServiceForBl articleServiceForBl;
 
     @Override
     public ResponseEntity<String> register(UserParam userParam){
@@ -169,8 +176,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<UserSimpleInfoVO> getSimpleUser(Long userId){
-        UserPO userPO = userMapper.selectSimpleUser(userId);
-        return ResponseEntity.ok().body(userPO.getUserSimpleInfoVO());
+        if(userMapper.ifExist(userId)) {
+            UserPO userPO = userMapper.selectSimpleUser(userId);
+            return ResponseEntity.ok().body(userPO.getUserSimpleInfoVO());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
@@ -185,9 +196,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(Long userId){
-        // TODO
+        if(userMapper.ifExist(userId)) {
+            List<Long> articleIds = collectionServiceForBl.getCollections(userId);
+            List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
+            for (int i = 0; i < articleIds.size(); i++) {
+                ArticleSimpleInfoVO articleSimpleInfoVO = new ArticleSimpleInfoVO();
+                ArticlePO articlePO = articleServiceForBl.getArticle(articleIds.get(i));
 
-        return null;
+                articleSimpleInfoVO.setArticleId(articlePO.getArticleId());
+                articleSimpleInfoVO.setSummary(articlePO.getSummary());
+                articleSimpleInfoVO.setTitle(articlePO.getTitle());
+                articleSimpleInfoVO.setCollected(true);
+
+                articleSimpleInfoVOS.add(articleSimpleInfoVO);
+            }
+            return ResponseEntity.ok().body(articleSimpleInfoVOS);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
@@ -202,6 +228,16 @@ public class UserServiceImpl implements UserService {
             }
         }else {
             return ResponseEntity.status(403).body("该邮箱不存在！");
+        }
+    }
+
+    @Override
+    public String getUsername(Long userId){
+        if(userMapper.ifExist(userId)) {
+            UserPO userPO = userMapper.selectSimpleUser(userId);
+            return userPO.getUsername();
+        }else {
+            return "该用户已被注销";
         }
     }
 

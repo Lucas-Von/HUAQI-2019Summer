@@ -1,6 +1,5 @@
 package financial_management.bl.article;
 
-import financial_management.parameter.CollectionParam;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -10,15 +9,17 @@ import org.springframework.http.ResponseEntity;
 public interface CollectionService {
     /**
      * 添加收藏
-     * @param collectionParam
+     * @param articleId
+     * @param userId
      * @return
      */
-    ResponseEntity<String> addCollection(CollectionParam collectionParam);
+    ResponseEntity<String> addCollection(Long articleId, Long userId);
 
     /**
      * 取消收藏
-     * @param collectionParam
+     * @param articleId
+     * @param userId
      * @return
      */
-    ResponseEntity<String> deleteCollection(CollectionParam collectionParam);
+    ResponseEntity<String> deleteCollection(Long articleId, Long userId);
 }

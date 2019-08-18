@@ -1,5 +1,7 @@
 package financial_management.parameter;
 
+import financial_management.entity.ArticlePO;
+
 import java.util.List;
 
 /**
@@ -60,6 +62,21 @@ public class ArticleParam {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public ArticlePO getArticlePO(){
+        StringBuilder allTags = new StringBuilder();
+        for(int i=0;i<tags.size();i++){
+            allTags.append(tags.get(i)).append(",");
+        }
+        if(allTags.length() != 0){
+            allTags.deleteCharAt(allTags.length() - 1);
+        }
+        return new ArticlePO(title,
+                summary,
+                content,
+                category,
+                allTags.toString());
     }
 
     public ArticleParam() {

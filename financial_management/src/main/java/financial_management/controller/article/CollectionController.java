@@ -1,10 +1,12 @@
 package financial_management.controller.article;
 
 import financial_management.bl.article.CollectionService;
-import financial_management.parameter.CollectionParam;
+import financial_management.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author xyh
@@ -13,14 +15,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/article/collection")
 public class CollectionController {
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private CollectionService collectionService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCollection(@RequestBody CollectionParam collectionParam){
-        return ResponseEntity.ok().body("添加成功");
+    public ResponseEntity<String> addCollection(@RequestParam Long articleId, HttpServletRequest request){
+        return collectionService.addCollection(articleId, jwtUtil.getIdFromRequest(request));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCollection(@RequestBody CollectionParam collectionParam){
-        return ResponseEntity.ok().body("取消成功");
+    public ResponseEntity<String> deleteCollection(@RequestParam Long articleId, HttpServletRequest request){
+        return collectionService.deleteCollection(articleId, jwtUtil.getIdFromRequest(request));
     }
 }

@@ -27,7 +27,7 @@
         where id = #{commentId} and user_id = #{userId}
     </delete>
 
-    <select id="ifCollected" resultType="boolean">
+    <select id="ifLighted" resultType="boolean">
         select count(user_id)
         from light where id = #{commentId} and user_id = #{userId}
     </select>
@@ -35,6 +35,11 @@
     <select id="selectLights" resultType="Integer">
         select count(user_id)
         from light where id = #{commentId}
+    </select>
+
+    <select id="ifExist" resultType="boolean">
+        select count(user_id)
+        from comment where id = #{commentId}
     </select>
 
     <resultMap id="CommentPO" type="financial_management.entity.CommentPO">

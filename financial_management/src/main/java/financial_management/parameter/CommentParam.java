@@ -6,7 +6,6 @@ package financial_management.parameter;
  */
 public class CommentParam {
     private Long articleId;
-    private Long userId;
     private String content;
 
     public Long getArticleId() {
@@ -15,14 +14,6 @@ public class CommentParam {
 
     public void setArticleId(Long articleId) {
         this.articleId = articleId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getContent() {
@@ -36,9 +27,8 @@ public class CommentParam {
     public CommentParam() {
     }
 
-    public CommentParam(Long articleId, Long userId, String content) {
-        this.articleId = articleId;
-        this.userId = userId;
+    public CommentParam(Long articleId, String content) {
+        this.articleId = articleId;;
         this.content = content;
     }
 }

@@ -1,8 +1,6 @@
 package financial_management.bl.article;
 
 import financial_management.parameter.CommentParam;
-import financial_management.parameter.LightCommentParam;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -15,21 +13,23 @@ public interface CommentService {
      * @param commentParam
      * @return
      */
-    ResponseEntity<String> addComment(CommentParam commentParam);
+    ResponseEntity<String> addComment(CommentParam commentParam, Long userId);
 
     /**
      * 点赞一条评论
-     * @param lightCommentParam
+     * @param commentId
+     * @param userId
      * @return
      */
-    ResponseEntity<String> lightComment(LightCommentParam lightCommentParam);
+    ResponseEntity<String> lightComment(Long commentId, Long userId);
 
     /**
      * 取消点赞一条评论
-     * @param lightCommentParam
+     * @param commentId
+     * @param userId
      * @return
      */
-    ResponseEntity<String> unlightComment(LightCommentParam lightCommentParam);
+    ResponseEntity<String> unlightComment(Long commentId, Long userId);
 
     /**
      * 举报一条评论（消息通知告诉管理员）

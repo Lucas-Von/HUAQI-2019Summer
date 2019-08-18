@@ -24,6 +24,12 @@
 
     <select id="selectAllArticles" resultMap="ArticlePO">
         select * from article
+        where category = #{category}
+    </select>
+
+    <select id="ifExist" resultType="boolean">
+        select count(article_id)
+        from article where article_id = #{articleId}
     </select>
 
     <resultMap id="ArticlePO" type="financial_management.entity.ArticlePO">

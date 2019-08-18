@@ -5,6 +5,8 @@ import financial_management.vo.ArticleSimpleInfoVO;
 import financial_management.vo.ArticleVO;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 /**
  * @author xyh
  * @date 2019/8/17
@@ -36,11 +38,11 @@ public interface ArticleService {
      * @param articleId
      * @return
      */
-    ResponseEntity<ArticleVO> getSimpleArticle(Long articleId);
+    ResponseEntity<ArticleVO> getSimpleArticle(Long articleId, Long userId);
 
     /**
      * 获取所有文章基本信息
      * @return
      */
-    ResponseEntity<ArticleSimpleInfoVO> getAllArticles();
+    ResponseEntity<List<ArticleSimpleInfoVO>> getAllArticles(Integer category, Long userId);
 }

@@ -55,7 +55,7 @@ public class ShiroConfig {
         filterMap.put("/user/activate","anon");
         filterMap.put("/user/get","anon");
         filterMap.put("/user/getAll","anon");
-        filterMap.put("/*","authc");//通配
+        filterMap.put("/*","anon");//通配
 
         shiroFilterFactoryBean.setLoginUrl("/user/login/email");
 //        shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth");

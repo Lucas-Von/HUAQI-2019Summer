@@ -1,5 +1,7 @@
 package financial_management.entity;
 
+import java.sql.Timestamp;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -33,9 +35,9 @@ public class CommentPO {
     String content;
 
     /**
-     * @Description //点赞数量（点赞有单独一张表。但因前端不需调用，故没有PO对应实体）
-     **/
-    Integer lightAmount;
+     * 评论时间
+     */
+    private Timestamp time;
 
     public Long getId() {
         return id;
@@ -77,11 +79,11 @@ public class CommentPO {
         this.content = content;
     }
 
-    public Integer getLightAmount() {
-        return lightAmount;
+    public Timestamp getTime() {
+        return time;
     }
 
-    public void setLightAmount(Integer lightAmount) {
-        this.lightAmount = lightAmount;
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 }

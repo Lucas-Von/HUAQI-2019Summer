@@ -1,30 +1,18 @@
-package financial_management.entity;
+package financial_management.parameter;
 
-public class ArticlePO {
-    /**
-     * 文章ID
-     */
+import java.util.List;
+
+/**
+ * @author xyh
+ * @date 2019/8/17
+ */
+public class ArticleParam {
     private Long articleId;
-    /**
-     * 标题
-     */
     private String title;
-    /**
-     * 摘要
-     */
     private String summary;
-    /**
-     * 内容
-     */
     private String content;
-    /**
-     * 类别
-     */
     private Integer category;
-    /**
-     * 关键词（用逗号分隔）
-     */
-    private String tags;
+    private List<String> tags;
 
     public Long getArticleId() {
         return articleId;
@@ -66,22 +54,24 @@ public class ArticlePO {
         this.category = category;
     }
 
-    public String getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(String tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 
-    public ArticlePO() {
+    public ArticleParam() {
     }
 
-    public ArticlePO(String title,
-                     String summary,
-                     String content,
-                     Integer category,
-                     String tags) {
+    public ArticleParam(Long articleId,
+                        String title,
+                        String summary,
+                        String content,
+                        Integer category,
+                        List<String> tags) {
+        this.articleId = articleId;
         this.title = title;
         this.summary = summary;
         this.content = content;

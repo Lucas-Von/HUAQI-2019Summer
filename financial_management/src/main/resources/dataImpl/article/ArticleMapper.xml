@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.user.ArticleMapper">
+
+    <insert id="insertArticle" useGeneratedKeys="true" keyProperty="articleId">
+        insert into article(title,summary,content,category,tags)
+        values(#{title},#{summary},#{content},#{category},#{tags})
+    </insert>
+
+    <update id="updateArticle">
+        update article set title = #{title}, summary = #{summary}, content = #{content}, category = #{category}, tags = #{tags}
+        where article_id = #{articleId}
+    </update>
+
+    <delete id="deleteArticle">
+        delete from article
+        where article_id = #{articleId}
+    </delete>
+
+    <select id="selectArticle" resultMap="ArticlePO">
+        select * from article
+        where article_id = #{articleId}
+    </select>
+
+    <select id="selectAllArticles" resultMap="ArticlePO">
+        select * from article
+    </select>
+
+    <resultMap id="ArticlePO" type="financial_management.entity.ArticlePO">
+        <result column="article_id" property="articleId"></result>
+        <result column="title" property="title"></result>
+        <result column="summary" property="summary"></result>
+        <result column="content" property="content"></result>
+        <result column="category" property="category"></result>
+        <result column="tags" property="tags"></result>
+    </resultMap>
+
+</mapper>

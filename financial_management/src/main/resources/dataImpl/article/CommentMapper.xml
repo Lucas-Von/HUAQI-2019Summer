@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.user.CommentMapper">
+
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="id">
+        insert into comment(user_id,article_id,content)
+        values(#{userId},#{articleId},#{content})
+    </insert>
+
+    <delete id="deleteComment">
+        delete from comment
+        where id = #{commentId}
+    </delete>
+
+    <select id="selectComments" resultMap="CommentPO">
+        select * from comment
+        where article_id = #{articleId}
+    </select>
+
+    <insert id="lightComment">
+        insert into light(id, user_id)
+        values(#{commentId}, #{userId})
+    </insert>
+
+    <delete id="unlightComment">
+        delete from light
+        where id = #{commentId} and user_id = #{userId}
+    </delete>
+
+    <select id="ifCollected" resultType="boolean">
+        select count(user_id)
+        from light where id = #{commentId} and user_id = #{userId}
+    </select>
+
+    <select id="selectLights" resultType="Integer">
+        select count(user_id)
+        from light where id = #{commentId}
+    </select>
+
+    <resultMap id="CommentPO" type="financial_management.entity.CommentPO">
+        <result column="id" property="id"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="article_id" property="articleId"></result>
+        <result column="content" property="content"></result>
+        <result column="time" property="time"></result>
+    </resultMap>
+
+</mapper>

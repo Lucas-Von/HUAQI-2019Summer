@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -84,7 +85,11 @@ public class UserController {
 
     @GetMapping("/collections/get")
     public ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(HttpServletRequest request){
-        return userService.getCollections(jwtUtil.getIdFromRequest(request));
+        ArticleSimpleInfoVO articleSimpleInfoVO = new ArticleSimpleInfoVO((long) 1,"title","summary",true);
+        List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
+        articleSimpleInfoVOS.add(articleSimpleInfoVO);
+        return ResponseEntity.ok().body(articleSimpleInfoVOS);
+//        return userService.getCollections(jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping("/activate")

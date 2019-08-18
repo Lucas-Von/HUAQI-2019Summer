@@ -8,6 +8,7 @@ public class ArticleSimpleInfoVO {
     private Long articleId;
     private String title;
     private String summary;
+    private boolean collected;
 
     public Long getArticleId() {
         return articleId;
@@ -33,12 +34,21 @@ public class ArticleSimpleInfoVO {
         this.summary = summary;
     }
 
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
+    }
+
     public ArticleSimpleInfoVO() {
     }
 
-    public ArticleSimpleInfoVO(Long articleId, String title, String summary) {
+    public ArticleSimpleInfoVO(Long articleId, String title, String summary, boolean collected) {
         this.articleId = articleId;
         this.title = title;
         this.summary = summary;
+        this.collected = collected;
     }
 }

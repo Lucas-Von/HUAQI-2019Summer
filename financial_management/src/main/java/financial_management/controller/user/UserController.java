@@ -85,11 +85,7 @@ public class UserController {
 
     @GetMapping("/collections/get")
     public ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(HttpServletRequest request){
-        ArticleSimpleInfoVO articleSimpleInfoVO = new ArticleSimpleInfoVO((long) 1,"title","summary",true);
-        List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
-        articleSimpleInfoVOS.add(articleSimpleInfoVO);
-        return ResponseEntity.ok().body(articleSimpleInfoVOS);
-//        return userService.getCollections(jwtUtil.getIdFromRequest(request));
+        return userService.getCollections(jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping("/activate")

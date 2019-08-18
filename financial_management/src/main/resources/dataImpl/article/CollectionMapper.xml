@@ -18,7 +18,7 @@
     </select>
 
     <select id="getCollections" resultType="Long">
-        select * from collection
+        select article_id from collection
         where user_id = #{userId}
     </select>
 

@@ -25,14 +25,14 @@ public class WalletController {
 
     @PostMapping(value = "/recharge")
     public ResponseEntity<?> recharging(@RequestBody RechargeParam param, HttpServletRequest request){
-        Long id = jwtUtil.getIdFromRequest(request);
+
         //逻辑部分
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/payment/balance")
     public ResponseEntity<?> payment(@RequestBody PaymentParam payment,HttpServletRequest request){
-        Long id = jwtUtil.getIdFromRequest(request);
+
         return ResponseEntity.ok().build();
     }
 
@@ -47,7 +47,6 @@ public class WalletController {
     }
     @PostMapping(value = "/balance")
     public ResponseEntity<?> checkBalance(HttpServletRequest request){
-        Long id = jwtUtil.getIdFromRequest(request);
         //逻辑部分
         BalanceVO balance = new BalanceVO();
         balance.setBalance(2000L);
@@ -57,7 +56,7 @@ public class WalletController {
 
     @PostMapping(value = "/payment/thirdparty")
     public ResponseEntity<?> payByCard(HttpServletRequest request, @RequestBody ThirdPartyPaymentParam param){
-        Long id = jwtUtil.getIdFromRequest(request);
+
         return ResponseEntity.ok().build();
     }
 }

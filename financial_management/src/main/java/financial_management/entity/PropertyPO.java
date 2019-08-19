@@ -1,9 +1,11 @@
 package financial_management.entity;
 
-import financial_management.vo.PropertyVO;
-
 import java.util.ArrayList;
 
+/**
+ * @author lt
+ * @date 2019/08/13 14:25
+ */
 public class PropertyPO {
 
     /**
@@ -34,15 +36,7 @@ public class PropertyPO {
     /**
      * 用户投资偏好
      */
-    private String prefers;
-
-//    TO DO
-//    /**
-//     * 用户填写的问卷信息
-//     */
-//    public PropertyVO getPropertyVO() {
-//        return new PropertyVO(assets, prefers);
-//    }
+    private ArrayList<String> prefers;
 
     public Long getUsrId() {
         return userId;
@@ -84,11 +78,11 @@ public class PropertyPO {
         this.assetType = assetType;
     }
 
-    public String getPrefers() {
+    public ArrayList<String> getPrefers() {
         return prefers;
     }
 
-    public void setPrefers(String prefers) {
+    public void setPrefers(ArrayList<String> prefers) {
         this.prefers = prefers;
     }
 

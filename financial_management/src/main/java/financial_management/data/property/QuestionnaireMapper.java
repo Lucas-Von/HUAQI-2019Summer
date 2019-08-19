@@ -1,0 +1,32 @@
+package financial_management.data.property;
+
+import financial_management.entity.QuestionnairePO;
+import financial_management.parameter.QuestionnaireParam;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+/**
+ * @author lt
+ * @date 2019/08/17 15:02
+ */
+@Mapper
+public interface QuestionnaireMapper {
+
+    /**
+     * 根据userId判断用户是否已填写问卷，若无则返回空的问卷【值皆为0】
+     * @param userId
+     * @return
+     */
+    QuestionnairePO viewQuestById(@Param("userId") Long userId);
+
+    /**
+     * 插入用户填写的问卷
+     * @param userId
+     * @param questionnaireParam
+     * @return
+     */
+    int insertOneQuest(Long userId, QuestionnaireParam questionnaireParam);
+
+
+
+}

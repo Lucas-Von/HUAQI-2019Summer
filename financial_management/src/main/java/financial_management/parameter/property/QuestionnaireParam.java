@@ -1,10 +1,12 @@
-package financial_management.vo;
+package financial_management.parameter.property;
 
-/**
- * @author lt
- * @date 2019/08/18 19:01
- */
-public class AssetsVO {
+public class QuestionnaireParam {
+
+    /**
+     * 用户id
+     */
+    private Long userId;
+
     /**
      * 现金
      */
@@ -35,8 +37,17 @@ public class AssetsVO {
      */
     private int bond;
 
-    public AssetsVO() {
+    /**
+     * 用户的回答
+     */
+    private String answer;
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public int getFunds() {
@@ -87,8 +98,12 @@ public class AssetsVO {
         this.bond = bond;
     }
 
-    public InvestVO getInvestVO() {
-        return new InvestVO(stocks, gold, bond);
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
 }

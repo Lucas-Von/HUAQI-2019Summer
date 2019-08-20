@@ -15,7 +15,7 @@ import java.util.List;
 public class MessageController {
     @Autowired
     private MessageService messageService;
-
+    
     @GetMapping("get/{ID}")
     public ResponseEntity<?> getMessagesByUser(@PathVariable Long ID) {
         Response<List<MessageVO>> response = messageService.getMessagesByUser(ID);

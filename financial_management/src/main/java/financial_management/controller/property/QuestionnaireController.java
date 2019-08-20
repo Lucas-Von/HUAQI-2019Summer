@@ -1,8 +1,7 @@
 package financial_management.controller.property;
 
 import financial_management.bl.property.QuestionnaireService;
-import financial_management.parameter.QuestionnaireParam;
-import financial_management.vo.QuestionnaireVO;
+import financial_management.parameter.property.QuestionnaireParam;
 import financial_management.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +23,8 @@ public class QuestionnaireController {
     }
 
     @PostMapping("/questionnaire/add")
-    public ResponseVO addQuestionnaire(Long userId, @RequestBody QuestionnaireParam questionnaireParam){
-        return questionnaireService.addQuestionnaire(userId, questionnaireParam);
+    public ResponseVO addQuestionnaire(@RequestBody QuestionnaireParam questionnaireParam){
+        return questionnaireService.addQuestionnaire(questionnaireParam);
     }
 
 }

@@ -1,6 +1,6 @@
 package financial_management.bl.property;
 
-import financial_management.parameter.QuestionnaireParam;
+import financial_management.parameter.property.QuestionnaireParam;
 import financial_management.vo.ResponseVO;
 
 /**
@@ -18,10 +18,9 @@ public interface QuestionnaireService {
 
     /**
      * 保存问卷内容
-     * @param userId
      * @param questionnaireParam
      * @return
      */
-    ResponseVO addQuestionnaire(Long userId, QuestionnaireParam questionnaireParam);
+    ResponseVO addQuestionnaire(QuestionnaireParam questionnaireParam);
 
 }

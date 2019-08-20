@@ -17,13 +17,18 @@ public class QuestionnaireController {
     @Autowired
     private QuestionnaireService questionnaireService;
 
+    @GetMapping("/questionnaire/judge")
+    public ResponseVO hasQuestionnaire(Long userId) {
+        return questionnaireService.hasQuestionnaire(userId);
+    }
+
     @GetMapping("/questionnaire/view")
-    public ResponseVO viewQuestionnaireById(Long userId){
-        return questionnaireService.viewQuestionnaire(userId);
+    public ResponseVO viewQuestionnaire() {
+        return questionnaireService.viewQuestionnaire();
     }
 
     @PostMapping("/questionnaire/add")
-    public ResponseVO addQuestionnaire(@RequestBody QuestionnaireParam questionnaireParam){
+    public ResponseVO addQuestionnaire(@RequestBody QuestionnaireParam questionnaireParam) {
         return questionnaireService.addQuestionnaire(questionnaireParam);
     }
 

@@ -18,26 +18,46 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Autowired
     private QuestionnaireMapper questionnaireMapper;
 
+    /**
+     * 判断用户是否已填写问卷
+     * @param userId
+     * @return
+     */
     @Override
-    public ResponseVO viewQuestionnaire(Long userId) {
-        try {
-            boolean hasQuestionnaire = questionnaireMapper.viewQuestById(userId);
-            System.out.println(hasQuestionnaire);
-            if (hasQuestionnaire) {
-                return ResponseVO.buildSuccess("该用户已填写问卷");
-            } else {
-                return ResponseVO.buildSuccess(new QuestionnairePO().getVO());
-            }
+    public ResponseVO hasQuestionnaire(Long userId) {
+        try{
+            boolean hasRecorded = questionnaireMapper.hasQuest(userId);
+            return ResponseVO.buildSuccess(hasRecorded);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    /**
+     * 查看空白问卷内容
+     * @param
+     * @return
+     */
+    @Override
+    public ResponseVO viewQuestionnaire() {
+        try {
+            return ResponseVO.buildSuccess(new QuestionnairePO().getVO());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 添加问卷内容
+     * @param questionnaireParam
+     * @return
+     */
     @Override
     public ResponseVO addQuestionnaire(QuestionnaireParam questionnaireParam) {
         try {
-            questionnaireMapper.insertOneQuest(questionnaireParam);
+            questionnaireMapper.insertQuest(questionnaireParam);
             return ResponseVO.buildSuccess("成功");
         } catch (Exception e) {
             e.printStackTrace();

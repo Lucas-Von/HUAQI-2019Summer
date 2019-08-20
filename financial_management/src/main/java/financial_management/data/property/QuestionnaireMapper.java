@@ -4,11 +4,13 @@ import financial_management.entity.QuestionnairePO;
 import financial_management.parameter.QuestionnaireParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author lt
  * @date 2019/08/17 15:02
  */
+@Repository
 @Mapper
 public interface QuestionnaireMapper {
 

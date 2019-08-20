@@ -16,20 +16,20 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @GetMapping("get")
-    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID) {
+    @GetMapping("get/{ID}")
+    public ResponseEntity<?> getMessagesByUser(@PathVariable Long ID) {
         Response<List<MessageVO>> response = messageService.getMessagesByUser(ID);
         return judge(response);
     }
 
-    @GetMapping("get")
-    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID, @RequestParam int type) {
+    @GetMapping("get/{ID}/type/{type}")
+    public ResponseEntity<?> getMessagesByUser(@PathVariable Long ID, @PathVariable int type) {
         Response<List<MessageVO>> response = messageService.getMessagesByUser(ID, type);
         return judge(response);
     }
 
-    @GetMapping("get")
-    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID, @RequestParam int type, @RequestParam int page) {
+    @GetMapping("get/{ID}/type/{type}/{page}")
+    public ResponseEntity<?> getMessagesByUser(@PathVariable Long ID, @PathVariable int type, @PathVariable int page) {
         Response<List<MessageVO>> response = messageService.getMessagesByUser(ID, type, page);
         return judge(response);
     }

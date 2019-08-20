@@ -1,11 +1,7 @@
 package financial_management.entity;
 
-import financial_management.vo.AssetsVO;
-import financial_management.vo.PreferVO;
-import financial_management.vo.QuestionnaireVO;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import financial_management.vo.property.AssetsVO;
+import financial_management.vo.property.QuestionnaireVO;
 
 /**
  * @author lt
@@ -49,9 +45,9 @@ public class QuestionnairePO {
     private int bond;
 
     /**
-     * 投资偏好列表
+     * 问题
      */
-    private List<PreferPO> preferList;
+    private String question;
 
     public QuestionnairePO() {
 
@@ -67,12 +63,8 @@ public class QuestionnairePO {
         avo.setStocks(stocks);
         avo.setGold(gold);
         avo.setBond(bond);
-        vo.setPreferList(preferList.stream().map(prefer -> {
-            PreferVO pvo = new PreferVO();
-            pvo.setQuestion(prefer.getQuestion());
-            pvo.setAnswer(prefer.getAnswer());
-            return pvo;
-        }).collect(Collectors.toList()));
+        vo.setAssetsVO(avo);
+        vo.setQuestionList();
         return vo;
     }
 
@@ -132,11 +124,12 @@ public class QuestionnairePO {
         this.bond = bond;
     }
 
-    public List<PreferPO> getPreferList() {
-        return preferList;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setPreferList(List<PreferPO> preferList) {
-        this.preferList = preferList;
+    public void setQuestion(String question) {
+        this.question = question;
     }
+
 }

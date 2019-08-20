@@ -1,4 +1,4 @@
-package financial_management.vo;
+package financial_management.vo.property;
 
 /**
  * @author lt

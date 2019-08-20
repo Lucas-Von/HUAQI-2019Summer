@@ -16,23 +16,23 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @GetMapping("get")
-    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID) {
-        Response<List<MessageVO>> response = messageService.getMessagesByUser(ID);
-        return judge(response);
-    }
-
-    @GetMapping("get")
-    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID, @RequestParam int type) {
-        Response<List<MessageVO>> response = messageService.getMessagesByUser(ID, type);
-        return judge(response);
-    }
-
-    @GetMapping("get")
-    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID, @RequestParam int type, @RequestParam int page) {
-        Response<List<MessageVO>> response = messageService.getMessagesByUser(ID, type, page);
-        return judge(response);
-    }
+//    @GetMapping("get")
+//    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID) {
+//        Response<List<MessageVO>> response = messageService.getMessagesByUser(ID);
+//        return judge(response);
+//    }
+//
+//    @GetMapping("get")
+//    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID, @RequestParam int type) {
+//        Response<List<MessageVO>> response = messageService.getMessagesByUser(ID, type);
+//        return judge(response);
+//    }
+//
+//    @GetMapping("get")
+//    public ResponseEntity<?> getMessagesByUser(@RequestParam Long ID, @RequestParam int type, @RequestParam int page) {
+//        Response<List<MessageVO>> response = messageService.getMessagesByUser(ID, type, page);
+//        return judge(response);
+//    }
 
     @GetMapping("getNew")
     public ResponseEntity<?> getNewMessageByUser(@RequestParam Long ID){

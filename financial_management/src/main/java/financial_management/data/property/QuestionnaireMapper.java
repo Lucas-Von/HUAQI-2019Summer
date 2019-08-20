@@ -1,7 +1,7 @@
 package financial_management.data.property;
 
 import financial_management.entity.QuestionnairePO;
-import financial_management.parameter.QuestionnaireParam;
+import financial_management.parameter.property.QuestionnaireParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -19,15 +19,14 @@ public interface QuestionnaireMapper {
      * @param userId
      * @return
      */
-    QuestionnairePO viewQuestById(@Param("userId") Long userId);
+    boolean viewQuestById(@Param("userId") Long userId);
 
     /**
      * 插入用户填写的问卷
-     * @param userId
      * @param questionnaireParam
      * @return
      */
-    int insertOneQuest(Long userId, QuestionnaireParam questionnaireParam);
+    int insertOneQuest(QuestionnaireParam questionnaireParam);
 
 
 

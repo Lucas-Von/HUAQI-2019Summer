@@ -1,16 +1,25 @@
 package financial_management.vo;
 
-public enum  ResponseStatus {
+public final class ResponseStatus {
 
-    STATUS_SUCCESS("0000", "success"),
-    STATUS_SERVER_ERROR("1111", "server error"),
+    public static final ResponseStatus STATUS_SUCCESS = new ResponseStatus("0000", "Success");
 
-    STATUS_PSW_WRONG("1000", "password wrong"),
-    STATUS_USERNAME_WRONG("1001", "username wrong");
+    public static final ResponseStatus SERVER_ERROR = new ResponseStatus("0001", "Server error");
+
 
     public String code;
 
     public String msg;
+
+    public String getCode() {
+        return code;
+    }
+
+
+    public String getMsg() {
+        return msg;
+    }
+
 
     private ResponseStatus(String code, String msg){
         this.code = code;

@@ -1,6 +1,8 @@
 package financial_management.controller.product;
 
 import financial_management.parameter.product.DepositPurchaseParam;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.product.DepRecProductVO;
 import financial_management.vo.product.MyDepositVO;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,7 @@ import java.util.List;
 public class DepositController {
 
     @GetMapping(value = "/product/deposit")
-    public ResponseEntity<?> MyDeposit(HttpServletRequest request){
+    public BasicResponse MyDeposit(HttpServletRequest request){
         List<MyDepositVO> vos = new ArrayList<>();
         String dateString = "2020-02-23";
         try {
@@ -36,7 +38,7 @@ public class DepositController {
         catch (Exception e){
             e.printStackTrace();
         }
-        return ResponseEntity.ok().body(vos);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
 

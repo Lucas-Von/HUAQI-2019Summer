@@ -13,6 +13,7 @@ public class UserParam {
     private String email;
     private String phoneNum;
     private String password;
+    private String profilePhoto;
 
     public String getUsername() {
         return username;
@@ -62,12 +63,21 @@ public class UserParam {
         this.password = password;
     }
 
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
     public UserPO getUserPo(){
         return new UserPO(username,
                 identityNum,
                 name,
                 email,
-                password);
+                password,
+                profilePhoto);
     }
 
     public UserParam() {
@@ -78,12 +88,14 @@ public class UserParam {
                      String name,
                      String email,
                      String phoneNum,
-                     String password) {
+                     String password,
+                     String profilePhoto) {
         this.username = username;
         this.identityNum = identityNum;
         this.name = name;
         this.email = email;
         this.phoneNum = phoneNum;
         this.password = password;
+        this.profilePhoto = profilePhoto;
     }
 }

@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
             UsernameVO usernameVO = new UsernameVO();
             usernameVO.setUsername(userPO.getUsername());
             usernameVO.setToken(jwtUtil.generateToken(userPO.getUserId()+""));
+            usernameVO.setProfilePhoto(userPO.getProfilePhoto());
             return ResponseEntity.ok().body(usernameVO);
         }else {
             return ResponseEntity.status(403).build();
@@ -175,21 +176,21 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     }
 
     @Override
-    public ResponseEntity<UserSimpleInfoVO> getSimpleUser(Long userId){
+    public ResponseEntity<UserVO> getSimpleUser(Long userId){
         if(userMapper.ifExist(userId)) {
             UserPO userPO = userMapper.selectSimpleUser(userId);
-            return ResponseEntity.ok().body(userPO.getUserSimpleInfoVO());
+            return ResponseEntity.ok().body(userPO.getUserVO());
         }else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @Override
-    public ResponseEntity<List<UserVO>> getAllUsers(){
+    public ResponseEntity<List<UserSimpleInfoVO>> getAllUsers(){
         List<UserPO> userPOList = userMapper.selectAllUsers();
-        List<UserVO> userVOList = new ArrayList<>();
+        List<UserSimpleInfoVO> userVOList = new ArrayList<>();
         for(int i=0;i<userPOList.size();i++){
-            userVOList.add(userPOList.get(i).getUserVO());
+            userVOList.add(userPOList.get(i).getUserSimpleInfoVO());
         }
         return ResponseEntity.ok().body(userVOList);
     }
@@ -228,6 +229,50 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
             }
         }else {
             return ResponseEntity.status(403).body("该邮箱不存在！");
+        }
+    }
+
+    @Override
+    public ResponseEntity<String> updateProfilePhoto(String profilePhoto, Long userId){
+        if(userMapper.ifExist(userId)) {
+            userMapper.updateProfilePhoto(userId, profilePhoto);
+            return ResponseEntity.ok().body("更新用户头像成功！");
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<UserVO> searchUserByEmail(String email){
+        if(userMapper.ifExistEmail(email)) {
+            UserPO userPO = userMapper.selectUserByEmail(email);
+            return ResponseEntity.ok().body(userPO.getUserVO());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<UserVO> searchUserByIdentityNum(String identityNum){
+        if(userMapper.ifExistIdentityNum(identityNum)){
+            UserPO userPO = userMapper.selectUserByIdentityNum(identityNum);
+            return ResponseEntity.ok().body(userPO.getUserVO());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<UserSimpleInfoVO>> searchUserByUsername(String username){
+        List<UserPO> userPOList = userMapper.selectUserByUsername(username);
+        if(userPOList.size() != 0){
+            List<UserSimpleInfoVO> userSimpleInfoVOS = new ArrayList<>();
+            for(int i=0;i<userPOList.size();i++){
+                userSimpleInfoVOS.add(userPOList.get(i).getUserSimpleInfoVO());
+            }
+            return ResponseEntity.ok().body(userSimpleInfoVOS);
+        }else {
+            return ResponseEntity.notFound().build();
         }
     }
 

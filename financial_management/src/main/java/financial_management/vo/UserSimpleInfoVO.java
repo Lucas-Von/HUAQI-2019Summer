@@ -5,11 +5,18 @@ package financial_management.vo;
  * @date 2019/8/16
  */
 public class UserSimpleInfoVO {
+    private Long userId;
     private String username;
     private String identityNum;
-    private String name;
     private String email;
-    private String phoneNum;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;
@@ -27,14 +34,6 @@ public class UserSimpleInfoVO {
         this.identityNum = identityNum;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -43,26 +42,16 @@ public class UserSimpleInfoVO {
         this.email = email;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
     public UserSimpleInfoVO() {
     }
 
-    public UserSimpleInfoVO(String username,
+    public UserSimpleInfoVO(Long userId,
+                            String username,
                             String identityNum,
-                            String name,
-                            String email,
-                            String phoneNum) {
+                            String email) {
+        this.userId = userId;
         this.username = username;
         this.identityNum = identityNum;
-        this.name = name;
         this.email = email;
-        this.phoneNum = phoneNum;
     }
 }

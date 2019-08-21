@@ -11,6 +11,7 @@ public class UserVO {
     private String name;
     private String email;
     private String phoneNum;
+    private String profilePhoto;
 
     public Long getUserId() {
         return userId;
@@ -60,6 +61,14 @@ public class UserVO {
         this.phoneNum = phoneNum;
     }
 
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
     public UserVO() {
     }
 
@@ -68,12 +77,14 @@ public class UserVO {
                   String identityNum,
                   String name,
                   String email,
-                  String phoneNum) {
+                  String phoneNum,
+                  String profilePhoto) {
         this.userId = userId;
         this.username = username;
         this.identityNum = identityNum;
         this.name = name;
         this.email = email;
         this.phoneNum = phoneNum;
+        this.profilePhoto = profilePhoto;
     }
 }

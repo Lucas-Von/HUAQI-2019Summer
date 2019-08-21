@@ -84,13 +84,13 @@ public interface UserService {
      * @param userId
      * @return
      */
-    ResponseEntity<UserSimpleInfoVO> getSimpleUser(Long userId);
+    ResponseEntity<UserVO> getSimpleUser(Long userId);
 
     /**
-     * 获取所有用户的基本信息
+     * 获取所有用户的基本信息（弃用）
      * @return
      */
-    ResponseEntity<List<UserVO>> getAllUsers();
+    ResponseEntity<List<UserSimpleInfoVO>> getAllUsers();
 
     /**
      * 获取用户所有收藏的⽂章
@@ -105,4 +105,33 @@ public interface UserService {
      * @return
      */
     ResponseEntity<String> activate(String email);
+
+    /**
+     * 修改用户头像
+     * @param profilePhoto
+     * @param userId
+     * @return
+     */
+    ResponseEntity<String> updateProfilePhoto(String profilePhoto, Long userId);
+
+    /**
+     * 按照邮箱搜索指定用户
+     * @param email
+     * @return
+     */
+    ResponseEntity<UserVO> searchUserByEmail(String email);
+
+    /**
+     * 按照身份证号搜索指定用户
+     * @param identityNum
+     * @return
+     */
+    ResponseEntity<UserVO> searchUserByIdentityNum(String identityNum);
+
+    /**
+     * 按照昵称模糊搜索符合条件的用户
+     * @param username
+     * @return
+     */
+    ResponseEntity<List<UserSimpleInfoVO>> searchUserByUsername(String username);
 }

@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,12 +73,12 @@ public class UserController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<UserSimpleInfoVO> getSimpleUser(HttpServletRequest request){
+    public ResponseEntity<UserVO> getSimpleUser(HttpServletRequest request){
         return userService.getSimpleUser(jwtUtil.getIdFromRequest(request));
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<UserVO>> getAllUsers(){
+    public ResponseEntity<List<UserSimpleInfoVO>> getAllUsers(){
         return userService.getAllUsers();
     }
 
@@ -91,5 +90,25 @@ public class UserController {
     @PostMapping("/activate")
     public ResponseEntity<String> activate(@RequestParam String email){
         return userService.activate(email);
+    }
+
+    @PostMapping("/update/photo")
+    public ResponseEntity<String> updateProfilePhoto(@RequestParam String profilePhoto, HttpServletRequest request){
+        return userService.updateProfilePhoto(profilePhoto,jwtUtil.getIdFromRequest(request));
+    }
+
+    @GetMapping("/search/email")
+    public ResponseEntity<UserVO> searchUserByEmail(@RequestParam String email){
+        return userService.searchUserByEmail(email);
+    }
+
+    @GetMapping("/search/identityNum")
+    public ResponseEntity<UserVO> searchUserByIdentityNum(@RequestParam String identityNum){
+        return userService.searchUserByIdentityNum(identityNum);
+    }
+
+    @GetMapping("/search/username")
+    public ResponseEntity<List<UserSimpleInfoVO>> searchUserByUsername(@RequestParam String username){
+        return userService.searchUserByUsername(username);
     }
 }

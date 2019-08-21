@@ -7,6 +7,7 @@ package financial_management.vo;
 public class UsernameVO {
     private String token;
     private String username;
+    private String profilePhoto;
 
     public String getToken() {
         return token;
@@ -24,11 +25,20 @@ public class UsernameVO {
         this.username = username;
     }
 
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
     public UsernameVO() {
     }
 
-    public UsernameVO(String token, String username) {
+    public UsernameVO(String token, String username, String profilePhoto) {
         this.token = token;
         this.username = username;
+        this.profilePhoto = profilePhoto;
     }
 }

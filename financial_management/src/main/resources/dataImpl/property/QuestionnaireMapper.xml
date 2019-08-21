@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.property.QuestionnaireMapper">
+
+    <select id="hasQuest" resultType="boolean">
+        select count(user_id) from questionnaire where user_id = #{userId}
+    </select>
+
+    <insert id="insertQuest" parameterType="financial_management.parameter.property.QuestionnaireParam"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into questionnaire(user_id, funds, saving, insurance, stocks, gold, bond, answer)
+        values(#{userId}, #{funds}, #{saving},  #{insurance}, #{stocks}, #{gold}, #{bond}, #{answer})
+    </insert>
+
+</mapper>

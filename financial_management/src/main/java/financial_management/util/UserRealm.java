@@ -1,5 +1,6 @@
 package financial_management.util;
 
+
 import financial_management.data.user.UserMapper;
 import financial_management.entity.UserPO;
 import financial_management.service.user.UserServiceImpl;
@@ -10,6 +11,15 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+
+import financial_management.entity.UserPO;
+import financial_management.service.user.UserServiceImpl;
+import org.apache.catalina.security.SecurityUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -28,6 +38,7 @@ public class UserRealm extends AuthorizingRealm {
 
     @Autowired
     UserMapper userMapper;
+
 
     /**
      * @Author jyh
@@ -81,6 +92,7 @@ public class UserRealm extends AuthorizingRealm {
         //这里使用原来的mapper与实体User，以后可能会需要更改
         //如果user找不到，应该抛出一个异常
         UserPO user = userMapper.selectSimpleUser(id);
+
         //认证失败应该抛出一个异常，因项目还未完善，暂不处理
         if (!jwtUtil.validateToken(token, user))
             throw new AuthenticationException("Username or password error");

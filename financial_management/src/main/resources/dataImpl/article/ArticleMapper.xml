@@ -31,7 +31,7 @@
     <select id="selectAllArticlesByPageviews" resultMap="ArticlePO">
         select * from article
         where category = #{category}
-        order by pageviews desc
+        order by pageviews desc, time desc
     </select>
 
     <select id="ifExist" resultType="boolean">

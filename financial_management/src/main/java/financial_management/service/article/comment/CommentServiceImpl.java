@@ -4,7 +4,7 @@ import financial_management.bl.article.CommentService;
 import financial_management.data.article.CommentMapper;
 import financial_management.entity.CommentPO;
 import financial_management.entity.LightPO;
-import financial_management.parameter.CommentParam;
+import financial_management.parameter.article.CommentParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

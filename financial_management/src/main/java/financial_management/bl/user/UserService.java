@@ -1,6 +1,10 @@
 package financial_management.bl.user;
 
-import financial_management.parameter.*;
+import financial_management.parameter.user.UserEmailParam;
+import financial_management.parameter.user.UserLoginParam;
+import financial_management.parameter.user.UserParam;
+import financial_management.parameter.user.UserPasswordParam;
+import financial_management.vo.BasicResponse;
 import financial_management.vo.article.ArticleSimpleInfoVO;
 import financial_management.vo.user.UserSimpleInfoVO;
 import financial_management.vo.user.UserVO;
@@ -18,7 +22,7 @@ public interface UserService {
      * 用户注册
      * @return
      */
-    ResponseEntity<String> register(UserParam userParam);
+    BasicResponse register(UserParam userParam);
 
     /**
      * 用户通过邮箱登录
@@ -134,4 +138,10 @@ public interface UserService {
      * @return
      */
     ResponseEntity<List<UserSimpleInfoVO>> searchUserByUsername(String username);
+
+    /**
+     * 获得所有用户的的数量
+     * @return
+     */
+    ResponseEntity<Long> getUserAmount();
 }

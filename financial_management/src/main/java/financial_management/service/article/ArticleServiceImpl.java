@@ -4,7 +4,7 @@ import financial_management.bl.article.ArticleService;
 import financial_management.data.article.ArticleMapper;
 import financial_management.entity.ArticlePO;
 import financial_management.entity.CommentPO;
-import financial_management.parameter.ArticleParam;
+import financial_management.parameter.article.ArticleParam;
 import financial_management.service.article.collection.CollectionServiceForBl;
 import financial_management.service.article.comment.CommentServiceForBl;
 import financial_management.service.user.UserServiceForBl;
@@ -67,7 +67,11 @@ public class ArticleServiceImpl implements ArticleService, ArticleServiceForBl {
             ArticlePO articlePO = articleMapper.selectArticle(articleId);
             ArticleVO articleVO = new ArticleVO();
             articleVO.setTitle(articlePO.getTitle());
-            articleVO.setContent(articlePO.getContent());
+            articleVO.setMdContent(articlePO.getMdContent());
+            articleVO.setHtmlContent(articlePO.getHtmlContent());
+            articleVO.setPageviews(articlePO.getPageviews());
+            articleVO.setTime(articlePO.getTime());
+            articleVO.setTags(articlePO.getTags());
 
             boolean collected = collectionServiceForBl.ifCollected(userId,articleId);
             articleVO.setCollected(collected);
@@ -99,8 +103,13 @@ public class ArticleServiceImpl implements ArticleService, ArticleServiceForBl {
     }
 
     @Override
-    public ResponseEntity<List<ArticleSimpleInfoVO>> getAllArticles(Integer category, Long userId){
-        List<ArticlePO> articlePOS = articleMapper.selectAllArticles(category);
+    public ResponseEntity<List<ArticleSimpleInfoVO>> getAllArticles(Integer category,Integer type,Long userId){
+        List<ArticlePO> articlePOS = new ArrayList<>();
+        if(type == 1){
+            articlePOS = articleMapper.selectAllArticlesByTime(category);
+        }else if(type == 2){
+            articlePOS = articleMapper.selectAllArticlesByPageviews(category);
+        }
         List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
         for(int i=0;i<articlePOS.size();i++){
             ArticlePO articlePO = articlePOS.get(i);
@@ -108,11 +117,24 @@ public class ArticleServiceImpl implements ArticleService, ArticleServiceForBl {
             articleSimpleInfoVO.setArticleId(articlePO.getArticleId());
             articleSimpleInfoVO.setSummary(articlePO.getSummary());
             articleSimpleInfoVO.setTitle(articlePO.getTitle());
+            articleSimpleInfoVO.setPageviews(articlePO.getPageviews());
+            articleSimpleInfoVO.setTime(articlePO.getTime());
+            articleSimpleInfoVO.setTags(articlePO.getTags());
 
             articleSimpleInfoVO.setCollected(collectionServiceForBl.ifCollected(userId, articlePO.getArticleId()));
             articleSimpleInfoVOS.add(articleSimpleInfoVO);
         }
         return ResponseEntity.ok().body(articleSimpleInfoVOS);
+    }
+
+    @Override
+    public ResponseEntity<String> addPageviews(Long articleId){
+        if(articleMapper.ifExist(articleId)){
+            articleMapper.addPageviews(articleId);
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override

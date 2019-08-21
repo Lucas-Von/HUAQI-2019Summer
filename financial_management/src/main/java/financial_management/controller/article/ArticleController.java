@@ -1,7 +1,7 @@
 package financial_management.controller.article;
 
 import financial_management.bl.article.ArticleService;
-import financial_management.parameter.ArticleParam;
+import financial_management.parameter.article.ArticleParam;
 import financial_management.util.JwtUtil;
 import financial_management.vo.article.ArticleSimpleInfoVO;
 import financial_management.vo.article.ArticleVO;
@@ -46,7 +46,12 @@ public class ArticleController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<ArticleSimpleInfoVO>> getAllArticles(@RequestParam Integer category, HttpServletRequest request){
-        return articleService.getAllArticles(category, jwtUtil.getIdFromRequest(request));
+    public ResponseEntity<List<ArticleSimpleInfoVO>> getAllArticles(@RequestParam Integer category, @RequestParam Integer type, HttpServletRequest request){
+        return articleService.getAllArticles(category,type,jwtUtil.getIdFromRequest(request));
+    }
+
+    @PostMapping("/pageviews/add")
+    public ResponseEntity<String> addPageviews(@RequestParam Long articleId){
+        return articleService.addPageviews(articleId);
     }
 }

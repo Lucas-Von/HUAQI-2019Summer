@@ -125,6 +125,12 @@ public interface UserMapper {
     List<UserPO> selectUserByUsername(@Param("username") String username);
 
     /**
+     * 获得所有用户的的数量
+     * @return
+     */
+    Long getUserAmount();
+
+    /**
      * 定时判断是否有超过10分钟未激活的账号，有则注销
      */
     @Scheduled(cron = "0/1 * * * * ?")

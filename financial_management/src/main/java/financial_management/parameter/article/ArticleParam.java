@@ -1,4 +1,4 @@
-package financial_management.parameter;
+package financial_management.parameter.article;
 
 import financial_management.entity.ArticlePO;
 
@@ -12,7 +12,8 @@ public class ArticleParam {
     private Long articleId;
     private String title;
     private String summary;
-    private String content;
+    private String mdContent;
+    private String htmlContent;
     private Integer category;
     private List<String> tags;
 
@@ -40,12 +41,20 @@ public class ArticleParam {
         this.summary = summary;
     }
 
-    public String getContent() {
-        return content;
+    public String getMdContent() {
+        return mdContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMdContent(String mdContent) {
+        this.mdContent = mdContent;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 
     public Integer getCategory() {
@@ -74,7 +83,8 @@ public class ArticleParam {
         }
         return new ArticlePO(title,
                 summary,
-                content,
+                mdContent,
+                htmlContent,
                 category,
                 allTags.toString());
     }
@@ -85,13 +95,15 @@ public class ArticleParam {
     public ArticleParam(Long articleId,
                         String title,
                         String summary,
-                        String content,
+                        String mdContent,
+                        String htmlContent,
                         Integer category,
                         List<String> tags) {
         this.articleId = articleId;
         this.title = title;
         this.summary = summary;
-        this.content = content;
+        this.mdContent = mdContent;
+        this.htmlContent = htmlContent;
         this.category = category;
         this.tags = tags;
     }

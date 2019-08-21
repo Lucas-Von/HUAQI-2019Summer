@@ -1,8 +1,12 @@
 package financial_management.controller.user;
 
 import financial_management.bl.user.UserService;
-import financial_management.parameter.*;
+import financial_management.parameter.user.UserEmailParam;
+import financial_management.parameter.user.UserLoginParam;
+import financial_management.parameter.user.UserParam;
+import financial_management.parameter.user.UserPasswordParam;
 import financial_management.util.JwtUtil;
+import financial_management.vo.BasicResponse;
 import financial_management.vo.article.ArticleSimpleInfoVO;
 import financial_management.vo.user.UserSimpleInfoVO;
 import financial_management.vo.user.UserVO;
@@ -28,7 +32,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserParam userParam){
+    public BasicResponse register(@RequestBody UserParam userParam){
         return userService.register(userParam);
     }
 
@@ -110,5 +114,10 @@ public class UserController {
     @GetMapping("/search/username")
     public ResponseEntity<List<UserSimpleInfoVO>> searchUserByUsername(@RequestParam String username){
         return userService.searchUserByUsername(username);
+    }
+
+    @GetMapping("/amount")
+    public ResponseEntity<Long> getUserAmount(){
+        return userService.getUserAmount();
     }
 }

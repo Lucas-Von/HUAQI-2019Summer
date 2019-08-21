@@ -1,7 +1,7 @@
 package financial_management.controller.article;
 
 import financial_management.bl.article.CommentService;
-import financial_management.parameter.CommentParam;
+import financial_management.parameter.article.CommentParam;
 import financial_management.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

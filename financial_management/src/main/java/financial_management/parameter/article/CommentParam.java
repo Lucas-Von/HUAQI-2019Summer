@@ -1,4 +1,4 @@
-package financial_management.parameter;
+package financial_management.parameter.article;
 
 /**
  * @author xyh

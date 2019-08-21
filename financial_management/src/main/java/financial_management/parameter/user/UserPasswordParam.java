@@ -1,10 +1,10 @@
-package financial_management.parameter;
+package financial_management.parameter.user;
 
 /**
  * @author xyh
  * @date 2019/8/16
  */
-public class UserLoginParam {
+public class UserPasswordParam {
     private String email;
     private String password;
 
@@ -24,10 +24,10 @@ public class UserLoginParam {
         this.password = password;
     }
 
-    public UserLoginParam() {
+    public UserPasswordParam() {
     }
 
-    public UserLoginParam(String email, String password) {
+    public UserPasswordParam(String email, String password) {
         this.email = email;
         this.password = password;
     }

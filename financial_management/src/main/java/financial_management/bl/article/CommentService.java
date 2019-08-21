@@ -1,6 +1,6 @@
 package financial_management.bl.article;
 
-import financial_management.parameter.CommentParam;
+import financial_management.parameter.article.CommentParam;
 import org.springframework.http.ResponseEntity;
 
 /**

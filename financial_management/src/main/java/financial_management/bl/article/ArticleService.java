@@ -1,6 +1,6 @@
 package financial_management.bl.article;
 
-import financial_management.parameter.ArticleParam;
+import financial_management.parameter.article.ArticleParam;
 import financial_management.vo.article.ArticleSimpleInfoVO;
 import financial_management.vo.article.ArticleVO;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +44,12 @@ public interface ArticleService {
      * 获取所有文章基本信息
      * @return
      */
-    ResponseEntity<List<ArticleSimpleInfoVO>> getAllArticles(Integer category, Long userId);
+    ResponseEntity<List<ArticleSimpleInfoVO>> getAllArticles(Integer category, Integer type, Long userId);
+
+    /**
+     * 给一篇文章的浏览量+1
+     * @param articleId
+     * @return
+     */
+    ResponseEntity<String> addPageviews(Long articleId);
 }

@@ -3,12 +3,12 @@
 <mapper namespace="financial_management.data.article.ArticleMapper">
 
     <insert id="insertArticle" useGeneratedKeys="true" keyProperty="articleId">
-        insert into article(title,summary,content,category,tags)
-        values(#{title},#{summary},#{content},#{category},#{tags})
+        insert into article(title,summary,md_content,html_content,category,tags)
+        values(#{title},#{summary},#{mdContent},#{htmlContent},#{category},#{tags})
     </insert>
 
     <update id="updateArticle">
-        update article set title = #{title}, summary = #{summary}, content = #{content}, category = #{category}, tags = #{tags}
+        update article set title = #{title}, summary = #{summary}, md_content = #{mdContent},html_content = #{htmlContent}, category = #{category}, tags = #{tags}
         where article_id = #{articleId}
     </update>
 
@@ -22,9 +22,16 @@
         where article_id = #{articleId}
     </select>
 
-    <select id="selectAllArticles" resultMap="ArticlePO">
+    <select id="selectAllArticlesByTime" resultMap="ArticlePO">
         select * from article
         where category = #{category}
+        order by time desc
+    </select>
+
+    <select id="selectAllArticlesByPageviews" resultMap="ArticlePO">
+        select * from article
+        where category = #{category}
+        order by pageviews desc
     </select>
 
     <select id="ifExist" resultType="boolean">
@@ -32,13 +39,21 @@
         from article where article_id = #{articleId}
     </select>
 
+    <update id="addPageviews">
+        update article set pageviews = pageviews + 1
+        where article_id = #{articleId}
+    </update>
+
     <resultMap id="ArticlePO" type="financial_management.entity.ArticlePO">
         <result column="article_id" property="articleId"></result>
         <result column="title" property="title"></result>
         <result column="summary" property="summary"></result>
-        <result column="content" property="content"></result>
+        <result column="md_content" property="mdContent"></result>
+        <result column="html_content" property="htmlContent"></result>
         <result column="category" property="category"></result>
         <result column="tags" property="tags"></result>
+        <result column="pageviews" property="pageviews"></result>
+        <result column="time" property="time"></result>
     </resultMap>
 
 </mapper>

@@ -1,4 +1,4 @@
-package financial_management.parameter;
+package financial_management.parameter.user;
 
 import financial_management.entity.UserPO;
 
@@ -13,7 +13,7 @@ public class UserParam {
     private String email;
     private String phoneNum;
     private String password;
-    private String profilePhoto;
+    private String profilePhoto = "https://i.loli.net/2019/08/14/mUZcISHpWrx1aPM.jpg";
 
     public String getUsername() {
         return username;

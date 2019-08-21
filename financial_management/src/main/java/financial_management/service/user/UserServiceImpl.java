@@ -5,11 +5,15 @@ import financial_management.bl.user.UserService;
 import financial_management.data.user.UserMapper;
 import financial_management.entity.ArticlePO;
 import financial_management.entity.UserPO;
-import financial_management.parameter.*;
+import financial_management.parameter.user.UserEmailParam;
+import financial_management.parameter.user.UserLoginParam;
+import financial_management.parameter.user.UserParam;
+import financial_management.parameter.user.UserPasswordParam;
 import financial_management.service.article.ArticleServiceForBl;
 import financial_management.service.article.collection.CollectionServiceForBl;
 import financial_management.util.JwtUtil;
 import financial_management.util.SendEmail;
+import financial_management.vo.BasicResponse;
 import financial_management.vo.article.ArticleSimpleInfoVO;
 import financial_management.vo.user.UserSimpleInfoVO;
 import financial_management.vo.user.UserVO;
@@ -40,21 +44,21 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     private ArticleServiceForBl articleServiceForBl;
 
     @Override
-    public ResponseEntity<String> register(UserParam userParam){
-        String error = "";
+    public BasicResponse register(UserParam userParam){
+        int wrongStatus = 0;
         String email = userParam.getEmail();
         String identityNum = userParam.getIdentityNum();
         if(userMapper.ifExistEmail(email)){
-            error = "该邮箱已被注册！";
+            wrongStatus = 1;
         }
         if(userMapper.ifExistIdentityNum(identityNum)){
-            if(error.equals("")){
-                error = "该身份证号已被绑定！";
+            if(wrongStatus == 0){
+                wrongStatus = 2;
             }else {
-                error = error + "；该身份证号已被绑定！";
+                wrongStatus = 3;
             }
         }
-        if(error.equals("")){
+        if(wrongStatus == 0){
             UserPO userPO = userParam.getUserPo();
             userPO.setPassword(getCryptPassword(userPO.getPassword()));
             userMapper.insert(userPO);
@@ -69,9 +73,15 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
 
             SendEmail.send(email,"账号激活邮件", sb.toString());
 
-            return ResponseEntity.ok().body("注册成功！");
+            return null;
         }else {
-            return ResponseEntity.status(403).body(error);
+            if(wrongStatus == 1){
+                return null;
+            }else if(wrongStatus == 2){
+                return null;
+            }else {
+                return null;
+            }
         }
     }
 
@@ -278,6 +288,11 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     }
 
     @Override
+    public ResponseEntity<Long> getUserAmount(){
+        return ResponseEntity.ok().body(userMapper.getUserAmount());
+    }
+
+    @Override
     public String getUsername(Long userId){
         if(userMapper.ifExist(userId)) {
             UserPO userPO = userMapper.selectSimpleUser(userId);
@@ -287,6 +302,11 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
         }
     }
 
+    /**
+     * 获得加密后的密码
+     * @param password
+     * @return
+     */
     private String getCryptPassword(String password){
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");

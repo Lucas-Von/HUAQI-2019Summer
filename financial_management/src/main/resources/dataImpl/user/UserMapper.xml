@@ -80,6 +80,11 @@
         where username like '%${username}%'
     </select>
 
+    <select id="getUserAmount" resultType="long">
+        select count(user_id)
+        from user where status = 1
+    </select>
+
     <resultMap id="UserPO" type="financial_management.entity.UserPO">
         <result column="user_id" property="userId"></result>
         <result column="username" property="username"></result>

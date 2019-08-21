@@ -1,5 +1,6 @@
 package financial_management.vo.article;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -9,7 +10,11 @@ import java.util.List;
 public class ArticleVO {
     private String title;
     private boolean collected;
-    private String content;
+    private String mdContent;
+    private String htmlContent;
+    private Long pageviews;
+    private Timestamp time;
+    private String tags;
     private List<CommentVO> comments;
 
     public String getTitle() {
@@ -28,12 +33,20 @@ public class ArticleVO {
         this.collected = collected;
     }
 
-    public String getContent() {
-        return content;
+    public String getMdContent() {
+        return mdContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMdContent(String mdContent) {
+        this.mdContent = mdContent;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 
     public List<CommentVO> getComments() {
@@ -44,13 +57,48 @@ public class ArticleVO {
         this.comments = comments;
     }
 
+    public Long getPageviews() {
+        return pageviews;
+    }
+
+    public void setPageviews(Long pageviews) {
+        this.pageviews = pageviews;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     public ArticleVO() {
     }
 
-    public ArticleVO(String title, boolean collected, String content, List<CommentVO> comments) {
+    public ArticleVO(String title,
+                     boolean collected,
+                     String mdContent,
+                     String htmlContent,
+                     Long pageviews,
+                     Timestamp time,
+                     String tags,
+                     List<CommentVO> comments) {
         this.title = title;
         this.collected = collected;
-        this.content = content;
+        this.mdContent = mdContent;
+        this.htmlContent = htmlContent;
+        this.pageviews = pageviews;
+        this.time = time;
+        this.tags = tags;
         this.comments = comments;
     }
 }

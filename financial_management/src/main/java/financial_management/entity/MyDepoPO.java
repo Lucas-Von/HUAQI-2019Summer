@@ -39,6 +39,13 @@ public class MyDepoPO {
      **/
     String name;
 
+    /**
+     * @Author jyh
+     * @Description //利率
+     * @Date 18:53 2019/8/21
+     **/
+    Double rate;
+
     public Long getUserId() {
         return userId;
     }
@@ -86,4 +93,14 @@ public class MyDepoPO {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
+    }
+
+
 }

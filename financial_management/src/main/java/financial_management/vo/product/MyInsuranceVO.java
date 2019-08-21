@@ -1,5 +1,7 @@
 package financial_management.vo.product;
 
+import financial_management.entity.MyInsPO;
+
 import java.util.Date;
 
 /**
@@ -72,6 +74,15 @@ public class MyInsuranceVO {
         this.amount = amount;
         this.insured = insured;
         this.endtime = endtime;
+    }
+
+    public MyInsuranceVO (MyInsPO po){
+        this.amount = po.getPrice().doubleValue();
+        this.endtime = po.getMaturity();
+        this.insured = po.getCompensation().doubleValue();
+        this.insurant = po.getBeneficiary();
+        this.name = po.getName();
+        this.type = po.getType();
     }
 
     public MyInsuranceVO() {

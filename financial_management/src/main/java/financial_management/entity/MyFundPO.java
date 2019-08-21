@@ -32,6 +32,18 @@ public class MyFundPO {
      * @Description //收益率，不入库，有FundPO所在库动态加载
      **/
     Float rate;
+    /**
+     * @Description //用户支付密码
+     **/
+    String payPassword;
+
+    public String getPayPassword() {
+        return payPassword;
+    }
+
+    public void setPayPassword(String payPassword) {
+        this.payPassword = payPassword;
+    }
 
     public Long getUserId() {
         return userId;

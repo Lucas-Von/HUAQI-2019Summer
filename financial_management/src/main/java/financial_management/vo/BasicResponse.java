@@ -18,10 +18,6 @@ public class BasicResponse<T> {
         return data;
     }
 
-    public void setData(T data) {
-        this.data = data;
-    }
-
     public BasicResponse(ResponseStatus status, T data){
         this.status = status;
         this.data = data;

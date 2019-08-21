@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author xyh
  * @date 2019/8/18
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/article/collection")
 public class CollectionController {

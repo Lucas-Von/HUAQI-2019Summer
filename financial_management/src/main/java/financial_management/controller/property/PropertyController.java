@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
  * @author lt
  * @date 2019/08/20 16:43
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/property")
 public class PropertyController {

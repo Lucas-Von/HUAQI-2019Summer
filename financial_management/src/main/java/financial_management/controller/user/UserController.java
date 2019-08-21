@@ -22,6 +22,7 @@ import java.util.List;
  * @author xyh
  * @date 2019/8/16
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * @author lt
  * @date 2019/08/18 18:33
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/property")
 public class QuestionnaireController {

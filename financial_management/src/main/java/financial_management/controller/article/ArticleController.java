@@ -16,6 +16,7 @@ import java.util.List;
  * @author xyh
  * @date 2019/8/18
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/article")
 public class ArticleController {

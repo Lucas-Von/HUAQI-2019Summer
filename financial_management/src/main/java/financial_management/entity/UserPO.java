@@ -1,7 +1,7 @@
 package financial_management.entity;
 
-import financial_management.vo.UserSimpleInfoVO;
-import financial_management.vo.UserVO;
+import financial_management.vo.user.UserSimpleInfoVO;
+import financial_management.vo.user.UserVO;
 
 import java.sql.Timestamp;
 

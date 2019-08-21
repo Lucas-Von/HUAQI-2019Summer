@@ -1,10 +1,10 @@
 package financial_management.bl.user;
 
 import financial_management.parameter.*;
-import financial_management.vo.ArticleSimpleInfoVO;
-import financial_management.vo.UserSimpleInfoVO;
-import financial_management.vo.UserVO;
-import financial_management.vo.UsernameVO;
+import financial_management.vo.article.ArticleSimpleInfoVO;
+import financial_management.vo.user.UserSimpleInfoVO;
+import financial_management.vo.user.UserVO;
+import financial_management.vo.user.UsernameVO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package financial_management.vo;
+package financial_management.vo.article;
 
 import java.util.List;
 

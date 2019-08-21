@@ -1,8 +1,8 @@
 package financial_management.bl.article;
 
 import financial_management.parameter.ArticleParam;
-import financial_management.vo.ArticleSimpleInfoVO;
-import financial_management.vo.ArticleVO;
+import financial_management.vo.article.ArticleSimpleInfoVO;
+import financial_management.vo.article.ArticleVO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

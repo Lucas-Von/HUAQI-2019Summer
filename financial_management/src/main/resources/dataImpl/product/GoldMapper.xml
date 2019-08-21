@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.product.GoldMapper">
+    <select id="selectAllGold" resultMap="GoldProduct">
+        select * from gold
+    </select>
+
+    <select id="selectSelfGold" resultMap="MyGoldProduct">
+        select
+          mg.user_id,
+          mg.code,
+          mg.amount,
+          mg.profit,
+          mg.profit_rate,
+          mg.purchase_price,
+          mg.quantity
+        from my_gold mg
+        where mg.user_id=#{userId}
+    </select>
+
+    <insert id="insertMyGold" parameterType="financial_management.entity.MyGoldPO">
+        insert into my_gold (user_id, code, purchase_price, profit, profit_rate, quantity, amount) values (#{userId},#{code},#{purchasePrice},#{profit},#{profitRate},#{quantity},#{amount})
+    </insert>
+
+    <select id="selectGoldByCode" resultMap="GoldProduct">
+        select * from gold where code = #{code}
+    </select>
+
+    <resultMap id="MyGoldProduct" type="financial_management.entity.MyGoldPO">
+        <result property="code" column="code"/>
+        <result property="userId" column="user_id"/>
+        <result property="purchasePrice" column="purchase_price"/>
+        <result property="profit" column="profit"/>
+        <result property="profitRate" column="profit_rate"/>
+        <result property="quantity" column="qiantity"/>
+        <result property="amount" column="amount"/>
+    </resultMap>
+
+    <resultMap id="GoldProduct" type="financial_management.entity.GoldPO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="latestPrice" column="latest_price"/>
+    </resultMap>
+
+
+
+</mapper>

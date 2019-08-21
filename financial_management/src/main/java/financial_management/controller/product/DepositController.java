@@ -51,7 +51,7 @@ public class DepositController {
     }
 
     @PostMapping(value = "/product/deposit")
-    public ResponseEntity<?> purchaseDepositProduct(@RequestBody DepositPurchaseParam param){
+    public ResponseEntity<?> purchaseDepositProduct(HttpServletRequest request,@RequestBody DepositPurchaseParam param){
         return ResponseEntity.ok().build();
     }
 }

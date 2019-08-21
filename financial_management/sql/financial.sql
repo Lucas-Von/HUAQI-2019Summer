@@ -54,7 +54,7 @@ CREATE TABLE `bond` (
 -- ----------------------------
 DROP TABLE IF EXISTS `card`;
 CREATE TABLE `card` (
-  `user_id` varchar(45) DEFAULT NULL,
+  `user_id` bigint(255) DEFAULT NULL,
   `cardnum` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -226,6 +226,7 @@ CREATE TABLE `ins_product` (
   `type` varchar(45) DEFAULT NULL,
   `price` float DEFAULT NULL,
   `compensation` float DEFAULT NULL,
+  `length` int ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -320,7 +321,8 @@ DROP TABLE IF EXISTS `my_fund`;
 CREATE TABLE `my_fund` (
   `user_id` bigint(255) NOT NULL,
   `balance` float DEFAULT NULL,
-  `update_time` date DEFAULT NULL
+  `update_time` date DEFAULT NULL,
+  `pay_password` varchar(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

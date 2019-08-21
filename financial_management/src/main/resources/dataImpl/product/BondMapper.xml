@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.product.BondMapper">
+    <select id="selectAllBond" resultMap="BondProduct">
+        select * from bond
+    </select>
+
+    <select id="selectBondByCode" resultMap="BondProduct">
+        select * from bond where code = #{code}
+    </select>
+
+    <select id="selectSelfBond" resultMap="MyBondProduct">
+        select
+          mb.user_id,
+          mb.code,
+          mb.amount,
+          mb.profit,
+          mb.profit_rate,
+          mb.purchase_price,
+          mb.quantity
+        from my_bond mb
+        where mb.user_id=#{userId}
+    </select>
+
+    <insert id="insertMyBond" parameterType="financial_management.entity.MyBondPO">
+        insert into my_bond (user_id, code, purchase_price, profit, profit_rate, quantity, amount) values (#{userId},#{code},#{purchasePrice},#{profit},#{profitRate},#{quantity},#{amount})
+    </insert>
+
+    <resultMap id="MyBondProduct" type="financial_management.entity.MyBondPO">
+        <result property="code" column="code"/>
+        <result property="userId" column="user_id"/>
+        <result property="purchasePrice" column="purchase_price"/>
+        <result property="profit" column="profit"/>
+        <result property="profitRate" column="profit_rate"/>
+        <result property="quantity" column="qiantity"/>
+        <result property="amount" column="amount"/>
+    </resultMap>
+
+    <resultMap id="BondProduct" type="financial_management.entity.BondPO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="latestPrice" column="latest_price"/>
+    </resultMap>
+
+
+
+</mapper>

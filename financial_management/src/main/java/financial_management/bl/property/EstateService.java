@@ -1,17 +1,18 @@
 package financial_management.bl.property;
 
-import financial_management.vo.ResponseVO;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author lt
  * @date 2019/08/20 16:47
  */
-public interface PropertyService {
+public interface EstateService {
 
     /**
      * 获取用户资产概况
      * @param userId
      * @return
      */
-    ResponseVO getPropertyByUser(Long userId);
+    ResponseVO getPropertyByUser(@Param("userId") Long userId);
+
 }

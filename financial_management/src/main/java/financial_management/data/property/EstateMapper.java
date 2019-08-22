@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface PropertyMapper {
+public interface EstateMapper {
 
     /**
      * 获取用户资产概况

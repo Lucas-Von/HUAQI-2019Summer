@@ -4,9 +4,10 @@ import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.property.QuestionnaireMapper;
 import financial_management.entity.QuestionnairePO;
 import financial_management.parameter.property.QuestionnaireParam;
-import financial_management.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 /**
  * @author lt
@@ -30,7 +31,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
             return ResponseVO.buildSuccess(hasRecorded);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return ResponseVO.buildFailure("失败");
         }
     }
 
@@ -40,12 +41,16 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
      * @return
      */
     @Override
-    public ResponseVO viewQuestionnaire() {
+    public BasicResponse viewQuestionnaire() {
         try {
-            return ResponseVO.buildSuccess(new QuestionnairePO().getVO());
-        } catch (Exception e) {
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS, new QuestionnairePO().getVO());
+//            return ResponseVO.buildSuccess(new QuestionnairePO().getVO());
+        } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new BasicResponse(ResponseStatus.STATUS_PSW_WRONG, null);
+
+        } catch (Exception e){
+            return new BasicResponse(ResponseStatus.STATUS_USERNAME_WRONG, null);
         }
     }
 

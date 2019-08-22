@@ -1,7 +1,6 @@
 package financial_management.data.property;
 
 import financial_management.parameter.property.QuestionnaireParam;
-import financial_management.vo.property.QuestionnaireVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

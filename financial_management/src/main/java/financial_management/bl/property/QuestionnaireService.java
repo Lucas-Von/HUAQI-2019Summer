@@ -1,7 +1,6 @@
 package financial_management.bl.property;
 
 import financial_management.parameter.property.QuestionnaireParam;
-import financial_management.vo.ResponseVO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -23,7 +22,7 @@ public interface QuestionnaireService {
      * @param
      * @return
      */
-    ResponseVO viewQuestionnaire();
+    BasicResponse viewQuestionnaire();
 
     /**
      * 保存问卷内容

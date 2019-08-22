@@ -4,7 +4,8 @@ import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.property.QuestionnaireMapper;
 import financial_management.entity.QuestionnairePO;
 import financial_management.parameter.property.QuestionnaireParam;
-import financial_management.vo.ResponseVO;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,48 +21,55 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     /**
      * 判断用户是否已填写问卷
+     *
      * @param userId
      * @return
      */
     @Override
-    public ResponseVO hasQuestionnaire(Long userId) {
-        try{
+    public BasicResponse hasQuestionnaire(Long userId) {
+        try {
             boolean hasRecorded = questionnaireMapper.hasQuest(userId);
-            return ResponseVO.buildSuccess(hasRecorded);
+            if (hasRecorded) {
+                return new BasicResponse(ResponseStatus.STATUS_QUESTION_EXIST);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_QUESTION_NOT_EXIST);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     /**
      * 查看空白问卷内容
+     *
      * @param
      * @return
      */
     @Override
-    public ResponseVO viewQuestionnaire() {
+    public BasicResponse viewQuestionnaire() {
         try {
-            return ResponseVO.buildSuccess(new QuestionnairePO().getVO());
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new QuestionnairePO().getVO());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     /**
      * 添加问卷内容
+     *
      * @param questionnaireParam
      * @return
      */
     @Override
-    public ResponseVO addQuestionnaire(QuestionnaireParam questionnaireParam) {
+    public BasicResponse addQuestionnaire(QuestionnaireParam questionnaireParam) {
         try {
             questionnaireMapper.insertQuest(questionnaireParam);
-            return ResponseVO.buildSuccess("成功");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseVO.buildFailure("失败");
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 

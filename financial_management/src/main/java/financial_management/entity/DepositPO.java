@@ -1,64 +1,62 @@
 package financial_management.entity;
 
-import java.util.List;
+import java.util.Date;
 
 /**
- * @Description 用户储蓄实体类
- * @Author 233loser
- * @Date 2019/8/14 10:19
- * @Version 1.0
- **/
+ * @author lt
+ * @date 2019/08/22
+ */
 public class DepositPO {
 
     /**
-     * @Description //用户ID
+     * 储蓄产品名称
      */
-    Long userId;
+    private String name;
 
     /**
-     * @Description //储蓄的总额
-     **/
-    Float amount;
+     * 产品已购金额
+     */
+    private double money;
 
     /**
-     * @Description //所占总额的百分比
-     **/
-    Float percentage;
+     * 年化收益率
+     */
+    private double annualizedRate;
 
     /**
-     * @Description //用户商品部分。不入库，调用时动态加载MyDepoPO
-     **/
-    List<MyDepoPO> depoProducts;
+     * 产品到期时间
+     */
+    private Date expirationDate;
 
-    public Long getUserId() {
-        return userId;
+    public String getName() {
+        return name;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<MyDepoPO> getDepoProducts() {
-        return depoProducts;
+    public double getMoney() {
+        return money;
     }
 
-    public void setDepoProducts(List<MyDepoPO> depoProducts) {
-        this.depoProducts = depoProducts;
+    public void setMoney(double money) {
+        this.money = money;
     }
 
-    public Float getAmount() {
-        return amount;
+    public double getAnnualizedRate() {
+        return annualizedRate;
     }
 
-    public void setAmount(Float amount) {
-        this.amount = amount;
+    public void setAnnualizedRate(double annualizedRate) {
+        this.annualizedRate = annualizedRate;
     }
 
-    public Float getPercentage() {
-        return percentage;
+    public Date getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setPercentage(Float percentage) {
-        this.percentage = percentage;
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
     }
 }

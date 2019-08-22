@@ -1,7 +1,7 @@
 package financial_management.bl.property;
 
 import financial_management.parameter.property.QuestionnaireParam;
-import financial_management.vo.ResponseVO;
+import financial_management.vo.BasicResponse;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -13,23 +13,26 @@ public interface QuestionnaireService {
 
     /**
      * 根据userId判断用户是否已填写问卷，若无则返回空的问卷【值皆为0】
+     *
      * @param userId
      * @return
      */
-    ResponseVO hasQuestionnaire(@Param("userId") Long userId);
+    BasicResponse hasQuestionnaire(@Param("userId") Long userId);
 
     /**
      * 问卷内容获取
+     *
      * @param
      * @return
      */
-    ResponseVO viewQuestionnaire();
+    BasicResponse viewQuestionnaire();
 
     /**
      * 保存问卷内容
+     *
      * @param questionnaireParam
      * @return
      */
-    ResponseVO addQuestionnaire(QuestionnaireParam questionnaireParam);
+    BasicResponse addQuestionnaire(QuestionnaireParam questionnaireParam);
 
 }

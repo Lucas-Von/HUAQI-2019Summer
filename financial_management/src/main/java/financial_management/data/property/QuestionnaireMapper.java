@@ -1,7 +1,6 @@
 package financial_management.data.property;
 
 import financial_management.parameter.property.QuestionnaireParam;
-import financial_management.vo.property.QuestionnaireVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -16,6 +15,7 @@ public interface QuestionnaireMapper {
 
     /**
      * 根据userId判断用户是否已填写问卷，若无则返回空的问卷【值皆为0】
+     *
      * @param userId
      * @return
      */
@@ -23,11 +23,10 @@ public interface QuestionnaireMapper {
 
     /**
      * 插入用户填写的问卷
+     *
      * @param questionnaireParam
      * @return
      */
     int insertQuest(QuestionnaireParam questionnaireParam);
-
-
 
 }

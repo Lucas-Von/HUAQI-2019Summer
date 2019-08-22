@@ -4,53 +4,54 @@ package financial_management.vo.property;
  * @author lt
  * @date 2019/08/18 19:12
  */
-public class InvestVO {
+public class InvestOfAssetsVO {
 
     /**
      * 股票
      */
-    private int stocks;
+    private double stocks;
 
     /**
      * 黄金
      */
-    private int gold;
+    private double gold;
 
     /**
      * 债券
      */
-    private int bond;
+    private double bond;
 
-    public InvestVO(int stocks, int gold, int bond) {
+    public InvestOfAssetsVO(double stocks, double gold, double bond) {
         this.stocks = stocks;
         this.gold = gold;
         this.bond = bond;
     }
 
-    public InvestVO() {
+    public InvestOfAssetsVO() {
+
     }
 
-    public int getStocks() {
+    public double getStocks() {
         return stocks;
     }
 
-    public void setStocks(int stocks) {
+    public void setStocks(double stocks) {
         this.stocks = stocks;
     }
 
-    public int getGold() {
+    public double getGold() {
         return gold;
     }
 
-    public void setGold(int gold) {
+    public void setGold(double gold) {
         this.gold = gold;
     }
 
-    public int getBond() {
+    public double getBond() {
         return bond;
     }
 
-    public void setBond(int bond) {
+    public void setBond(double bond) {
         this.bond = bond;
     }
 }

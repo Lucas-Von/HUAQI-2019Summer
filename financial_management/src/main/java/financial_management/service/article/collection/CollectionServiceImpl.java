@@ -3,6 +3,8 @@ package financial_management.service.article.collection;
 import financial_management.bl.article.CollectionService;
 import financial_management.data.article.CollectionMapper;
 import financial_management.entity.CollectionPO;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,28 +21,28 @@ public class CollectionServiceImpl implements CollectionService, CollectionServi
     private CollectionMapper collectionMapper;
 
     @Override
-    public ResponseEntity<String> addCollection(Long articleId, Long userId){
+    public BasicResponse addCollection(Long articleId, Long userId){
         if(collectionMapper.ifCollected(userId,articleId)){
-            return ResponseEntity.status(403).body("该文章已被收藏！");
+            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_COLLECTED);
         }else {
             CollectionPO collectionPO = new CollectionPO();
             collectionPO.setUserId(userId);
             collectionPO.setArticleId(articleId);
             collectionMapper.insertCollection(collectionPO);
-            return ResponseEntity.ok().body("收藏成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }
     }
 
     @Override
-    public ResponseEntity<String> deleteCollection(Long articleId, Long userId){
+    public BasicResponse deleteCollection(Long articleId, Long userId){
         if(collectionMapper.ifCollected(userId,articleId)){
             CollectionPO collectionPO = new CollectionPO();
             collectionPO.setUserId(userId);
             collectionPO.setArticleId(articleId);
             collectionMapper.deleteCollection(collectionPO);
-            return ResponseEntity.ok().body("取消收藏成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.status(403).body("该文章未被收藏！");
+            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_COLLECTED);
         }
     }
 

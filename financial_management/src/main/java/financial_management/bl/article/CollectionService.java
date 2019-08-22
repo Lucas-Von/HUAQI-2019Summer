@@ -1,5 +1,6 @@
 package financial_management.bl.article;
 
+import financial_management.vo.BasicResponse;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -13,7 +14,7 @@ public interface CollectionService {
      * @param userId
      * @return
      */
-    ResponseEntity<String> addCollection(Long articleId, Long userId);
+    BasicResponse addCollection(Long articleId, Long userId);
 
     /**
      * 取消收藏
@@ -21,5 +22,5 @@ public interface CollectionService {
      * @param userId
      * @return
      */
-    ResponseEntity<String> deleteCollection(Long articleId, Long userId);
+    BasicResponse deleteCollection(Long articleId, Long userId);
 }

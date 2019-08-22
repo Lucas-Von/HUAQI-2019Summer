@@ -8,6 +8,8 @@ import financial_management.parameter.article.ArticleParam;
 import financial_management.service.article.collection.CollectionServiceForBl;
 import financial_management.service.article.comment.CommentServiceForBl;
 import financial_management.service.user.UserServiceForBl;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.article.ArticleSimpleInfoVO;
 import financial_management.vo.article.ArticleVO;
 import financial_management.vo.article.CommentVO;
@@ -34,35 +36,35 @@ public class ArticleServiceImpl implements ArticleService, ArticleServiceForBl {
     private UserServiceForBl userServiceForBl;
 
     @Override
-    public ResponseEntity<String> addArticle(ArticleParam articleParam){
+    public BasicResponse addArticle(ArticleParam articleParam){
         articleMapper.insertArticle(articleParam.getArticlePO());
-        return ResponseEntity.ok().body("插入文章成功！");
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 
     @Override
-    public ResponseEntity<String> updateArticle(ArticleParam articleParam){
+    public BasicResponse updateArticle(ArticleParam articleParam){
         if(articleMapper.ifExist(articleParam.getArticleId())) {
             ArticlePO articlePO = articleParam.getArticlePO();
             articlePO.setArticleId(articleParam.getArticleId());
             articleMapper.updateArticle(articlePO);
-            return ResponseEntity.ok().body("修改文章成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.status(403).body("该文章不存在！");
+            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> deleteArticle(Long articleId){
+    public BasicResponse deleteArticle(Long articleId){
         if(articleMapper.ifExist(articleId)){
             articleMapper.deleteArticle(articleId);
-            return ResponseEntity.ok().body("删除文章成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.status(403).body("该文章不存在！");
+            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<ArticleVO> getSimpleArticle(Long articleId, Long userId){
+    public BasicResponse getSimpleArticle(Long articleId, Long userId){
         if(articleMapper.ifExist(articleId)){
             ArticlePO articlePO = articleMapper.selectArticle(articleId);
             ArticleVO articleVO = new ArticleVO();
@@ -96,14 +98,14 @@ public class ArticleServiceImpl implements ArticleService, ArticleServiceForBl {
             }
 
             articleVO.setComments(commentVOS);
-            return ResponseEntity.ok().body(articleVO);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleVO);
         }else {
-            return ResponseEntity.status(403).build();
+            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<List<ArticleSimpleInfoVO>> getAllArticles(Integer category,Integer type,Long userId){
+    public BasicResponse getAllArticles(Integer category,Integer type,Long userId){
         List<ArticlePO> articlePOS = new ArrayList<>();
         if(type == 1){
             articlePOS = articleMapper.selectAllArticlesByTime(category);
@@ -124,16 +126,16 @@ public class ArticleServiceImpl implements ArticleService, ArticleServiceForBl {
             articleSimpleInfoVO.setCollected(collectionServiceForBl.ifCollected(userId, articlePO.getArticleId()));
             articleSimpleInfoVOS.add(articleSimpleInfoVO);
         }
-        return ResponseEntity.ok().body(articleSimpleInfoVOS);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleInfoVOS);
     }
 
     @Override
-    public ResponseEntity<String> addPageviews(Long articleId){
+    public BasicResponse addPageviews(Long articleId){
         if(articleMapper.ifExist(articleId)){
             articleMapper.addPageviews(articleId);
-            return ResponseEntity.ok().build();
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.notFound().build();
+            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
         }
     }
 

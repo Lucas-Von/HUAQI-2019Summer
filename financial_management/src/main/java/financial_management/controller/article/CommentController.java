@@ -3,6 +3,7 @@ package financial_management.controller.article;
 import financial_management.bl.article.CommentService;
 import financial_management.parameter.article.CommentParam;
 import financial_management.util.JwtUtil;
+import financial_management.vo.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,27 +25,27 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addComment(@RequestBody CommentParam commentParam, HttpServletRequest request) {
+    public BasicResponse addComment(@RequestBody CommentParam commentParam, HttpServletRequest request) {
         return commentService.addComment(commentParam, jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping("/light")
-    public ResponseEntity<String> lightComment(@RequestParam Long commentId, HttpServletRequest request){
+    public BasicResponse lightComment(@RequestParam Long commentId, HttpServletRequest request){
         return commentService.lightComment(commentId, jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping("/unlight")
-    public ResponseEntity<String> unlightComment(@RequestParam Long commentId, HttpServletRequest request){
+    public BasicResponse unlightComment(@RequestParam Long commentId, HttpServletRequest request){
         return commentService.unlightComment(commentId, jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping("/report")
-    public ResponseEntity<String> reportComment(@RequestParam Long commentId){
+    public BasicResponse reportComment(@RequestParam Long commentId){
         return commentService.reportComment(commentId);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteComment(@RequestParam Long commentId){
+    public BasicResponse deleteComment(@RequestParam Long commentId){
         return commentService.deleteComment(commentId);
     }
 }

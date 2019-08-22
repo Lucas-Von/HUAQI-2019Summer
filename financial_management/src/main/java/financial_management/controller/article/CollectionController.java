@@ -2,6 +2,7 @@ package financial_management.controller.article;
 
 import financial_management.bl.article.CollectionService;
 import financial_management.util.JwtUtil;
+import financial_management.vo.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +24,12 @@ public class CollectionController {
     private CollectionService collectionService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCollection(@RequestParam Long articleId, HttpServletRequest request){
+    public BasicResponse addCollection(@RequestParam Long articleId, HttpServletRequest request){
         return collectionService.addCollection(articleId, jwtUtil.getIdFromRequest(request));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCollection(@RequestParam Long articleId, HttpServletRequest request){
+    public BasicResponse deleteCollection(@RequestParam Long articleId, HttpServletRequest request){
         return collectionService.deleteCollection(articleId, jwtUtil.getIdFromRequest(request));
     }
 }

@@ -29,7 +29,7 @@ public interface UserService {
      * @param userLoginParam
      * @return
      */
-    ResponseEntity<UsernameVO> loginByEmail(UserLoginParam userLoginParam);
+    BasicResponse loginByEmail(UserLoginParam userLoginParam);
 
     /**
      * 修改用户昵称
@@ -37,14 +37,14 @@ public interface UserService {
      * @param userId
      * @return
      */
-    ResponseEntity<String> updateUsername(String username, Long userId);
+    BasicResponse updateUsername(String username, Long userId);
 
     /**
      * 修改用户邮箱（需要验证是否重复）
      * @param userEmailParam
      * @return
      */
-    ResponseEntity<String> updateEmail(UserEmailParam userEmailParam);
+    BasicResponse updateEmail(UserEmailParam userEmailParam);
 
     /**
      * 修改用户手机号
@@ -52,7 +52,7 @@ public interface UserService {
      * @param userId
      * @return
      */
-    ResponseEntity<String> updatePhoneNum(String phoneNum, Long userId);
+    BasicResponse updatePhoneNum(String phoneNum, Long userId);
 
     /**
      * 通过userId修改用户的密码
@@ -60,55 +60,55 @@ public interface UserService {
      * @param password
      * @return
      */
-    ResponseEntity<String> updatePasswordByUserId(String password, Long userId);
+    BasicResponse updatePasswordByUserId(String password, Long userId);
 
     /**
      * 通过邮箱修改用户的密码
      * @param userPasswordParam
      * @return
      */
-    ResponseEntity<String> updatePasswordByEmail(UserPasswordParam userPasswordParam);
+    BasicResponse updatePasswordByEmail(UserPasswordParam userPasswordParam);
 
     /**
      * 用户申请修改邮箱
      * @param email
      * @return
      */
-    ResponseEntity<String> applyForUpdateEmail(String email);
+    BasicResponse applyForUpdateEmail(String email);
 
     /**
      * 用户申请找回密码
      * @param email
      * @return
      */
-    ResponseEntity<String> applyForUpdatePassword(String email);
+    BasicResponse applyForUpdatePassword(String email);
 
     /**
      * 获取一个用户的基本信息
      * @param userId
      * @return
      */
-    ResponseEntity<UserVO> getSimpleUser(Long userId);
+    BasicResponse getSimpleUser(Long userId);
 
     /**
      * 获取所有用户的基本信息（弃用）
      * @return
      */
-    ResponseEntity<List<UserSimpleInfoVO>> getAllUsers();
+    BasicResponse getAllUsers();
 
     /**
      * 获取用户所有收藏的⽂章
      * @param userId
      * @return
      */
-    ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(Long userId);
+    BasicResponse getCollections(Long userId);
 
     /**
      * 激活账号
      * @param email
      * @return
      */
-    ResponseEntity<String> activate(String email);
+    BasicResponse activate(String email);
 
     /**
      * 修改用户头像
@@ -116,32 +116,32 @@ public interface UserService {
      * @param userId
      * @return
      */
-    ResponseEntity<String> updateProfilePhoto(String profilePhoto, Long userId);
+    BasicResponse updateProfilePhoto(String profilePhoto, Long userId);
 
     /**
      * 按照邮箱搜索指定用户
      * @param email
      * @return
      */
-    ResponseEntity<UserVO> searchUserByEmail(String email);
+    BasicResponse searchUserByEmail(String email);
 
     /**
      * 按照身份证号搜索指定用户
      * @param identityNum
      * @return
      */
-    ResponseEntity<UserVO> searchUserByIdentityNum(String identityNum);
+    BasicResponse searchUserByIdentityNum(String identityNum);
 
     /**
      * 按照昵称模糊搜索符合条件的用户
      * @param username
      * @return
      */
-    ResponseEntity<List<UserSimpleInfoVO>> searchUserByUsername(String username);
+    BasicResponse searchUserByUsername(String username);
 
     /**
      * 获得所有用户的的数量
      * @return
      */
-    ResponseEntity<Long> getUserAmount();
+    BasicResponse getUserAmount();
 }

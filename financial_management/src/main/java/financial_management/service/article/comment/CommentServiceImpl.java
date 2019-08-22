@@ -5,6 +5,8 @@ import financial_management.data.article.CommentMapper;
 import financial_management.entity.CommentPO;
 import financial_management.entity.LightPO;
 import financial_management.parameter.article.CommentParam;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,64 +23,64 @@ public class CommentServiceImpl implements CommentService, CommentServiceForBl {
     private CommentMapper commentMapper;
 
     @Override
-    public ResponseEntity<String> addComment(CommentParam commentParam, Long userId){
+    public BasicResponse addComment(CommentParam commentParam, Long userId){
         CommentPO commentPO = new CommentPO();
         commentPO.setArticleId(commentParam.getArticleId());
         commentPO.setContent(commentParam.getContent());
         commentPO.setUserId(userId);
         commentMapper.insertComment(commentPO);
-        return ResponseEntity.ok().body("添加评论成功！");
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 
     @Override
-    public ResponseEntity<String> lightComment(Long commentId, Long userId){
+    public BasicResponse lightComment(Long commentId, Long userId){
         if(commentMapper.ifExist(commentId)){
             if(commentMapper.ifLighted(userId,commentId)){
-                return ResponseEntity.status(403).body("该评论已经被点赞！");
+                return new BasicResponse(ResponseStatus.STATUS_COMMENT_LIGHTED);
             }else {
                 LightPO lightPO = new LightPO(commentId, userId);
                 commentMapper.lightComment(lightPO);
-                return ResponseEntity.ok().body("点赞成功！");
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
             }
         }else {
-            return ResponseEntity.notFound().build();
+            return new BasicResponse(ResponseStatus.STATUS_COMMENT_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> unlightComment(Long commentId, Long userId){
+    public BasicResponse unlightComment(Long commentId, Long userId){
         if(commentMapper.ifExist(commentId)){
             if(commentMapper.ifLighted(userId,commentId)){
                 LightPO lightPO = new LightPO(commentId, userId);
                 commentMapper.unlightComment(lightPO);
-                return ResponseEntity.ok().body("取消点赞成功！");
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
             }else {
-                return ResponseEntity.status(403).body("该评论未被点赞！");
+                return new BasicResponse(ResponseStatus.STATUS_COMMENT_NOT_LIGHTED);
             }
         }else {
-            return ResponseEntity.notFound().build();
+            return new BasicResponse(ResponseStatus.STATUS_COMMENT_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> reportComment(Long commentId){
+    public BasicResponse reportComment(Long commentId){
         if(commentMapper.ifExist(commentId)){
             // TODO
             // 调用发送信息给管理员发送举报评论的信息
 
-            return ResponseEntity.ok().body("举报评论成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.notFound().build();
+            return new BasicResponse(ResponseStatus.STATUS_COMMENT_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> deleteComment(Long commentId){
+    public BasicResponse deleteComment(Long commentId){
         if(commentMapper.ifExist(commentId)){
             commentMapper.deleteComment(commentId);
-            return ResponseEntity.ok().body("删除评论成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.notFound().build();
+            return new BasicResponse(ResponseStatus.STATUS_COMMENT_NOT_EXIST);
         }
     }
 

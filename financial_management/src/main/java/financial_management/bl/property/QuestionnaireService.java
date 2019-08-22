@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface QuestionnaireService {
 
-
     /**
      * 根据userId判断用户是否已填写问卷，若无则返回空的问卷【值皆为0】
      *

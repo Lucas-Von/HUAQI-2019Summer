@@ -35,6 +35,6 @@ public interface QuestionnaireMapper {
      * @param questionnaireParam
      * @return
      */
-    int updateQuest(QuestionnaireParam questionnaireParam);
+    void updateQuest(QuestionnaireParam questionnaireParam);
 
 }

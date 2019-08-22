@@ -16,6 +16,7 @@
             useGeneratedKeys="true" keyProperty="id">
         update questionnaire
         set funds = #{funds}, saving = #{saving}, insurance = #{insurance}, stocks = #{stocks}, gold = #{gold}, bond = #{bond}, answer = #{answer}
+        where user_id = #{userId}
     </insert>
 
 </mapper>

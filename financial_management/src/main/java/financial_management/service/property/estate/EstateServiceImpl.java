@@ -4,12 +4,11 @@ import financial_management.bl.property.EstateService;
 import financial_management.data.property.EstateMapper;
 import financial_management.entity.DepositPO;
 import financial_management.entity.EstatePO;
+import financial_management.entity.RecAllocPO;
+import financial_management.service.property.manage.ManageServiceForBl;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
-import financial_management.vo.property.DepositVO;
-import financial_management.vo.property.EstateVO;
-import financial_management.vo.property.InvestOfEstateVO;
-import financial_management.vo.property.SubEstateVO;
+import financial_management.vo.property.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ import java.util.List;
  * @date 2019/08/20 20:36
  */
 @Service
-public class EstateServiceImpl implements EstateService {
+public class EstateServiceImpl implements EstateService, EstateServiceForBl {
 
     @Autowired
     private EstateMapper estateMapper;
@@ -32,6 +31,7 @@ public class EstateServiceImpl implements EstateService {
      * @param userId
      * @return
      */
+    @Override
     public BasicResponse getPropertyByUser(Long userId) {
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
@@ -50,6 +50,7 @@ public class EstateServiceImpl implements EstateService {
      * @param userId
      * @return
      */
+    @Override
     public BasicResponse getTotalIncome(Long userId) {
         try {
             double totalIncome = estateMapper.getTotalIncome(userId);
@@ -66,6 +67,7 @@ public class EstateServiceImpl implements EstateService {
      * @param userId
      * @return
      */
+    @Override
     public BasicResponse getNewlyIncome(Long userId) {
         try {
             double newlyIncome = estateMapper.getTotalIncome(userId);
@@ -82,6 +84,7 @@ public class EstateServiceImpl implements EstateService {
      * @param userId
      * @return
      */
+    @Override
     public BasicResponse getDepositList(Long userId) {
         try {
             List<DepositPO> depositPOList = estateMapper.getDepositList(userId);
@@ -108,27 +111,26 @@ public class EstateServiceImpl implements EstateService {
      * @param userId, assetType
      * @return
      */
+    @Override
     public BasicResponse getAssetInfoList(Long userId, String assetType) {
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
-            double total = estatePO.getFundsInPlatform() + estatePO.getFundsOutPlatform() + estatePO.getSavingInPlatform() + estatePO.getSavingOutPlatform()
-                    + estatePO.getInsuranceInPlatform() + estatePO.getInsuranceOutPlatform() + estatePO.getStocksInPlatform() + estatePO.getStocksOutPlatform()
-                    + estatePO.getGoldInPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondInPlatform() + estatePO.getBondOutPlatform();
+            double totalAsset = getTotalAsset(userId);
             SubEstateVO subEstateVO = new SubEstateVO();
             switch (assetType) {
                 case "funds":
-                    subEstateVO = new SubEstateVO(total, estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform());
+                    subEstateVO = new SubEstateVO(totalAsset, estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform());
                     break;
                 case "saving":
-                    subEstateVO = new SubEstateVO(total, estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform());
+                    subEstateVO = new SubEstateVO(totalAsset, estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform());
                     break;
                 case "insurance":
-                    subEstateVO = new SubEstateVO(total, estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform());
+                    subEstateVO = new SubEstateVO(totalAsset, estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform());
                     break;
                 case "investment":
                     double investInPlatform = estatePO.getStocksInPlatform() + estatePO.getGoldInPlatform() + estatePO.getBondInPlatform();
                     double investOutPlatform = estatePO.getStocksOutPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondOutPlatform();
-                    subEstateVO = new SubEstateVO(total, investInPlatform, investOutPlatform);
+                    subEstateVO = new SubEstateVO(totalAsset, investInPlatform, investOutPlatform);
                 default:
                     break;
             }
@@ -136,6 +138,25 @@ public class EstateServiceImpl implements EstateService {
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 计算用户总资产
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getTotalAsset(Long userId) {
+        try {
+            EstatePO estatePO = estateMapper.getPropertyByUser(userId);
+            return estatePO.getFundsInPlatform() + estatePO.getFundsOutPlatform() + estatePO.getSavingInPlatform() + estatePO.getSavingOutPlatform()
+                    + estatePO.getInsuranceInPlatform() + estatePO.getInsuranceOutPlatform() + estatePO.getStocksInPlatform() + estatePO.getStocksOutPlatform()
+                    + estatePO.getGoldInPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondInPlatform() + estatePO.getBondOutPlatform();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.property.ManageMapper">
+
+    <select id="isAdmin" resultType="boolean">
+        select count(admin_id) from admin where admin_id = #{adminId}
+    </select>
+
+    <select id="getRecAllocList" resultMap="RecAllocPO">
+        select
+            u.user_id as userId,
+            u.name as name,
+            u.identity_num as identityNum,
+            u.username as nick,
+            u.email as email,
+            ra.funds_rate as fundsRate,
+            ra.saving_rate as savingRate,
+            ra.insurance_rate as insuranceRate,
+            ra.invest_rate as investRate
+        from user u
+        inner join rec_alloc ra
+        on u.user_id =  ra.user_id
+    </select>
+
+    <select id="getRecAlloc" resultMap="RecAllocPO">
+        select
+            u.user_id as userId,
+            u.name as name,
+            u.identity_num as identityNum,
+            u.username as nick,
+            u.email as email,
+            ra.funds_rate as fundsRate,
+            ra.saving_rate as savingRate,
+            ra.insurance_rate as insuranceRate,
+            ra.invest_rate as investRate
+        from user u, rec_alloc ra
+        where u.user_id = #{userId} and ra.user_id = #{userId};
+    </select>
+
+    <insert id="editRecAlloc" parameterType="financial_management.parameter.property.RecAllocParam"
+            useGeneratedKeys="true" keyProperty="id">
+        update rec_alloc
+        set funds_rate = #{fundsRate}, saving_rate = #{savingRate}, insurance_rate = #{insuranceRate}, invest_rate = #{investRate}
+        where user_id = #{userId}
+    </insert>
+
+    <resultMap id="RecAllocPO" type="financial_management.entity.RecAllocPO">
+    </resultMap>
+
+</mapper>

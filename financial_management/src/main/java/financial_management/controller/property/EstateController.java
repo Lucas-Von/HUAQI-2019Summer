@@ -1,6 +1,7 @@
 package financial_management.controller.property;
 
 import financial_management.bl.property.EstateService;
+import financial_management.vo.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,5 +21,19 @@ public class EstateController {
         return estateService.getPropertyByUser(userId);
     }
 
+    @GetMapping("/estate/getTotalIncome")
+    public BasicResponse getTotalIncome(Long userId) {
+        return estateService.getTotalIncome(userId);
+    }
+
+    @GetMapping("estate/getNewlyIncome")
+    public BasicResponse getNewlyIncome(Long userId) {
+        return estateService.getNewlyIncome(userId);
+    }
+
+    @GetMapping("estate/getDepositList")
+    public BasicResponse getDepositList(Long userId) {
+        return estateService.getDepositList(userId);
+    }
 
 }

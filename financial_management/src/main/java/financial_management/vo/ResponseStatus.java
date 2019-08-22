@@ -13,6 +13,10 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_COMMENT_NOT_LIGHTED = new ResponseStatus("2005", "The comment has not been lighted");
     public static final ResponseStatus STATUS_COMMENT_NOT_EXIST = new ResponseStatus("2006", "The comment does not exist");
 
+
+    public static final ResponseStatus STATUS_QUESTION_EXIST = new ResponseStatus("6001","The user has filled out the questionnaire.");
+    public static final ResponseStatus STATUS_QUESTION_NOT_EXIST = new ResponseStatus("6002","The user has not filled out the questionnaire.");
+
     public static final ResponseStatus STATUS_EMAIL_EXIST = new ResponseStatus("8001", "The email has existed");
     public static final ResponseStatus STATUS_IDENTITY_EXIST = new ResponseStatus("8002", "The identity has existed");
     public static final ResponseStatus STATUS_EMAIL_AND_IDENTITY_EXIST = new ResponseStatus("8003", "The email and identity have existed");

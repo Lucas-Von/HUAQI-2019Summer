@@ -3,73 +3,92 @@ package financial_management.vo.property;
 public class EstateVO {
 
     /**
-     * 用户id
-     */
-    private Long userId;
-
-    /**
      * 用户资产总额
      */
-    private int totalAsset;
+    private double totalAsset;
 
     /**
      * 用户平台内现金数额
      */
-    private int fundsInPlatform;
+    private double fundsInPlatform;
 
     /**
      * 用户平台外现金数额
      */
-    private int fundsOutPlatform;
+    private double fundsOutPlatform;
 
     /**
      * 用户平台内储蓄数额
      */
-    private int savingInPlatform;
+    private double savingInPlatform;
 
     /**
      * 用户平台外储蓄数额
      */
-    private int savingOutPlatform;
+    private double savingOutPlatform;
 
     /**
      * 用户平台内保险数额
      */
-    private int insuranceInPlatform;
+    private double insuranceInPlatform;
 
     /**
      * 用户平台外保险数额
      */
-    private int insuranceOutPlatform;
+    private double insuranceOutPlatform;
 
     /**
-     * 用户平台内股票数额
+     * 用户的投资数额列表
      */
-    private int stocksInPlatform;
+    private InvestOfEstateVO investOfEstateVO;
 
-    /**
-     * 用户平台外股票数额
-     */
-    private int stocksOutPlatform;
+    public EstateVO(double fundsInPlatform, double fundsOutPlatform, double savingInPlatform, double savingOutPlatform, double insuranceInPlatform, double insuranceOutPlatform, InvestOfEstateVO investOfEstateVO) {
+        this.fundsInPlatform = fundsInPlatform;
+        this.fundsOutPlatform = fundsOutPlatform;
+        this.savingInPlatform = savingInPlatform;
+        this.savingOutPlatform = savingOutPlatform;
+        this.insuranceInPlatform = insuranceInPlatform;
+        this.insuranceOutPlatform = insuranceOutPlatform;
+        this.investOfEstateVO = investOfEstateVO;
+        this.totalAsset = fundsInPlatform + fundsOutPlatform + savingInPlatform + savingOutPlatform + insuranceInPlatform + insuranceOutPlatform
+                + investOfEstateVO.getStocksInPlatform() + investOfEstateVO.getStocksOutPlatform() + investOfEstateVO.getGoldInPlatform()
+                + investOfEstateVO.getGoldOutPlatform() + investOfEstateVO.getBondInPlatform() + investOfEstateVO.getBondOutPlatform();
+    }
 
-    /**
-     * 用户平台内黄金数额
-     */
-    private int goldInPlatform;
+    public EstateVO() {
 
-    /**
-     * 用户平台外黄金数额
-     */
-    private int goldOutPlatform;
+    }
 
-    /**
-     * 用户平台内债券数额
-     */
-    private int bondInPlatform;
+    public double getTotalAsset() {
+        return totalAsset;
+    }
 
-    /**
-     * 用户平台外债券数额
-     */
-    private int bondOutPlatform;
+    public double getFundsInPlatform() {
+        return fundsInPlatform;
+    }
+
+    public double getFundsOutPlatform() {
+        return fundsOutPlatform;
+    }
+
+    public double getSavingInPlatform() {
+        return savingInPlatform;
+    }
+
+    public double getSavingOutPlatform() {
+        return savingOutPlatform;
+    }
+
+    public double getInsuranceInPlatform() {
+        return insuranceInPlatform;
+    }
+
+    public double getInsuranceOutPlatform() {
+        return insuranceOutPlatform;
+    }
+
+    public InvestOfEstateVO getInvestOfEstateVO() {
+        return investOfEstateVO;
+    }
 
 }

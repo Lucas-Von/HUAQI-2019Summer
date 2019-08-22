@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.property.EstateMapper">
+
+    <select id="getPropertyByUser" resultMap="EstatePO">
+        select
+            sum(mf.balance) as fundsInPlatform,
+            q.funds as fundsOutPlatform,
+            sum(md.amount) as savingInPlatform,
+            q.saving as savingOutPlatform,
+            sum(mi.price) as insuranceInPlatform,
+            q.insurance as insuranceOutPlatform,
+            sum(ms.amount) as stocksInPlatform,
+            q.stocks as stocksOutPlatform,
+            sum(mg.amount) as goldInPlatform,
+            q.gold as goldOutPlatform,
+            sum(mb.amount) as bondInPlatform,
+            q.bond as bondOutPlatform
+        from questionnaire q, my_fund mf, my_depo md, my_ins mi, my_stock ms, my_gold mg, my_bond mb
+        where q.user_id = #{userId} and mf.user_id = #{userId} and md.user_id = #{userId} and mi.user_id = #{userId}
+            and ms.user_id = #{userId} and mg.user_id = #{userId} and mb.user_id = #{userId};
+    </select>
+
+    <select id="getTotalIncome" resultType="Double">
+        select sum(ms.profit + mg.profit + mb.profit)
+        from my_stock ms, my_gold mg, my_bond mb
+        where ms.user_id = #{userId} and mg.user_id = #{userId} and mb.user_id = #{userId};
+    </select>
+
+    <select id="getNewlyIncome" resultType="Double">
+        select sum(ms.profit + mg.profit + mb.profit)
+        from my_stock ms, my_gold mg, my_bond mb
+        where ms.user_id = #{userId} and mg.user_id = #{userId} and mb.user_id = #{userId};
+    </select>
+
+    <select id="getDepositList" resultMap="DepositPO">
+        select
+            d.name as name,
+            md.amount as money,
+            d.rate as annualizedRate,
+            md.maturity as expirationDate
+        from my_depo md
+        inner join deposit_product d
+        on md.product_id = d.id
+    </select>
+
+    <resultMap id="EstatePO" type="financial_management.entity.EstatePO">
+    </resultMap>
+
+    <resultMap id="DepositPO" type="financial_management.entity.DepositPO">
+    </resultMap>
+
+</mapper>

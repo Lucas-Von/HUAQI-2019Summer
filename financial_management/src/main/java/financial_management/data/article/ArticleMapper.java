@@ -52,6 +52,12 @@ public interface ArticleMapper {
     List<ArticlePO> selectAllArticlesByPageviews(@Param("category") Integer category);
 
     /**
+     * 按照时间获得所有文章的全部信息
+     * @return
+     */
+    List<ArticlePO> selectAllArticlesByTimeByAdmin();
+
+    /**
      * 判断一篇文章是否存在
      * @param articleId
      * @return
@@ -63,4 +69,18 @@ public interface ArticleMapper {
      * @param articleId
      */
     void addPageviews(@Param("articleId") Long articleId);
+
+    /**
+     * 按照标题搜索文章
+     * @param title
+     * @return
+     */
+    List<ArticlePO> selectArticleByTitle(@Param("title") String title);
+
+    /**
+     * 按照标题搜索文章
+     * @param tags
+     * @return
+     */
+    List<ArticlePO> selectArticleByTags(@Param("tags") String tags);
 }

@@ -131,6 +131,72 @@ public interface UserMapper {
     Long getUserAmount();
 
     /**
+     * 在能否修改邮箱表中插入一个用户
+     * @param email
+     */
+    void insertIfChangedEmail(@Param("email") String email);
+
+    /**
+     * 判断能否修改邮箱表中是否包含该邮箱，如不包含则说明是无效链接
+     * @param email
+     * @return
+     */
+    boolean ifExistChangedEmail(@Param("email") String email);
+
+    /**
+     * 判断能否修改邮箱（1：可修改；2：已完成修改；3：超时）
+     * @param email
+     * @return
+     */
+    Integer ifChangedEmail(@Param("email") String email);
+
+    /**
+     * 修改能否修改邮箱表中用户的状态
+     * @param email
+     * @param status
+     */
+    void changeStatusInIfChangedEmail(@Param("email") String email, @Param("status") Integer status);
+
+    /**
+     * 定时判断是否有超过10分钟未修改邮箱，有则将状态变为3
+     */
+    @Scheduled(cron = "0/1 * * * * ?")
+    void cleanIfChangedEmail();
+
+    /**
+     * 在能否修改密码表中插入一个用户
+     * @param email
+     */
+    void insertIfChangedPassword(@Param("email") String email);
+
+    /**
+     * 判断能否修改密码表中是否包含该邮箱，如不包含则说明是无效链接
+     * @param email
+     * @return
+     */
+    boolean ifExistChangedPassword(@Param("email") String email);
+
+    /**
+     * 判断能否修改密码（1：可修改；2：已完成修改；3：超时）
+     * @param email
+     * @return
+     */
+    Integer ifChangedPassword(@Param("email") String email);
+
+    /**
+     * 修改能否修改密码表中用户的状态
+     * @param email
+     * @param status
+     */
+    void changeStatusInIfChangedPassword(@Param("email") String email, @Param("status") Integer status);
+
+    /**
+     * 定时判断是否有超过10分钟未修改密码，有则将状态变为3
+     */
+    @Scheduled(cron = "0/1 * * * * ?")
+    void cleanIfChangedPassword();
+
+    /**
      * 定时判断是否有超过10分钟未激活的账号，有则注销
      */
     @Scheduled(cron = "0/1 * * * * ?")

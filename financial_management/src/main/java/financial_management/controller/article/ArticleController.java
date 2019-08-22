@@ -2,6 +2,7 @@ package financial_management.controller.article;
 
 import financial_management.bl.article.ArticleService;
 import financial_management.parameter.article.ArticleParam;
+import financial_management.parameter.article.DateParam;
 import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.article.ArticleSimpleInfoVO;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,5 +57,50 @@ public class ArticleController {
     @PostMapping("/pageviews/add")
     public BasicResponse addPageviews(@RequestParam Long articleId){
         return articleService.addPageviews(articleId);
+    }
+
+    @GetMapping("/nologin/getAll")
+    public BasicResponse getAllArticlesWithoutLogin(@RequestParam Integer category, @RequestParam Integer type){
+        return articleService.getAllArticlesWithoutLogin(category, type);
+    }
+
+    @GetMapping("/nologin/get")
+    public BasicResponse getArticleWithoutLogin(@RequestParam Long articleId){
+        return articleService.getArticleWithoutLogin(articleId);
+    }
+
+    @GetMapping("/admin/getAll")
+    public BasicResponse getAllArticlesByAdmin(){
+        return articleService.getAllArticlesByAdmin();
+    }
+
+    @GetMapping("/admin/get")
+    public BasicResponse getArticleByAdmin(@RequestParam Long articleId){
+        return articleService.getArticleByAdmin(articleId);
+    }
+
+    @GetMapping("/admin/search/category")
+    public BasicResponse searchArticlesByCategory(@RequestParam Integer category){
+        return articleService.searchArticlesByCategory(category);
+    }
+
+    @GetMapping("/admin/search/title")
+    public BasicResponse searchArticlesByTitle(@RequestParam String title){
+        return articleService.searchArticlesByTitle(title);
+    }
+
+    @GetMapping("/admin/search/time")
+    public BasicResponse searchArticlesByTime(@RequestBody DateParam dateParam){
+        return articleService.searchArticlesByTime(dateParam.getTime());
+    }
+
+    @GetMapping("/admin/search/tags")
+    public BasicResponse searchArticlesByTags(@RequestParam String tags){
+        return articleService.searchArticlesByTags(tags);
+    }
+
+    @GetMapping("/comment/admin/get")
+    public BasicResponse getAllComments(Long articleId){
+        return articleService.getAllComments(articleId);
     }
 }

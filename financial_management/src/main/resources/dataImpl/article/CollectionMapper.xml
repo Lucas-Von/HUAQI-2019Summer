@@ -22,4 +22,9 @@
         where user_id = #{userId}
     </select>
 
+    <select id="getCollectionAmount" resultType="Long">
+        select count(user_id)
+        from collection where article_id = #{articleId}
+    </select>
+
 </mapper>

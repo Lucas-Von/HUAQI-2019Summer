@@ -144,4 +144,18 @@ public interface UserService {
      * @return
      */
     BasicResponse getUserAmount();
+
+    /**
+     * 判断能否修改邮箱
+     * @param email
+     * @return
+     */
+    BasicResponse ifChangedEmail(String email);
+
+    /**
+     * 判断能否修改密码
+     * @param email
+     * @return
+     */
+    BasicResponse ifChangedPassword(String email);
 }

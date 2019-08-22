@@ -38,4 +38,11 @@ public interface CollectionMapper {
      * @return
      */
     List<Long> getCollections(@Param("userId") Long userId);
+
+    /**
+     * 获得一篇文章的总收藏数
+     * @param articleId
+     * @return
+     */
+    Long getCollectionAmount(@Param("articleId") Long articleId);
 }

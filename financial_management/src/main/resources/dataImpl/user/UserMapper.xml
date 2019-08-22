@@ -85,6 +85,11 @@
         from user where status = 1
     </select>
 
+    <insert id="insertIfChangedEmail">
+        insert into if_changed_email(email)
+        values(#{email})
+    </insert>
+
     <select id="ifExistChangedEmail" resultType="boolean">
         select count(email)
         from if_changed_email where email = #{email}
@@ -104,6 +109,11 @@
         update if_changed_email set status = 3
         where minute(timediff(now(),time))>10 and status = 1
     </update>
+
+    <insert id="insertIfChangedPassword">
+        insert into if_changed_password(email)
+        values(#{email})
+    </insert>
 
     <select id="ifExistChangedPassword" resultType="boolean">
         select count(email)

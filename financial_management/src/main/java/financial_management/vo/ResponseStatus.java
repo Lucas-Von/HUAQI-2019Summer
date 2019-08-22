@@ -22,6 +22,9 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_PASSWORD_WRONG = new ResponseStatus("8004", "The password is wrong");
     public static final ResponseStatus STATUS_USER_NOT_EXIST = new ResponseStatus("8005","The user does not exist");
     public static final ResponseStatus STATUS_ACCOUNT_ACTIVATED = new ResponseStatus("8006", "The account has been activated");
+    public static final ResponseStatus STATUS_INVALID_LINK = new ResponseStatus("8007","The link is invalid");
+    public static final ResponseStatus STATUS_HAS_CHANGED = new ResponseStatus("8008", "You have changed it");
+    public static final ResponseStatus STATUS_TIME_OUT = new ResponseStatus("8009", "Time out");
 
     public String code;
 

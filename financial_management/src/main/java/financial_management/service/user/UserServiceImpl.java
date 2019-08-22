@@ -115,6 +115,7 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
         if(userMapper.ifExistEmail(userEmailParam.getOldEmail())) {
             if(!userMapper.ifExistEmail(userEmailParam.getNewEmail())) {
                 userMapper.updateEmail(userEmailParam.getOldEmail(), userEmailParam.getNewEmail());
+                userMapper.changeStatusInIfChangedEmail(userEmailParam.getOldEmail(),2);
                 return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
             }else {
                 return new BasicResponse(ResponseStatus.STATUS_EMAIL_EXIST);
@@ -150,6 +151,7 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
         if(userMapper.ifExistEmail(userPasswordParam.getEmail())){
             String password = getCryptPassword(userPasswordParam.getPassword());
             userMapper.updatePasswordByEmail(userPasswordParam.getEmail(),password);
+            userMapper.changeStatusInIfChangedPassword(userPasswordParam.getEmail(),2);
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
             return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
@@ -169,6 +171,10 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
 
             SendEmail.send(email, "修改绑定邮箱邮件", sb.toString());
 
+            if(!userMapper.ifExistChangedEmail(email)) {
+                userMapper.insertIfChangedEmail(email);
+            }
+
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
             return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
@@ -185,6 +191,10 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
             sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
             sb.append(email);
             sb.append("</a>");
+
+            if(!userMapper.ifExistChangedPassword(email)) {
+                userMapper.insertIfChangedPassword(email);
+            }
 
             SendEmail.send(email, "修改密码邮件", sb.toString());
 
@@ -306,8 +316,18 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     @Override
     public BasicResponse ifChangedEmail(String email){
         if(userMapper.ifExistEmail(email)) {
-            // TODO
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            if(userMapper.ifExistChangedEmail(email)){
+                int status = userMapper.ifChangedEmail(email);
+                if(status == 1){
+                    return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+                }else if(status == 2){
+                    return new BasicResponse(ResponseStatus.STATUS_HAS_CHANGED);
+                }else {
+                    return new BasicResponse(ResponseStatus.STATUS_TIME_OUT);
+                }
+            }else {
+                return new BasicResponse(ResponseStatus.STATUS_INVALID_LINK);
+            }
         }else {
             return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
         }
@@ -316,8 +336,18 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     @Override
     public BasicResponse ifChangedPassword(String email){
         if(userMapper.ifExistEmail(email)) {
-            // TODO
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            if(userMapper.ifExistChangedPassword(email)){
+                int status = userMapper.ifChangedPassword(email);
+                if(status == 1){
+                    return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+                }else if(status == 2){
+                    return new BasicResponse(ResponseStatus.STATUS_HAS_CHANGED);
+                }else {
+                    return new BasicResponse(ResponseStatus.STATUS_TIME_OUT);
+                }
+            }else {
+                return new BasicResponse(ResponseStatus.STATUS_INVALID_LINK);
+            }
         }else {
             return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
         }

@@ -131,6 +131,12 @@ public interface UserMapper {
     Long getUserAmount();
 
     /**
+     * 在能否修改邮箱表中插入一个用户
+     * @param email
+     */
+    void insertIfChangedEmail(@Param("email") String email);
+
+    /**
      * 判断能否修改邮箱表中是否包含该邮箱，如不包含则说明是无效链接
      * @param email
      * @return
@@ -156,6 +162,12 @@ public interface UserMapper {
      */
     @Scheduled(cron = "0/1 * * * * ?")
     void cleanIfChangedEmail();
+
+    /**
+     * 在能否修改密码表中插入一个用户
+     * @param email
+     */
+    void insertIfChangedPassword(@Param("email") String email);
 
     /**
      * 判断能否修改密码表中是否包含该邮箱，如不包含则说明是无效链接

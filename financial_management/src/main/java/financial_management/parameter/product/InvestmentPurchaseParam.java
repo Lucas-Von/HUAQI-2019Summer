@@ -11,6 +11,15 @@ public class InvestmentPurchaseParam {
     String code;
     Integer amount;
     Double totalprice;
+    String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getCode() {
         return code;

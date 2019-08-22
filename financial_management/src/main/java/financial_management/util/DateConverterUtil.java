@@ -80,11 +80,17 @@ public class DateConverterUtil {
     public static Date moveForwardByDay(Date current,Integer step){
         Calendar cal = Calendar.getInstance();
         cal.setTime(current);
-        cal.add(Calendar.DAY_OF_YEAR,step);
+        cal.add(Calendar.DATE,step);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(cal.getTime());
-        ParsePosition pos = new ParsePosition(8);
-        Date currentTime_2 = formatter.parse(dateString, pos);
-        return currentTime_2;
+//        ParsePosition pos = new ParsePosition(8);
+        try {
+            Date currentTime_2 = formatter.parse(dateString);
+
+            return currentTime_2;
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

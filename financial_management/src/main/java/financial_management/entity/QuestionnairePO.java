@@ -17,32 +17,32 @@ public class QuestionnairePO {
     /**
      * 现金
      */
-    private int funds;
+    private double funds;
 
     /**
      * 储蓄
      */
-    private int saving;
+    private double saving;
 
     /**
      * 保险
      */
-    private int insurance;
+    private double insurance;
 
     /**
      * 股票
      */
-    private int stocks;
+    private double stocks;
 
     /**
      * 黄金
      */
-    private int gold;
+    private double gold;
 
     /**
      * 债券
      */
-    private int bond;
+    private double bond;
 
     /**
      * 问题
@@ -76,51 +76,51 @@ public class QuestionnairePO {
         this.userId = userId;
     }
 
-    public int getFunds() {
+    public double getFunds() {
         return funds;
     }
 
-    public void setFunds(int funds) {
+    public void setFunds(double funds) {
         this.funds = funds;
     }
 
-    public int getSaving() {
+    public double getSaving() {
         return saving;
     }
 
-    public void setSaving(int saving) {
+    public void setSaving(double saving) {
         this.saving = saving;
     }
 
-    public int getInsurance() {
+    public double getInsurance() {
         return insurance;
     }
 
-    public void setInsurance(int insurance) {
+    public void setInsurance(double insurance) {
         this.insurance = insurance;
     }
 
-    public int getStocks() {
+    public double getStocks() {
         return stocks;
     }
 
-    public void setStocks(int stocks) {
+    public void setStocks(double stocks) {
         this.stocks = stocks;
     }
 
-    public int getGold() {
+    public double getGold() {
         return gold;
     }
 
-    public void setGold(int gold) {
+    public void setGold(double gold) {
         this.gold = gold;
     }
 
-    public int getBond() {
+    public double getBond() {
         return bond;
     }
 
-    public void setBond(int bond) {
+    public void setBond(double bond) {
         this.bond = bond;
     }
 

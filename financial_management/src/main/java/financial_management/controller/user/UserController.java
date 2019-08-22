@@ -11,6 +11,7 @@ import financial_management.vo.article.ArticleSimpleInfoVO;
 import financial_management.vo.user.UserSimpleInfoVO;
 import financial_management.vo.user.UserVO;
 import financial_management.vo.user.UsernameVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -120,5 +121,15 @@ public class UserController {
     @GetMapping("/amount")
     public BasicResponse getUserAmount(){
         return userService.getUserAmount();
+    }
+
+    @GetMapping("/ifChanged/email")
+    public BasicResponse ifChangedEmail(@RequestParam String email){
+        return userService.ifChangedEmail(email);
+    }
+
+    @GetMapping("/ifChanged/password")
+    public BasicResponse ifChangedPassword(@RequestParam String email){
+        return userService.ifChangedPassword(email);
     }
 }

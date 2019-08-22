@@ -304,6 +304,26 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     }
 
     @Override
+    public BasicResponse ifChangedEmail(String email){
+        if(userMapper.ifExistEmail(email)) {
+            // TODO
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
+    }
+
+    @Override
+    public BasicResponse ifChangedPassword(String email){
+        if(userMapper.ifExistEmail(email)) {
+            // TODO
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
+    }
+
+    @Override
     public String getUsername(Long userId){
         if(userMapper.ifExist(userId)) {
             UserPO userPO = userMapper.selectSimpleUser(userId);

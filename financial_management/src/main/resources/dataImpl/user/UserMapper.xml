@@ -85,6 +85,46 @@
         from user where status = 1
     </select>
 
+    <select id="ifExistChangedEmail" resultType="boolean">
+        select count(email)
+        from if_changed_email where email = #{email}
+    </select>
+
+    <select id="ifChangedEmail" resultType="Integer">
+        select status
+        from if_changed_email where email = #{email}
+    </select>
+
+    <update id="changeStatusInIfChangedEmail">
+        update if_changed_email set status = #{status}
+        where email = #{email}
+    </update>
+
+    <update id="cleanIfChangedEmail">
+        update if_changed_email set status = 3
+        where minute(timediff(now(),time))>10 and status = 1
+    </update>
+
+    <select id="ifExistChangedPassword" resultType="boolean">
+        select count(email)
+        from if_changed_password where email = #{email}
+    </select>
+
+    <select id="ifChangedPassword" resultType="long">
+        select status
+        from if_changed_password where email = #{email}
+    </select>
+
+    <update id="changeStatusInIfChangedPassword">
+        update if_changed_password set status = #{status}
+        where email = #{email}
+    </update>
+
+    <update id="cleanIfChangedPassword">
+        update if_changed_password set status = 3
+        where minute(timediff(now(),time))>10 and status = 1
+    </update>
+
     <resultMap id="UserPO" type="financial_management.entity.UserPO">
         <result column="user_id" property="userId"></result>
         <result column="username" property="username"></result>

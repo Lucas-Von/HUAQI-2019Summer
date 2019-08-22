@@ -1,5 +1,7 @@
 package financial_management.vo.product;
 
+import financial_management.entity.InsProductPO;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -59,5 +61,13 @@ public class InsRecProductVO {
         this.amount = amount;
         this.insured = insured;
         this.time = time;
+    }
+
+    public InsRecProductVO(InsProductPO po){
+        this.amount = po.getPrice().doubleValue();
+        this.insured = po.getCompensation().doubleValue();
+        this.name = po.getName();
+        this.time = po.getLength();
+        this.type = po.getType();
     }
 }

@@ -1,10 +1,8 @@
 package financial_management.entity;
 
-import financial_management.vo.UserSimpleInfoVO;
-import financial_management.vo.UserVO;
+import financial_management.vo.user.UserSimpleInfoVO;
+import financial_management.vo.user.UserVO;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 
 public class UserPO {
@@ -48,8 +46,12 @@ public class UserPO {
      * 注册时间
      */
     private Timestamp time;
+    /**
+     * 用户头像URL
+     */
+    private String profilePhoto;
 
-    public Long getUserId() {
+   public Long getUserId() {
         return userId;
     }
 
@@ -129,12 +131,17 @@ public class UserPO {
         this.time = time;
     }
 
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
     public UserSimpleInfoVO getUserSimpleInfoVO(){
-        return new UserSimpleInfoVO(username,
-                identityNum,
-                name,
-                email,
-                phoneNum);
+        return new UserSimpleInfoVO(userId,username,identityNum,email);
     }
 
     public UserVO getUserVO(){
@@ -143,7 +150,8 @@ public class UserPO {
                 identityNum,
                 name,
                 email,
-                phoneNum);
+                phoneNum,
+                profilePhoto);
     }
 
     public UserPO() {
@@ -153,11 +161,13 @@ public class UserPO {
                   String identityNum,
                   String name,
                   String email,
-                  String password) {
+                  String password,
+                  String profilePhoto) {
         this.username = username;
         this.identityNum = identityNum;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.profilePhoto = profilePhoto;
     }
 }

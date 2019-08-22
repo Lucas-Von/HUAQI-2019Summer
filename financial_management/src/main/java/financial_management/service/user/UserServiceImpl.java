@@ -3,16 +3,23 @@ package financial_management.service.user;
 
 import financial_management.bl.user.UserService;
 import financial_management.data.user.UserMapper;
+import financial_management.entity.ArticlePO;
 import financial_management.entity.UserPO;
-import financial_management.parameter.*;
+import financial_management.parameter.user.UserEmailParam;
+import financial_management.parameter.user.UserLoginParam;
+import financial_management.parameter.user.UserParam;
+import financial_management.parameter.user.UserPasswordParam;
+import financial_management.service.article.ArticleServiceForBl;
+import financial_management.service.article.collection.CollectionServiceForBl;
 import financial_management.util.JwtUtil;
 import financial_management.util.SendEmail;
-import financial_management.vo.ArticleSimpleInfoVO;
-import financial_management.vo.UserSimpleInfoVO;
-import financial_management.vo.UserVO;
-import financial_management.vo.UsernameVO;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
+import financial_management.vo.article.ArticleSimpleInfoVO;
+import financial_management.vo.user.UserSimpleInfoVO;
+import financial_management.vo.user.UserVO;
+import financial_management.vo.user.UsernameVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
@@ -25,29 +32,33 @@ import java.util.List;
  * @date 2019/8/16
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserServiceForBl {
     @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CollectionServiceForBl collectionServiceForBl;
+    @Autowired
+    private ArticleServiceForBl articleServiceForBl;
 
     @Override
-    public ResponseEntity<String> register(UserParam userParam){
-        String error = "";
+    public BasicResponse register(UserParam userParam){
+        int wrongStatus = 0;
         String email = userParam.getEmail();
         String identityNum = userParam.getIdentityNum();
         if(userMapper.ifExistEmail(email)){
-            error = "该邮箱已被注册！";
+            wrongStatus = 1;
         }
         if(userMapper.ifExistIdentityNum(identityNum)){
-            if(error.equals("")){
-                error = "该身份证号已被绑定！";
+            if(wrongStatus == 0){
+                wrongStatus = 2;
             }else {
-                error = error + "；该身份证号已被绑定！";
+                wrongStatus = 3;
             }
         }
-        if(error.equals("")){
+        if(wrongStatus == 0){
             UserPO userPO = userParam.getUserPo();
             userPO.setPassword(getCryptPassword(userPO.getPassword()));
             userMapper.insert(userPO);
@@ -62,150 +73,251 @@ public class UserServiceImpl implements UserService {
 
             SendEmail.send(email,"账号激活邮件", sb.toString());
 
-            return ResponseEntity.ok().body("注册成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.status(403).body(error);
+            if(wrongStatus == 1){
+                return new BasicResponse(ResponseStatus.STATUS_EMAIL_EXIST);
+            }else if(wrongStatus == 2){
+                return new BasicResponse(ResponseStatus.STATUS_IDENTITY_EXIST);
+            }else {
+                return new BasicResponse(ResponseStatus.STATUS_EMAIL_AND_IDENTITY_EXIST);
+            }
         }
     }
 
     @Override
-    public ResponseEntity<UsernameVO> loginByEmail(UserLoginParam userLoginParam){
+    public BasicResponse loginByEmail(UserLoginParam userLoginParam){
         UserPO userPO = userMapper.selectUserByEmail(userLoginParam.getEmail());
         String password = getCryptPassword(userLoginParam.getPassword());
         if(userPO.getPassword().equals(password)){
             UsernameVO usernameVO = new UsernameVO();
             usernameVO.setUsername(userPO.getUsername());
             usernameVO.setToken(jwtUtil.generateToken(userPO.getUserId()+""));
-            return ResponseEntity.ok().body(usernameVO);
+            usernameVO.setProfilePhoto(userPO.getProfilePhoto());
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, usernameVO);
         }else {
-            return ResponseEntity.status(403).build();
+            return new BasicResponse(ResponseStatus.STATUS_PASSWORD_WRONG);
         }
     }
 
     @Override
-    public ResponseEntity<String> updateUsername(String username, Long userId){
+    public BasicResponse updateUsername(String username, Long userId){
         if(userMapper.ifExist(userId)) {
             userMapper.updateUsername(userId, username);
-            return ResponseEntity.ok().body("更新用户昵称成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.status(403).body("该用户不存在！");
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> updateEmail(UserEmailParam userEmailParam){
+    public BasicResponse updateEmail(UserEmailParam userEmailParam){
         if(userMapper.ifExistEmail(userEmailParam.getOldEmail())) {
             if(!userMapper.ifExistEmail(userEmailParam.getNewEmail())) {
                 userMapper.updateEmail(userEmailParam.getOldEmail(), userEmailParam.getNewEmail());
-                return ResponseEntity.ok().body("更新用户邮箱成功！");
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
             }else {
-                return ResponseEntity.status(403).body("该邮箱已被注册！");
+                return new BasicResponse(ResponseStatus.STATUS_EMAIL_EXIST);
             }
         }else {
-            return ResponseEntity.status(403).body("该用户不存在！");
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> updatePhoneNum(String phoneNum, Long userId){
+    public BasicResponse updatePhoneNum(String phoneNum, Long userId){
         if(userMapper.ifExist(userId)) {
             userMapper.updatePhoneNum(userId, phoneNum);
-            return ResponseEntity.ok().body("更新用户手机号成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.status(403).body("该用户不存在！");
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> updatePasswordByUserId(String password, Long userId){
+    public BasicResponse updatePasswordByUserId(String password, Long userId){
         if(userMapper.ifExist(userId)) {
             password = getCryptPassword(password);
             userMapper.updatePasswordByUserId(userId, password);
-            return ResponseEntity.ok().body("更新用户密码成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.status(403).body("该用户不存在！");
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> updatePasswordByEmail(UserPasswordParam userPasswordParam){
+    public BasicResponse updatePasswordByEmail(UserPasswordParam userPasswordParam){
         if(userMapper.ifExistEmail(userPasswordParam.getEmail())){
             String password = getCryptPassword(userPasswordParam.getPassword());
             userMapper.updatePasswordByEmail(userPasswordParam.getEmail(),password);
-            return ResponseEntity.ok().body("更新用户密码成功！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
-            return ResponseEntity.status(403).body("该用户不存在！");
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
         }
     }
 
     @Override
-    public ResponseEntity<String> applyForUpdateEmail(String email){
-        // 发送邮件
-        StringBuffer sb = new StringBuffer("点击下面链接修改邮箱，链接只能使用一次，请尽快完成操作！</br>");
-        sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
-        sb.append(email);
-        sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
-        sb.append(email);
-        sb.append("</a>");
+    public BasicResponse applyForUpdateEmail(String email){
+        if(userMapper.ifExistEmail(email)) {
+            // 发送邮件
+            StringBuffer sb = new StringBuffer("点击下面链接修改邮箱，链接只能使用一次，请尽快完成操作！</br>");
+            sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
+            sb.append(email);
+            sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
+            sb.append(email);
+            sb.append("</a>");
 
-        SendEmail.send(email, "修改绑定邮箱邮件", sb.toString());
+            SendEmail.send(email, "修改绑定邮箱邮件", sb.toString());
 
-        return ResponseEntity.ok().body("请尽快点击链接完成修改邮箱操作！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
     }
 
     @Override
-    public ResponseEntity<String> applyForUpdatePassword(String email){
-        // 发送邮件
-        StringBuffer sb = new StringBuffer("点击下面链接修改密码，链接只能使用一次，请尽快完成操作！</br>");
-        sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
-        sb.append(email);
-        sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
-        sb.append(email);
-        sb.append("</a>");
+    public BasicResponse applyForUpdatePassword(String email){
+        if(userMapper.ifExistEmail(email)) {
+            // 发送邮件
+            StringBuffer sb = new StringBuffer("点击下面链接修改密码，链接只能使用一次，请尽快完成操作！</br>");
+            sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
+            sb.append(email);
+            sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
+            sb.append(email);
+            sb.append("</a>");
 
-        SendEmail.send(email,"修改密码邮件", sb.toString());
+            SendEmail.send(email, "修改密码邮件", sb.toString());
 
-        return ResponseEntity.ok().body("请尽快点击链接完成修改密码操作！");
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
     }
 
     @Override
-    public ResponseEntity<UserSimpleInfoVO> getSimpleUser(Long userId){
-        UserPO userPO = userMapper.selectSimpleUser(userId);
-        return ResponseEntity.ok().body(userPO.getUserSimpleInfoVO());
+    public BasicResponse getSimpleUser(Long userId){
+        if(userMapper.ifExist(userId)) {
+            UserPO userPO = userMapper.selectSimpleUser(userId);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
     }
 
     @Override
-    public ResponseEntity<List<UserVO>> getAllUsers(){
+    public BasicResponse getAllUsers(){
         List<UserPO> userPOList = userMapper.selectAllUsers();
-        List<UserVO> userVOList = new ArrayList<>();
+        List<UserSimpleInfoVO> userVOList = new ArrayList<>();
         for(int i=0;i<userPOList.size();i++){
-            userVOList.add(userPOList.get(i).getUserVO());
+            userVOList.add(userPOList.get(i).getUserSimpleInfoVO());
         }
-        return ResponseEntity.ok().body(userVOList);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userVOList);
     }
 
     @Override
-    public ResponseEntity<List<ArticleSimpleInfoVO>> getCollections(Long userId){
-        // TODO
+    public BasicResponse getCollections(Long userId){
+        if(userMapper.ifExist(userId)) {
+            List<Long> articleIds = collectionServiceForBl.getCollections(userId);
+            List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
+            for (int i = 0; i < articleIds.size(); i++) {
+                ArticleSimpleInfoVO articleSimpleInfoVO = new ArticleSimpleInfoVO();
+                ArticlePO articlePO = articleServiceForBl.getArticle(articleIds.get(i));
 
-        return null;
+                articleSimpleInfoVO.setArticleId(articlePO.getArticleId());
+                articleSimpleInfoVO.setSummary(articlePO.getSummary());
+                articleSimpleInfoVO.setTitle(articlePO.getTitle());
+                articleSimpleInfoVO.setCollected(true);
+                articleSimpleInfoVO.setPageviews(articlePO.getPageviews());
+                articleSimpleInfoVO.setTime(articlePO.getTime());
+                articleSimpleInfoVO.setTags(articlePO.getTags());
+
+                articleSimpleInfoVOS.add(articleSimpleInfoVO);
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,articleSimpleInfoVOS);
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
     }
 
     @Override
-    public ResponseEntity<String> activate(String email){
+    public BasicResponse activate(String email){
         if(userMapper.ifExistEmail(email)) {
             UserPO userPO = userMapper.selectUserByEmail(email);
             if(userPO.getStatus() == 0) {
                 userMapper.updateStatus(userPO.getUserId(), 1);
-                return ResponseEntity.ok().body("账号已成功激活！");
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
             }else {
-                return ResponseEntity.status(403).body("您的账号已经被激活，请勿重复操作！");
+                return new BasicResponse(ResponseStatus.STATUS_ACCOUNT_ACTIVATED);
             }
         }else {
-            return ResponseEntity.status(403).body("该邮箱不存在！");
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
         }
     }
 
+    @Override
+    public BasicResponse updateProfilePhoto(String profilePhoto, Long userId){
+        if(userMapper.ifExist(userId)) {
+            userMapper.updateProfilePhoto(userId, profilePhoto);
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
+    }
+
+    @Override
+    public BasicResponse searchUserByEmail(String email){
+        if(userMapper.ifExistEmail(email)) {
+            UserPO userPO = userMapper.selectUserByEmail(email);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
+    }
+
+    @Override
+    public BasicResponse searchUserByIdentityNum(String identityNum){
+        if(userMapper.ifExistIdentityNum(identityNum)){
+            UserPO userPO = userMapper.selectUserByIdentityNum(identityNum);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
+    }
+
+    @Override
+    public BasicResponse searchUserByUsername(String username){
+        List<UserPO> userPOList = userMapper.selectUserByUsername(username);
+        if(userPOList.size() != 0){
+            List<UserSimpleInfoVO> userSimpleInfoVOS = new ArrayList<>();
+            for(int i=0;i<userPOList.size();i++){
+                userSimpleInfoVOS.add(userPOList.get(i).getUserSimpleInfoVO());
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userSimpleInfoVOS);
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
+    }
+
+    @Override
+    public BasicResponse getUserAmount(){
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userMapper.getUserAmount());
+    }
+
+    @Override
+    public String getUsername(Long userId){
+        if(userMapper.ifExist(userId)) {
+            UserPO userPO = userMapper.selectSimpleUser(userId);
+            return userPO.getUsername();
+        }else {
+            return "该用户已被注销";
+        }
+    }
+
+    /**
+     * 获得加密后的密码
+     * @param password
+     * @return
+     */
     private String getCryptPassword(String password){
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");

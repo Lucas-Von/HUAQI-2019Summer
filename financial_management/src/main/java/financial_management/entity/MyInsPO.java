@@ -48,7 +48,7 @@ public class MyInsPO {
     /**
      * @Description //当前最高保额，不入库
      **/
-    Float Compensation;
+    Float compensation;
 
     public Long getUserId() {
         return userId;
@@ -107,10 +107,21 @@ public class MyInsPO {
     }
 
     public Float getCompensation() {
-        return Compensation;
+        return compensation;
     }
 
     public void setCompensation(Float compensation) {
-        Compensation = compensation;
+        this.compensation = compensation;
+    }
+
+    public MyInsPO() {
+    }
+
+    public MyInsPO(Long userId, String beneficiary, Long productId, Date maturity, Float price) {
+        this.userId = userId;
+        this.beneficiary = beneficiary;
+        this.productId = productId;
+        this.maturity = maturity;
+        this.price = price;
     }
 }

@@ -1,9 +1,12 @@
 package financial_management.bl.article;
 
-import financial_management.parameter.ArticleParam;
-import financial_management.vo.ArticleSimpleInfoVO;
-import financial_management.vo.ArticleVO;
+import financial_management.parameter.article.ArticleParam;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.article.ArticleSimpleInfoVO;
+import financial_management.vo.article.ArticleVO;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 /**
  * @author xyh
@@ -15,32 +18,39 @@ public interface ArticleService {
      * @param articleParam
      * @return
      */
-    ResponseEntity<String> addArticle(ArticleParam articleParam);
+    BasicResponse addArticle(ArticleParam articleParam);
 
     /**
      * 修改文章
      * @param articleParam
      * @return
      */
-    ResponseEntity<String> updateArticle(ArticleParam articleParam);
+    BasicResponse updateArticle(ArticleParam articleParam);
 
     /**
      * 删除文章
      * @param articleId
      * @return
      */
-    ResponseEntity<String> deleteArticle(Long articleId);
+    BasicResponse deleteArticle(Long articleId);
 
     /**
      * 获取一篇文章的全部信息
      * @param articleId
      * @return
      */
-    ResponseEntity<ArticleVO> getSimpleArticle(Long articleId);
+    BasicResponse getSimpleArticle(Long articleId, Long userId);
 
     /**
      * 获取所有文章基本信息
      * @return
      */
-    ResponseEntity<ArticleSimpleInfoVO> getAllArticles();
+    BasicResponse getAllArticles(Integer category, Integer type, Long userId);
+
+    /**
+     * 给一篇文章的浏览量+1
+     * @param articleId
+     * @return
+     */
+    BasicResponse addPageviews(Long articleId);
 }

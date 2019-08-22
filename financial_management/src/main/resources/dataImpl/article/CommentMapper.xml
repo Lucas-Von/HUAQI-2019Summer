@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="financial_management.data.user.CommentMapper">
+<mapper namespace="financial_management.data.article.CommentMapper">
 
     <insert id="insertComment" useGeneratedKeys="true" keyProperty="id">
         insert into comment(user_id,article_id,content)
@@ -18,23 +18,28 @@
     </select>
 
     <insert id="lightComment">
-        insert into light(id, user_id)
+        insert into light(comment_id, user_id)
         values(#{commentId}, #{userId})
     </insert>
 
     <delete id="unlightComment">
         delete from light
-        where id = #{commentId} and user_id = #{userId}
+        where comment_id = #{commentId} and user_id = #{userId}
     </delete>
 
-    <select id="ifCollected" resultType="boolean">
+    <select id="ifLighted" resultType="boolean">
         select count(user_id)
-        from light where id = #{commentId} and user_id = #{userId}
+        from light where comment_id = #{commentId} and user_id = #{userId}
     </select>
 
     <select id="selectLights" resultType="Integer">
         select count(user_id)
-        from light where id = #{commentId}
+        from light where comment_id = #{commentId}
+    </select>
+
+    <select id="ifExist" resultType="boolean">
+        select count(user_id)
+        from comment where id = #{commentId}
     </select>
 
     <resultMap id="CommentPO" type="financial_management.entity.CommentPO">

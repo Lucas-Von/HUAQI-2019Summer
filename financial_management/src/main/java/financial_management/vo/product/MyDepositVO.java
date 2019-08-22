@@ -67,4 +67,6 @@ public class MyDepositVO {
 
     public MyDepositVO() {
     }
+
+
 }

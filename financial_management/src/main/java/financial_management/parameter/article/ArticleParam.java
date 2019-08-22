@@ -1,4 +1,6 @@
-package financial_management.parameter;
+package financial_management.parameter.article;
+
+import financial_management.entity.ArticlePO;
 
 import java.util.List;
 
@@ -10,7 +12,8 @@ public class ArticleParam {
     private Long articleId;
     private String title;
     private String summary;
-    private String content;
+    private String mdContent;
+    private String htmlContent;
     private Integer category;
     private List<String> tags;
 
@@ -38,12 +41,20 @@ public class ArticleParam {
         this.summary = summary;
     }
 
-    public String getContent() {
-        return content;
+    public String getMdContent() {
+        return mdContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMdContent(String mdContent) {
+        this.mdContent = mdContent;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 
     public Integer getCategory() {
@@ -62,19 +73,37 @@ public class ArticleParam {
         this.tags = tags;
     }
 
+    public ArticlePO getArticlePO(){
+        StringBuilder allTags = new StringBuilder();
+        for(int i=0;i<tags.size();i++){
+            allTags.append(tags.get(i)).append(",");
+        }
+        if(allTags.length() != 0){
+            allTags.deleteCharAt(allTags.length() - 1);
+        }
+        return new ArticlePO(title,
+                summary,
+                mdContent,
+                htmlContent,
+                category,
+                allTags.toString());
+    }
+
     public ArticleParam() {
     }
 
     public ArticleParam(Long articleId,
                         String title,
                         String summary,
-                        String content,
+                        String mdContent,
+                        String htmlContent,
                         Integer category,
                         List<String> tags) {
         this.articleId = articleId;
         this.title = title;
         this.summary = summary;
-        this.content = content;
+        this.mdContent = mdContent;
+        this.htmlContent = htmlContent;
         this.category = category;
         this.tags = tags;
     }

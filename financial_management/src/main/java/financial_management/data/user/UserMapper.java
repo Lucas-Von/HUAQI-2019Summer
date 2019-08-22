@@ -105,6 +105,32 @@ public interface UserMapper {
     void updateStatus(@Param("userId") Long userId, @Param("status") Integer status);
 
     /**
+     * 更新用户的头像
+     * @param userId
+     * @param profilePhoto
+     */
+    void updateProfilePhoto(@Param("userId") Long userId, @Param("profilePhoto") String profilePhoto);
+
+    /**
+     * 通过身份证号查找用户
+     * @return
+     */
+    UserPO selectUserByIdentityNum(@Param("identityNum") String identityNum);
+
+    /**
+     * 通过昵称模糊搜索符合条件的用户
+     * @param username
+     * @return
+     */
+    List<UserPO> selectUserByUsername(@Param("username") String username);
+
+    /**
+     * 获得所有用户的的数量
+     * @return
+     */
+    Long getUserAmount();
+
+    /**
      * 定时判断是否有超过10分钟未激活的账号，有则注销
      */
     @Scheduled(cron = "0/1 * * * * ?")

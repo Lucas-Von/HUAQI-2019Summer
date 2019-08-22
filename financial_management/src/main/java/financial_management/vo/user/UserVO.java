@@ -1,18 +1,25 @@
-package financial_management.parameter;
-
-import financial_management.entity.UserPO;
+package financial_management.vo.user;
 
 /**
  * @author xyh
  * @date 2019/8/16
  */
-public class UserParam {
+public class UserVO {
+    private Long userId;
     private String username;
     private String identityNum;
     private String name;
     private String email;
     private String phoneNum;
-    private String password;
+    private String profilePhoto;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;
@@ -54,36 +61,30 @@ public class UserParam {
         this.phoneNum = phoneNum;
     }
 
-    public String getPassword() {
-        return password;
+    public String getProfilePhoto() {
+        return profilePhoto;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
-    public UserPO getUserPo(){
-        return new UserPO(username,
-                identityNum,
-                name,
-                email,
-                password);
+    public UserVO() {
     }
 
-    public UserParam() {
-    }
-
-    public UserParam(String username,
-                     String identityNum,
-                     String name,
-                     String email,
-                     String phoneNum,
-                     String password) {
+    public UserVO(Long userId,
+                  String username,
+                  String identityNum,
+                  String name,
+                  String email,
+                  String phoneNum,
+                  String profilePhoto) {
+        this.userId = userId;
         this.username = username;
         this.identityNum = identityNum;
         this.name = name;
         this.email = email;
         this.phoneNum = phoneNum;
-        this.password = password;
+        this.profilePhoto = profilePhoto;
     }
 }

@@ -13,8 +13,8 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
-        insert into user(username,identity_num,name,email,phone_num,password,perms,status)
-        values(#{username},#{identityNum},#{name},#{email},#{phoneNum},#{password},#{perms},#{status})
+        insert into user(username,identity_num,name,email,phone_num,password,perms,status,profile_photo)
+        values(#{username},#{identityNum},#{name},#{email},#{phoneNum},#{password},#{perms},#{status},#{profilePhoto})
     </insert>
 
     <select id="selectUserByEmail" resultMap="UserPO">
@@ -65,6 +65,26 @@
         where user_id = #{userId}
     </update>
 
+    <update id="updateProfilePhoto">
+        update user set profile_photo = #{profilePhoto}
+        where user_id = #{userId}
+    </update>
+
+    <select id="selectUserByIdentityNum" resultMap="UserPO">
+        select * from user
+        where identity_num = #{identityNum}
+    </select>
+
+    <select id="selectUserByUsername" resultMap="UserPO">
+        select * from user
+        where username like '%${username}%'
+    </select>
+
+    <select id="getUserAmount" resultType="long">
+        select count(user_id)
+        from user where status = 1
+    </select>
+
     <resultMap id="UserPO" type="financial_management.entity.UserPO">
         <result column="user_id" property="userId"></result>
         <result column="username" property="username"></result>
@@ -76,6 +96,7 @@
         <result column="perms" property="perms"></result>
         <result column="status" property="status"></result>
         <result column="time" property="time"></result>
+        <result column="profile_photo" property="profilePhoto"></result>
     </resultMap>
 
     <delete id="cleanInactive">

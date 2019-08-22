@@ -58,4 +58,11 @@ public interface CommentMapper {
      * @return
      */
     Integer selectLights(@Param("commentId") Long commentId);
+
+    /**
+     * 判断一条评论是否存在
+     * @param commentId
+     * @return
+     */
+    boolean ifExist(@Param("commentId") Long commentId);
 }

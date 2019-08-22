@@ -1,5 +1,7 @@
 package financial_management.entity;
 
+import java.sql.Timestamp;
+
 public class ArticlePO {
     /**
      * 文章ID
@@ -14,9 +16,13 @@ public class ArticlePO {
      */
     private String summary;
     /**
-     * 内容
+     * 内容（md格式）
      */
-    private String content;
+    private String mdContent;
+    /**
+     * 内容（html格式）
+     */
+    private String htmlContent;
     /**
      * 类别
      */
@@ -25,6 +31,14 @@ public class ArticlePO {
      * 关键词（用逗号分隔）
      */
     private String tags;
+    /**
+     * 浏览量
+     */
+    private Long pageviews;
+    /**
+     * 最近更新时间
+     */
+    private Timestamp time;
 
     public Long getArticleId() {
         return articleId;
@@ -50,12 +64,20 @@ public class ArticlePO {
         this.summary = summary;
     }
 
-    public String getContent() {
-        return content;
+    public String getMdContent() {
+        return mdContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMdContent(String mdContent) {
+        this.mdContent = mdContent;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 
     public Integer getCategory() {
@@ -74,17 +96,35 @@ public class ArticlePO {
         this.tags = tags;
     }
 
+    public Long getPageviews() {
+        return pageviews;
+    }
+
+    public void setPageviews(Long pageviews) {
+        this.pageviews = pageviews;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
     public ArticlePO() {
     }
 
     public ArticlePO(String title,
                      String summary,
-                     String content,
+                     String mdContent,
+                     String htmlContent,
                      Integer category,
                      String tags) {
         this.title = title;
         this.summary = summary;
-        this.content = content;
+        this.mdContent = mdContent;
+        this.htmlContent = htmlContent;
         this.category = category;
         this.tags = tags;
     }

@@ -29,6 +29,11 @@ public class InsProductPO {
      **/
     Float compensation;
 
+    /**
+     * @Description //时间
+     **/
+    Integer length;
+
     public String getName() {
         return name;
     }
@@ -67,5 +72,13 @@ public class InsProductPO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
     }
 }

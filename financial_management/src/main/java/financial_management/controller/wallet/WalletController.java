@@ -3,6 +3,7 @@ package financial_management.controller.wallet;
 import financial_management.parameter.wallet.*;
 import financial_management.util.JwtUtil;
 import financial_management.vo.wallet.BalanceVO;
+import financial_management.vo.wallet.BindingVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +44,12 @@ public class WalletController {
 
     @PostMapping(value = "/binding")
     public ResponseEntity<?> cardBinding(@RequestBody BindingParam binding){
-        return ResponseEntity.ok().build();
+        BindingVO vo = new BindingVO();
+
+        vo.setBound(true);
+        return ResponseEntity.ok().body(vo);
     }
+
     @PostMapping(value = "/balance")
     public ResponseEntity<?> checkBalance(HttpServletRequest request){
         //逻辑部分

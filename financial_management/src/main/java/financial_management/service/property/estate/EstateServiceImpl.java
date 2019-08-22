@@ -9,6 +9,7 @@ import financial_management.vo.ResponseStatus;
 import financial_management.vo.property.DepositVO;
 import financial_management.vo.property.EstateVO;
 import financial_management.vo.property.InvestOfEstateVO;
+import financial_management.vo.property.SubEstateVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,6 +96,43 @@ public class EstateServiceImpl implements EstateService {
                 depositVOList.add(depositVO);
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户指定资产类型信息列表
+     *
+     * @param userId, assetType
+     * @return
+     */
+    public BasicResponse getAssetInfoList(Long userId, String assetType) {
+        try {
+            EstatePO estatePO = estateMapper.getPropertyByUser(userId);
+            double total = estatePO.getFundsInPlatform() + estatePO.getFundsOutPlatform() + estatePO.getSavingInPlatform() + estatePO.getSavingOutPlatform()
+                    + estatePO.getInsuranceInPlatform() + estatePO.getInsuranceOutPlatform() + estatePO.getStocksInPlatform() + estatePO.getStocksOutPlatform()
+                    + estatePO.getGoldInPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondInPlatform() + estatePO.getBondOutPlatform();
+            SubEstateVO subEstateVO = new SubEstateVO();
+            switch (assetType) {
+                case "funds":
+                    subEstateVO = new SubEstateVO(total, estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform());
+                    break;
+                case "saving":
+                    subEstateVO = new SubEstateVO(total, estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform());
+                    break;
+                case "insurance":
+                    subEstateVO = new SubEstateVO(total, estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform());
+                    break;
+                case "investment":
+                    double investInPlatform = estatePO.getStocksInPlatform() + estatePO.getGoldInPlatform() + estatePO.getBondInPlatform();
+                    double investOutPlatform = estatePO.getStocksOutPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondOutPlatform();
+                    subEstateVO = new SubEstateVO(total, investInPlatform, investOutPlatform);
+                default:
+                    break;
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subEstateVO);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

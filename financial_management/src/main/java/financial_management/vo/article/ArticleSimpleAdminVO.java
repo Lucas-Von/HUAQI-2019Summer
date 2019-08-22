@@ -4,16 +4,17 @@ import java.sql.Timestamp;
 
 /**
  * @author xyh
- * @date 2019/8/16
+ * @date 2019/8/22
  */
-public class ArticleSimpleInfoVO {
+public class ArticleSimpleAdminVO {
     private Long articleId;
     private String title;
     private String summary;
-    private boolean collected;
     private Long pageviews;
     private Timestamp time;
     private String tags;
+    private int category;
+    private Long collections;
 
     public Long getArticleId() {
         return articleId;
@@ -37,14 +38,6 @@ public class ArticleSimpleInfoVO {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public boolean isCollected() {
-        return collected;
-    }
-
-    public void setCollected(boolean collected) {
-        this.collected = collected;
     }
 
     public Long getPageviews() {
@@ -71,36 +64,56 @@ public class ArticleSimpleInfoVO {
         this.tags = tags;
     }
 
-    public ArticleSimpleInfoVO() {
+    public int getCategory() {
+        return category;
     }
 
-    public ArticleSimpleInfoVO(Long articleId,
-                               String title,
-                               String summary,
-                               Long pageviews,
-                               Timestamp time,
-                               String tags) {
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public Long getCollections() {
+        return collections;
+    }
+
+    public void setCollections(Long collections) {
+        this.collections = collections;
+    }
+
+    public ArticleSimpleAdminVO() {
+    }
+
+    public ArticleSimpleAdminVO(Long articleId,
+                                String title,
+                                String summary,
+                                Long pageviews,
+                                Timestamp time,
+                                String tags,
+                                int category) {
         this.articleId = articleId;
         this.title = title;
         this.summary = summary;
         this.pageviews = pageviews;
         this.time = time;
         this.tags = tags;
+        this.category = category;
     }
 
-    public ArticleSimpleInfoVO(Long articleId,
-                               String title,
-                               String summary,
-                               boolean collected,
-                               Long pageviews,
-                               Timestamp time,
-                               String tags) {
+    public ArticleSimpleAdminVO(Long articleId,
+                                String title,
+                                String summary,
+                                Long pageviews,
+                                Timestamp time,
+                                String tags,
+                                int category,
+                                Long collections) {
         this.articleId = articleId;
         this.title = title;
         this.summary = summary;
-        this.collected = collected;
         this.pageviews = pageviews;
         this.time = time;
         this.tags = tags;
+        this.category = category;
+        this.collections = collections;
     }
 }

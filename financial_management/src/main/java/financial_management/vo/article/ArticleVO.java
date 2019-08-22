@@ -85,6 +85,20 @@ public class ArticleVO {
     }
 
     public ArticleVO(String title,
+                     String mdContent,
+                     String htmlContent,
+                     Long pageviews,
+                     Timestamp time,
+                     String tags) {
+        this.title = title;
+        this.mdContent = mdContent;
+        this.htmlContent = htmlContent;
+        this.pageviews = pageviews;
+        this.time = time;
+        this.tags = tags;
+    }
+
+    public ArticleVO(String title,
                      boolean collected,
                      String mdContent,
                      String htmlContent,

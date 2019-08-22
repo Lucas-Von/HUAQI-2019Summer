@@ -46,11 +46,14 @@ INSERT INTO `article` VALUES ('7', 'hhh', '3206841998090700', 'aDSaaaa', '153604
 DROP TABLE IF EXISTS `bond`;
 CREATE TABLE `bond` (
   `id` bigint(255) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `code` varchar(45) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `bond` values ('1','19国债10','019620','100.0');
+insert into `bond` values ('2','19国债20','019621','1000.0');
 
 -- ----------------------------
 -- Records of bond
@@ -129,6 +132,7 @@ CREATE TABLE `deposit` (
   `percentage` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 -- ----------------------------
 -- Records of deposit
 -- ----------------------------
@@ -139,12 +143,16 @@ CREATE TABLE `deposit` (
 DROP TABLE IF EXISTS `deposit_product`;
 CREATE TABLE `deposit_product` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `rate` float DEFAULT NULL,
   `length` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `deposit_product` values ('1','产品1','类型1','0.0575','365');
+insert into `deposit_product` values ('2','产品2','克苏鲁','0.0175','200');
+insert into `deposit_product` values ('3','产品3','花旗杯','0.025','365');
 
 -- ----------------------------
 -- Records of deposit_product
@@ -156,11 +164,13 @@ CREATE TABLE `deposit_product` (
 DROP TABLE IF EXISTS `dom_stock`;
 CREATE TABLE `dom_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `code` varchar(45) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into `dom_stock` values ('1','大唐发电','601991','4.06');
+insert into `dom_stock` values ('2','东方财富','300059','13.82');
 
 -- ----------------------------
 -- Records of dom_stock
@@ -172,11 +182,13 @@ CREATE TABLE `dom_stock` (
 DROP TABLE IF EXISTS `for_stock`;
 CREATE TABLE `for_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `code` varchar(45) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into `for_stock` values ('1','外唐发电','613991','14.06');
+insert into `for_stock` values ('2','外方财富','000000','113.82');
 
 -- ----------------------------
 -- Records of for_stock
@@ -187,10 +199,12 @@ CREATE TABLE `for_stock` (
 -- ----------------------------
 DROP TABLE IF EXISTS `fund`;
 CREATE TABLE `fund` (
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `rate` float DEFAULT NULL,
   `time` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `fund` values ('并夕夕','0.0548','2019-03-02');
 
 -- ----------------------------
 -- Records of fund
@@ -202,11 +216,12 @@ CREATE TABLE `fund` (
 DROP TABLE IF EXISTS `gold`;
 CREATE TABLE `gold` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `code` varchar(45) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into `gold` values ('1','国际现货黄金','XAUUSD','1513.26');
 
 -- ----------------------------
 -- Records of gold
@@ -233,13 +248,17 @@ CREATE TABLE `insurance` (
 DROP TABLE IF EXISTS `ins_product`;
 CREATE TABLE `ins_product` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `price` float DEFAULT NULL,
   `compensation` float DEFAULT NULL,
   `length` int ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `ins_product` values ('1','金盛人寿','分红险','30000','2000','365');
+insert into `ins_product` values ('2','英大泰和','全能险','25000','1400','365');
+
 
 -- ----------------------------
 -- Records of ins_product
@@ -299,13 +318,15 @@ CREATE TABLE `message` (
 DROP TABLE IF EXISTS `my_bond`;
 CREATE TABLE `my_bond` (
   `user_id` bigint(255) NOT NULL,
-  `code` varchar(45) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
   `purchase_price` float DEFAULT NULL,
   `profit` float DEFAULT NULL,
   `profit_rate` float DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `my_bond` values ('5','019620','30000','100','0.003','23000','234234');
 
 -- ----------------------------
 -- Records of my_bond
@@ -322,6 +343,9 @@ CREATE TABLE `my_depo` (
   `maturity` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+insert into `my_depo` values ('5','1','20000','2019-08-19');
+insert into `my_depo` values ('5','2','1000','2019-08-19');
+
 -- ----------------------------
 -- Records of my_depo
 -- ----------------------------
@@ -337,6 +361,8 @@ CREATE TABLE `my_fund` (
   `pay_password` varchar(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+insert into `my_fund` values ('5','2000.0','2019-08-22','123456');
+
 -- ----------------------------
 -- Records of my_fund
 -- ----------------------------
@@ -347,13 +373,15 @@ CREATE TABLE `my_fund` (
 DROP TABLE IF EXISTS `my_gold`;
 CREATE TABLE `my_gold` (
   `user_id` bigint(255) NOT NULL,
-  `code` varchar(45) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
   `purchase_price` float DEFAULT NULL,
   `profit` float DEFAULT NULL,
   `profit_rate` float DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `my_gold` values('5','XAUUSD','20000','200','0.03','2000','23123');
 
 -- ----------------------------
 -- Records of my_gold
@@ -365,11 +393,13 @@ CREATE TABLE `my_gold` (
 DROP TABLE IF EXISTS `my_ins`;
 CREATE TABLE `my_ins` (
   `user_id` bigint(255) NOT NULL,
-  `beneficiary` varchar(45) DEFAULT NULL,
+  `beneficiary` varchar(255) DEFAULT NULL,
   `product_id` bigint(255) DEFAULT NULL,
   `maturity` date DEFAULT NULL,
   `price` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `my_ins` values ('5','cxk','1','2019-02-12','20000');
 
 -- ----------------------------
 -- Records of my_ins
@@ -381,7 +411,7 @@ CREATE TABLE `my_ins` (
 DROP TABLE IF EXISTS `my_stock`;
 CREATE TABLE `my_stock` (
   `user_id` bigint(255) NOT NULL,
-  `code` varchar(45) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
   `purchase_price` float DEFAULT NULL,
   `profit` float DEFAULT NULL,
   `profit_rate` float DEFAULT NULL,
@@ -389,6 +419,8 @@ CREATE TABLE `my_stock` (
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+insert into `my_stock` values ('5','601991','20003','2123','0.043','200','23133');
+insert into `my_stock` values ('5','000000','123123','2333','0.013','200','23133');
 -- ----------------------------
 -- Records of my_stock
 -- ----------------------------

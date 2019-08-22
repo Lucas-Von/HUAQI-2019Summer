@@ -1,6 +1,11 @@
 package financial_management.controller.product;
 
+import financial_management.bl.product.FundService;
+import financial_management.util.JwtUtil;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.product.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,28 +23,26 @@ import java.util.Date;
 @RestController
 public class FundController {
 
+    @Autowired
+    FundService fundService;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @GetMapping(value = "/product/imf")
-    public ResponseEntity<?> getFund(HttpServletRequest request){
-        FundVO fund = new FundVO();
-        fund.setAmount(20000.0);
-        fund.setName("并夕夕");
-        fund.setRate(0.036);
-        String dateString = "2018-02-23";
-        try{
-        Date date= new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
-        fund.setUpdateTime(date);}
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return ResponseEntity.ok().body(fund);
+    public BasicResponse getFund(HttpServletRequest request){
+
+        FundVO fund = fundService.getFund(jwtUtil.getIdFromRequest(request));
+
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,fund);
+
     }
     @GetMapping(value = "/product/imf/all")
-    public ResponseEntity<?> getFundBasicInfo(){
-        FundBasicVO vo  = new FundBasicVO();
-        vo.setName("并夕夕");
-        vo.setRate(0.036);
-        return ResponseEntity.ok().body(vo);
+    public BasicResponse getFundBasicInfo(){
+
+        FundBasicVO vo  = fundService.getBasicFund();
+
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
     }
 
 

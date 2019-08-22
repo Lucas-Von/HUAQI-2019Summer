@@ -1,14 +1,21 @@
 package financial_management.controller.product;
 
+import financial_management.bl.product.DepositService;
+import financial_management.bl.product.FundService;
+import financial_management.bl.product.InsuranceService;
+import financial_management.bl.product.InvestmentService;
 import financial_management.parameter.product.DepositPurchaseParam;
+import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.product.DepRecProductVO;
 import financial_management.vo.product.MyDepositVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.RemoteEndpoint;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,36 +31,29 @@ import java.util.List;
 @RestController
 public class DepositController {
 
+
+    @Autowired
+    DepositService depositService;
+
+    @Autowired
+    JwtUtil jwtUtil;
+
     @GetMapping(value = "/product/deposit")
     public BasicResponse MyDeposit(HttpServletRequest request){
-        List<MyDepositVO> vos = new ArrayList<>();
-        String dateString = "2020-02-23";
-        try {
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
-            MyDepositVO vo = new MyDepositVO("产品1","type1",20000.0,0.035,date);
-            vos.add(vo);
-            vo = new MyDepositVO("产品2","type2",130000.0,0.05,date);
-            vos.add(vo);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        List<MyDepositVO> vos = depositService.getSelfDeposits(jwtUtil.getIdFromRequest(request));
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
 
     @GetMapping(value = "/product/deposit/recommend")
-    public ResponseEntity<?> RecommendDepProduct(HttpServletRequest request){
-        List<DepRecProductVO> vos = new ArrayList<>();
-        DepRecProductVO vo = new DepRecProductVO("产品1",200,0.03);
-        vos.add(vo);
-        vo = new DepRecProductVO("产品2",1200,0.08);
-        vos.add(vo);
-        return ResponseEntity.ok().body(vos);
+    public BasicResponse RecommendDepProduct(HttpServletRequest request){
+        List<DepRecProductVO> vos = depositService.getAllDeposits();
+        return  new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
     }
 
     @PostMapping(value = "/product/deposit")
-    public ResponseEntity<?> purchaseDepositProduct(HttpServletRequest request,@RequestBody DepositPurchaseParam param){
-        return ResponseEntity.ok().build();
+    public BasicResponse purchaseDepositProduct(HttpServletRequest request, @RequestBody DepositPurchaseParam param){
+        depositService.purchase(jwtUtil.getIdFromRequest(request),param.getName(),param.getAmount());
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 }

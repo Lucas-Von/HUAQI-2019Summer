@@ -10,6 +10,7 @@ import financial_management.util.DateConverterUtil;
 import financial_management.vo.product.FundBasicVO;
 import financial_management.vo.product.FundVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,7 +24,7 @@ import java.util.Optional;
  **/
 @Service
 public class FundServiceImpl implements FundService4Wallet, FundService, ProductService4User {
-    @Mapper
+    @Autowired
     FundMapper mapper;
 
     @Override
@@ -72,7 +73,8 @@ public class FundServiceImpl implements FundService4Wallet, FundService, Product
 
     @Override
     public FundBasicVO getBasicFund() {
-        return new FundBasicVO(mapper.selectFund());
+        FundPO po = mapper.selectFund();
+        return new FundBasicVO(po);
     }
 
     @Override

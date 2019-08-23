@@ -41,4 +41,12 @@ public interface EstateService {
      */
     BasicResponse getDepositList(@Param("userId") Long userId);
 
+    /**
+     * 获取用户指定资产类型信息列表
+     *
+     * @param userId, assetType
+     * @return
+     */
+    BasicResponse getAssetInfoList(Long userId, String assetType);
+
 }

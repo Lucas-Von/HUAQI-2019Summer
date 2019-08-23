@@ -36,4 +36,9 @@ public class EstateController {
         return estateService.getDepositList(userId);
     }
 
+    @GetMapping("estate/getAssetInfoList")
+    public BasicResponse getAssetInfoList(long userId, String assetType) {
+        return estateService.getAssetInfoList(userId, assetType);
+    }
+
 }

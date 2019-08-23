@@ -30,9 +30,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         try {
             boolean hasRecorded = questionnaireMapper.hasQuest(userId);
             if (hasRecorded) {
-                return new BasicResponse(ResponseStatus.STATUS_QUESTION_EXIST);
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_EXIST);
             } else {
-                return new BasicResponse(ResponseStatus.STATUS_QUESTION_NOT_EXIST);
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +65,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Override
     public BasicResponse addQuestionnaire(QuestionnaireParam questionnaireParam) {
         try {
-            questionnaireMapper.insertQuest(questionnaireParam);
+            Long userId = questionnaireParam.getUserId();
+            boolean hasRecorded = questionnaireMapper.hasQuest(userId);
+            if (!hasRecorded) {
+                questionnaireMapper.insertQuest(questionnaireParam);
+            } else {
+                questionnaireMapper.updateQuest(questionnaireParam);
+            }
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

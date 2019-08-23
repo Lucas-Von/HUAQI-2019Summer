@@ -2,7 +2,6 @@ package financial_management.bl.property;
 
 import financial_management.parameter.property.QuestionnaireParam;
 import financial_management.vo.BasicResponse;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @author lt
@@ -16,7 +15,7 @@ public interface QuestionnaireService {
      * @param userId
      * @return
      */
-    BasicResponse hasQuestionnaire(@Param("userId") Long userId);
+    BasicResponse hasQuestionnaire(Long userId);
 
     /**
      * 问卷内容获取

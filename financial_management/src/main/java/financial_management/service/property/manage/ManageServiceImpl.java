@@ -2,8 +2,7 @@ package financial_management.service.property.manage;
 
 import financial_management.bl.property.ManageService;
 import financial_management.data.property.ManageMapper;
-import financial_management.entity.DepositPO;
-import financial_management.entity.RecAllocPO;
+import financial_management.entity.property.RecAllocPO;
 import financial_management.parameter.property.RecAllocParam;
 import financial_management.service.property.estate.EstateServiceForBl;
 import financial_management.vo.BasicResponse;

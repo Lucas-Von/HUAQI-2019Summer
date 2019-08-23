@@ -2,10 +2,10 @@ package financial_management.service.property.estate;
 
 import financial_management.bl.property.EstateService;
 import financial_management.data.property.EstateMapper;
-import financial_management.entity.DepositPO;
-import financial_management.entity.EstatePO;
-import financial_management.entity.RecAllocPO;
-import financial_management.service.property.manage.ManageServiceForBl;
+import financial_management.entity.property.DepositPO;
+import financial_management.entity.property.EstatePO;
+import financial_management.entity.property.FortunePO;
+import financial_management.entity.property.InvestPO;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.property.*;
@@ -135,6 +135,78 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                     break;
             }
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subEstateVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户自注册起所有月份的资产列表
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getMonthlyProList(Long userId) {
+        try {
+            FortunePO fortunePO = estateMapper.getMonthlyProList(userId);
+            FortuneVO fortuneVO = new FortuneVO(fortunePO.getDate(), fortunePO.getFunds(), fortunePO.getSaving(), fortunePO.getInsurance(), fortunePO.getStocks(), fortunePO.getGold(), fortunePO.getBond());
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, fortuneVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户自注册起所有月份的投资列表
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getMonthlyInvList(Long userId) {
+        try {
+            InvestPO investPO = estateMapper.getMonthlyInvList(userId);
+            InvestVO investVO = new InvestVO(investPO.getDate(), investPO.getStocks(), investPO.getGold(), investPO.getBond());
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户最近30天的资产列表
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getDailyProList(Long userId) {
+        try {
+            FortunePO fortunePO = estateMapper.getDailyProList(userId);
+            FortuneVO fortuneVO = new FortuneVO(fortunePO.getDate(), fortunePO.getFunds(), fortunePO.getSaving(), fortunePO.getInsurance(), fortunePO.getStocks(), fortunePO.getGold(), fortunePO.getBond());
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, fortuneVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户最近30天的投资列表
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getDailyInvList(Long userId) {
+        try {
+            InvestPO investPO = estateMapper.getDailyInvList(userId);
+            InvestVO investVO = new InvestVO(investPO.getDate(), investPO.getStocks(), investPO.getGold(), investPO.getBond());
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investVO);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

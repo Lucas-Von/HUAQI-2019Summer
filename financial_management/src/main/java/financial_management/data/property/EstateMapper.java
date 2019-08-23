@@ -1,7 +1,9 @@
 package financial_management.data.property;
 
-import financial_management.entity.DepositPO;
-import financial_management.entity.EstatePO;
+import financial_management.entity.property.DepositPO;
+import financial_management.entity.property.EstatePO;
+import financial_management.entity.property.FortunePO;
+import financial_management.entity.property.InvestPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -47,5 +49,37 @@ public interface EstateMapper {
      * @return
      */
     List<DepositPO> getDepositList(@Param("userId") Long userId);
+
+    /**
+     * 获取用户自注册起所有月份的资产列表
+     *
+     * @param userId
+     * @return
+     */
+    FortunePO getMonthlyProList(@Param("userId") Long userId);
+
+    /**
+     * 获取用户自注册起所有月份的投资列表
+     *
+     * @param userId
+     * @return
+     */
+    InvestPO getMonthlyInvList(@Param("userId") Long userId);
+
+    /**
+     * 获取用户最近30天的资产列表
+     *
+     * @param userId
+     * @return
+     */
+    FortunePO getDailyProList(@Param("userId") Long userId);
+
+    /**
+     * 获取用户最近30天的投资列表
+     *
+     * @param userId
+     * @return
+     */
+    InvestPO getDailyInvList(@Param("userId") Long userId);
 
 }

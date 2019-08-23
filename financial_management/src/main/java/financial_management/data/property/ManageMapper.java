@@ -1,6 +1,6 @@
 package financial_management.data.property;
 
-import financial_management.entity.RecAllocPO;
+import financial_management.entity.property.RecAllocPO;
 import financial_management.parameter.property.RecAllocParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -38,7 +38,7 @@ public interface ManageMapper {
      * @param userId
      * @return
      */
-    RecAllocPO getRecAlloc(Long userId);
+    RecAllocPO getRecAlloc(@Param("userId") Long userId);
 
     /**
      * 修改指定用户推荐资产配置

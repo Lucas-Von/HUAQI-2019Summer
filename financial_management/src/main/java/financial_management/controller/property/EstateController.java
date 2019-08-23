@@ -37,8 +37,28 @@ public class EstateController {
     }
 
     @GetMapping("estate/getAssetInfoList")
-    public BasicResponse getAssetInfoList(long userId, String assetType) {
+    public BasicResponse getAssetInfoList(Long userId, String assetType) {
         return estateService.getAssetInfoList(userId, assetType);
+    }
+
+    @GetMapping("estate/getMonthlyProList")
+    public BasicResponse getMonthlyProList(Long userId) {
+        return estateService.getMonthlyProList(userId);
+    }
+
+    @GetMapping("estate/getMonthlyInvList")
+    public BasicResponse getMonthlyInvList(Long userId) {
+        return estateService.getMonthlyInvList(userId);
+    }
+
+    @GetMapping("estate/getDailyProList")
+    public BasicResponse getDailyProList(Long userId) {
+        return estateService.getDailyProList(userId);
+    }
+
+    @GetMapping("estate/getDailyInvList")
+    public BasicResponse getDailyInvList(Long userId) {
+        return estateService.getDailyInvList(userId);
     }
 
 }

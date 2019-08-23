@@ -1,10 +1,12 @@
-package financial_management.entity;
+package financial_management.entity.property;
 
 import financial_management.vo.property.AssetsVO;
 import financial_management.vo.property.QuestionnaireVO;
 
 /**
  * @author lt
+ * @version 1.0
+ * @description 问卷实体
  * @date 2019/08/13 15:00
  */
 public class QuestionnairePO {

@@ -44,7 +44,7 @@
         where user_id = #{userId}
     </insert>
 
-    <resultMap id="RecAllocPO" type="financial_management.entity.RecAllocPO">
+    <resultMap id="RecAllocPO" type="financial_management.entity.property.RecAllocPO">
     </resultMap>
 
 </mapper>

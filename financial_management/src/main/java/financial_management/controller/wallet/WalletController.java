@@ -53,7 +53,7 @@ public class WalletController {
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
     }
 
-    @PostMapping(value = "/balance")
+    @GetMapping(value = "/balance")
     public BasicResponse checkBalance(HttpServletRequest request){
         //逻辑部分
         BalanceVO balance = new BalanceVO();

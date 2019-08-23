@@ -89,7 +89,7 @@ public class ArticleController {
         return articleService.searchArticlesByTitle(title);
     }
 
-    @GetMapping("/admin/search/time")
+    @PostMapping("/admin/search/time")
     public BasicResponse searchArticlesByTime(@RequestBody DateParam dateParam){
         return articleService.searchArticlesByTime(dateParam.getTime());
     }

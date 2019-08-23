@@ -38,6 +38,7 @@
         <result property="compensation" column="compensation"/>
         <result property="type" column="type"/>
     </resultMap>
+
     <resultMap id="InsProduct" type="financial_management.entity.InsProductPO">
         <id property="id" column="id"/>
         <result property="name" column="name"/>

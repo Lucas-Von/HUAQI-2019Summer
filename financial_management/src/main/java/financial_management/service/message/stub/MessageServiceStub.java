@@ -1,4 +1,4 @@
-package financial_management.bl.message.stub;
+package financial_management.service.message.stub;
 
 import financial_management.bl.message.MessageService;
 import financial_management.entity.Response;

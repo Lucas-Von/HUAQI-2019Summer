@@ -177,6 +177,30 @@ insert into `dom_stock` values ('2','东方财富','300059','13.82');
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for feedback
+-- ----------------------------
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE `feedback` (
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `title` varchar(80) NOT NULL,
+  `type` int(10) NOT NULL DEFAULT 1,
+  `detail` text DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_ID` bigint(255) NOT NULL,
+  `phone` varchar(30) NULL,
+  `QQ` varchar(15) NULL,
+  `email` varchar(100) NULL,
+  `solved` bit NOT NULL DEFAULT 0,
+  `solver_ID` bigint(255) NOT NULL,
+  `solve_time` timestamp NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of feedback
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for for_stock
 -- ----------------------------
 DROP TABLE IF EXISTS `for_stock`;
@@ -299,12 +323,12 @@ INSERT INTO `light` VALUES ('5', '1');
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `time` date DEFAULT NULL,
+  `time` timestamp NULL DEFAULT NULL,
   `user_id` bigint(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   `content` varchar(45) DEFAULT NULL,
-  `is_read` tinyint(4) DEFAULT NULL,
-  `is_delete` tinyint(4) DEFAULT NULL,
+  `is_read` bit DEFAULT NULL,
+  `is_delete` bit DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -449,8 +473,8 @@ DROP TABLE IF EXISTS `trade_record`;
 CREATE TABLE `trade_record` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `trade_id` bigint(255) DEFAULT NULL,
-  `create_time` date DEFAULT NULL,
-  `complete_time` date DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `complete_time` timestamp NULL DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   `code` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL,
@@ -458,7 +482,7 @@ CREATE TABLE `trade_record` (
   `total` float DEFAULT NULL,
   `user_id` bigint(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `is_customize` tinyint(4) DEFAULT NULL,
+  `is_customize` bit DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -472,13 +496,13 @@ CREATE TABLE `trade_record` (
 DROP TABLE IF EXISTS `transfer_record`;
 CREATE TABLE `transfer_record` (
   `id` bigint(255) NOT NULL,
-  `create_time` date DEFAULT NULL,
-  `complete_time` date DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `complete_time` timestamp NULL DEFAULT NULL,
   `sell_type` int(11) DEFAULT NULL,
   `buy_type` int(11) DEFAULT NULL,
   `user_id` bigint(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `is_customize` tinyint(4) DEFAULT NULL,
+  `is_customize` bit DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

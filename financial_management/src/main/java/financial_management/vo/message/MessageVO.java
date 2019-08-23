@@ -1,5 +1,7 @@
 package financial_management.vo.message;
 
+import financial_management.entity.MessagePO;
+
 import java.util.Date;
 
 public class MessageVO {
@@ -65,5 +67,14 @@ public class MessageVO {
         this.type = type;
         this.content = content;
         this.isRead = isRead;
+    }
+
+    public MessageVO(MessagePO po) {
+        this.ID = po.getID();
+        this.time = po.getTime();
+        this.userID = po.getUserID();
+        this.type = po.getType();
+        this.content = po.getContent();
+        this.isRead = po.getIsRead();
     }
 }

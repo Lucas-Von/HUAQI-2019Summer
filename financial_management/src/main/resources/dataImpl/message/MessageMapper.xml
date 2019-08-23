@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.message.MessageMapper">
+    <resultMap id="original" type="financial_management.entity.MessagePO">
+        <id column="id" jdbcType="BIGINT" property="ID"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="user_id" jdbcType="BIGINT" property="userID"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="is_read" jdbcType="BIT" property="isRead"/>
+        <result column="is_delete" jdbcType="BIT" property="isDelete"/>
+    </resultMap>
+
+    <sql id="all">
+        `id`, `time`, `user_id`, `type`, `content`, `is_read`, `is_delete`
+    </sql>
+
+    <select id="selectByUserID" resultMap="original">
+        select
+        <include refid="all"/>
+        from message
+        where user_id = #{userID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByUserIDandType" resultMap="original">
+        select
+        <include refid="all"/>
+        from message
+        where user_id = #{userID,jdbcType=BIGINT}
+        and type = #{type,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserIDandTypeAndPage" resultMap="original">
+
+    </select>
+
+    <select id="selectLatestMessageByTypeAndUserID" resultMap="original">
+        select
+        <include refid="all"/>
+        from message
+        where type = #{type,jdbcType=Integer}
+        and user_id = #{userID,jdbcType=BIGINT}
+        order by time desc
+        limit 1
+    </select>
+
+    <select id="selectAmountOfUnreadByTypeAndUserID" resultType="java.lang.Integer">
+        select count(id)
+        from message
+        where type = #{type,jdbcType=INTEGER}
+          and user_id = #{userID,jdbcType=BIGINT}
+          and is_read = 0
+    </select>
+
+    <insert id="insertMessage" parameterType="financial_management.entity.MessagePO">
+        insert into message (id, time, user_id, type, content, is_read, is_delete)
+        values (#{ID,jdbcType=BIGINT}, #{time,jdbcType=TIMESTAMP}, #{userID,jdbcType=BIGINT}, #{type,jdbcType=INTEGER},
+                #{content,jdbcType=VARCHAR}, #{isRead,jdbcType=BIT}, #{isDelete,jdbcType=BIT})
+    </insert>
+
+    <update id="readMessageByTypeAndUserID">
+        update message
+        set id        = #{ID},
+            time      = #{time},
+            user_id   = #{userID},
+            type      = #{type},
+            content   = #{content},
+            is_read   = 1,
+            is_delete = #{isDelete}
+        where type = #{type}
+          and user_id = #{userID}
+    </update>
+</mapper>

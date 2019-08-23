@@ -34,6 +34,11 @@
         order by pageviews desc, time desc
     </select>
 
+    <select id="selectAllArticlesByTimeByAdmin" resultMap="ArticlePO">
+        select * from article
+        order by time desc
+    </select>
+
     <select id="ifExist" resultType="boolean">
         select count(article_id)
         from article where article_id = #{articleId}
@@ -43,6 +48,18 @@
         update article set pageviews = pageviews + 1
         where article_id = #{articleId}
     </update>
+
+    <select id="selectArticleByTitle" resultMap="ArticlePO">
+        select * from article
+        where title like '%${title}%'
+        order by time desc
+    </select>
+
+    <select id="selectArticleByTags" resultMap="ArticlePO">
+        select * from article
+        where tags like '%${tags}%'
+        order by time desc
+    </select>
 
     <resultMap id="ArticlePO" type="financial_management.entity.ArticlePO">
         <result column="article_id" property="articleId"></result>

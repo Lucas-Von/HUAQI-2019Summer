@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `admin` (
+  `admin_id` bigint(255) NOT NULL,
+  PRIMARY KEY (`admin_id`),
+  UNIQUE KEY `admin_admin_id_uindex` (`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admin`
+--
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (888);
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `article`
 --
 
@@ -156,7 +180,7 @@ CREATE TABLE `comment` (
   `content` varchar(10000) DEFAULT NULL,
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,6 +191,29 @@ LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
 INSERT INTO `comment` VALUES (1,5,1,'评论！！！','2019-08-18 15:08:17'),(2,5,1,'评论？？？','2019-08-18 15:08:41');
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deposit`
+--
+
+DROP TABLE IF EXISTS `deposit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `deposit` (
+  `user_id` bigint(255) NOT NULL,
+  `amount` float DEFAULT NULL,
+  `percentage` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `deposit`
+--
+
+LOCK TABLES `deposit` WRITE;
+/*!40000 ALTER TABLE `deposit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deposit` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -249,6 +296,35 @@ INSERT INTO `for_stock` VALUES (1,'外唐发电','613991',14.06),(2,'外方财�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `fortune`
+--
+
+DROP TABLE IF EXISTS `fortune`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fortune` (
+  `user_id` bigint(255) NOT NULL,
+  `date` date NOT NULL,
+  `funds` float DEFAULT NULL,
+  `saving` float DEFAULT NULL,
+  `insurance` float DEFAULT NULL,
+  `stock` float DEFAULT NULL,
+  `gold` float DEFAULT NULL,
+  `bond` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fortune`
+--
+
+LOCK TABLES `fortune` WRITE;
+/*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
+INSERT INTO `fortune` VALUES (1,'2019-08-01',25,30,25,50,60,80),(1,'2019-08-02',25,30,25,50,60,80),(1,'2019-08-03',25,30,25,50,60,80),(1,'2019-08-04',25,30,25,50,60,80),(1,'2019-08-05',25,30,25,50,60,80);
+/*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `fund`
 --
 
@@ -296,6 +372,54 @@ LOCK TABLES `gold` WRITE;
 /*!40000 ALTER TABLE `gold` DISABLE KEYS */;
 INSERT INTO `gold` VALUES (1,'国际现货黄金','XAUUSD',1513.26);
 /*!40000 ALTER TABLE `gold` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `if_changed_email`
+--
+
+DROP TABLE IF EXISTS `if_changed_email`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `if_changed_email` (
+  `email` varchar(255) DEFAULT NULL,
+  `status` int(255) DEFAULT '1',
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `if_changed_email`
+--
+
+LOCK TABLES `if_changed_email` WRITE;
+/*!40000 ALTER TABLE `if_changed_email` DISABLE KEYS */;
+INSERT INTO `if_changed_email` VALUES ('153604998@qq.com',3,'2019-08-22 14:38:45');
+/*!40000 ALTER TABLE `if_changed_email` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `if_changed_password`
+--
+
+DROP TABLE IF EXISTS `if_changed_password`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `if_changed_password` (
+  `email` varchar(255) DEFAULT NULL,
+  `status` int(255) DEFAULT '1',
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `if_changed_password`
+--
+
+LOCK TABLES `if_changed_password` WRITE;
+/*!40000 ALTER TABLE `if_changed_password` DISABLE KEYS */;
+INSERT INTO `if_changed_password` VALUES ('153604998@qq.com',3,'2019-08-22 14:39:17');
+/*!40000 ALTER TABLE `if_changed_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -638,8 +762,36 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,50,500,30,15,35,26,'6～12个月(中长期或长期)');
+INSERT INTO `questionnaire` VALUES (1,20,500,30,15,35,26,'6～12个月(中长期或长期)'),(2,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(3,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(4,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(5,56,500,30,25,35,26,'6～12个月(中长期或长期)');
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rec_alloc`
+--
+
+DROP TABLE IF EXISTS `rec_alloc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rec_alloc` (
+  `user_id` bigint(255) NOT NULL,
+  `funds_rate` float DEFAULT NULL,
+  `saving_rate` float DEFAULT NULL,
+  `insurance_rate` float DEFAULT NULL,
+  `invest_rate` float DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rec_alloc`
+--
+
+LOCK TABLES `rec_alloc` WRITE;
+/*!40000 ALTER TABLE `rec_alloc` DISABLE KEYS */;
+INSERT INTO `rec_alloc` VALUES (1,0.5,0.02,0.08,0.4),(2,0.8,0.02,0.08,0.1);
+/*!40000 ALTER TABLE `rec_alloc` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -724,7 +876,7 @@ CREATE TABLE `user` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `profile_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -733,7 +885,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (5,'320684199809070018','xyh','153604998@qq.com','18951899427','9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc',NULL,'xyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-17 09:58:08','xxx'),(6,'320684199809070019','xxyh','153604998@qq.comm',NULL,NULL,NULL,'xxyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 14:46:34',NULL),(7,'320684199809070020','xyh','153604998@qq.commm',NULL,NULL,NULL,'xyhhhhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 14:47:10',NULL);
+INSERT INTO `user` VALUES (1,'320684199809070018','xyh','153604998@qq.com','18951899427','9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc',NULL,'xyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-17 09:58:08','xxx'),(2,'320684199809070019','xxyh','153604998@qq.comm',NULL,NULL,NULL,'xxyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 14:46:34',NULL),(3,'320684199809070020','xyh','153604998@qq.commm',NULL,NULL,NULL,'xyhhhhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 14:47:10',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -754,4 +906,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-22 21:55:19
+-- Dump completed on 2019-08-23 14:50:06

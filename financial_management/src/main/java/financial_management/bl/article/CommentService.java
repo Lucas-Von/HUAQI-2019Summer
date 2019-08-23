@@ -40,7 +40,7 @@ public interface CommentService {
     BasicResponse reportComment(Long commentId);
 
     /**
-     * 删除一条评论
+     * 删除一条评论（管理员）
      * @param commentId
      * @return
      */

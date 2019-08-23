@@ -115,6 +115,7 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
         if(userMapper.ifExistEmail(userEmailParam.getOldEmail())) {
             if(!userMapper.ifExistEmail(userEmailParam.getNewEmail())) {
                 userMapper.updateEmail(userEmailParam.getOldEmail(), userEmailParam.getNewEmail());
+                userMapper.changeStatusInIfChangedEmail(userEmailParam.getOldEmail(),2);
                 return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
             }else {
                 return new BasicResponse(ResponseStatus.STATUS_EMAIL_EXIST);
@@ -150,6 +151,7 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
         if(userMapper.ifExistEmail(userPasswordParam.getEmail())){
             String password = getCryptPassword(userPasswordParam.getPassword());
             userMapper.updatePasswordByEmail(userPasswordParam.getEmail(),password);
+            userMapper.changeStatusInIfChangedPassword(userPasswordParam.getEmail(),2);
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
             return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
@@ -169,6 +171,12 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
 
             SendEmail.send(email, "修改绑定邮箱邮件", sb.toString());
 
+            if(!userMapper.ifExistChangedEmail(email)) {
+                userMapper.insertIfChangedEmail(email);
+            }else {
+                userMapper.changeStatusInIfChangedEmail(email,1);
+            }
+
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
             return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
@@ -185,6 +193,12 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
             sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
             sb.append(email);
             sb.append("</a>");
+
+            if(!userMapper.ifExistChangedPassword(email)) {
+                userMapper.insertIfChangedPassword(email);
+            }else {
+                userMapper.changeStatusInIfChangedPassword(email,1);
+            }
 
             SendEmail.send(email, "修改密码邮件", sb.toString());
 
@@ -220,16 +234,9 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
             List<Long> articleIds = collectionServiceForBl.getCollections(userId);
             List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
             for (int i = 0; i < articleIds.size(); i++) {
-                ArticleSimpleInfoVO articleSimpleInfoVO = new ArticleSimpleInfoVO();
                 ArticlePO articlePO = articleServiceForBl.getArticle(articleIds.get(i));
-
-                articleSimpleInfoVO.setArticleId(articlePO.getArticleId());
-                articleSimpleInfoVO.setSummary(articlePO.getSummary());
-                articleSimpleInfoVO.setTitle(articlePO.getTitle());
+                ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
                 articleSimpleInfoVO.setCollected(true);
-                articleSimpleInfoVO.setPageviews(articlePO.getPageviews());
-                articleSimpleInfoVO.setTime(articlePO.getTime());
-                articleSimpleInfoVO.setTags(articlePO.getTags());
 
                 articleSimpleInfoVOS.add(articleSimpleInfoVO);
             }
@@ -301,6 +308,46 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     @Override
     public BasicResponse getUserAmount(){
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userMapper.getUserAmount());
+    }
+
+    @Override
+    public BasicResponse ifChangedEmail(String email){
+        if(userMapper.ifExistEmail(email)) {
+            if(userMapper.ifExistChangedEmail(email)){
+                int status = userMapper.ifChangedEmail(email);
+                if(status == 1){
+                    return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+                }else if(status == 2){
+                    return new BasicResponse(ResponseStatus.STATUS_HAS_CHANGED);
+                }else {
+                    return new BasicResponse(ResponseStatus.STATUS_TIME_OUT);
+                }
+            }else {
+                return new BasicResponse(ResponseStatus.STATUS_INVALID_LINK);
+            }
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
+    }
+
+    @Override
+    public BasicResponse ifChangedPassword(String email){
+        if(userMapper.ifExistEmail(email)) {
+            if(userMapper.ifExistChangedPassword(email)){
+                int status = userMapper.ifChangedPassword(email);
+                if(status == 1){
+                    return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+                }else if(status == 2){
+                    return new BasicResponse(ResponseStatus.STATUS_HAS_CHANGED);
+                }else {
+                    return new BasicResponse(ResponseStatus.STATUS_TIME_OUT);
+                }
+            }else {
+                return new BasicResponse(ResponseStatus.STATUS_INVALID_LINK);
+            }
+        }else {
+            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }
     }
 
     @Override

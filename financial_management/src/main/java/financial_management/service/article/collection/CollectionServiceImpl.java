@@ -55,4 +55,9 @@ public class CollectionServiceImpl implements CollectionService, CollectionServi
     public List<Long> getCollections(Long userId) {
         return collectionMapper.getCollections(userId);
     }
+
+    @Override
+    public Long getCollectionAmount(Long articleId){
+        return collectionMapper.getCollectionAmount(articleId);
+    }
 }

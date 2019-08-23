@@ -1,9 +1,11 @@
-package financial_management.entity;
+package financial_management.entity.property;
 
 import java.util.Date;
 
 /**
  * @author lt
+ * @version 1.0
+ * @description 储蓄产品类
  * @date 2019/08/22
  */
 public class DepositPO {
@@ -59,4 +61,5 @@ public class DepositPO {
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
+
 }

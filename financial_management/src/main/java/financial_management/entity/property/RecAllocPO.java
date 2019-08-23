@@ -1,7 +1,9 @@
-package financial_management.entity;
+package financial_management.entity.property;
 
 /**
  * @author lt
+ * @version 1.0
+ * @description 用户推荐资产配置信息实体
  * @date 2019/08/23 00:37
  */
 public class RecAllocPO {

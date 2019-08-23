@@ -2,7 +2,6 @@ package financial_management.bl.property;
 
 import financial_management.parameter.property.RecAllocParam;
 import financial_management.vo.BasicResponse;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @author lt
@@ -16,7 +15,7 @@ public interface ManageService {
      * @param adminId
      * @return
      */
-    BasicResponse getRecAllocList(@Param("adminId") Long adminId);
+    BasicResponse getRecAllocList(Long adminId);
 
     /**
      * 获取指定用户推荐资产配置

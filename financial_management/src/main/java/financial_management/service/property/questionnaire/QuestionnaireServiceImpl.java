@@ -2,7 +2,7 @@ package financial_management.service.property.questionnaire;
 
 import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.property.QuestionnaireMapper;
-import financial_management.entity.QuestionnairePO;
+import financial_management.entity.property.QuestionnairePO;
 import financial_management.parameter.property.QuestionnaireParam;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;

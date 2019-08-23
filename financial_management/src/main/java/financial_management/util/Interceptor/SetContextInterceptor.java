@@ -25,8 +25,8 @@ public class SetContextInterceptor {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         if (attr != null && attr.getRequest() != null){
             HttpServletRequest request = attr.getRequest();
-            Long userid = jwtUtil.getIdFromRequest(request);
-            ContextHolder.create(new Context(userid));
+            Long userId = jwtUtil.getIdFromRequest(request);
+            ContextHolder.create(new Context(userId));
             try {
                 return (BasicResponse) pjp.proceed();
             } catch (Throwable throwable) {

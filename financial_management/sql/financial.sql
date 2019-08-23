@@ -304,11 +304,11 @@ DROP TABLE IF EXISTS `fortune`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fortune` (
   `user_id` bigint(255) NOT NULL,
-  `date` date NOT NULL,
+  `record_date` date NOT NULL,
   `funds` float DEFAULT NULL,
   `saving` float DEFAULT NULL,
   `insurance` float DEFAULT NULL,
-  `stock` float DEFAULT NULL,
+  `stocks` float DEFAULT NULL,
   `gold` float DEFAULT NULL,
   `bond` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -320,7 +320,7 @@ CREATE TABLE `fortune` (
 
 LOCK TABLES `fortune` WRITE;
 /*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
-INSERT INTO `fortune` VALUES (1,'2019-08-01',25,30,25,50,60,80),(1,'2019-08-02',25,30,25,50,60,80),(1,'2019-08-03',25,30,25,50,60,80),(1,'2019-08-04',25,30,25,50,60,80),(1,'2019-08-05',25,30,25,50,60,80);
+INSERT INTO `fortune` VALUES (1,'2019-08-01',25,30,25,50,60,80),(1,'2019-08-02',25,30,25,50,60,80),(1,'2019-08-03',25,30,25,50,60,80),(1,'2019-08-04',25,30,25,50,60,80),(1,'2019-08-05',25,30,25,50,60,80),(1,'2019-08-22',25,30,25,50,60,80),(1,'2019-08-23',28,30,25,80,60,80);
 /*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -906,4 +906,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-23 14:50:06
+-- Dump completed on 2019-08-23 22:58:56

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * @author lt
  * @date 2019/08/23 00:19
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/property")
 public class ManageController {
@@ -24,7 +25,7 @@ public class ManageController {
 
 
     @GetMapping("/manage/getRecAlloc")
-    public BasicResponse getRecAlloc(long userId) {
+    public BasicResponse getRecAlloc(Long userId) {
         return manageService.getRecAlloc(userId);
     }
 

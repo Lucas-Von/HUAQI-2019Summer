@@ -44,10 +44,10 @@
         on md.product_id = d.id
     </select>
 
-    <resultMap id="EstatePO" type="financial_management.entity.EstatePO">
+    <resultMap id="EstatePO" type="financial_management.entity.property.EstatePO">
     </resultMap>
 
-    <resultMap id="DepositPO" type="financial_management.entity.DepositPO">
+    <resultMap id="DepositPO" type="financial_management.entity.property.DepositPO">
     </resultMap>
 
 </mapper>

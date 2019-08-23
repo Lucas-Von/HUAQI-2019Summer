@@ -1,7 +1,9 @@
-package financial_management.entity;
+package financial_management.entity.property;
 
 /**
  * @author lt
+ * @version 1.0
+ * @description 用户资产信息
  * @date 2019/08/13 14:25
  */
 public class EstatePO {

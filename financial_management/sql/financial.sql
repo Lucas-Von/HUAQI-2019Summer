@@ -180,7 +180,7 @@ CREATE TABLE `comment` (
   `content` varchar(10000) DEFAULT NULL,
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,6 +293,35 @@ LOCK TABLES `for_stock` WRITE;
 /*!40000 ALTER TABLE `for_stock` DISABLE KEYS */;
 INSERT INTO `for_stock` VALUES (1,'外唐发电','613991',14.06),(2,'外方财富','000000',113.82);
 /*!40000 ALTER TABLE `for_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fortune`
+--
+
+DROP TABLE IF EXISTS `fortune`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fortune` (
+  `user_id` bigint(255) NOT NULL,
+  `date` date NOT NULL,
+  `funds` float DEFAULT NULL,
+  `saving` float DEFAULT NULL,
+  `insurance` float DEFAULT NULL,
+  `stock` float DEFAULT NULL,
+  `gold` float DEFAULT NULL,
+  `bond` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fortune`
+--
+
+LOCK TABLES `fortune` WRITE;
+/*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
+INSERT INTO `fortune` VALUES (1,'2019-08-01',25,30,25,50,60,80),(1,'2019-08-02',25,30,25,50,60,80),(1,'2019-08-03',25,30,25,50,60,80),(1,'2019-08-04',25,30,25,50,60,80),(1,'2019-08-05',25,30,25,50,60,80);
+/*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -733,7 +762,7 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,20,500,30,15,35,26,'6～12个月(中长期或长期)');
+INSERT INTO `questionnaire` VALUES (1,20,500,30,15,35,26,'6～12个月(中长期或长期)'),(2,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(3,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(4,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(5,56,500,30,25,35,26,'6～12个月(中长期或长期)');
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -847,7 +876,7 @@ CREATE TABLE `user` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `profile_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -877,4 +906,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-23  3:02:48
+-- Dump completed on 2019-08-23 14:50:06

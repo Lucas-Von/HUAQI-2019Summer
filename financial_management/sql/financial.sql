@@ -291,7 +291,7 @@ CREATE TABLE `light` (
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `time` date DEFAULT NULL,
+  `time` timestamp NULL DEFAULT NULL,
   `user_id` bigint(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   `content` varchar(45) DEFAULT NULL,
@@ -427,8 +427,8 @@ DROP TABLE IF EXISTS `trade_record`;
 CREATE TABLE `trade_record` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `trade_id` bigint(255) DEFAULT NULL,
-  `create_time` date DEFAULT NULL,
-  `complete_time` date DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `complete_time` timestamp NULL DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   `code` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL,
@@ -450,8 +450,8 @@ CREATE TABLE `trade_record` (
 DROP TABLE IF EXISTS `transfer_record`;
 CREATE TABLE `transfer_record` (
   `id` bigint(255) NOT NULL,
-  `create_time` date DEFAULT NULL,
-  `complete_time` date DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `complete_time` timestamp NULL DEFAULT NULL,
   `sell_type` int(11) DEFAULT NULL,
   `buy_type` int(11) DEFAULT NULL,
   `user_id` bigint(255) DEFAULT NULL,

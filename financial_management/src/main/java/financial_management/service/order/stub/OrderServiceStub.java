@@ -1,4 +1,4 @@
-package financial_management.bl.order.stub;
+package financial_management.service.order.stub;
 
 import financial_management.bl.order.OrderService;
 import financial_management.entity.Response;

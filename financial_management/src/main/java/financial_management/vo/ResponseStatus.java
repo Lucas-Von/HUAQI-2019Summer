@@ -13,6 +13,7 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_COMMENT_NOT_LIGHTED = new ResponseStatus("2005", "The comment has not been lighted");
     public static final ResponseStatus STATUS_COMMENT_NOT_EXIST = new ResponseStatus("2006", "The comment does not exist");
 
+    public static final ResponseStatus STATUS_PAYPASSWORD_WRONG = new ResponseStatus("5001","支付密码错误");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_EXIST = new ResponseStatus("6001","The user has filled out the questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_NOT_EXIST = new ResponseStatus("6002","The user has not filled out the questionnaire.");
     public static final ResponseStatus STATUS_MANAGE_NOT_ADMIN = new ResponseStatus("6003", "The user is not admin.");

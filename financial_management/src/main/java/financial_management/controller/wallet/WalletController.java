@@ -2,6 +2,8 @@ package financial_management.controller.wallet;
 
 import financial_management.parameter.wallet.*;
 import financial_management.util.JwtUtil;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.wallet.BalanceVO;
 import financial_management.vo.wallet.BindingVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.RemoteEndpoint;
 
 /**
  * @Description TODO
@@ -25,43 +28,48 @@ public class WalletController {
     JwtUtil jwtUtil;
 
     @PostMapping(value = "/recharge")
-    public ResponseEntity<?> recharging(@RequestBody RechargeParam param, HttpServletRequest request){
+    public BasicResponse recharging(@RequestBody RechargeParam param, HttpServletRequest request){
 
         //逻辑部分
-        return ResponseEntity.ok().build();
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 
     @PostMapping(value = "/payment/balance")
-    public ResponseEntity<?> payment(@RequestBody PaymentParam payment,HttpServletRequest request){
+    public BasicResponse payment(@RequestBody PaymentParam payment,HttpServletRequest request){
 
-        return ResponseEntity.ok().build();
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 
     @PostMapping(value = "/withdraw")
-    public ResponseEntity<?> withdraw(@RequestBody WithdrawParam withdraw){
-        return ResponseEntity.ok().build();
+    public BasicResponse withdraw(@RequestBody WithdrawParam withdraw){
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 
     @PostMapping(value = "/binding")
-    public ResponseEntity<?> cardBinding(@RequestBody BindingParam binding){
+    public BasicResponse cardBinding(@RequestBody BindingParam binding){
         BindingVO vo = new BindingVO();
 
         vo.setBound(true);
-        return ResponseEntity.ok().body(vo);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
     }
 
     @PostMapping(value = "/balance")
-    public ResponseEntity<?> checkBalance(HttpServletRequest request){
+    public BasicResponse checkBalance(HttpServletRequest request){
         //逻辑部分
         BalanceVO balance = new BalanceVO();
         balance.setBalance(2000L);
         balance.setCardid("3211233211233211");
-        return ResponseEntity.ok().body(balance);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,balance);
     }
 
     @PostMapping(value = "/payment/thirdparty")
-    public ResponseEntity<?> payByCard(HttpServletRequest request, @RequestBody ThirdPartyPaymentParam param){
+    public BasicResponse payByCard(HttpServletRequest request, @RequestBody ThirdPartyPaymentParam param) {
+        if (true) {
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
 
-        return ResponseEntity.ok().build();
+        }
+        else {
+            return new BasicResponse<>(ResponseStatus.STATUS_PAYPASSWORD_WRONG,null);
+        }
     }
 }

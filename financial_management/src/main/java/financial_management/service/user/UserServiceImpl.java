@@ -173,6 +173,8 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
 
             if(!userMapper.ifExistChangedEmail(email)) {
                 userMapper.insertIfChangedEmail(email);
+            }else {
+                userMapper.changeStatusInIfChangedEmail(email,1);
             }
 
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
@@ -194,6 +196,8 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
 
             if(!userMapper.ifExistChangedPassword(email)) {
                 userMapper.insertIfChangedPassword(email);
+            }else {
+                userMapper.changeStatusInIfChangedPassword(email,1);
             }
 
             SendEmail.send(email, "修改密码邮件", sb.toString());
@@ -230,16 +234,9 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
             List<Long> articleIds = collectionServiceForBl.getCollections(userId);
             List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
             for (int i = 0; i < articleIds.size(); i++) {
-                ArticleSimpleInfoVO articleSimpleInfoVO = new ArticleSimpleInfoVO();
                 ArticlePO articlePO = articleServiceForBl.getArticle(articleIds.get(i));
-
-                articleSimpleInfoVO.setArticleId(articlePO.getArticleId());
-                articleSimpleInfoVO.setSummary(articlePO.getSummary());
-                articleSimpleInfoVO.setTitle(articlePO.getTitle());
+                ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
                 articleSimpleInfoVO.setCollected(true);
-                articleSimpleInfoVO.setPageviews(articlePO.getPageviews());
-                articleSimpleInfoVO.setTime(articlePO.getTime());
-                articleSimpleInfoVO.setTags(articlePO.getTags());
 
                 articleSimpleInfoVOS.add(articleSimpleInfoVO);
             }

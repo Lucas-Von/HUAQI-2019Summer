@@ -12,4 +12,11 @@
         values(#{userId}, #{funds}, #{saving},  #{insurance}, #{stocks}, #{gold}, #{bond}, #{answer})
     </insert>
 
+    <insert id="updateQuest" parameterType="financial_management.parameter.property.QuestionnaireParam"
+            useGeneratedKeys="true" keyProperty="id">
+        update questionnaire
+        set funds = #{funds}, saving = #{saving}, insurance = #{insurance}, stocks = #{stocks}, gold = #{gold}, bond = #{bond}, answer = #{answer}
+        where user_id = #{userId}
+    </insert>
+
 </mapper>

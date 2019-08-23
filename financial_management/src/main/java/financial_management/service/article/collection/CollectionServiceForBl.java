@@ -21,4 +21,11 @@ public interface CollectionServiceForBl {
      * @return
      */
     List<Long> getCollections(Long userId);
+
+    /**
+     * 获得一篇文章的总收藏数
+     * @param articleId
+     * @return
+     */
+    Long getCollectionAmount(Long articleId);
 }

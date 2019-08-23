@@ -48,21 +48,6 @@ public class DepositVO {
         this.distance = daysBetween(new Date(), expirationDate);
     }
 
-
-    /**
-     * 计算两个日期之间相差的天数
-     */
-    public static int daysBetween(Date smallDate, Date bigDate) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(smallDate);
-        long time1 = cal.getTimeInMillis();
-        cal.setTime(bigDate);
-        long time2 = cal.getTimeInMillis();
-        long between_days = (time2 - time1) / (1000 * 3600 * 24);
-        return Integer.parseInt(String.valueOf(between_days));
-    }
-
-
     public DepositVO() {
 
     }
@@ -89,6 +74,19 @@ public class DepositVO {
 
     public int getDistance() {
         return distance;
+    }
+
+    /**
+     * 计算两个日期之间相差的天数
+     */
+    public static int daysBetween(Date smallDate, Date bigDate) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(smallDate);
+        long time1 = cal.getTimeInMillis();
+        cal.setTime(bigDate);
+        long time2 = cal.getTimeInMillis();
+        long between_days = (time2 - time1) / (1000 * 3600 * 24);
+        return Integer.parseInt(String.valueOf(between_days));
     }
 
 }

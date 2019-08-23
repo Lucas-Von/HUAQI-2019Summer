@@ -1,7 +1,6 @@
 package financial_management.bl.property;
 
 import financial_management.vo.BasicResponse;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @author lt
@@ -15,7 +14,7 @@ public interface EstateService {
      * @param userId
      * @return
      */
-    BasicResponse getPropertyByUser(@Param("userId") Long userId);
+    BasicResponse getPropertyByUser(Long userId);
 
     /**
      * 获取用户累计收益
@@ -23,7 +22,7 @@ public interface EstateService {
      * @param userId
      * @return
      */
-    BasicResponse getTotalIncome(@Param("userId") Long userId);
+    BasicResponse getTotalIncome(Long userId);
 
     /**
      * 获取用户昨日收益
@@ -31,14 +30,54 @@ public interface EstateService {
      * @param userId
      * @return
      */
-    BasicResponse getNewlyIncome(@Param("userId") Long userId);
+    BasicResponse getNewlyIncome(Long userId);
 
     /**
      * 获取用户储蓄产品列表
      *
+     * @param userId
      * @return
-     * @Param userId
      */
-    BasicResponse getDepositList(@Param("userId") Long userId);
+    BasicResponse getDepositList(Long userId);
+
+    /**
+     * 获取用户指定资产类型信息列表
+     *
+     * @param userId, assetType
+     * @return
+     */
+    BasicResponse getAssetInfoList(Long userId, String assetType);
+
+    /**
+     * 获取用户自注册起所有月份的资产列表
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getMonthlyProList(Long userId);
+
+    /**
+     * 获取用户自注册起所有月份的投资列表
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getMonthlyInvList(Long userId);
+
+    /**
+     * 获取用户最近30天的资产列表
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getDailyProList(Long userId);
+
+    /**
+     * 获取用户最近30天的投资列表
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getDailyInvList(Long userId);
 
 }

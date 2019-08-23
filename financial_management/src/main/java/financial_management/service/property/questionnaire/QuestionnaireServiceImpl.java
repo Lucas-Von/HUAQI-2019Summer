@@ -2,7 +2,7 @@ package financial_management.service.property.questionnaire;
 
 import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.property.QuestionnaireMapper;
-import financial_management.entity.QuestionnairePO;
+import financial_management.entity.property.QuestionnairePO;
 import financial_management.parameter.property.QuestionnaireParam;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
@@ -30,9 +30,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         try {
             boolean hasRecorded = questionnaireMapper.hasQuest(userId);
             if (hasRecorded) {
-                return new BasicResponse(ResponseStatus.STATUS_QUESTION_EXIST);
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_EXIST);
             } else {
-                return new BasicResponse(ResponseStatus.STATUS_QUESTION_NOT_EXIST);
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +65,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Override
     public BasicResponse addQuestionnaire(QuestionnaireParam questionnaireParam) {
         try {
-            questionnaireMapper.insertQuest(questionnaireParam);
+            Long userId = questionnaireParam.getUserId();
+            boolean hasRecorded = questionnaireMapper.hasQuest(userId);
+            if (!hasRecorded) {
+                questionnaireMapper.insertQuest(questionnaireParam);
+            } else {
+                questionnaireMapper.updateQuest(questionnaireParam);
+            }
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package financial_management.vo.product;
 
+import financial_management.entity.FundPO;
 import financial_management.entity.MyFundPO;
 
 import java.util.Date;
@@ -51,9 +52,10 @@ public class FundVO {
 
     public FundVO() {
     }
-    public FundVO(MyFundPO po,String name) {
+    public FundVO(MyFundPO po, FundPO fund) {
         this.amount =  po.getBalance().doubleValue();
-        this.rate = po.getRate().doubleValue();
-        this.name = name;
+        this.rate = fund.getRate().doubleValue();
+        this.name = fund.getName();
+        this.updateTime = fund.getTime();
     }
 }

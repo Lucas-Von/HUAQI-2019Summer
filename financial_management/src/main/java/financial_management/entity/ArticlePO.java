@@ -1,5 +1,10 @@
 package financial_management.entity;
 
+import financial_management.vo.article.ArticleAdminVO;
+import financial_management.vo.article.ArticleSimpleAdminVO;
+import financial_management.vo.article.ArticleSimpleInfoVO;
+import financial_management.vo.article.ArticleVO;
+
 import java.sql.Timestamp;
 
 public class ArticlePO {
@@ -110,6 +115,22 @@ public class ArticlePO {
 
     public void setTime(Timestamp time) {
         this.time = time;
+    }
+
+    public ArticleVO getArticleVO(){
+        return new ArticleVO(title, mdContent, htmlContent, pageviews, time, tags);
+    }
+
+    public ArticleSimpleInfoVO getArticleSimpleInfoVO(){
+        return new ArticleSimpleInfoVO(articleId, title, summary, pageviews, time, tags);
+    }
+
+    public ArticleAdminVO getArticleAdminVO(){
+        return new ArticleAdminVO(title, summary, mdContent, htmlContent,category, time, tags);
+    }
+
+    public ArticleSimpleAdminVO getArticleSimpleAdminVO(){
+        return new ArticleSimpleAdminVO(articleId, title, summary, pageviews, time, tags, category);
     }
 
     public ArticlePO() {

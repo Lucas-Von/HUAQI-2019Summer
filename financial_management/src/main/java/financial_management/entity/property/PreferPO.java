@@ -1,7 +1,9 @@
-package financial_management.entity;
+package financial_management.entity.property;
 
 /**
  * @author lt
+ * @version 1.0
+ * @description 问卷题目类
  * @date 2019/08/13 15:20
  */
 public class PreferPO {

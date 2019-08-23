@@ -10,16 +10,8 @@
     </select>
 
     <select id="selectSelfBond" resultMap="MyBondProduct">
-        select
-          mb.user_id,
-          mb.code,
-          mb.amount,
-          mb.profit,
-          mb.profit_rate,
-          mb.purchase_price,
-          mb.quantity
-        from my_bond mb
-        where mb.user_id=#{userId}
+        select * from my_bond
+        where user_id=#{userId}
     </select>
 
     <insert id="insertMyBond" parameterType="financial_management.entity.MyBondPO">
@@ -32,7 +24,7 @@
         <result property="purchasePrice" column="purchase_price"/>
         <result property="profit" column="profit"/>
         <result property="profitRate" column="profit_rate"/>
-        <result property="quantity" column="qiantity"/>
+        <result property="quantity" column="quantity"/>
         <result property="amount" column="amount"/>
     </resultMap>
 

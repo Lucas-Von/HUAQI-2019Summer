@@ -6,7 +6,7 @@
          balance balance,
          update_time updateTime,
          pay_password payPassword
-         from my_fund
+         from my_fund where user_id = #{userId}
     </select>
 
     <select id="selectFund" resultType="financial_management.entity.FundPO">

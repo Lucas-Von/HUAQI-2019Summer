@@ -87,7 +87,7 @@ public class MyGoldPO {
     }
 
     public void setQuantity(Integer quantity) {
-        quantity = quantity;
+        this.quantity = quantity;
     }
 
     public Float getAmount() {

@@ -67,7 +67,7 @@ public class FundServiceImpl implements FundService4Wallet, FundService, Product
     public FundVO getFund(Long userId) {
         MyFundPO po = mapper.selectSelfFund(userId);
         FundPO fund = mapper.selectFund();
-        return new FundVO(po,fund.getName());
+        return new FundVO(po,fund);
 
     }
 

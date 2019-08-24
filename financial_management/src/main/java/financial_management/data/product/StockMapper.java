@@ -31,4 +31,8 @@ public interface StockMapper {
     DomStockPO selectDomStockByCode(String code);
 
     ForStockPO selectForStockByCode(String code);
+
+    ForStockPO selectForStockById(Long id);
+
+    DomStockPO selectDomStockById(Long id);
 }

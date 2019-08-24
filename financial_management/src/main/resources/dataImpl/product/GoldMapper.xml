@@ -9,6 +9,10 @@
         select * from my_gold where user_id=#{userId}
     </select>
 
+    <select id="selectById" resultMap="GoldProduct">
+        select * from gold where id = #{Id}
+    </select>
+
     <insert id="insertMyGold" parameterType="financial_management.entity.MyGoldPO">
         insert into my_gold (user_id, code, purchase_price, profit, profit_rate, quantity, amount) values (#{userId},#{code},#{purchasePrice},#{profit},#{profitRate},#{quantity},#{amount})
     </insert>

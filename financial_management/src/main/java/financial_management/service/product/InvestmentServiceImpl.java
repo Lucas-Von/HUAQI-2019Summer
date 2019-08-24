@@ -52,13 +52,13 @@ public class InvestmentServiceImpl implements InvestmentService {
 
         domStocks.stream().forEach(o->{
             DomStockPO domStock = stockMapper.selectDomStockByCode(o.getCode());
-            InvestmentVO vo =new InvestmentVO(domStock.getName(),"国内债券",o.getCode(),domStock.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
+            InvestmentVO vo =new InvestmentVO(domStock.getName(),"国内股票",o.getCode(),domStock.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
             investments.add(vo);
         });
         List<MyStockPO> forStocks = stockMapper.selectSelfForStock(userId);
         forStocks.stream().forEach(o->{
             ForStockPO forStock = stockMapper.selectForStockByCode(o.getCode());
-            InvestmentVO vo =new InvestmentVO(forStock.getName(),"国内债券",o.getCode(),forStock.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
+            InvestmentVO vo =new InvestmentVO(forStock.getName(),"海外股票",o.getCode(),forStock.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
             investments.add(vo);
         });
 

@@ -11,15 +11,15 @@ public class FortuneVO {
     /**
      * 日期
      */
-    private Date date;
+    private Date recordDate;
 
     /**
      * 资产
      */
     private double asset;
 
-    public FortuneVO(Date date, double funds, double saving, double insurance, double stocks, double gold, double bond) {
-        this.date = date;
+    public FortuneVO(Date recordDate, double funds, double saving, double insurance, double stocks, double gold, double bond) {
+        this.recordDate = recordDate;
         this.asset = funds + saving + insurance + stocks + gold + bond;
     }
 
@@ -27,8 +27,8 @@ public class FortuneVO {
 
     }
 
-    public Date getDate() {
-        return date;
+    public Date getRecordDate() {
+        return recordDate;
     }
 
     public double getAsset() {

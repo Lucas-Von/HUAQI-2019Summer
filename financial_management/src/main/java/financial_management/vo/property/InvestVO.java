@@ -11,15 +11,15 @@ public class InvestVO {
     /**
      * 日期
      */
-    private Date date;
+    private Date recordDate;
 
     /**
      * 投资
      */
     private double invest;
 
-    public InvestVO(Date date, double stocks, double gold, double bond) {
-        this.date = date;
+    public InvestVO(Date recordDate, double stocks, double gold, double bond) {
+        this.recordDate = recordDate;
         this.invest = stocks + gold + bond;
     }
 
@@ -27,8 +27,8 @@ public class InvestVO {
 
     }
 
-    public Date getDate() {
-        return date;
+    public Date getRecordDate() {
+        return recordDate;
     }
 
     public double getInvest() {

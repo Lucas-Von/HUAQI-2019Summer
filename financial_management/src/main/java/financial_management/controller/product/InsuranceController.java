@@ -41,7 +41,7 @@ public class InsuranceController {
     }
 
     @GetMapping(value = "/product/insurance/recommend")
-    public BasicResponse RecommendedProduct(HttpServletRequest request){
+            public BasicResponse RecommendedProduct(HttpServletRequest request){
         List<InsRecProductVO> vos = service.getAllInsProduct();
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
     }

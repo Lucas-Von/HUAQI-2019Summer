@@ -13,7 +13,7 @@ public class FortunePO {
     /**
      * 日期
      */
-    private Date date;
+    private Date recordDate;
 
     /**
      * 现金
@@ -45,12 +45,12 @@ public class FortunePO {
      */
     private double bond;
 
-    public Date getDate() {
-        return date;
+    public Date getRecordDate() {
+        return recordDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setRecordDate(Date recordDate) {
+        this.recordDate = recordDate;
     }
 
     public double getFunds() {

@@ -63,7 +63,7 @@ public class InsProductPO {
     }
 
     public void setCompensation(Float compensation) {
-        compensation = compensation;
+        this.compensation = compensation;
     }
 
     public Long getId() {

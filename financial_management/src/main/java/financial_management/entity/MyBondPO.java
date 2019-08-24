@@ -81,12 +81,21 @@ public class MyBondPO {
         this.profitRate = profitRate;
     }
 
+//    public Integer getQuantity() {
+//        return quantity;
+//    }
+//
+//    public void setQuantity(Integer quantity) {
+//        quantity = quantity;
+//    }
+
+
     public Integer getQuantity() {
         return quantity;
     }
 
     public void setQuantity(Integer quantity) {
-        quantity = quantity;
+        this.quantity = quantity;
     }
 
     public void setAmount(Float amount) {

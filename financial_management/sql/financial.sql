@@ -835,17 +835,17 @@ DROP TABLE IF EXISTS `trade_record`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trade_record` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `trade_id` bigint(255) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
+  `trade_id` bigint(255) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `complete_time` timestamp NULL DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `code` int(11) DEFAULT NULL,
-  `amount` float DEFAULT NULL,
-  `price` float DEFAULT NULL,
-  `total` float DEFAULT NULL,
-  `user_id` bigint(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `is_customize` bit DEFAULT NULL,
+  `type` int(11) NOT NULL,
+  `product_id` bigint(255) NOT NULL,
+  `amount` float NOT NULL,
+  `price` float NOT NULL,
+  `total` float NOT NULL,
+  `user_id` bigint(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `is_customize` bit DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -868,13 +868,13 @@ DROP TABLE IF EXISTS `transfer_record`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `transfer_record` (
   `id` bigint(255) NOT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `complete_time` timestamp NULL DEFAULT NULL,
-  `sell_type` int(11) DEFAULT NULL,
-  `buy_type` int(11) DEFAULT NULL,
-  `user_id` bigint(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `is_customize` bit DEFAULT NULL,
+  `sell_type` int(11) NOT NULL,
+  `buy_type` int(11) NOT NULL,
+  `user_id` bigint(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  `is_customize` bit DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

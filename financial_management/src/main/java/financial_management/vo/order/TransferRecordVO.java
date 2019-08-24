@@ -1,17 +1,19 @@
 package financial_management.vo.order;
 
+import financial_management.entity.TransferRecordPO;
+
 import java.util.Date;
 
 public class TransferRecordVO {
     private long ID;
     private Date createTime;
     private Date completeTime;
-    private int goldTotal;
-    private int goldDelta;
-    private int bondTotal;
-    private int bondDelta;
-    private int stockTotal;
-    private int stockDelta;
+    private Float goldTotal;
+    private Float goldDelta;
+    private Float bondTotal;
+    private Float bondDelta;
+    private Float stockTotal;
+    private Float stockDelta;
     private long userID;
     private int status;
 
@@ -39,51 +41,51 @@ public class TransferRecordVO {
         this.completeTime = completeTime;
     }
 
-    public int getGoldTotal() {
+    public Float getGoldTotal() {
         return goldTotal;
     }
 
-    public void setGoldTotal(int goldTotal) {
+    public void setGoldTotal(Float goldTotal) {
         this.goldTotal = goldTotal;
     }
 
-    public int getGoldDelta() {
+    public Float getGoldDelta() {
         return goldDelta;
     }
 
-    public void setGoldDelta(int goldDelta) {
+    public void setGoldDelta(Float goldDelta) {
         this.goldDelta = goldDelta;
     }
 
-    public int getBondTotal() {
+    public Float getBondTotal() {
         return bondTotal;
     }
 
-    public void setBondTotal(int bondTotal) {
+    public void setBondTotal(Float bondTotal) {
         this.bondTotal = bondTotal;
     }
 
-    public int getBondDelta() {
+    public Float getBondDelta() {
         return bondDelta;
     }
 
-    public void setBondDelta(int bondDelta) {
+    public void setBondDelta(Float bondDelta) {
         this.bondDelta = bondDelta;
     }
 
-    public int getStockTotal() {
+    public Float getStockTotal() {
         return stockTotal;
     }
 
-    public void setStockTotal(int stockTotal) {
+    public void setStockTotal(Float stockTotal) {
         this.stockTotal = stockTotal;
     }
 
-    public int getStockDelta() {
+    public Float getStockDelta() {
         return stockDelta;
     }
 
-    public void setStockDelta(int stockDelta) {
+    public void setStockDelta(Float stockDelta) {
         this.stockDelta = stockDelta;
     }
 
@@ -106,7 +108,21 @@ public class TransferRecordVO {
     public TransferRecordVO() {
     }
 
-    public TransferRecordVO(long ID, Date createTime, Date completeTime, int goldTotal, int goldDelta, int bondTotal, int bondDelta, int stockTotal, int stockDelta, long userID, int status) {
+    public TransferRecordVO(TransferRecordPO po) {
+        ID = po.getID();
+        createTime = po.getCreateTime();
+        completeTime = po.getCompleteTime();
+        goldTotal = po.getGoldTotal();
+        goldDelta = po.getGoldDelta();
+        bondTotal = po.getBondTotal();
+        bondDelta = po.getBondDelta();
+        stockTotal = po.getStockTotal();
+        stockDelta = po.getStockDelta();
+        userID = po.getUserID();
+        status = po.getStatus();
+    }
+
+    public TransferRecordVO(long ID, Date createTime, Date completeTime, Float goldTotal, Float goldDelta, Float bondTotal, Float bondDelta, Float stockTotal, Float stockDelta, long userID, int status) {
         this.ID = ID;
         this.createTime = createTime;
         this.completeTime = completeTime;

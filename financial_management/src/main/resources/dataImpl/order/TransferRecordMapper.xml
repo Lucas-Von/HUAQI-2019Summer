@@ -5,12 +5,12 @@
         <id column="id" jdbcType="BIGINT" property="ID"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime"/>
-        <result column="gold_total" jdbcType="INTEGER" property="goldTotal"/>
-        <result column="gold_delta" jdbcType="INTEGER" property="goldDelta"/>
-        <result column="bond_total" jdbcType="INTEGER" property="bondTotal"/>
-        <result column="bond_delta" jdbcType="INTEGER" property="bondDelta"/>
-        <result column="stock_total" jdbcType="INTEGER" property="stockTotal"/>
-        <result column="stock_delta" jdbcType="INTEGER" property="stockDelta"/>
+        <result column="gold_total" jdbcType="FLOAT" property="goldTotal"/>
+        <result column="gold_delta" jdbcType="FLOAT" property="goldDelta"/>
+        <result column="bond_total" jdbcType="FLOAT" property="bondTotal"/>
+        <result column="bond_delta" jdbcType="FLOAT" property="bondDelta"/>
+        <result column="stock_total" jdbcType="FLOAT" property="stockTotal"/>
+        <result column="stock_delta" jdbcType="FLOAT" property="stockDelta"/>
         <result column="user_id" jdbcType="BIGINT" property="userID"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="is_customize" jdbcType="BIT" property="isCustomize"/>

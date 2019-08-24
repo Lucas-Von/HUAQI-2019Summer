@@ -19,5 +19,5 @@ public interface MessageService {
 
     BasicResponse<?> removeMessageByMessageID(Long ID);
 
-    //TODO postMessageToUserBy
+    BasicResponse<?> postMessageToUserBy(MessageVO messageVO);
 }

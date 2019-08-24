@@ -1,8 +1,8 @@
-package financial_management.entity;
+package financial_management.vo.feedback;
 
 import java.util.Date;
 
-public class FeedBackPO {
+public class FeedbackVO {
     private Long ID;
     private String title;
     private Integer type;

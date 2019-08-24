@@ -15,7 +15,7 @@ public interface OrderService {
 
     BasicResponse<TransferRecordVO> getTransferRecordByRecord(Long ID);
 
-    BasicResponse<?> addTradeRecord(TradeRecordVO tradeRecordVO);
+    BasicResponse<?> addTradeRecord(TradeRecordVO tradeRecordVO, boolean isCustomize);
 
-    BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO);
+    BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO, boolean isCustomize);
 }

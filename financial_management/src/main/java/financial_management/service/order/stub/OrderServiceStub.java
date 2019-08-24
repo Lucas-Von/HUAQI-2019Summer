@@ -1,7 +1,6 @@
 package financial_management.service.order.stub;
 
 import financial_management.bl.order.OrderService;
-import financial_management.entity.Response;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.TradeRecordVO;
@@ -22,16 +21,6 @@ public class OrderServiceStub implements OrderService {
     private TransferRecordVO voo;
     private TransferRecordVO voo1;
 
-    @Override
-    public BasicResponse<?> addTradeRecord(TradeRecordVO tradeRecordVO) {
-        return null;
-    }
-
-    @Override
-    public BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO) {
-        return null;
-    }
-
     {
         vo = new TradeRecordVO();
         vo.setID(1);
@@ -42,9 +31,7 @@ public class OrderServiceStub implements OrderService {
         } catch (ParseException ignored) {
 
         }
-        vo.setProduct("博时黄金ETF联接C");
         vo.setType("黄金");
-        vo.setPcode((long)2611);
         vo.setAmount(100);
         vo.setPrice((float) 1.1777);
         vo.setTotal((float) 117.77);
@@ -60,9 +47,7 @@ public class OrderServiceStub implements OrderService {
         } catch (ParseException ignored) {
 
         }
-        vo1.setProduct("卖了不亏基金");
         vo1.setType("基金");
-        vo1.setPcode((long)777);
         vo1.setAmount(-100);
         vo1.setPrice(1);
         vo1.setTotal(-100);
@@ -78,9 +63,7 @@ public class OrderServiceStub implements OrderService {
         } catch (ParseException ignored) {
 
         }
-        vo2.setProduct("买了就赚基金");
         vo2.setType("基金");
-        vo2.setPcode((long)4396);
         vo2.setAmount(50);
         vo2.setPrice(2);
         vo2.setTotal(100);
@@ -165,5 +148,15 @@ public class OrderServiceStub implements OrderService {
             response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
         }
         return response;
+    }
+
+    @Override
+    public BasicResponse<?> addTradeRecord(TradeRecordVO tradeRecordVO, boolean isCustomize) {
+        return null;
+    }
+
+    @Override
+    public BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO, boolean isCustomize) {
+        return null;
     }
 }

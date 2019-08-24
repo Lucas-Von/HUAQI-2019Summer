@@ -83,4 +83,9 @@ public class MessageServiceStub implements MessageService {
     public BasicResponse<?> removeMessageByMessageID(Long ID) {
         return null;
     }
+
+    @Override
+    public BasicResponse<?> postMessageToUserBy(MessageVO messageVO) {
+        return null;
+    }
 }

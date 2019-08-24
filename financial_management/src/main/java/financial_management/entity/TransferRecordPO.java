@@ -12,17 +12,17 @@ public class TransferRecordPO{
     //调仓完成时间
     private Date completeTime;
 
-    private Integer goldTotal;
+    private Float goldTotal;
 
-    private Integer goldDelta;
+    private Float goldDelta;
 
-    private Integer bondTotal;
+    private Float bondTotal;
 
-    private Integer bondDelta;
+    private Float bondDelta;
 
-    private Integer stockTotal;
+    private Float stockTotal;
 
-    private Integer stockDelta;
+    private Float stockDelta;
 
     //调仓用户ID
     private Long userID;
@@ -57,51 +57,51 @@ public class TransferRecordPO{
         this.completeTime = completeTime;
     }
 
-    public Integer getGoldTotal() {
+    public Float getGoldTotal() {
         return goldTotal;
     }
 
-    public void setGoldTotal(Integer goldTotal) {
+    public void setGoldTotal(Float goldTotal) {
         this.goldTotal = goldTotal;
     }
 
-    public Integer getGoldDelta() {
+    public Float getGoldDelta() {
         return goldDelta;
     }
 
-    public void setGoldDelta(Integer goldDelta) {
+    public void setGoldDelta(Float goldDelta) {
         this.goldDelta = goldDelta;
     }
 
-    public Integer getBondTotal() {
+    public Float getBondTotal() {
         return bondTotal;
     }
 
-    public void setBondTotal(Integer bondTotal) {
+    public void setBondTotal(Float bondTotal) {
         this.bondTotal = bondTotal;
     }
 
-    public Integer getBondDelta() {
+    public Float getBondDelta() {
         return bondDelta;
     }
 
-    public void setBondDelta(Integer bondDelta) {
+    public void setBondDelta(Float bondDelta) {
         this.bondDelta = bondDelta;
     }
 
-    public Integer getStockTotal() {
+    public Float getStockTotal() {
         return stockTotal;
     }
 
-    public void setStockTotal(Integer stockTotal) {
+    public void setStockTotal(Float stockTotal) {
         this.stockTotal = stockTotal;
     }
 
-    public Integer getStockDelta() {
+    public Float getStockDelta() {
         return stockDelta;
     }
 
-    public void setStockDelta(Integer stockDelta) {
+    public void setStockDelta(Float stockDelta) {
         this.stockDelta = stockDelta;
     }
 

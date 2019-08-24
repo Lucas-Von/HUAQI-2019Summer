@@ -78,4 +78,23 @@ public class MessageServiceImpl implements MessageService {
             return new BasicResponse<>(ResponseStatus.STATUS_MESSAGE_DELETE_FAIL, null);
         }
     }
+
+    @Override
+    public BasicResponse<?> postMessageToUserBy(MessageVO messageVO) {
+        MessagePO po = assembleMessagePO(messageVO);
+        po.setID(null);
+        po.setIsDelete(false);
+        long id = messageMapper.insertMessage(po);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
+    }
+
+    private static MessagePO assembleMessagePO(MessageVO messageVO){
+        MessagePO messagePO = new MessagePO();
+        messagePO.setID(messageVO.getID());
+        messagePO.setTime(messageVO.getTime());
+        messagePO.setContent(messageVO.getContent());
+        messagePO.setType(messageVO.getType());
+        messagePO.setIsRead(messageVO.getReaded());
+        return messagePO;
+    }
 }

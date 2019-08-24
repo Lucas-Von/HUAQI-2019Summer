@@ -27,10 +27,21 @@
         where ms.user_id = #{userId} and mg.user_id = #{userId} and mb.user_id = #{userId};
     </select>
 
-    <select id="getNewlyIncome" resultType="Double">
-        select sum(ms.profit + mg.profit + mb.profit)
-        from my_stock ms, my_gold mg, my_bond mb
-        where ms.user_id = #{userId} and mg.user_id = #{userId} and mb.user_id = #{userId};
+    <select id="getNewlyIncome" resultMap="RecentInvPO">
+        select
+            today.stocks as todayStocks,
+            today.gold as todayGold,
+            today.bond as todayBond,
+            yesterday.stocks as yesterdayStocks,
+            yesterday.gold as yesterdayGold,
+            yesterday.bond as yesterdayBond
+        from
+            (select stocks, gold, bond
+                from fortune
+                where user_id = #{userId} and record_date = CURDATE()) today,
+            (select stocks, gold, bond
+                from fortune
+                where user_id = #{userId} and record_date = DATE_SUB(CURDATE(), INTERVAL 1 DAY)) yesterday
     </select>
 
     <select id="getDepositList" resultMap="DepositPO">
@@ -44,10 +55,43 @@
         on md.product_id = d.id
     </select>
 
+    <select id="getMonthlyProList" resultMap="FortunePO">
+        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, gold, bond
+        from fortune
+        where user_id = #{userId} and record_date REGEXP "01$";
+    </select>
+
+    <select id="getMonthlyInvList" resultMap="InvestPO">
+        select user_id as userId, record_date as recordDate, stocks, gold, bond
+        from fortune
+        where user_id = #{userId} and record_date REGEXP "01$";
+    </select>
+
+    <select id="getDailyProList" resultMap="FortunePO">
+        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, gold, bond
+        from fortune
+        where user_id = #{userId} and DATE_SUB(CURDATE(), INTERVAL 30 DAY);
+    </select>
+
+    <select id="getDailyInvList" resultMap="InvestPO">
+        select user_id as userId, record_date as recordDate, stocks, gold, bond
+        from fortune
+        where user_id = #{userId} and DATE_SUB(CURDATE(), INTERVAL 30 DAY);
+    </select>
+
     <resultMap id="EstatePO" type="financial_management.entity.property.EstatePO">
     </resultMap>
 
+    <resultMap id="RecentInvPO" type="financial_management.entity.property.RecentInvPO">
+    </resultMap>
+
     <resultMap id="DepositPO" type="financial_management.entity.property.DepositPO">
+    </resultMap>
+
+    <resultMap id="FortunePO" type="financial_management.entity.property.FortunePO">
+    </resultMap>
+
+    <resultMap id="InvestPO" type="financial_management.entity.property.InvestPO">
     </resultMap>
 
 </mapper>

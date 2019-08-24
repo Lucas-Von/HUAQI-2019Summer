@@ -13,7 +13,7 @@ public class InvestPO {
     /**
      * 日期
      */
-    private Date date;
+    private Date recordDate;
 
     /**
      * 股票
@@ -30,12 +30,12 @@ public class InvestPO {
      */
     private double bond;
 
-    public Date getDate() {
-        return date;
+    public Date getRecordDate() {
+        return recordDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setRecordDate(Date recordDate) {
+        this.recordDate = recordDate;
     }
 
     public double getStocks() {

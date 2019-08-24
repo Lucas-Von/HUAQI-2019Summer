@@ -112,10 +112,10 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
      */
     @Override
     public BasicResponse getAssetInfoList(Long userId, String assetType) {
+        SubEstateVO subEstateVO = new SubEstateVO();
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
             double totalAsset = getTotalAsset(userId);
-            SubEstateVO subEstateVO = new SubEstateVO();
             switch (assetType) {
                 case "funds":
                     subEstateVO = new SubEstateVO(totalAsset, estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform());
@@ -136,7 +136,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subEstateVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, subEstateVO);
         }
     }
 

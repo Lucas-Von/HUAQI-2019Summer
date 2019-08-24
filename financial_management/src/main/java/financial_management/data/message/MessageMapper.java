@@ -21,7 +21,7 @@ public interface MessageMapper {
 
     Integer selectAmountOfUnreadByTypeAndUserID(@Param("type") Integer type, @Param("userID") Long userID);
 
-    Integer insertMessage(MessagePO message);
+    Long insertMessage(MessagePO message);
 
     Integer readMessageByTypeAndUserID(@Param("type") Integer type, @Param("userID") Long userID);
 

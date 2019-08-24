@@ -16,10 +16,10 @@ public class TradeRecordPO{
     private Date completeTime;
 
     //产品类型
-    private Integer type;
+    private String type;
 
     //产品代码
-    private Integer code;
+    private Long productID;
 
     //交易份额或数量
     private Float amount;
@@ -71,20 +71,20 @@ public class TradeRecordPO{
         this.completeTime = completeTime;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public Integer getCode() {
-        return code;
+    public Long getProductID() {
+        return productID;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setProductID(Long productID) {
+        this.productID = productID;
     }
 
     public Float getAmount() {

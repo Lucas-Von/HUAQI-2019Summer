@@ -17,6 +17,8 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_MESSAGE_DELETE_SUCCESS = new ResponseStatus("3002", "删除成功");
     public static final ResponseStatus STATUS_MESSAGE_DELETE_FAIL = new ResponseStatus("3003", "删除失败");
 
+    public static final ResponseStatus STATUS_RECORD_NOT_EXIST = new ResponseStatus("4001","记录不存在");
+
     public static final ResponseStatus STATUS_PAYPASSWORD_WRONG = new ResponseStatus("5001","支付密码错误");
 
     public static final ResponseStatus STATUS_QUESTIONNAIRE_EXIST = new ResponseStatus("6001","The user has filled out the questionnaire.");

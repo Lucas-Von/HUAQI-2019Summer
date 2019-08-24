@@ -12,11 +12,17 @@ public class TransferRecordPO{
     //调仓完成时间
     private Date completeTime;
 
-    //减持类型
-    private Integer sellType;
+    private Integer goldTotal;
 
-    //增持类型
-    private Integer buyType;
+    private Integer goldDelta;
+
+    private Integer bondTotal;
+
+    private Integer bondDelta;
+
+    private Integer stockTotal;
+
+    private Integer stockDelta;
 
     //调仓用户ID
     private Long userID;
@@ -51,20 +57,52 @@ public class TransferRecordPO{
         this.completeTime = completeTime;
     }
 
-    public Integer getSellType() {
-        return sellType;
+    public Integer getGoldTotal() {
+        return goldTotal;
     }
 
-    public void setSellType(Integer sellType) {
-        this.sellType = sellType;
+    public void setGoldTotal(Integer goldTotal) {
+        this.goldTotal = goldTotal;
     }
 
-    public Integer getBuyType() {
-        return buyType;
+    public Integer getGoldDelta() {
+        return goldDelta;
     }
 
-    public void setBuyType(Integer buyType) {
-        this.buyType = buyType;
+    public void setGoldDelta(Integer goldDelta) {
+        this.goldDelta = goldDelta;
+    }
+
+    public Integer getBondTotal() {
+        return bondTotal;
+    }
+
+    public void setBondTotal(Integer bondTotal) {
+        this.bondTotal = bondTotal;
+    }
+
+    public Integer getBondDelta() {
+        return bondDelta;
+    }
+
+    public void setBondDelta(Integer bondDelta) {
+        this.bondDelta = bondDelta;
+    }
+
+    public Integer getStockTotal() {
+        return stockTotal;
+    }
+
+    public void setStockTotal(Integer stockTotal) {
+        this.stockTotal = stockTotal;
+    }
+
+    public Integer getStockDelta() {
+        return stockDelta;
+    }
+
+    public void setStockDelta(Integer stockDelta) {
+        this.stockDelta = stockDelta;
     }
 
     public Long getUserID() {

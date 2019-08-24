@@ -1,16 +1,17 @@
 package financial_management.vo.order;
 
 import java.util.Date;
-import java.util.List;
 
 public class TransferRecordVO {
     private long ID;
     private Date createTime;
     private Date completeTime;
-    private String sellType;
-    private String buyType;
-    private List<TradeRecordVO> sellList;
-    private List<TradeRecordVO> buyList;
+    private int goldTotal;
+    private int goldDelta;
+    private int bondTotal;
+    private int bondDelta;
+    private int stockTotal;
+    private int stockDelta;
     private long userID;
     private int status;
 
@@ -38,36 +39,52 @@ public class TransferRecordVO {
         this.completeTime = completeTime;
     }
 
-    public String getSellType() {
-        return sellType;
+    public int getGoldTotal() {
+        return goldTotal;
     }
 
-    public void setSellType(String sellType) {
-        this.sellType = sellType;
+    public void setGoldTotal(int goldTotal) {
+        this.goldTotal = goldTotal;
     }
 
-    public String getBuyType() {
-        return buyType;
+    public int getGoldDelta() {
+        return goldDelta;
     }
 
-    public void setBuyType(String buyType) {
-        this.buyType = buyType;
+    public void setGoldDelta(int goldDelta) {
+        this.goldDelta = goldDelta;
     }
 
-    public List<TradeRecordVO> getSellList() {
-        return sellList;
+    public int getBondTotal() {
+        return bondTotal;
     }
 
-    public void setSellList(List<TradeRecordVO> sellList) {
-        this.sellList = sellList;
+    public void setBondTotal(int bondTotal) {
+        this.bondTotal = bondTotal;
     }
 
-    public List<TradeRecordVO> getBuyList() {
-        return buyList;
+    public int getBondDelta() {
+        return bondDelta;
     }
 
-    public void setBuyList(List<TradeRecordVO> buyList) {
-        this.buyList = buyList;
+    public void setBondDelta(int bondDelta) {
+        this.bondDelta = bondDelta;
+    }
+
+    public int getStockTotal() {
+        return stockTotal;
+    }
+
+    public void setStockTotal(int stockTotal) {
+        this.stockTotal = stockTotal;
+    }
+
+    public int getStockDelta() {
+        return stockDelta;
+    }
+
+    public void setStockDelta(int stockDelta) {
+        this.stockDelta = stockDelta;
     }
 
     public long getUserID() {
@@ -89,14 +106,16 @@ public class TransferRecordVO {
     public TransferRecordVO() {
     }
 
-    public TransferRecordVO(long ID, Date createTime, Date completeTime, String sellType, String buyType, List<TradeRecordVO> sellList, List<TradeRecordVO> buyList, long userID, int status) {
+    public TransferRecordVO(long ID, Date createTime, Date completeTime, int goldTotal, int goldDelta, int bondTotal, int bondDelta, int stockTotal, int stockDelta, long userID, int status) {
         this.ID = ID;
         this.createTime = createTime;
         this.completeTime = completeTime;
-        this.sellType = sellType;
-        this.buyType = buyType;
-        this.sellList = sellList;
-        this.buyList = buyList;
+        this.goldTotal = goldTotal;
+        this.goldDelta = goldDelta;
+        this.bondTotal = bondTotal;
+        this.bondDelta = bondDelta;
+        this.stockTotal = stockTotal;
+        this.stockDelta = stockDelta;
         this.userID = userID;
         this.status = status;
     }

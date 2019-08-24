@@ -61,7 +61,7 @@
           and is_delete = 0
     </select>
 
-    <insert id="insertMessage" parameterType="financial_management.entity.MessagePO">
+    <insert id="insertMessage" parameterType="financial_management.entity.MessagePO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
         insert into message (id, time, user_id, type, content, is_read, is_delete)
         values (#{ID,jdbcType=BIGINT}, #{time,jdbcType=TIMESTAMP}, #{userID,jdbcType=BIGINT}, #{type,jdbcType=INTEGER},
                 #{content,jdbcType=VARCHAR}, #{isRead,jdbcType=BIT}, #{isDelete,jdbcType=BIT})
@@ -75,7 +75,7 @@
           and is_read = 0
     </update>
 
-    <update id="deleteMessage">
+    <update id="deleteMessage" parameterType="financial_management.entity.MessagePO">
         update message
         set is_delete = 1
         where id = #{ID}

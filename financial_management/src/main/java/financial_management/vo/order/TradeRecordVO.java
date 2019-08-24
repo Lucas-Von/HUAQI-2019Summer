@@ -11,7 +11,7 @@ public class TradeRecordVO {
     private Date completeTime;
     private String product;
     private String type;
-    private int pcode;
+    private Long pcode;
     private float amount;
     private float price;
     private float total;
@@ -66,11 +66,11 @@ public class TradeRecordVO {
         this.type = type;
     }
 
-    public int getPcode() {
+    public Long getPcode() {
         return pcode;
     }
 
-    public void setPcode(int pcode) {
+    public void setPcode(Long pcode) {
         this.pcode = pcode;
     }
 
@@ -122,14 +122,14 @@ public class TradeRecordVO {
         transID = po.getTransID();
         createTime = po.getCreateTime();
         completeTime = po.getCompleteTime();
-        pcode = po.getCode();
+        pcode = po.getProductID();
         amount = po.getAmount();
         price = po.getPrice();
         total = po.getTotal();
         userID = po.getUserID();
     }
 
-    public TradeRecordVO(long ID, long transID, Date createTime, Date completeTime, String product, String type, int pcode, float amount, float price, float total, long userID, int status) {
+    public TradeRecordVO(long ID, long transID, Date createTime, Date completeTime, String product, String type, Long pcode, float amount, float price, float total, long userID, int status) {
         this.ID = ID;
         this.transID = transID;
         this.createTime = createTime;

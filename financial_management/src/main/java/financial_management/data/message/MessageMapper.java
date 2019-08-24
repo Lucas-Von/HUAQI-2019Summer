@@ -23,7 +23,7 @@ public interface MessageMapper {
 
     Integer insertMessage(MessagePO message);
 
-    List<MessagePO> readMessageByTypeAndUserID(@Param("type") Integer type, @Param("userID") Long userID);
+    Integer readMessageByTypeAndUserID(@Param("type") Integer type, @Param("userID") Long userID);
 
     List<MessagePO> deleteMessage(@Param("ID") Long ID);
 }

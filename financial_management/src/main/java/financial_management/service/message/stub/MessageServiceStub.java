@@ -1,7 +1,8 @@
 package financial_management.service.message.stub;
 
 import financial_management.bl.message.MessageService;
-import financial_management.entity.Response;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.message.MessageVO;
 import financial_management.vo.message.NewMessageVO;
 import org.springframework.stereotype.Service;
@@ -27,63 +28,59 @@ public class MessageServiceStub implements MessageService {
     }
 
     @Override
-    public Response<List<MessageVO>> getMessagesByUser(Long ID) {
-        Response<List<MessageVO>> response;
+    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID) {
+        BasicResponse<List<MessageVO>> response;
         if (ID == 1) {
             List<MessageVO> list = new ArrayList<>(Arrays.asList(m1, m2, m3));
-            response = new Response<>(true, 200, null, list);
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, list);
         } else {
-            String message = "只有ID为1的用户！";
-            response = new Response<>(false, 404, message, null);
+            response = new BasicResponse<>(ResponseStatus.STATUS_USER_NOT_EXIST, null);
         }
         return response;
     }
 
     @Override
-    public Response<List<MessageVO>> getMessagesByUser(Long ID, int type) {
-        Response<List<MessageVO>> response;
+    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type) {
+        BasicResponse<List<MessageVO>> response;
         if (ID == 1) {
             if (type == 1) {
-                response = new Response<>(true, 200, null, Collections.singletonList(m1));
+                response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, Collections.singletonList(m1));
             } else if (type == 2) {
-                response = new Response<>(true, 200, null, Collections.singletonList(m2));
+                response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, Collections.singletonList(m2));
             } else if (type == 3) {
-                response = new Response<>(true, 200, null, Collections.singletonList(m3));
+                response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, Collections.singletonList(m3));
             } else {
-                String message = "类型只有1~3！";
-                response = new Response<>(false,400,message,null);
+                response = new BasicResponse<>(ResponseStatus.STATUS_WRONG_MESSAGE_TYPE, null);
             }
         } else {
-            String message = "只有ID为1的用户！";
-            response = new Response<>(false, 404, message, null);
+            response = new BasicResponse<>(ResponseStatus.STATUS_USER_NOT_EXIST, null);
         }
         return response;
     }
 
     @Override
-    public Response<List<MessageVO>> getMessagesByUser(Long ID, int type, int page) {
+    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type, int page) {
         return getMessagesByUser(ID, type);
     }
 
     @Override
-    public Response<List<NewMessageVO>> getNewMessageByUser(Long ID) {
-        Response<List<NewMessageVO>> response;
-        if (ID == 1){
-            response = new Response<>(true,200,null,Arrays.asList(nm1,nm2,nm3));
+    public BasicResponse<List<NewMessageVO>> getNewMessageByUser(Long ID) {
+        BasicResponse<List<NewMessageVO>> response;
+        if (ID == 1) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, Arrays.asList(nm1, nm2, nm3));
         } else {
-            String message = "只有ID为1的用户！";
-            response = new Response<>(false, 404, message, null);
+            response = new BasicResponse<>(ResponseStatus.STATUS_USER_NOT_EXIST, null);
         }
         return response;
     }
 
     @Override
-    public Response<?> readNewMessages(Long userID, int type) {
+    public BasicResponse<?> readNewMessages(Long userID, int type) {
         return null;
     }
 
     @Override
-    public Response<?> removeMessageByMessageID(Long ID) {
+    public BasicResponse<?> removeMessageByMessageID(Long ID) {
         return null;
     }
 }

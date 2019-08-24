@@ -290,8 +290,11 @@ CREATE TABLE `feedback` (
   `solved` bit NOT NULL DEFAULT 0,
   `solver_ID` bigint(255) NOT NULL,
   `solve_time` timestamp NULL,
+  `solve_text` text NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO feedback VALUES (1,'为什么不开大？',1,'喂，老板，他刚才又没开大；我没骂他，我上局就没骂他；这个人应该是思想出了问题',CURRENT_TIMESTAMP,1,NULL,NULL,'123456@789.com',1,7,CURRENT_TIMESTAMP,'对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区'),
+                            (2,'一个数学问题',1,'1+1=?',CURRENT_TIMESTAMP,1,NULL,NULL,'123456@789.com',0,NULL,NULL,NULL);
 
 -- ----------------------------
 -- Records of feedback
@@ -560,7 +563,7 @@ CREATE TABLE `message` (
   `time` timestamp NULL DEFAULT NULL,
   `user_id` bigint(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
-  `content` varchar(45) DEFAULT NULL,
+  `content` varchar(200) DEFAULT NULL,
   `is_read` bit DEFAULT NULL,
   `is_delete` bit DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -573,6 +576,8 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO message VALUES (1,timestampadd(day,-1,CURRENT_TIMESTAMP),1,1,'尊敬的用户，您的账户有新的调仓操作，请确认',1,0),
+                           (2,CURRENT_TIMESTAMP,1,4,'尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区',0,0);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 

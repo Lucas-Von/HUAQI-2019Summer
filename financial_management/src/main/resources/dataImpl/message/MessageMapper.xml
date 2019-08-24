@@ -20,6 +20,7 @@
         <include refid="all"/>
         from message
         where user_id = #{userID,jdbcType=BIGINT}
+        and is_delete = 0;
     </select>
 
     <select id="selectByUserIDandType" resultMap="original">
@@ -28,18 +29,25 @@
         from message
         where user_id = #{userID,jdbcType=BIGINT}
         and type = #{type,jdbcType=INTEGER}
+        and is_delete = 0;
     </select>
 
     <select id="selectByUserIDandTypeAndPage" resultMap="original">
-
+        select
+        <include refid="all"/>
+        from message
+        where user_id = #{userID,jdbcType=BIGINT}
+        and type = #{type,jdbcType=INTEGER}
+        and is_delete = 0;
     </select>
 
     <select id="selectLatestMessageByTypeAndUserID" resultMap="original">
         select
         <include refid="all"/>
         from message
-        where type = #{type,jdbcType=Integer}
+        where type = #{type,jdbcType=INTEGER}
         and user_id = #{userID,jdbcType=BIGINT}
+        and is_delete = 0
         order by time desc
         limit 1
     </select>
@@ -50,6 +58,7 @@
         where type = #{type,jdbcType=INTEGER}
           and user_id = #{userID,jdbcType=BIGINT}
           and is_read = 0
+          and is_delete = 0
     </select>
 
     <insert id="insertMessage" parameterType="financial_management.entity.MessagePO">
@@ -60,14 +69,15 @@
 
     <update id="readMessageByTypeAndUserID">
         update message
-        set id        = #{ID},
-            time      = #{time},
-            user_id   = #{userID},
-            type      = #{type},
-            content   = #{content},
-            is_read   = 1,
-            is_delete = #{isDelete}
+        set is_read = 1
         where type = #{type}
           and user_id = #{userID}
+          and is_read = 0
+    </update>
+
+    <update id="deleteMessage">
+        update message
+        set is_delete = 1
+        where id = #{ID}
     </update>
 </mapper>

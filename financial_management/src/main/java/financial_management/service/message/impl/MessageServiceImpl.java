@@ -3,7 +3,8 @@ package financial_management.service.message.impl;
 import financial_management.bl.message.MessageService;
 import financial_management.data.message.MessageMapper;
 import financial_management.entity.MessagePO;
-import financial_management.entity.Response;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.message.MessageVO;
 import financial_management.vo.message.NewMessageVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,37 +19,56 @@ public class MessageServiceImpl implements MessageService {
     private MessageMapper messageMapper;
 
     @Override
-    public Response<List<MessageVO>> getMessagesByUser(Long ID) {
+    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID) {
         List<MessagePO> messages = messageMapper.selectByUserID(ID);
+        return getListBasicResponseOnSuccess(messages);
+    }
+
+    @Override
+    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type) {
+        List<MessagePO> messages = messageMapper.selectByUserIDandType(ID, type);
+        return getListBasicResponseOnSuccess(messages);
+    }
+
+    @Override
+    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type, int page) {
+        List<MessagePO> messages = messageMapper.selectByUserIDandTypeAndPage(ID, type, page);
+        return getListBasicResponseOnSuccess(messages);
+    }
+
+    private static BasicResponse<List<MessageVO>> getListBasicResponseOnSuccess(List<MessagePO> messages) {
+        BasicResponse<List<MessageVO>> response;
         List<MessageVO> vos = new ArrayList<>(messages.size());
-        for (MessagePO messagePO:messages){
+        for (MessagePO messagePO : messages) {
             vos.add(new MessageVO(messagePO));
         }
-        return null;
+        response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+        return response;
     }
 
     @Override
-    public Response<List<MessageVO>> getMessagesByUser(Long ID, int type) {
-        return null;
+    public BasicResponse<List<NewMessageVO>> getNewMessageByUser(Long ID) {
+        int typeAmount = 4;
+        List<NewMessageVO> newMessages = new ArrayList<>(typeAmount);
+        for (int type = 1; type <= typeAmount; type++) {
+            NewMessageVO vo = new NewMessageVO();
+            vo.setType(type);
+            vo.setUnreadAmount(messageMapper.selectAmountOfUnreadByTypeAndUserID(type, ID));
+            vo.setLatest(messageMapper.selectLatestMessageByTypeAndUserID(type, ID).getContent());
+            newMessages.add(vo);
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,newMessages);
     }
 
     @Override
-    public Response<List<MessageVO>> getMessagesByUser(Long ID, int type, int page) {
-        return null;
+    public BasicResponse<?> readNewMessages(Long userID, int type) {
+        messageMapper.readMessageByTypeAndUserID(type,userID);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 
     @Override
-    public Response<List<NewMessageVO>> getNewMessageByUser(Long ID) {
-        return null;
-    }
-
-    @Override
-    public Response<?> readNewMessages(Long userID, int type) {
-        return null;
-    }
-
-    @Override
-    public Response<?> removeMessageByMessageID(Long ID) {
-        return null;
+    public BasicResponse<?> removeMessageByMessageID(Long ID) {
+        messageMapper.deleteMessage(ID);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 }

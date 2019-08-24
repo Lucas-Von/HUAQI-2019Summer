@@ -4,7 +4,9 @@ import financial_management.bl.product.DepositService;
 import financial_management.data.product.DepositMapper;
 import financial_management.entity.DepositProductPO;
 import financial_management.entity.MyDepoPO;
+import financial_management.entity.property.DepositPO;
 import financial_management.util.DateConverterUtil;
+import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.DepRecProductVO;
 import financial_management.vo.product.FundBasicVO;
 import financial_management.vo.product.FundVO;
@@ -66,6 +68,27 @@ public class DepositServiceImpl implements DepositService {
         po.setMaturity(DateConverterUtil.moveForwardByDay(new Date(),product.getLength()));
 
         mapper.insertMyProduct(po);
+    }
 
+    public ProductVO4Order getProduct(Long id){
+        List<DepositProductPO> deposits = mapper.selectAllProducts();
+        for (DepositProductPO i: deposits){
+            if (i.getId() == id){
+                ProductVO4Order vo = new ProductVO4Order();
+                vo.setCode(null);
+                vo.setpID(id);
+                vo.setName(i.getName());
+                return vo;
+            }
+        }
+        return getNullProduct();
+    }
+
+    public ProductVO4Order getNullProduct(){
+        ProductVO4Order vo = new ProductVO4Order();
+        vo.setName(null);
+        vo.setCode(null);
+        vo.setpID(null);
+        return vo;
     }
 }

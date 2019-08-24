@@ -24,8 +24,17 @@
     <select id="selectDomStockByCode" resultMap="DomProduct">
         select *from dom_stock where code=#{code}
     </select>
+
     <select id="selectForStockByCode" resultMap="ForProduct">
         select *from for_stock where code=#{code}
+    </select>
+
+    <select id="selectForStockById" resultMap="ForProduct">
+        select *from for_stock where id=#{Id}
+    </select>
+
+    <select id="selectDomStockById" resultMap="DomProduct">
+        select *from dom_stock where id=#{Id}
     </select>
 
     <resultMap id="MyStockProduct" type="financial_management.entity.MyStockPO">

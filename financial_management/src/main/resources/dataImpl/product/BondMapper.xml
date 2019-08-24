@@ -9,6 +9,10 @@
         select * from bond where code = #{code}
     </select>
 
+    <select id="selectBondById" resultMap="BondProduct">
+        select * from bond where id = #{Id}
+    </select>
+
     <select id="selectSelfBond" resultMap="MyBondProduct">
         select * from my_bond
         where user_id=#{userId}

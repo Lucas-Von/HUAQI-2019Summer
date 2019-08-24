@@ -14,7 +14,8 @@ public class FeedBackPO {
     private String email;
     private Boolean solved;
     private Long solverID;
-    private Date solve_time;
+    private Date solveTime;
+    private String solveText;
 
     public Long getID() {
         return ID;
@@ -104,11 +105,19 @@ public class FeedBackPO {
         this.solverID = solverID;
     }
 
-    public Date getSolve_time() {
-        return solve_time;
+    public Date getSolveTime() {
+        return solveTime;
     }
 
-    public void setSolve_time(Date solve_time) {
-        this.solve_time = solve_time;
+    public void setSolveTime(Date solveTime) {
+        this.solveTime = solveTime;
+    }
+
+    public String getSolveText() {
+        return solveText;
+    }
+
+    public void setSolveText(String solveText) {
+        this.solveText = solveText;
     }
 }

@@ -1,6 +1,6 @@
 package financial_management.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TransferRecordPO{
     //调仓记录ID

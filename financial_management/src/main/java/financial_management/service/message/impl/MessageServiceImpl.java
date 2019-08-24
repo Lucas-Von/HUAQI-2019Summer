@@ -21,6 +21,9 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID) {
         List<MessagePO> messages = messageMapper.selectByUserID(ID);
+        for (MessagePO po : messages) {
+            System.out.println(po.getTime());
+        }
         return getListBasicResponseOnSuccess(messages);
     }
 
@@ -42,7 +45,7 @@ public class MessageServiceImpl implements MessageService {
         for (MessagePO messagePO : messages) {
             vos.add(new MessageVO(messagePO));
         }
-        response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+        response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
         return response;
     }
 
@@ -54,21 +57,25 @@ public class MessageServiceImpl implements MessageService {
             NewMessageVO vo = new NewMessageVO();
             vo.setType(type);
             vo.setUnreadAmount(messageMapper.selectAmountOfUnreadByTypeAndUserID(type, ID));
-            vo.setLatest(messageMapper.selectLatestMessageByTypeAndUserID(type, ID).getContent());
+            MessagePO po = messageMapper.selectLatestMessageByTypeAndUserID(type, ID);
+            vo.setLatest(po==null?"没有最新消息":po.getContent());
             newMessages.add(vo);
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,newMessages);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, newMessages);
     }
 
     @Override
     public BasicResponse<?> readNewMessages(Long userID, int type) {
-        messageMapper.readMessageByTypeAndUserID(type,userID);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        messageMapper.readMessageByTypeAndUserID(type, userID);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
     }
 
     @Override
     public BasicResponse<?> removeMessageByMessageID(Long ID) {
-        messageMapper.deleteMessage(ID);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        if (messageMapper.deleteMessage(ID)==1) {
+            return new BasicResponse<>(ResponseStatus.STATUS_MESSAGE_DELETE_SUCCESS, null);
+        } else {
+            return new BasicResponse<>(ResponseStatus.STATUS_MESSAGE_DELETE_FAIL, null);
+        }
     }
 }

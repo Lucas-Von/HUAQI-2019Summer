@@ -1,6 +1,7 @@
 package financial_management.service.user;
 
 
+import financial_management.bl.product.ProductService4User;
 import financial_management.bl.user.UserService;
 import financial_management.data.user.UserMapper;
 import financial_management.entity.ArticlePO;
@@ -42,6 +43,9 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     private CollectionServiceForBl collectionServiceForBl;
     @Autowired
     private ArticleServiceForBl articleServiceForBl;
+
+    @Autowired
+    private ProductService4User productService4User;
 
     @Override
     public BasicResponse register(UserParam userParam){
@@ -252,6 +256,7 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
             UserPO userPO = userMapper.selectUserByEmail(email);
             if(userPO.getStatus() == 0) {
                 userMapper.updateStatus(userPO.getUserId(), 1);
+                productService4User.generateFund(userPO.getUserId());
                 return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
             }else {
                 return new BasicResponse(ResponseStatus.STATUS_ACCOUNT_ACTIVATED);

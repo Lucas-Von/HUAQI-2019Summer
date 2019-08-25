@@ -40,7 +40,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, estateVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -57,7 +57,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, totalIncome);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -74,7 +74,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, newlyIncome);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -101,7 +101,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositVOList);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -137,7 +137,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subEstateVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -155,7 +155,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, fortuneVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -173,7 +173,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -191,7 +191,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, fortuneVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -209,7 +209,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 

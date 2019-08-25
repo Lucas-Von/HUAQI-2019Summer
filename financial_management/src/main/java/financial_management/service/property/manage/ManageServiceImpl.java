@@ -51,7 +51,7 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -84,7 +84,7 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, recAllocVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 
@@ -100,7 +100,7 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
         }
     }
 

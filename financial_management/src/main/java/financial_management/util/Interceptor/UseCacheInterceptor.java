@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import redis.clients.jedis.Jedis;
 
+import javax.xml.crypto.Data;
+
 @Aspect
 public class UseCacheInterceptor {
 
@@ -57,5 +59,4 @@ public class UseCacheInterceptor {
             return null;
         }
     }
-
 }

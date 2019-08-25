@@ -37,6 +37,8 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_HAS_CHANGED = new ResponseStatus("8008", "You have changed it");
     public static final ResponseStatus STATUS_TIME_OUT = new ResponseStatus("8009", "Time out");
 
+    public static final ResponseStatus STATUS_FEEDBACK_NOT_EXIST = new ResponseStatus("9001","反馈不存在");
+
     public String code;
 
     public String msg;

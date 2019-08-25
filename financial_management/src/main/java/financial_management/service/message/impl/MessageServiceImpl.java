@@ -1,5 +1,6 @@
 package financial_management.service.message.impl;
 
+import financial_management.bl.message.MessageInterface;
 import financial_management.bl.message.MessageService;
 import financial_management.data.message.MessageMapper;
 import financial_management.entity.MessagePO;
@@ -11,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
-public class MessageServiceImpl implements MessageService {
+public class MessageServiceImpl implements MessageService, MessageInterface {
     @Autowired
     private MessageMapper messageMapper;
 
@@ -80,13 +82,17 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public BasicResponse<?> postMessageToUserBy(MessageVO messageVO) {
-        MessagePO po = assembleMessagePO(messageVO);
-        po.setID(null);
+    public BasicResponse<?> postMessageToUserBy(Long userID, String content) {
+        MessagePO po = new MessagePO();
+        po.setTime(new Date());
+        po.setUserID(userID);
+        po.setContent(content);
+        po.setIsRead(false);
         po.setIsDelete(false);
         long id = messageMapper.insertMessage(po);
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
     }
+
 
     private static MessagePO assembleMessagePO(MessageVO messageVO){
         MessagePO messagePO = new MessagePO();

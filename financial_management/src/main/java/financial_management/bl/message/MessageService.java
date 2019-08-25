@@ -18,6 +18,4 @@ public interface MessageService {
     BasicResponse<?> readNewMessages(Long userID, int type);
 
     BasicResponse<?> removeMessageByMessageID(Long ID);
-
-    BasicResponse<?> postMessageToUserBy(MessageVO messageVO);
 }

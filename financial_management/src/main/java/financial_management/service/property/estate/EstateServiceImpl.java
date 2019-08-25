@@ -3,6 +3,7 @@ package financial_management.service.property.estate;
 import financial_management.bl.property.EstateService;
 import financial_management.data.property.EstateMapper;
 import financial_management.entity.property.*;
+import financial_management.service.property.manage.ManageServiceForBl;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.property.*;
@@ -22,18 +23,20 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Autowired
     private EstateMapper estateMapper;
 
+    @Autowired
+    private ManageServiceForBl manageServiceForBl;
+
     /**
      * 获取用户资产概况
      *
      * @param userId
-     * @return
+     * @returnn
      */
     @Override
     public BasicResponse getPropertyByUser(Long userId) {
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
-            InvestOfEstateVO investOfEstateVO = new InvestOfEstateVO(estatePO.getStocksInPlatform(), estatePO.getStocksOutPlatform(), estatePO.getGoldInPlatform(), estatePO.getGoldOutPlatform(), estatePO.getBondInPlatform(), estatePO.getBondOutPlatform());
-            EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform(), investOfEstateVO);
+            EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getStocksInPlatform(), estatePO.getStocksOutPlatform(), estatePO.getGoldInPlatform(), estatePO.getGoldOutPlatform(), estatePO.getBondInPlatform(), estatePO.getBondOutPlatform());
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, estateVO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,10 +115,10 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
      */
     @Override
     public BasicResponse getAssetInfoList(Long userId, String assetType) {
-        SubEstateVO subEstateVO = new SubEstateVO();
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
             double totalAsset = getTotalAsset(userId);
+            SubEstateVO subEstateVO = new SubEstateVO();
             switch (assetType) {
                 case "funds":
                     subEstateVO = new SubEstateVO(totalAsset, estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform());
@@ -136,7 +139,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subEstateVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, subEstateVO);
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
@@ -222,6 +225,24 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                 dailyInvestVOList.add(dailyInvestVO);
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, dailyInvestVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户自身的推荐资产配置
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getMyRecAlloc(Long userId) {
+        try {
+            RecAllocPO recAllocPO = manageServiceForBl.getRecAllocPO(userId);
+            MyRecAllocVO myRecAllocVO = new MyRecAllocVO(recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, myRecAllocVO);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

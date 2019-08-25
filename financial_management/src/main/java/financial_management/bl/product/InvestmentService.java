@@ -1,5 +1,6 @@
 package financial_management.bl.product;
 
+import financial_management.vo.BasicResponse;
 import financial_management.vo.product.InvestRecProductVO;
 import financial_management.vo.product.InvestmentVO;
 
@@ -16,6 +17,6 @@ public interface InvestmentService {
 
     List<InvestRecProductVO> getAllInvProduct();
 
-    void purchase(Long userId,String code,Integer amount,Double totalprice,String type);
+    BasicResponse purchase(Long userId, String code, Integer amount, Double totalprice, String type);
 
 }

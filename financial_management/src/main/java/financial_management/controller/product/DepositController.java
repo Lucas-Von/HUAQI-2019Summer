@@ -54,8 +54,12 @@ public class DepositController {
     }
 
     @PostMapping(value = "/product/deposit")
-    public BasicResponse purchaseDepositProduct(HttpServletRequest request, @RequestBody DepositPurchaseParam param){
-        depositService.purchase(jwtUtil.getIdFromRequest(request),param.getName(),param.getAmount());
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+    public BasicResponse purchaseDepositProduct(HttpServletRequest request, @RequestBody DepositPurchaseParam param) {
+        if (depositService.purchase(jwtUtil.getIdFromRequest(request), param.getName(), param.getAmount())) {
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+
+        } else {
+            return new BasicResponse<>(ResponseStatus.STATUS_DEPOSITPRODUCT_UNFINED, null);
+        }
     }
 }

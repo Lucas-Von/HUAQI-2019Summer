@@ -6,6 +6,8 @@ import financial_management.entity.DepositProductPO;
 import financial_management.entity.InsProductPO;
 import financial_management.entity.MyInsPO;
 import financial_management.util.DateConverterUtil;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.InsRecProductVO;
 import financial_management.vo.product.MyInsuranceVO;
@@ -55,10 +57,16 @@ public class InsuranceServiceImpl implements InsuranceService {
     }
 
     @Override
-    public void purchase(Long userId, String name, String insurant) {
-        InsProductPO po =mapper.selectProductByName(name);
-        MyInsPO myInsPO = new MyInsPO(userId,insurant,po.getId(), DateConverterUtil.moveForwardByDay(new Date(),po.getLength()),po.getPrice());
-        mapper.insertMyProduct(myInsPO);
+    public BasicResponse purchase(Long userId, String name, String insurant) {
+        try {
+            InsProductPO po = mapper.selectProductByName(name);
+            MyInsPO myInsPO = new MyInsPO(userId, insurant, po.getId(), DateConverterUtil.moveForwardByDay(new Date(), po.getLength()), po.getPrice());
+            mapper.insertMyProduct(myInsPO);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return new BasicResponse<>(ResponseStatus.STATUS_INSURANCEPRODUCT_UNFINED,null);
+        }
     }
 
     public ProductVO4Order getProduct(Long id){

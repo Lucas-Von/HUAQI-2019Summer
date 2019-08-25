@@ -19,5 +19,5 @@ public interface DepositService {
 
     List<DepRecProductVO> getAllDeposits();
 
-    void purchase(Long userId,String productName,Double amount);
+    boolean purchase(Long userId,String productName,Double amount);
 }

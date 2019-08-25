@@ -34,4 +34,9 @@ public class ManageController {
         return manageService.editRecAlloc(recAllocParam);
     }
 
+    @GetMapping("/manage/getAverageProfit")
+    public BasicResponse getRecentProfitRate(int days) {
+        return manageService.getRecentProfitRate(days);
+    }
+
 }

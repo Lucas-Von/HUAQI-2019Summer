@@ -26,7 +26,7 @@ public class FeedbackController {
         return feedbackService.getFeedbackBy(ID);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public BasicResponse postFeedback(@RequestBody FeedbackParam feedbackParam) {
         return feedbackService.postFeedback(feedbackParam);
     }

@@ -34,7 +34,7 @@
         where solved = 0
     </select>
 
-    <insert id="insert" parameterType="financial_management.entity.FeedBackPO" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="financial_management.entity.FeedBackPO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
         insert into feedback (title, type, detail, create_time, user_ID, phone, QQ, email, solved, solver_ID, solve_time, solve_text)
         values (#{title},#{type},#{detail},#{createTime},#{userID},#{phone},#{QQ},#{email},#{solved},#{solverID},#{solveTime},#{solveText})
     </insert>

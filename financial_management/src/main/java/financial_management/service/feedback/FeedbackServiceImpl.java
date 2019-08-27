@@ -33,6 +33,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         po.setPhone(feedbackParam.getPhone());
         po.setQQ(feedbackParam.getQq());
         po.setEmail(feedbackParam.getEmail());
+        po.setCreateTime(new Date());
         po.setSolved(false);
         long id = feedbackMapper.insert(po);
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);

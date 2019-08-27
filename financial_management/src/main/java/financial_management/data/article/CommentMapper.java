@@ -65,4 +65,11 @@ public interface CommentMapper {
      * @return
      */
     boolean ifExist(@Param("commentId") Long commentId);
+
+    /**
+     * 获得一条评论
+     * @param commentId
+     * @return
+     */
+    CommentPO selectComment(@Param("commentId") Long commentId);
 }

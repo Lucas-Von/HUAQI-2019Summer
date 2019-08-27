@@ -1,10 +1,14 @@
 package financial_management.service.article.comment;
 
 import financial_management.bl.article.CommentService;
+import financial_management.bl.message.MessageInterface;
+import financial_management.bl.message.MessageService;
 import financial_management.data.article.CommentMapper;
+import financial_management.entity.ArticlePO;
 import financial_management.entity.CommentPO;
 import financial_management.entity.LightPO;
 import financial_management.parameter.article.CommentParam;
+import financial_management.service.article.ArticleServiceForBl;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,12 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService, CommentServiceForBl {
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private ArticleServiceForBl articleServiceForBl;
+
+    @Autowired
+    private MessageInterface messageInterface;
 
     @Override
     public BasicResponse addComment(CommentParam commentParam, Long userId){
@@ -65,9 +75,14 @@ public class CommentServiceImpl implements CommentService, CommentServiceForBl {
     @Override
     public BasicResponse reportComment(Long commentId){
         if(commentMapper.ifExist(commentId)){
-            // TODO
-            // 调用发送信息给管理员发送举报评论的信息
-
+            CommentPO commentPO = commentMapper.selectComment(commentId);
+            Long articleId = commentPO.getArticleId();
+            ArticlePO articlePO = articleServiceForBl.getArticle(articleId);
+            String title = articlePO.getTitle();
+            String commentContent = commentPO.getContent();
+            String postContent = "文章：《" + title + "》下的评论：“" + commentContent + "”被一举报，请去确认情况是否属实！";
+            messageInterface.postMessageToUserBy((long)0,postContent);
+            System.out.println(postContent);
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }else {
             return new BasicResponse(ResponseStatus.STATUS_COMMENT_NOT_EXIST);

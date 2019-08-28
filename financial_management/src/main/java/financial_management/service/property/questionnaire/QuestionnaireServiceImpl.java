@@ -36,7 +36,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
@@ -52,7 +52,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new QuestionnairePO().getVO());
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
@@ -75,7 +75,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 

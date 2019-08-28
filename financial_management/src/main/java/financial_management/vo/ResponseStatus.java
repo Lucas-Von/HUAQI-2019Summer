@@ -3,7 +3,7 @@ package financial_management.vo;
 public final class ResponseStatus {
 
     public static final ResponseStatus STATUS_SUCCESS = new ResponseStatus("0000", "Success");
-    public static final ResponseStatus STATUS_SERVER_ERROR = new ResponseStatus("0001", "Server error");
+    public static final ResponseStatus SERVER_ERROR = new ResponseStatus("0001", "Server error");
     public static final ResponseStatus STATUS_REQUEST_PARAM_ERROR = new ResponseStatus("0002", "Request param error");
 
     public static final ResponseStatus STATUS_ARTICLE_NOT_EXIST = new ResponseStatus("2001","The article does not exist");

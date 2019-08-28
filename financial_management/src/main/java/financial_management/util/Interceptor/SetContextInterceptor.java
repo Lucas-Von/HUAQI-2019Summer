@@ -30,7 +30,7 @@ public class SetContextInterceptor {
             try {
                 return (BasicResponse) pjp.proceed();
             } catch (Throwable throwable) {
-                return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
+                return new BasicResponse(ResponseStatus.SERVER_ERROR);
             } finally {
                 ContextHolder.destroy();
             }

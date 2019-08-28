@@ -23,6 +23,12 @@ public class EstateController {
     @Autowired
     private EstateService estateService;
 
+    @GetMapping("/estate/getOverview")
+    public BasicResponse getOverviewByUser(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getOverviewByUser(userId);
+    }
+
     @GetMapping("/estate/getProperty")
     public BasicResponse getPropertyByUser(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
@@ -47,10 +53,28 @@ public class EstateController {
         return estateService.getDepositList(userId);
     }
 
-    @GetMapping("/estate/getAssetInfoList")
-    public BasicResponse getAssetInfoList(HttpServletRequest request, String assetType) {
+    @GetMapping("/estate/getFundsInfoList")
+    public BasicResponse getFundsInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
-        return estateService.getAssetInfoList(userId, assetType);
+        return estateService.getAssetInfoList(userId, "funds");
+    }
+
+    @GetMapping("/estate/getSavingInfoList")
+    public BasicResponse getSavingInfoList(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getAssetInfoList(userId, "saving");
+    }
+
+    @GetMapping("/estate/getInsuranceInfoList")
+    public BasicResponse getInsuranceInfoList(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getAssetInfoList(userId, "insurance");
+    }
+
+    @GetMapping("/estate/getInvestmentInfoList")
+    public BasicResponse getInvestmentInfoList(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getAssetInfoList(userId, "investment");
     }
 
     @GetMapping("/estate/getMonthlyProList")

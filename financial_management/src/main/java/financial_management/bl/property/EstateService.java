@@ -14,6 +14,14 @@ public interface EstateService {
      * @param userId
      * @return
      */
+    BasicResponse getOverviewByUser(Long userId);
+
+    /**
+     * 获取用户资产记录
+     *
+     * @param userId
+     * @return
+     */
     BasicResponse getPropertyByUser(Long userId);
 
     /**

@@ -2,9 +2,11 @@ package financial_management.service.product;
 
 import financial_management.bl.product.InsuranceService;
 import financial_management.data.product.InsuranceMapper;
+import financial_management.entity.DepositProductPO;
 import financial_management.entity.InsProductPO;
 import financial_management.entity.MyInsPO;
 import financial_management.util.DateConverterUtil;
+import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.InsRecProductVO;
 import financial_management.vo.product.MyInsuranceVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +59,27 @@ public class InsuranceServiceImpl implements InsuranceService {
         InsProductPO po =mapper.selectProductByName(name);
         MyInsPO myInsPO = new MyInsPO(userId,insurant,po.getId(), DateConverterUtil.moveForwardByDay(new Date(),po.getLength()),po.getPrice());
         mapper.insertMyProduct(myInsPO);
+    }
+
+    public ProductVO4Order getProduct(Long id){
+        List<InsProductPO> insurances = mapper.selectAllInsProduct();
+        for (InsProductPO i: insurances){
+            if (i.getId() == id){
+                ProductVO4Order vo = new ProductVO4Order();
+                vo.setCode(null);
+                vo.setpID(id);
+                vo.setName(i.getName());
+                return vo;
+            }
+        }
+        return getNullProduct();
+    }
+
+    public ProductVO4Order getNullProduct(){
+        ProductVO4Order vo = new ProductVO4Order();
+        vo.setName(null);
+        vo.setCode(null);
+        vo.setpID(null);
+        return vo;
     }
 }

@@ -6,16 +6,11 @@
     </select>
 
     <select id="selectSelfGold" resultMap="MyGoldProduct">
-        select
-          mg.user_id,
-          mg.code,
-          mg.amount,
-          mg.profit,
-          mg.profit_rate,
-          mg.purchase_price,
-          mg.quantity
-        from my_gold mg
-        where mg.user_id=#{userId}
+        select * from my_gold where user_id=#{userId}
+    </select>
+
+    <select id="selectById" resultMap="GoldProduct">
+        select * from gold where id = #{Id}
     </select>
 
     <insert id="insertMyGold" parameterType="financial_management.entity.MyGoldPO">
@@ -32,7 +27,7 @@
         <result property="purchasePrice" column="purchase_price"/>
         <result property="profit" column="profit"/>
         <result property="profitRate" column="profit_rate"/>
-        <result property="quantity" column="qiantity"/>
+        <result property="quantity" column="quantity"/>
         <result property="amount" column="amount"/>
     </resultMap>
 

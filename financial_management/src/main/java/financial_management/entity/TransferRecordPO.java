@@ -1,6 +1,6 @@
 package financial_management.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TransferRecordPO{
     //调仓记录ID
@@ -12,11 +12,17 @@ public class TransferRecordPO{
     //调仓完成时间
     private Date completeTime;
 
-    //减持类型
-    private Integer sellType;
+    private Float goldTotal;
 
-    //增持类型
-    private Integer buyType;
+    private Float goldDelta;
+
+    private Float bondTotal;
+
+    private Float bondDelta;
+
+    private Float stockTotal;
+
+    private Float stockDelta;
 
     //调仓用户ID
     private Long userID;
@@ -51,20 +57,52 @@ public class TransferRecordPO{
         this.completeTime = completeTime;
     }
 
-    public Integer getSellType() {
-        return sellType;
+    public Float getGoldTotal() {
+        return goldTotal;
     }
 
-    public void setSellType(Integer sellType) {
-        this.sellType = sellType;
+    public void setGoldTotal(Float goldTotal) {
+        this.goldTotal = goldTotal;
     }
 
-    public Integer getBuyType() {
-        return buyType;
+    public Float getGoldDelta() {
+        return goldDelta;
     }
 
-    public void setBuyType(Integer buyType) {
-        this.buyType = buyType;
+    public void setGoldDelta(Float goldDelta) {
+        this.goldDelta = goldDelta;
+    }
+
+    public Float getBondTotal() {
+        return bondTotal;
+    }
+
+    public void setBondTotal(Float bondTotal) {
+        this.bondTotal = bondTotal;
+    }
+
+    public Float getBondDelta() {
+        return bondDelta;
+    }
+
+    public void setBondDelta(Float bondDelta) {
+        this.bondDelta = bondDelta;
+    }
+
+    public Float getStockTotal() {
+        return stockTotal;
+    }
+
+    public void setStockTotal(Float stockTotal) {
+        this.stockTotal = stockTotal;
+    }
+
+    public Float getStockDelta() {
+        return stockDelta;
+    }
+
+    public void setStockDelta(Float stockDelta) {
+        this.stockDelta = stockDelta;
     }
 
     public Long getUserID() {

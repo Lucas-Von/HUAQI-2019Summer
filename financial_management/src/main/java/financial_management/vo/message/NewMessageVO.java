@@ -29,6 +29,9 @@ public class NewMessageVO {
         this.unreadAmount = unreadAmount;
     }
 
+    public NewMessageVO() {
+    }
+
     public NewMessageVO(int type, String latest, int unreadAmount) {
         this.type = type;
         this.latest = latest;

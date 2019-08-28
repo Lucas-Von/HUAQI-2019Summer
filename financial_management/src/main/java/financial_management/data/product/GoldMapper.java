@@ -23,4 +23,6 @@ public interface GoldMapper {
     int insertMyGold(MyGoldPO po);
 
     GoldPO selectGoldByCode(String code);
+
+    GoldPO selectById(Long Id);
 }

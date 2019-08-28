@@ -4,9 +4,11 @@ import financial_management.bl.product.FundService;
 import financial_management.bl.product.ProductService4User;
 import financial_management.bl.wallet.FundService4Wallet;
 import financial_management.data.product.FundMapper;
+import financial_management.entity.DepositProductPO;
 import financial_management.entity.FundPO;
 import financial_management.entity.MyFundPO;
 import financial_management.util.DateConverterUtil;
+import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.FundBasicVO;
 import financial_management.vo.product.FundVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -81,5 +84,25 @@ public class FundServiceImpl implements FundService4Wallet, FundService, Product
     public boolean generateFund(Long userId) {
         mapper.insertNewFund(userId,0.0F);
         return true;
+    }
+
+    public ProductVO4Order getProduct(Long id){
+        FundPO fundPO = mapper.selectFund();
+        if(fundPO == null){
+            return getNullProduct();
+        }
+        ProductVO4Order vo = new ProductVO4Order();
+        vo.setName(fundPO.getName());
+        vo.setpID(null);
+        vo.setCode(null);
+        return vo;
+    }
+
+    public ProductVO4Order getNullProduct(){
+        ProductVO4Order vo = new ProductVO4Order();
+        vo.setName(null);
+        vo.setCode(null);
+        vo.setpID(null);
+        return vo;
     }
 }

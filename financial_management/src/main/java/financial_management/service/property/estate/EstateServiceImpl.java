@@ -2,10 +2,7 @@ package financial_management.service.property.estate;
 
 import financial_management.bl.property.EstateService;
 import financial_management.data.property.EstateMapper;
-import financial_management.entity.property.DepositPO;
-import financial_management.entity.property.EstatePO;
-import financial_management.entity.property.FortunePO;
-import financial_management.entity.property.InvestPO;
+import financial_management.entity.property.*;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.property.*;
@@ -70,11 +67,13 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getNewlyIncome(Long userId) {
         try {
-            double newlyIncome = estateMapper.getTotalIncome(userId);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, newlyIncome);
+            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
+            double today = recentInvPO.getTodayStocks() + recentInvPO.getTodayGold() + recentInvPO.getTodayBond();
+            double yesterday = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, today - yesterday);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
+            return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
         }
     }
 
@@ -113,10 +112,10 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
      */
     @Override
     public BasicResponse getAssetInfoList(Long userId, String assetType) {
+        SubEstateVO subEstateVO = new SubEstateVO();
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
             double totalAsset = getTotalAsset(userId);
-            SubEstateVO subEstateVO = new SubEstateVO();
             switch (assetType) {
                 case "funds":
                     subEstateVO = new SubEstateVO(totalAsset, estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform());
@@ -137,7 +136,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subEstateVO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
+            return new BasicResponse<>(ResponseStatus.STATUS_SERVER_ERROR, subEstateVO);
         }
     }
 
@@ -150,9 +149,13 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getMonthlyProList(Long userId) {
         try {
-            FortunePO fortunePO = estateMapper.getMonthlyProList(userId);
-            FortuneVO fortuneVO = new FortuneVO(fortunePO.getDate(), fortunePO.getFunds(), fortunePO.getSaving(), fortunePO.getInsurance(), fortunePO.getStocks(), fortunePO.getGold(), fortunePO.getBond());
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, fortuneVO);
+            List<FortunePO> monthlyFortunePOList = estateMapper.getMonthlyProList(userId);
+            List<FortuneVO> monthlyFortuneVOList = new ArrayList<>();
+            monthlyFortunePOList.stream().forEach(monthlyFortunePO -> {
+                FortuneVO monthlyFortuneVO = new FortuneVO(monthlyFortunePO.getRecordDate(), monthlyFortunePO.getFunds(), monthlyFortunePO.getSaving(), monthlyFortunePO.getInsurance(), monthlyFortunePO.getStocks(), monthlyFortunePO.getGold(), monthlyFortunePO.getBond());
+                monthlyFortuneVOList.add(monthlyFortuneVO);
+            });
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, monthlyFortuneVOList);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
@@ -168,9 +171,13 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getMonthlyInvList(Long userId) {
         try {
-            InvestPO investPO = estateMapper.getMonthlyInvList(userId);
-            InvestVO investVO = new InvestVO(investPO.getDate(), investPO.getStocks(), investPO.getGold(), investPO.getBond());
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investVO);
+            List<InvestPO> monthlyInvestPOList = estateMapper.getMonthlyInvList(userId);
+            List<InvestVO> monthlyInvestVOList = new ArrayList<>();
+            monthlyInvestPOList.stream().forEach(monthlyInvestPO -> {
+                InvestVO monthlyInvestVO = new InvestVO(monthlyInvestPO.getRecordDate(), monthlyInvestPO.getStocks(), monthlyInvestPO.getGold(), monthlyInvestPO.getBond());
+                monthlyInvestVOList.add(monthlyInvestVO);
+            });
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, monthlyInvestVOList);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
@@ -186,9 +193,13 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getDailyProList(Long userId) {
         try {
-            FortunePO fortunePO = estateMapper.getDailyProList(userId);
-            FortuneVO fortuneVO = new FortuneVO(fortunePO.getDate(), fortunePO.getFunds(), fortunePO.getSaving(), fortunePO.getInsurance(), fortunePO.getStocks(), fortunePO.getGold(), fortunePO.getBond());
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, fortuneVO);
+            List<FortunePO> dailyFortunePOList = estateMapper.getDailyProList(userId);
+            List<FortuneVO> dailyFortuneVOList = new ArrayList<>();
+            dailyFortunePOList.stream().forEach(dailyFortunePO -> {
+                FortuneVO dailyFortuneVO = new FortuneVO(dailyFortunePO.getRecordDate(), dailyFortunePO.getFunds(), dailyFortunePO.getSaving(), dailyFortunePO.getInsurance(), dailyFortunePO.getStocks(), dailyFortunePO.getGold(), dailyFortunePO.getBond());
+                dailyFortuneVOList.add(dailyFortuneVO);
+            });
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, dailyFortuneVOList);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
@@ -204,9 +215,13 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getDailyInvList(Long userId) {
         try {
-            InvestPO investPO = estateMapper.getDailyInvList(userId);
-            InvestVO investVO = new InvestVO(investPO.getDate(), investPO.getStocks(), investPO.getGold(), investPO.getBond());
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investVO);
+            List<InvestPO> dailyInvestPOList = estateMapper.getDailyInvList(userId);
+            List<InvestVO> dailyInvestVOList = new ArrayList<>();
+            dailyInvestPOList.stream().forEach(dailyInvestPO -> {
+                InvestVO dailyInvestVO = new InvestVO(dailyInvestPO.getRecordDate(), dailyInvestPO.getStocks(), dailyInvestPO.getGold(), dailyInvestPO.getBond());
+                dailyInvestVOList.add(dailyInvestVO);
+            });
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, dailyInvestVOList);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);

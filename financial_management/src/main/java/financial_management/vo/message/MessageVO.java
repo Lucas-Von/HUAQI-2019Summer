@@ -1,5 +1,7 @@
 package financial_management.vo.message;
 
+import financial_management.entity.MessagePO;
+
 import java.util.Date;
 
 public class MessageVO {
@@ -8,7 +10,7 @@ public class MessageVO {
     private Long userID;
     private Integer type;
     private String content;
-    private Boolean isRead;
+    private Boolean readed;
 
     public Long getID() {
         return ID;
@@ -50,20 +52,29 @@ public class MessageVO {
         this.content = content;
     }
 
-    public Boolean getRead() {
-        return isRead;
+    public Boolean getReaded() {
+        return readed;
     }
 
-    public void setRead(Boolean read) {
-        isRead = read;
+    public void setReaded(Boolean readed) {
+        this.readed = readed;
     }
 
-    public MessageVO(Long ID, Date time, Long userID, Integer type, String content, Boolean isRead) {
+    public MessageVO(Long ID, Date time, Long userID, Integer type, String content, Boolean readed) {
         this.ID = ID;
         this.time = time;
         this.userID = userID;
         this.type = type;
         this.content = content;
-        this.isRead = isRead;
+        this.readed = readed;
+    }
+
+    public MessageVO(MessagePO po) {
+        this.ID = po.getID();
+        this.time = po.getTime();
+        this.userID = po.getUserID();
+        this.type = po.getType();
+        this.content = po.getContent();
+        this.readed = po.getIsRead();
     }
 }

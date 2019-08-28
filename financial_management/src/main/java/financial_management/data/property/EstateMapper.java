@@ -1,9 +1,6 @@
 package financial_management.data.property;
 
-import financial_management.entity.property.DepositPO;
-import financial_management.entity.property.EstatePO;
-import financial_management.entity.property.FortunePO;
-import financial_management.entity.property.InvestPO;
+import financial_management.entity.property.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -40,7 +37,7 @@ public interface EstateMapper {
      * @param userId
      * @return
      */
-    Double getNewlyIncome(@Param("userId") Long userId);
+    RecentInvPO getNewlyIncome(@Param("userId") Long userId);
 
     /**
      * 获取用户储蓄产品列表
@@ -56,7 +53,7 @@ public interface EstateMapper {
      * @param userId
      * @return
      */
-    FortunePO getMonthlyProList(@Param("userId") Long userId);
+    List<FortunePO> getMonthlyProList(@Param("userId") Long userId);
 
     /**
      * 获取用户自注册起所有月份的投资列表
@@ -64,7 +61,7 @@ public interface EstateMapper {
      * @param userId
      * @return
      */
-    InvestPO getMonthlyInvList(@Param("userId") Long userId);
+    List<InvestPO> getMonthlyInvList(@Param("userId") Long userId);
 
     /**
      * 获取用户最近30天的资产列表
@@ -72,7 +69,7 @@ public interface EstateMapper {
      * @param userId
      * @return
      */
-    FortunePO getDailyProList(@Param("userId") Long userId);
+    List<FortunePO> getDailyProList(@Param("userId") Long userId);
 
     /**
      * 获取用户最近30天的投资列表
@@ -80,6 +77,6 @@ public interface EstateMapper {
      * @param userId
      * @return
      */
-    InvestPO getDailyInvList(@Param("userId") Long userId);
+    List<InvestPO> getDailyInvList(@Param("userId") Long userId);
 
 }

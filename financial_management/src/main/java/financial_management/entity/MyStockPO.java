@@ -87,7 +87,7 @@ public class MyStockPO {
     }
 
     public void setQuantity(Integer quantity) {
-        quantity = quantity;
+        this.quantity = quantity;
     }
 
     public Float getAmount() {

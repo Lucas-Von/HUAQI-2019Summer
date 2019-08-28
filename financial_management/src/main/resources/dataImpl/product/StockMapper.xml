@@ -10,11 +10,11 @@
     </select>
 
     <select id="selectSelfDomStock" resultMap="MyStockProduct">
-        select *from my_stock where code in(select code from dom_stock);
+        select *from my_stock where code in(select code from dom_stock) and user_id = #{userId};
     </select>
 
     <select id="selectSelfForStock" resultMap="MyStockProduct">
-        select *from my_stock where code in(select code from for_stock);
+        select *from my_stock where code in(select code from for_stock) and user_id = #{userId};
     </select>
 
     <insert id="insertMyStock" parameterType="financial_management.entity.MyStockPO">
@@ -24,8 +24,17 @@
     <select id="selectDomStockByCode" resultMap="DomProduct">
         select *from dom_stock where code=#{code}
     </select>
-    <select id="selectForStockByCode" resultMap="DomProduct">
+
+    <select id="selectForStockByCode" resultMap="ForProduct">
         select *from for_stock where code=#{code}
+    </select>
+
+    <select id="selectForStockById" resultMap="ForProduct">
+        select *from for_stock where id=#{Id}
+    </select>
+
+    <select id="selectDomStockById" resultMap="DomProduct">
+        select *from dom_stock where id=#{Id}
     </select>
 
     <resultMap id="MyStockProduct" type="financial_management.entity.MyStockPO">
@@ -34,7 +43,7 @@
         <result property="purchasePrice" column="purchase_price"/>
         <result property="profit" column="profit"/>
         <result property="profitRate" column="profit_rate"/>
-        <result property="quantity" column="qiantity"/>
+        <result property="quantity" column="quantity"/>
         <result property="amount" column="amount"/>
     </resultMap>
 

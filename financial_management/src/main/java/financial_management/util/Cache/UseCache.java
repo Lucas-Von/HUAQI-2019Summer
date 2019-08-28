@@ -1,6 +1,12 @@
 package financial_management.util.Cache;
 
+
+import java.lang.annotation.*;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+@Documented
 public @interface UseCache {
     CacheType key();
-    long expiredTime() default 60*1000;
+    int expiredTime() default 1;
 }

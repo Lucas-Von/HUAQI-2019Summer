@@ -10,8 +10,6 @@ import java.util.Date;
  * @date 2019/8/22
  */
 public class DateParam {
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     public Date getTime() {

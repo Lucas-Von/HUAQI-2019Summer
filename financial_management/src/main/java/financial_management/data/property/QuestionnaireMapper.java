@@ -27,7 +27,7 @@ public interface QuestionnaireMapper {
      * @param questionnaireParam
      * @return
      */
-    int insertQuest(QuestionnaireParam questionnaireParam);
+    void insertQuest(QuestionnaireParam questionnaireParam);
 
     /**
      * 更新用户填写的问卷

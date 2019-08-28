@@ -25,4 +25,6 @@ public interface BondMapper {
     int insertMyBond(MyBondPO po);
 
     BondPO selectBondByCode(String code);
+
+    BondPO selectBondById(Long id);
 }

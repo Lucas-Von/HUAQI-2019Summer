@@ -104,4 +104,20 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
         }
     }
 
+    /**
+     * 获取平台所有用户近7/30/90天的收益率
+     *
+     * @param days
+     * @return
+     */
+    public BasicResponse getRecentProfitRate(int days) {
+        try {
+            double recentProfitRate = manageMapper.getRecentProfitRate(days);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, recentProfitRate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);
+        }
+    }
+
 }

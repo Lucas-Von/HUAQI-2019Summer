@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.order.TransferRecordMapper">
+    <resultMap id="original" type="financial_management.entity.TransferRecordPO">
+        <id column="id" jdbcType="BIGINT" property="ID"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime"/>
+        <result column="gold_total" jdbcType="FLOAT" property="goldTotal"/>
+        <result column="gold_delta" jdbcType="FLOAT" property="goldDelta"/>
+        <result column="bond_total" jdbcType="FLOAT" property="bondTotal"/>
+        <result column="bond_delta" jdbcType="FLOAT" property="bondDelta"/>
+        <result column="stock_total" jdbcType="FLOAT" property="stockTotal"/>
+        <result column="stock_delta" jdbcType="FLOAT" property="stockDelta"/>
+        <result column="user_id" jdbcType="BIGINT" property="userID"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="is_customize" jdbcType="BIT" property="isCustomize"/>
+    </resultMap>
+
+    <select id="selectByUserID">
+        select *
+        from transfer_record
+        where user_id = #{userID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByID">
+        select *
+        from transfer_record
+        where id = #{ID,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="financial_management.entity.TransferRecordPO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
+        insert into transfer_record (id, create_time, complete_time, gold_total, gold_delta, bond_total, bond_delta, stock_total, stock_delta, user_id, status, is_customize)
+        values (#{ID},#{createTime},#{completeTime},#{goldTotal},#{goldDelta},#{bondTotal},#{bondDelta},#{stockTotal},#{stockDelta},#{userID},#{status},#{isCustomize})
+    </insert>
+
+    <update id="update" parameterType="financial_management.entity.TransferRecordPO">
+        update transfer_record
+        set complete_time = #{completeTime},
+            status = #{status}
+        where id = #{ID};
+    </update>
+</mapper>

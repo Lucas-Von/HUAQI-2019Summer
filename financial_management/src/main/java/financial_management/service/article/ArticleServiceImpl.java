@@ -11,11 +11,9 @@ import financial_management.service.user.UserServiceForBl;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.article.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,259 +37,334 @@ public class ArticleServiceImpl implements ArticleService, ArticleServiceForBl {
 
     @Override
     public BasicResponse addArticle(ArticleParam articleParam){
-        articleMapper.insertArticle(articleParam.getArticlePO());
-        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        try {
+            articleMapper.insertArticle(articleParam.getArticlePO());
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
     }
 
     @Override
     public BasicResponse updateArticle(ArticleParam articleParam){
-        if(articleMapper.ifExist(articleParam.getArticleId())) {
-            ArticlePO articlePO = articleParam.getArticlePO();
-            articlePO.setArticleId(articleParam.getArticleId());
-            articleMapper.updateArticle(articlePO);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+        try {
+            if (articleMapper.ifExist(articleParam.getArticleId())) {
+                ArticlePO articlePO = articleParam.getArticlePO();
+                articlePO.setArticleId(articleParam.getArticleId());
+                articleMapper.updateArticle(articlePO);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse deleteArticle(Long articleId){
-        if(articleMapper.ifExist(articleId)){
-            articleMapper.deleteArticle(articleId);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+        try {
+            if (articleMapper.ifExist(articleId)) {
+                articleMapper.deleteArticle(articleId);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse getSimpleArticle(Long articleId, Long userId){
-        if(articleMapper.ifExist(articleId)){
-            ArticlePO articlePO = articleMapper.selectArticle(articleId);
-            ArticleVO articleVO = articlePO.getArticleVO();
+        try {
+            if (articleMapper.ifExist(articleId)) {
+                ArticlePO articlePO = articleMapper.selectArticle(articleId);
+                ArticleVO articleVO = articlePO.getArticleVO();
 
-            boolean collected = collectionServiceForBl.ifCollected(userId,articleId);
-            articleVO.setCollected(collected);
+                boolean collected = collectionServiceForBl.ifCollected(userId, articleId);
+                articleVO.setCollected(collected);
 
-            List<CommentPO> commentPOS = commentServiceForBl.getComments(articleId);
-            List<CommentVO> commentVOS = new ArrayList<>();
-            for(int i=0;i<commentPOS.size();i++){
-                CommentPO commentPO = commentPOS.get(i);
-                CommentVO commentVO = new CommentVO();
-                commentVO.setCommentId(commentPO.getId());
-                commentVO.setContent(commentPO.getContent());
-                commentVO.setTime(commentPO.getTime());
+                List<CommentPO> commentPOS = commentServiceForBl.getComments(articleId);
+                List<CommentVO> commentVOS = new ArrayList<>();
+                for (int i = 0; i < commentPOS.size(); i++) {
+                    CommentPO commentPO = commentPOS.get(i);
+                    CommentVO commentVO = new CommentVO();
+                    commentVO.setCommentId(commentPO.getId());
+                    commentVO.setContent(commentPO.getContent());
+                    commentVO.setTime(commentPO.getTime());
 
-                Long commentUserId = commentPO.getUserId();
-                String username = userServiceForBl.getUsername(commentUserId);
-                commentVO.setUsername(username);
+                    Long commentUserId = commentPO.getUserId();
+                    String username = userServiceForBl.getUsername(commentUserId);
+                    commentVO.setUsername(username);
 
-                commentVO.setLight(commentServiceForBl.getLights(commentPO.getId()));
-                commentVO.setLighted(commentServiceForBl.ifLighted(userId,commentPO.getId()));
+                    commentVO.setLight(commentServiceForBl.getLights(commentPO.getId()));
+                    commentVO.setLighted(commentServiceForBl.ifLighted(userId, commentPO.getId()));
 
-                commentVOS.add(commentVO);
+                    commentVOS.add(commentVO);
+                }
+
+                articleVO.setComments(commentVOS);
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleVO);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
             }
-
-            articleVO.setComments(commentVOS);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleVO);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse getAllArticles(Integer category,Integer type,Long userId){
-        List<ArticlePO> articlePOS = new ArrayList<>();
-        if(type == 1){
-            articlePOS = articleMapper.selectAllArticlesByTime(category);
-        }else if(type == 2){
-            articlePOS = articleMapper.selectAllArticlesByPageviews(category);
-        }
-        List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
-        for(int i=0;i<articlePOS.size();i++){
-            ArticlePO articlePO = articlePOS.get(i);
-            ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
+        try {
+            List<ArticlePO> articlePOS = new ArrayList<>();
+            if (type == 1) {
+                articlePOS = articleMapper.selectAllArticlesByTime(category);
+            } else if (type == 2) {
+                articlePOS = articleMapper.selectAllArticlesByPageviews(category);
+            }
+            List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
+            for (int i = 0; i < articlePOS.size(); i++) {
+                ArticlePO articlePO = articlePOS.get(i);
+                ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
 
-            articleSimpleInfoVO.setCollected(collectionServiceForBl.ifCollected(userId, articlePO.getArticleId()));
-            articleSimpleInfoVOS.add(articleSimpleInfoVO);
+                articleSimpleInfoVO.setCollected(collectionServiceForBl.ifCollected(userId, articlePO.getArticleId()));
+                articleSimpleInfoVOS.add(articleSimpleInfoVO);
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleInfoVOS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleInfoVOS);
     }
 
     @Override
     public BasicResponse addPageviews(Long articleId){
-        if(articleMapper.ifExist(articleId)){
-            articleMapper.addPageviews(articleId);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+        try {
+            if (articleMapper.ifExist(articleId)) {
+                articleMapper.addPageviews(articleId);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse getAllComments(Long articleId){
-        if(articleMapper.ifExist(articleId)){
-            List<CommentPO> commentPOS = commentServiceForBl.getComments(articleId);
-            List<CommentVO> commentVOS = new ArrayList<>();
-            for(int i=0;i<commentPOS.size();i++){
-                CommentPO commentPO = commentPOS.get(i);
-                CommentVO commentVO = new CommentVO();
-                commentVO.setCommentId(commentPO.getId());
-                commentVO.setContent(commentPO.getContent());
-                commentVO.setTime(commentPO.getTime());
+        try {
+            if (articleMapper.ifExist(articleId)) {
+                List<CommentPO> commentPOS = commentServiceForBl.getComments(articleId);
+                List<CommentVO> commentVOS = new ArrayList<>();
+                for (int i = 0; i < commentPOS.size(); i++) {
+                    CommentPO commentPO = commentPOS.get(i);
+                    CommentVO commentVO = new CommentVO();
+                    commentVO.setCommentId(commentPO.getId());
+                    commentVO.setContent(commentPO.getContent());
+                    commentVO.setTime(commentPO.getTime());
 
-                Long commentUserId = commentPO.getUserId();
-                String username = userServiceForBl.getUsername(commentUserId);
-                commentVO.setUsername(username);
+                    Long commentUserId = commentPO.getUserId();
+                    String username = userServiceForBl.getUsername(commentUserId);
+                    commentVO.setUsername(username);
 
-                commentVO.setLight(commentServiceForBl.getLights(commentPO.getId()));
+                    commentVO.setLight(commentServiceForBl.getLights(commentPO.getId()));
 
-                commentVOS.add(commentVO);
+                    commentVOS.add(commentVO);
+                }
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, commentVOS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
             }
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, commentVOS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse getAllArticlesWithoutLogin(Integer category, Integer type){
-        List<ArticlePO> articlePOS = new ArrayList<>();
-        if(type == 1){
-            articlePOS = articleMapper.selectAllArticlesByTime(category);
-        }else if(type == 2){
-            articlePOS = articleMapper.selectAllArticlesByPageviews(category);
+        try {
+            List<ArticlePO> articlePOS = new ArrayList<>();
+            if (type == 1) {
+                articlePOS = articleMapper.selectAllArticlesByTime(category);
+            } else if (type == 2) {
+                articlePOS = articleMapper.selectAllArticlesByPageviews(category);
+            }
+            List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
+            for (int i = 0; i < articlePOS.size(); i++) {
+                ArticlePO articlePO = articlePOS.get(i);
+                ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
+                articleSimpleInfoVOS.add(articleSimpleInfoVO);
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleInfoVOS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
-        List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
-        for(int i=0;i<articlePOS.size();i++){
-            ArticlePO articlePO = articlePOS.get(i);
-            ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
-            articleSimpleInfoVOS.add(articleSimpleInfoVO);
-        }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleInfoVOS);
     }
 
     @Override
     public BasicResponse getArticleWithoutLogin(Long articleId){
-        if(articleMapper.ifExist(articleId)){
-            ArticlePO articlePO = articleMapper.selectArticle(articleId);
-            ArticleVO articleVO = articlePO.getArticleVO();
+        try {
+            if (articleMapper.ifExist(articleId)) {
+                ArticlePO articlePO = articleMapper.selectArticle(articleId);
+                ArticleVO articleVO = articlePO.getArticleVO();
 
-            List<CommentPO> commentPOS = commentServiceForBl.getComments(articleId);
-            List<CommentVO> commentVOS = new ArrayList<>();
-            for(int i=0;i<commentPOS.size();i++){
-                CommentPO commentPO = commentPOS.get(i);
-                CommentVO commentVO = new CommentVO();
-                commentVO.setCommentId(commentPO.getId());
-                commentVO.setContent(commentPO.getContent());
-                commentVO.setTime(commentPO.getTime());
+                List<CommentPO> commentPOS = commentServiceForBl.getComments(articleId);
+                List<CommentVO> commentVOS = new ArrayList<>();
+                for (int i = 0; i < commentPOS.size(); i++) {
+                    CommentPO commentPO = commentPOS.get(i);
+                    CommentVO commentVO = new CommentVO();
+                    commentVO.setCommentId(commentPO.getId());
+                    commentVO.setContent(commentPO.getContent());
+                    commentVO.setTime(commentPO.getTime());
 
-                Long commentUserId = commentPO.getUserId();
-                String username = userServiceForBl.getUsername(commentUserId);
-                commentVO.setUsername(username);
+                    Long commentUserId = commentPO.getUserId();
+                    String username = userServiceForBl.getUsername(commentUserId);
+                    commentVO.setUsername(username);
 
-                commentVO.setLight(commentServiceForBl.getLights(commentPO.getId()));
+                    commentVO.setLight(commentServiceForBl.getLights(commentPO.getId()));
 
-                commentVOS.add(commentVO);
+                    commentVOS.add(commentVO);
+                }
+
+                articleVO.setComments(commentVOS);
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleVO);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
             }
-
-            articleVO.setComments(commentVOS);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleVO);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse getAllArticlesByAdmin(){
-        List<ArticlePO> articlePOS = articleMapper.selectAllArticlesByTimeByAdmin();
-        List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
-        for(int i=0;i<articlePOS.size();i++){
-            ArticlePO articlePO = articlePOS.get(i);
-            ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
-            articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
-
-            articleSimpleAdminVOS.add(articleSimpleAdminVO);
-        }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
-    }
-
-    @Override
-    public BasicResponse getArticleByAdmin(Long articleId){
-        if(articleMapper.ifExist(articleId)){
-            ArticlePO articlePO = articleMapper.selectArticle(articleId);
-            ArticleAdminVO articleAdminVO = articlePO.getArticleAdminVO();
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleAdminVO);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
-        }
-    }
-
-    @Override
-    public BasicResponse searchArticlesByCategory(Integer category){
-        List<ArticlePO> articlePOS = articleMapper.selectAllArticlesByTime(category);
-        List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
-        for(int i=0;i<articlePOS.size();i++){
-            ArticlePO articlePO = articlePOS.get(i);
-            ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
-            articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
-
-            articleSimpleAdminVOS.add(articleSimpleAdminVO);
-        }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
-    }
-
-    @Override
-    public BasicResponse searchArticlesByTitle(String title){
-        List<ArticlePO> articlePOS = articleMapper.selectArticleByTitle(title);
-        List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
-        for(int i=0;i<articlePOS.size();i++){
-            ArticlePO articlePO = articlePOS.get(i);
-            ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
-            articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
-
-            articleSimpleAdminVOS.add(articleSimpleAdminVO);
-        }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
-    }
-
-    @Override
-    public BasicResponse searchArticlesByTime(Date time){
-        List<ArticlePO> articlePOS = articleMapper.selectAllArticlesByTimeByAdmin();
-        List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
-        for(int i=0;i<articlePOS.size();i++){
-            ArticlePO articlePO = articlePOS.get(i);
-            Timestamp articleTime = articlePO.getTime();
-            Date articleDate = articleTime;
-            articleDate = new Date(articleTime.getTime());
-            // 判断是否是同一天
-            Calendar cal1 = Calendar.getInstance();
-            cal1.setTime(time);
-            Calendar cal2 = Calendar.getInstance();
-            cal2.setTime(articleDate);
-            if(isSameDay(cal1, cal2)){
+        try {
+            List<ArticlePO> articlePOS = articleMapper.selectAllArticlesByTimeByAdmin();
+            List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
+            for (int i = 0; i < articlePOS.size(); i++) {
+                ArticlePO articlePO = articlePOS.get(i);
                 ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
                 articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
 
                 articleSimpleAdminVOS.add(articleSimpleAdminVO);
             }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
+    }
+
+    @Override
+    public BasicResponse getArticleByAdmin(Long articleId){
+        try {
+            if (articleMapper.ifExist(articleId)) {
+                ArticlePO articlePO = articleMapper.selectArticle(articleId);
+                ArticleAdminVO articleAdminVO = articlePO.getArticleAdminVO();
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleAdminVO);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public BasicResponse searchArticlesByCategory(Integer category){
+        try {
+            List<ArticlePO> articlePOS = articleMapper.selectAllArticlesByTime(category);
+            List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
+            for (int i = 0; i < articlePOS.size(); i++) {
+                ArticlePO articlePO = articlePOS.get(i);
+                ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
+                articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
+
+                articleSimpleAdminVOS.add(articleSimpleAdminVO);
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public BasicResponse searchArticlesByTitle(String title){
+        try {
+            List<ArticlePO> articlePOS = articleMapper.selectArticleByTitle(title);
+            List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
+            for (int i = 0; i < articlePOS.size(); i++) {
+                ArticlePO articlePO = articlePOS.get(i);
+                ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
+                articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
+
+                articleSimpleAdminVOS.add(articleSimpleAdminVO);
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public BasicResponse searchArticlesByTime(Date time){
+        try {
+            List<ArticlePO> articlePOS = articleMapper.selectAllArticlesByTimeByAdmin();
+            List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
+            for (int i = 0; i < articlePOS.size(); i++) {
+                ArticlePO articlePO = articlePOS.get(i);
+                Timestamp articleTime = articlePO.getTime();
+                Date articleDate = articleTime;
+                articleDate = new Date(articleTime.getTime());
+                // 判断是否是同一天
+                Calendar cal1 = Calendar.getInstance();
+                cal1.setTime(time);
+                Calendar cal2 = Calendar.getInstance();
+                cal2.setTime(articleDate);
+                if (isSameDay(cal1, cal2)) {
+                    ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
+                    articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
+
+                    articleSimpleAdminVOS.add(articleSimpleAdminVO);
+                }
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
     }
 
     @Override
     public BasicResponse searchArticlesByTags(String tags){
-        List<ArticlePO> articlePOS = articleMapper.selectArticleByTags(tags);
-        List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
-        for(int i=0;i<articlePOS.size();i++){
-            ArticlePO articlePO = articlePOS.get(i);
-            ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
-            articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
+        try {
+            List<ArticlePO> articlePOS = articleMapper.selectArticleByTags(tags);
+            List<ArticleSimpleAdminVO> articleSimpleAdminVOS = new ArrayList<>();
+            for (int i = 0; i < articlePOS.size(); i++) {
+                ArticlePO articlePO = articlePOS.get(i);
+                ArticleSimpleAdminVO articleSimpleAdminVO = articlePO.getArticleSimpleAdminVO();
+                articleSimpleAdminVO.setCollections(collectionServiceForBl.getCollectionAmount(articlePO.getArticleId()));
 
-            articleSimpleAdminVOS.add(articleSimpleAdminVO);
+                articleSimpleAdminVOS.add(articleSimpleAdminVO);
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleAdminVOS);
     }
 
     @Override

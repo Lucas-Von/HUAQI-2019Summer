@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/feedback")
 public class FeedbackController {
@@ -26,7 +26,7 @@ public class FeedbackController {
         return feedbackService.getFeedbackBy(ID);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public BasicResponse postFeedback(@RequestBody FeedbackParam feedbackParam) {
         return feedbackService.postFeedback(feedbackParam);
     }

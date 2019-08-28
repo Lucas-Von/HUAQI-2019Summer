@@ -203,9 +203,9 @@ CREATE TABLE `feedback` (
   `QQ` varchar(15) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `solved` bit(1) NOT NULL DEFAULT b'0',
-  `solver_ID` bigint(255) NOT NULL,
-  `solve_time` timestamp NULL DEFAULT NULL,
-  `solve_text` text,
+  `solver_ID` bigint(255) NULL,
+  `solve_time` timestamp NULL,
+  `solve_text` text NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 

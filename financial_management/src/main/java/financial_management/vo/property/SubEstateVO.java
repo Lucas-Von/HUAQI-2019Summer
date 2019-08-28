@@ -30,7 +30,11 @@ public class SubEstateVO {
         this.subEstate = subEstateInPlatform + subEstateOutPlatform;
         this.subEstateInPlatform = subEstateInPlatform;
         this.subEstateOutPlatform = subEstateOutPlatform;
-        this.rate = (subEstateInPlatform + subEstateOutPlatform) / total;
+        if (total == 0) {
+            this.rate = 0;
+        } else {
+            this.rate = (subEstateInPlatform + subEstateOutPlatform) / total;
+        }
     }
 
     public SubEstateVO() {

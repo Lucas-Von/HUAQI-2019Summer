@@ -1,10 +1,13 @@
 package financial_management.controller.message;
 
 import financial_management.bl.message.MessageService;
+import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @CrossOrigin
 @RestController
@@ -13,30 +16,32 @@ public class MessageController {
     @Autowired
     @Qualifier(value = "messageServiceImpl")
     private MessageService messageService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    @GetMapping("get/{ID}")
-    public BasicResponse getMessagesByUser(@PathVariable Long ID) {
-        return messageService.getMessagesByUser(ID);
+    @GetMapping("get")
+    public BasicResponse getMessagesByUser(HttpServletRequest request) {
+        return messageService.getMessagesByUser(jwtUtil.getIdFromRequest(request));
     }
 
-    @GetMapping("get/{ID}/type/{type}")
-    public BasicResponse getMessagesByUser(@PathVariable Long ID, @PathVariable int type) {
-        return messageService.getMessagesByUser(ID, type);
+    @GetMapping("get/{type}")
+    public BasicResponse getMessagesByUser(HttpServletRequest request, @PathVariable int type) {
+        return messageService.getMessagesByUser(jwtUtil.getIdFromRequest(request), type);
     }
 
-    @GetMapping("get/{ID}/type/{type}/{page}")
-    public BasicResponse getMessagesByUser(@PathVariable Long ID, @PathVariable int type, @PathVariable int page) {
-        return messageService.getMessagesByUser(ID, type, page);
+    @GetMapping("get/{type}/{page}")
+    public BasicResponse getMessagesByUser(HttpServletRequest request, @PathVariable int type, @PathVariable int page) {
+        return messageService.getMessagesByUser(jwtUtil.getIdFromRequest(request), type, page);
     }
 
     @GetMapping("getNew")
-    public BasicResponse getNewMessageByUser(@RequestParam Long ID) {
-        return messageService.getNewMessageByUser(ID);
+    public BasicResponse getNewMessageByUser(HttpServletRequest request) {
+        return messageService.getNewMessageByUser(jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping("hasRead")
-    public BasicResponse readNewMessage(@RequestParam Long userID, @RequestParam int type) {
-        return messageService.readNewMessages(userID, type);
+    public BasicResponse readNewMessage(HttpServletRequest request, @RequestParam int type) {
+        return messageService.readNewMessages(jwtUtil.getIdFromRequest(request), type);
     }
 
     @DeleteMapping("del/{ID}")

@@ -13,6 +13,14 @@ public class PyInvoke {
 
     private static final String invokeCmd = "python";
 
+    /**
+     *
+     * @param func      需要调用的python函数
+     * @param param     入参
+     * @param clazz     出参的类型
+     * @return
+     */
+
     public static List<Object> invoke(PyFunc func, PyParam param, Class clazz){
         String path = func.path;
         StringBuffer cmd = new StringBuffer();

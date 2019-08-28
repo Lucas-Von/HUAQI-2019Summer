@@ -1,5 +1,6 @@
 package financial_management.bl.product;
 
+import financial_management.vo.BasicResponse;
 import financial_management.vo.product.InsRecProductVO;
 import financial_management.vo.product.MyInsuranceVO;
 
@@ -17,6 +18,6 @@ public interface InsuranceService {
 
     List<InsRecProductVO> getAllInsProduct();
 
-    void purchase(Long userId,String name,String insurant);
+    BasicResponse purchase(Long userId, String name, String insurant);
 
 }

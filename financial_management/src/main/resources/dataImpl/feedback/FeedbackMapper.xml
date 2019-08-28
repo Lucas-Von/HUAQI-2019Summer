@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.feedback.FeedbackMapper">
+    <resultMap id="original" type="financial_management.entity.FeedBackPO">
+        <id column="id" jdbcType="BIGINT" property="ID"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="detail" jdbcType="LONGVARCHAR" property="detail"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="user_ID" jdbcType="BIGINT" property="userID"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="QQ" jdbcType="VARCHAR" property="QQ"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="solved" jdbcType="BIT" property="solved"/>
+        <result column="solver_ID" jdbcType="BIGINT" property="solverID"/>
+        <result column="solve_time" jdbcType="TIMESTAMP" property="solveTime"/>
+        <result column="solve_text" jdbcType="LONGVARCHAR" property="solveText"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="original">
+        select *
+        from feedback;
+    </select>
+
+    <select id="selectByID" resultMap="original">
+        select *
+        from feedback
+        where id = #{ID}
+    </select>
+
+    <select id="selectAmountOfUnsolve" resultType="java.lang.Integer">
+        select count(id)
+        from feedback
+        where solved = 0
+    </select>
+
+    <insert id="insert" parameterType="financial_management.entity.FeedBackPO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
+        insert into feedback (title, type, detail, create_time, user_ID, phone, QQ, email, solved, solver_ID, solve_time, solve_text)
+        values (#{title},#{type},#{detail},#{createTime},#{userID},#{phone},#{QQ},#{email},#{solved},#{solverID},#{solveTime},#{solveText})
+    </insert>
+
+    <update id="update" parameterType="financial_management.entity.FeedBackPO">
+        update feedback
+        set solved = #{solved},
+            solver_ID = #{solverID},
+            solve_time = #{solveTime},
+            solve_text = #{solveText}
+        where id = #{ID};
+    </update>
+</mapper>

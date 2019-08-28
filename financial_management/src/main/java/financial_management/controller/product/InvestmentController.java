@@ -35,9 +35,8 @@ public class InvestmentController {
     @PostMapping(value = "/product/invest")
     public BasicResponse purchaseInvestment(HttpServletRequest request, @RequestBody InvestmentPurchaseParam param){
 
-        service.purchase(jwtUtil.getIdFromRequest(request),param.getCode(),param.getAmount(), param.getTotalprice(), param.getType());
+        return  service.purchase(jwtUtil.getIdFromRequest(request),param.getCode(),param.getAmount(), param.getTotalprice(), param.getType());
 
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 
     @GetMapping(value = "/product/invest")

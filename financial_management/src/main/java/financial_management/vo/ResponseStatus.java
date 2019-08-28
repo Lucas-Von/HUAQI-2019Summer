@@ -21,6 +21,9 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_RECORD_ERROR = new ResponseStatus("4002","记录状态异常");
 
     public static final ResponseStatus STATUS_PAYPASSWORD_WRONG = new ResponseStatus("5001","支付密码错误");
+    public static final ResponseStatus STATUS_DEPOSITPRODUCT_UNFINED = new ResponseStatus("5002","储蓄产品已被下架或不存在");
+    public static final ResponseStatus STATUS_INSURANCEPRODUCT_UNFINED = new ResponseStatus("5003","保险产品已被下架或不存在");
+    public static final ResponseStatus STATUS_INVESTMENTPRODUCT_UNFINED = new ResponseStatus("5004","投资产品已被下架或不存在");
 
     public static final ResponseStatus STATUS_QUESTIONNAIRE_EXIST = new ResponseStatus("6001","The user has filled out the questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_NOT_EXIST = new ResponseStatus("6002","The user has not filled out the questionnaire.");
@@ -36,6 +39,8 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_INVALID_LINK = new ResponseStatus("8007", "The link is invalid");
     public static final ResponseStatus STATUS_HAS_CHANGED = new ResponseStatus("8008", "You have changed it");
     public static final ResponseStatus STATUS_TIME_OUT = new ResponseStatus("8009", "Time out");
+
+    public static final ResponseStatus STATUS_FEEDBACK_NOT_EXIST = new ResponseStatus("9001","反馈不存在");
 
     public String code;
 

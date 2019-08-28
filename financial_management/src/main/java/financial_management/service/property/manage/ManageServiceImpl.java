@@ -77,9 +77,10 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
      * @param userId
      * @return
      */
+    @Override
     public BasicResponse getRecAlloc(Long userId) {
         try {
-            RecAllocPO recAllocPO = manageMapper.getRecAlloc(userId);
+            RecAllocPO recAllocPO = getRecAllocPO(userId);
             RecAllocVO recAllocVO = new RecAllocVO(recAllocPO.getUserId(), recAllocPO.getName(), recAllocPO.getIdentityNum(), recAllocPO.getNick(), recAllocPO.getEmail(), estateServiceForBl.getTotalAsset(recAllocPO.getUserId()), recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, recAllocVO);
         } catch (Exception e) {
@@ -94,6 +95,7 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
      * @param recAllocParam
      * @return
      */
+    @Override
     public BasicResponse editRecAlloc(RecAllocParam recAllocParam) {
         try {
             manageMapper.editRecAlloc(recAllocParam);
@@ -105,15 +107,15 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
     }
 
     /**
-     * 获取平台所有用户近7/30/90天的收益率
+     * 获取用户推荐资产配置的PO
      *
-     * @param days
+     * @param userId
      * @return
      */
-    public BasicResponse getRecentProfitRate(int days) {
+    @Override
+    public RecAllocPO getRecAllocPO(Long userId) {
         try {
-            double recentProfitRate = manageMapper.getRecentProfitRate(days);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, recentProfitRate);
+            return manageMapper.getRecAlloc(userId);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_SERVER_ERROR);

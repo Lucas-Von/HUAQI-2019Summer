@@ -1,6 +1,7 @@
 package financial_management.service.user;
 
 
+import financial_management.bl.product.ProductService4User;
 import financial_management.bl.user.UserService;
 import financial_management.data.user.UserMapper;
 import financial_management.entity.ArticlePO;
@@ -17,7 +18,6 @@ import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.article.ArticleSimpleInfoVO;
 import financial_management.vo.user.UserSimpleInfoVO;
-import financial_management.vo.user.UserVO;
 import financial_management.vo.user.UsernameVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,310 +43,414 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     @Autowired
     private ArticleServiceForBl articleServiceForBl;
 
+    @Autowired
+    private ProductService4User productService4User;
+
     @Override
     public BasicResponse register(UserParam userParam){
-        int wrongStatus = 0;
-        String email = userParam.getEmail();
-        String identityNum = userParam.getIdentityNum();
-        if(userMapper.ifExistEmail(email)){
-            wrongStatus = 1;
-        }
-        if(userMapper.ifExistIdentityNum(identityNum)){
-            if(wrongStatus == 0){
-                wrongStatus = 2;
-            }else {
-                wrongStatus = 3;
+        try {
+            int wrongStatus = 0;
+            String email = userParam.getEmail();
+            String identityNum = userParam.getIdentityNum();
+            if (userMapper.ifExistEmail(email)) {
+                wrongStatus = 1;
             }
-        }
-        if(wrongStatus == 0){
-            UserPO userPO = userParam.getUserPo();
-            userPO.setPassword(getCryptPassword(userPO.getPassword()));
-            userMapper.insert(userPO);
-
-            // 发送邮件
-            StringBuffer sb = new StringBuffer("点击下面链接激活账号，10分钟内生效，否则需要重新注册账号，链接只能使用一次，请尽快激活！</br>");
-            sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
-            sb.append(email);
-            sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
-            sb.append(email);
-            sb.append("</a>");
-
-            SendEmail.send(email,"账号激活邮件", sb.toString());
-
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            if(wrongStatus == 1){
-                return new BasicResponse(ResponseStatus.STATUS_EMAIL_EXIST);
-            }else if(wrongStatus == 2){
-                return new BasicResponse(ResponseStatus.STATUS_IDENTITY_EXIST);
-            }else {
-                return new BasicResponse(ResponseStatus.STATUS_EMAIL_AND_IDENTITY_EXIST);
+            if (userMapper.ifExistIdentityNum(identityNum)) {
+                if (wrongStatus == 0) {
+                    wrongStatus = 2;
+                } else {
+                    wrongStatus = 3;
+                }
             }
+            if (wrongStatus == 0) {
+                UserPO userPO = userParam.getUserPo();
+                userPO.setPassword(getCryptPassword(userPO.getPassword()));
+                userMapper.insert(userPO);
+
+                // 发送邮件
+                StringBuffer sb = new StringBuffer("点击下面链接激活账号，10分钟内生效，否则需要重新注册账号，链接只能使用一次，请尽快激活！</br>");
+                sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
+                sb.append(email);
+                sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
+                sb.append(email);
+                sb.append("</a>");
+
+                SendEmail.send(email, "账号激活邮件", sb.toString());
+
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                if (wrongStatus == 1) {
+                    return new BasicResponse(ResponseStatus.STATUS_EMAIL_EXIST);
+                } else if (wrongStatus == 2) {
+                    return new BasicResponse(ResponseStatus.STATUS_IDENTITY_EXIST);
+                } else {
+                    return new BasicResponse(ResponseStatus.STATUS_EMAIL_AND_IDENTITY_EXIST);
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse loginByEmail(UserLoginParam userLoginParam){
-        UserPO userPO = userMapper.selectUserByEmail(userLoginParam.getEmail());
-        String password = getCryptPassword(userLoginParam.getPassword());
-        if(userPO.getPassword().equals(password)){
-            UsernameVO usernameVO = new UsernameVO();
-            usernameVO.setUsername(userPO.getUsername());
-            usernameVO.setToken(jwtUtil.generateToken(userPO.getUserId()+""));
-            usernameVO.setProfilePhoto(userPO.getProfilePhoto());
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, usernameVO);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_PASSWORD_WRONG);
+        try {
+            UserPO userPO = userMapper.selectUserByEmail(userLoginParam.getEmail());
+            String password = getCryptPassword(userLoginParam.getPassword());
+            if (userPO.getPassword().equals(password)) {
+                UsernameVO usernameVO = new UsernameVO();
+                usernameVO.setUsername(userPO.getUsername());
+                usernameVO.setToken(jwtUtil.generateToken(userPO.getUserId() + ""));
+                usernameVO.setProfilePhoto(userPO.getProfilePhoto());
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, usernameVO);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_PASSWORD_WRONG);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse updateUsername(String username, Long userId){
-        if(userMapper.ifExist(userId)) {
-            userMapper.updateUsername(userId, username);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        try {
+            if (userMapper.ifExist(userId)) {
+                userMapper.updateUsername(userId, username);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse updateEmail(UserEmailParam userEmailParam){
-        if(userMapper.ifExistEmail(userEmailParam.getOldEmail())) {
-            if(!userMapper.ifExistEmail(userEmailParam.getNewEmail())) {
-                userMapper.updateEmail(userEmailParam.getOldEmail(), userEmailParam.getNewEmail());
-                userMapper.changeStatusInIfChangedEmail(userEmailParam.getOldEmail(),2);
-                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-            }else {
-                return new BasicResponse(ResponseStatus.STATUS_EMAIL_EXIST);
+        try {
+            if (userMapper.ifExistEmail(userEmailParam.getOldEmail())) {
+                if (!userMapper.ifExistEmail(userEmailParam.getNewEmail())) {
+                    userMapper.updateEmail(userEmailParam.getOldEmail(), userEmailParam.getNewEmail());
+                    userMapper.changeStatusInIfChangedEmail(userEmailParam.getOldEmail(), 2);
+                    return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+                } else {
+                    return new BasicResponse(ResponseStatus.STATUS_EMAIL_EXIST);
+                }
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse updatePhoneNum(String phoneNum, Long userId){
-        if(userMapper.ifExist(userId)) {
-            userMapper.updatePhoneNum(userId, phoneNum);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        try {
+            if (userMapper.ifExist(userId)) {
+                userMapper.updatePhoneNum(userId, phoneNum);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse updatePasswordByUserId(String password, Long userId){
-        if(userMapper.ifExist(userId)) {
-            password = getCryptPassword(password);
-            userMapper.updatePasswordByUserId(userId, password);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        try {
+            if (userMapper.ifExist(userId)) {
+                password = getCryptPassword(password);
+                userMapper.updatePasswordByUserId(userId, password);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse updatePasswordByEmail(UserPasswordParam userPasswordParam){
-        if(userMapper.ifExistEmail(userPasswordParam.getEmail())){
-            String password = getCryptPassword(userPasswordParam.getPassword());
-            userMapper.updatePasswordByEmail(userPasswordParam.getEmail(),password);
-            userMapper.changeStatusInIfChangedPassword(userPasswordParam.getEmail(),2);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        try {
+            if (userMapper.ifExistEmail(userPasswordParam.getEmail())) {
+                String password = getCryptPassword(userPasswordParam.getPassword());
+                userMapper.updatePasswordByEmail(userPasswordParam.getEmail(), password);
+                userMapper.changeStatusInIfChangedPassword(userPasswordParam.getEmail(), 2);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse applyForUpdateEmail(String email){
-        if(userMapper.ifExistEmail(email)) {
-            // 发送邮件
-            StringBuffer sb = new StringBuffer("点击下面链接修改邮箱，链接只能使用一次，请尽快完成操作！</br>");
-            sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
-            sb.append(email);
-            sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
-            sb.append(email);
-            sb.append("</a>");
+        try {
+            if (userMapper.ifExistEmail(email)) {
+                // 发送邮件
+                StringBuffer sb = new StringBuffer("点击下面链接修改邮箱，链接只能使用一次，请尽快完成操作！</br>");
+                sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
+                sb.append(email);
+                sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
+                sb.append(email);
+                sb.append("</a>");
 
-            SendEmail.send(email, "修改绑定邮箱邮件", sb.toString());
+                SendEmail.send(email, "修改绑定邮箱邮件", sb.toString());
 
-            if(!userMapper.ifExistChangedEmail(email)) {
-                userMapper.insertIfChangedEmail(email);
-            }else {
-                userMapper.changeStatusInIfChangedEmail(email,1);
+                if (!userMapper.ifExistChangedEmail(email)) {
+                    userMapper.insertIfChangedEmail(email);
+                } else {
+                    userMapper.changeStatusInIfChangedEmail(email, 1);
+                }
+
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
-
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse applyForUpdatePassword(String email){
-        if(userMapper.ifExistEmail(email)) {
-            // 发送邮件
-            StringBuffer sb = new StringBuffer("点击下面链接修改密码，链接只能使用一次，请尽快完成操作！</br>");
-            sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
-            sb.append(email);
-            sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
-            sb.append(email);
-            sb.append("</a>");
+        try {
+            if (userMapper.ifExistEmail(email)) {
+                // 发送邮件
+                StringBuffer sb = new StringBuffer("点击下面链接修改密码，链接只能使用一次，请尽快完成操作！</br>");
+                sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
+                sb.append(email);
+                sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
+                sb.append(email);
+                sb.append("</a>");
 
-            if(!userMapper.ifExistChangedPassword(email)) {
-                userMapper.insertIfChangedPassword(email);
-            }else {
-                userMapper.changeStatusInIfChangedPassword(email,1);
+                if (!userMapper.ifExistChangedPassword(email)) {
+                    userMapper.insertIfChangedPassword(email);
+                } else {
+                    userMapper.changeStatusInIfChangedPassword(email, 1);
+                }
+
+                SendEmail.send(email, "修改密码邮件", sb.toString());
+
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
-
-            SendEmail.send(email, "修改密码邮件", sb.toString());
-
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse getSimpleUser(Long userId){
-        if(userMapper.ifExist(userId)) {
-            UserPO userPO = userMapper.selectSimpleUser(userId);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        try {
+            if (userMapper.ifExist(userId)) {
+                UserPO userPO = userMapper.selectSimpleUser(userId);
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse getAllUsers(){
-        List<UserPO> userPOList = userMapper.selectAllUsers();
-        List<UserSimpleInfoVO> userVOList = new ArrayList<>();
-        for(int i=0;i<userPOList.size();i++){
-            userVOList.add(userPOList.get(i).getUserSimpleInfoVO());
+        try {
+            List<UserPO> userPOList = userMapper.selectAllUsers();
+            List<UserSimpleInfoVO> userVOList = new ArrayList<>();
+            for (int i = 0; i < userPOList.size(); i++) {
+                userVOList.add(userPOList.get(i).getUserSimpleInfoVO());
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userVOList);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userVOList);
     }
 
     @Override
     public BasicResponse getCollections(Long userId){
-        if(userMapper.ifExist(userId)) {
-            List<Long> articleIds = collectionServiceForBl.getCollections(userId);
-            List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
-            for (int i = 0; i < articleIds.size(); i++) {
-                ArticlePO articlePO = articleServiceForBl.getArticle(articleIds.get(i));
-                ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
-                articleSimpleInfoVO.setCollected(true);
+        try {
+            if (userMapper.ifExist(userId)) {
+                List<Long> articleIds = collectionServiceForBl.getCollections(userId);
+                List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
+                for (int i = 0; i < articleIds.size(); i++) {
+                    ArticlePO articlePO = articleServiceForBl.getArticle(articleIds.get(i));
+                    ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
+                    articleSimpleInfoVO.setCollected(true);
 
-                articleSimpleInfoVOS.add(articleSimpleInfoVO);
+                    articleSimpleInfoVOS.add(articleSimpleInfoVO);
+                }
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleInfoVOS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,articleSimpleInfoVOS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse activate(String email){
-        if(userMapper.ifExistEmail(email)) {
-            UserPO userPO = userMapper.selectUserByEmail(email);
-            if(userPO.getStatus() == 0) {
-                userMapper.updateStatus(userPO.getUserId(), 1);
-                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-            }else {
-                return new BasicResponse(ResponseStatus.STATUS_ACCOUNT_ACTIVATED);
+        try {
+            if (userMapper.ifExistEmail(email)) {
+                UserPO userPO = userMapper.selectUserByEmail(email);
+                if (userPO.getStatus() == 0) {
+                    userMapper.updateStatus(userPO.getUserId(), 1);
+                    productService4User.generateFund(userPO.getUserId());
+                    return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+                } else {
+                    return new BasicResponse(ResponseStatus.STATUS_ACCOUNT_ACTIVATED);
+                }
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse updateProfilePhoto(String profilePhoto, Long userId){
-        if(userMapper.ifExist(userId)) {
-            userMapper.updateProfilePhoto(userId, profilePhoto);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        try {
+            if (userMapper.ifExist(userId)) {
+                userMapper.updateProfilePhoto(userId, profilePhoto);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse searchUserByEmail(String email){
-        if(userMapper.ifExistEmail(email)) {
-            UserPO userPO = userMapper.selectUserByEmail(email);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        try {
+            if (userMapper.ifExistEmail(email)) {
+                UserPO userPO = userMapper.selectUserByEmail(email);
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse searchUserByIdentityNum(String identityNum){
-        if(userMapper.ifExistIdentityNum(identityNum)){
-            UserPO userPO = userMapper.selectUserByIdentityNum(identityNum);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        try {
+            if (userMapper.ifExistIdentityNum(identityNum)) {
+                UserPO userPO = userMapper.selectUserByIdentityNum(identityNum);
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userPO.getUserVO());
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse searchUserByUsername(String username){
-        List<UserPO> userPOList = userMapper.selectUserByUsername(username);
-        if(userPOList.size() != 0){
-            List<UserSimpleInfoVO> userSimpleInfoVOS = new ArrayList<>();
-            for(int i=0;i<userPOList.size();i++){
-                userSimpleInfoVOS.add(userPOList.get(i).getUserSimpleInfoVO());
+        try {
+            List<UserPO> userPOList = userMapper.selectUserByUsername(username);
+            if (userPOList.size() != 0) {
+                List<UserSimpleInfoVO> userSimpleInfoVOS = new ArrayList<>();
+                for (int i = 0; i < userPOList.size(); i++) {
+                    userSimpleInfoVOS.add(userPOList.get(i).getUserSimpleInfoVO());
+                }
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userSimpleInfoVOS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userSimpleInfoVOS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse getUserAmount(){
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userMapper.getUserAmount());
+        try {
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, userMapper.getUserAmount());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
     }
 
     @Override
     public BasicResponse ifChangedEmail(String email){
-        if(userMapper.ifExistEmail(email)) {
-            if(userMapper.ifExistChangedEmail(email)){
-                int status = userMapper.ifChangedEmail(email);
-                if(status == 1){
-                    return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-                }else if(status == 2){
-                    return new BasicResponse(ResponseStatus.STATUS_HAS_CHANGED);
-                }else {
-                    return new BasicResponse(ResponseStatus.STATUS_TIME_OUT);
+        try {
+            if (userMapper.ifExistEmail(email)) {
+                if (userMapper.ifExistChangedEmail(email)) {
+                    int status = userMapper.ifChangedEmail(email);
+                    if (status == 1) {
+                        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+                    } else if (status == 2) {
+                        return new BasicResponse(ResponseStatus.STATUS_HAS_CHANGED);
+                    } else {
+                        return new BasicResponse(ResponseStatus.STATUS_TIME_OUT);
+                    }
+                } else {
+                    return new BasicResponse(ResponseStatus.STATUS_INVALID_LINK);
                 }
-            }else {
-                return new BasicResponse(ResponseStatus.STATUS_INVALID_LINK);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse ifChangedPassword(String email){
-        if(userMapper.ifExistEmail(email)) {
-            if(userMapper.ifExistChangedPassword(email)){
-                int status = userMapper.ifChangedPassword(email);
-                if(status == 1){
-                    return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-                }else if(status == 2){
-                    return new BasicResponse(ResponseStatus.STATUS_HAS_CHANGED);
-                }else {
-                    return new BasicResponse(ResponseStatus.STATUS_TIME_OUT);
+        try {
+            if (userMapper.ifExistEmail(email)) {
+                if (userMapper.ifExistChangedPassword(email)) {
+                    int status = userMapper.ifChangedPassword(email);
+                    if (status == 1) {
+                        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+                    } else if (status == 2) {
+                        return new BasicResponse(ResponseStatus.STATUS_HAS_CHANGED);
+                    } else {
+                        return new BasicResponse(ResponseStatus.STATUS_TIME_OUT);
+                    }
+                } else {
+                    return new BasicResponse(ResponseStatus.STATUS_INVALID_LINK);
                 }
-            }else {
-                return new BasicResponse(ResponseStatus.STATUS_INVALID_LINK);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 

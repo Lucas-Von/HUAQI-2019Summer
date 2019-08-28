@@ -6,7 +6,6 @@ import financial_management.entity.CollectionPO;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,27 +21,37 @@ public class CollectionServiceImpl implements CollectionService, CollectionServi
 
     @Override
     public BasicResponse addCollection(Long articleId, Long userId){
-        if(collectionMapper.ifCollected(userId,articleId)){
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_COLLECTED);
-        }else {
-            CollectionPO collectionPO = new CollectionPO();
-            collectionPO.setUserId(userId);
-            collectionPO.setArticleId(articleId);
-            collectionMapper.insertCollection(collectionPO);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        try {
+            if (collectionMapper.ifCollected(userId, articleId)) {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_COLLECTED);
+            } else {
+                CollectionPO collectionPO = new CollectionPO();
+                collectionPO.setUserId(userId);
+                collectionPO.setArticleId(articleId);
+                collectionMapper.insertCollection(collectionPO);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
     @Override
     public BasicResponse deleteCollection(Long articleId, Long userId){
-        if(collectionMapper.ifCollected(userId,articleId)){
-            CollectionPO collectionPO = new CollectionPO();
-            collectionPO.setUserId(userId);
-            collectionPO.setArticleId(articleId);
-            collectionMapper.deleteCollection(collectionPO);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
-        }else {
-            return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_COLLECTED);
+        try {
+            if (collectionMapper.ifCollected(userId, articleId)) {
+                CollectionPO collectionPO = new CollectionPO();
+                collectionPO.setUserId(userId);
+                collectionPO.setArticleId(articleId);
+                collectionMapper.deleteCollection(collectionPO);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_ARTICLE_NOT_COLLECTED);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 

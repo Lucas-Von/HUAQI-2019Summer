@@ -15,13 +15,13 @@
         <result column="is_customize" jdbcType="BIT" property="isCustomize"/>
     </resultMap>
 
-    <select id="selectByUserID">
+    <select id="selectByUserID" resultMap="original">
         select *
         from trade_record
         where user_id = #{userID,jdbcType=BIGINT}
     </select>
 
-    <select id="selectByID">
+    <select id="selectByID" resultMap="original">
         select *
         from trade_record
         where id = #{ID,jdbcType=BIGINT}

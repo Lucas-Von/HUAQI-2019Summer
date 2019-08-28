@@ -1,5 +1,7 @@
 package financial_management.vo.feedback;
 
+import financial_management.entity.FeedBackPO;
+
 import java.util.Date;
 
 public class FeedbackVO {
@@ -119,5 +121,21 @@ public class FeedbackVO {
 
     public void setSolveText(String solveText) {
         this.solveText = solveText;
+    }
+
+    public FeedbackVO(FeedBackPO po) {
+        ID = po.getID();
+        title = po.getTitle();
+        type = po.getType();
+        detail = po.getDetail();
+        createTime = po.getCreateTime();
+        userID = po.getUserID();
+        phone = po.getPhone();
+        QQ = po.getQQ();
+        email = po.getEmail();
+        solved = po.getSolved();
+        solverID = po.getSolverID();
+        solveTime = po.getSolveTime();
+        solveText = po.getSolveText();
     }
 }

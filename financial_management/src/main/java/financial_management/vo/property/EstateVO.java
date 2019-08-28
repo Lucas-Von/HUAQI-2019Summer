@@ -1,5 +1,9 @@
 package financial_management.vo.property;
 
+/**
+ * @author lt
+ * @date 2019/08/13 14:30
+ */
 public class EstateVO {
 
     /**
@@ -38,21 +42,25 @@ public class EstateVO {
     private double insuranceOutPlatform;
 
     /**
-     * 用户的投资数额列表
+     * 用户平台内投资数额
      */
-    private InvestOfEstateVO investOfEstateVO;
+    private double investInPlatform;
 
-    public EstateVO(double fundsInPlatform, double fundsOutPlatform, double savingInPlatform, double savingOutPlatform, double insuranceInPlatform, double insuranceOutPlatform, InvestOfEstateVO investOfEstateVO) {
+    /**
+     * 用户平台外投资数额
+     */
+    private double investOutPlatform;
+
+    public EstateVO(double fundsInPlatform, double fundsOutPlatform, double savingInPlatform, double savingOutPlatform, double insuranceInPlatform, double insuranceOutPlatform, double stocksInPlatform, double stocksOutPlatform, double goldInPlatform, double goldOutPlatform, double bondInPlatform, double bondOutPlatform) {
         this.fundsInPlatform = fundsInPlatform;
         this.fundsOutPlatform = fundsOutPlatform;
         this.savingInPlatform = savingInPlatform;
         this.savingOutPlatform = savingOutPlatform;
         this.insuranceInPlatform = insuranceInPlatform;
         this.insuranceOutPlatform = insuranceOutPlatform;
-        this.investOfEstateVO = investOfEstateVO;
-        this.totalAsset = fundsInPlatform + fundsOutPlatform + savingInPlatform + savingOutPlatform + insuranceInPlatform + insuranceOutPlatform
-                + investOfEstateVO.getStocksInPlatform() + investOfEstateVO.getStocksOutPlatform() + investOfEstateVO.getGoldInPlatform()
-                + investOfEstateVO.getGoldOutPlatform() + investOfEstateVO.getBondInPlatform() + investOfEstateVO.getBondOutPlatform();
+        this.investInPlatform = stocksInPlatform + goldInPlatform + bondInPlatform;
+        this.investOutPlatform = stocksOutPlatform + goldOutPlatform + bondOutPlatform;
+        this.totalAsset = fundsInPlatform + fundsOutPlatform + savingInPlatform + savingOutPlatform + insuranceInPlatform + insuranceOutPlatform + stocksInPlatform + stocksOutPlatform + goldInPlatform + goldOutPlatform + bondInPlatform + bondOutPlatform;
     }
 
     public EstateVO() {
@@ -87,8 +95,12 @@ public class EstateVO {
         return insuranceOutPlatform;
     }
 
-    public InvestOfEstateVO getInvestOfEstateVO() {
-        return investOfEstateVO;
+    public double getInvestInPlatform() {
+        return investInPlatform;
+    }
+
+    public double getInvestOutPlatform() {
+        return investOutPlatform;
     }
 
 }

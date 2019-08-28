@@ -80,4 +80,12 @@ public interface EstateService {
      */
     BasicResponse getDailyInvList(Long userId);
 
+    /**
+     * 获取用户自身的推荐资产配置
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getMyRecAlloc(Long userId);
+
 }

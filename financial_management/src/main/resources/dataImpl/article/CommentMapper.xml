@@ -43,6 +43,11 @@
         from comment where id = #{commentId}
     </select>
 
+    <select id="selectComment" resultMap="CommentPO">
+        select *
+        from comment where id = #{commentId}
+    </select>
+
     <resultMap id="CommentPO" type="financial_management.entity.CommentPO">
         <result column="id" property="id"></result>
         <result column="user_id" property="userId"></result>

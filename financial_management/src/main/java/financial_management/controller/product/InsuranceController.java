@@ -48,7 +48,7 @@ public class InsuranceController {
 
     @PostMapping(value = "/product/insurance")
     public BasicResponse purchaseInsurance(@RequestBody InsurancePurchaseParam param, HttpServletRequest request){
-        service.purchase(jwtUtil.getIdFromRequest(request),param.getName(),param.getInsurant());
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        return  service.purchase(jwtUtil.getIdFromRequest(request),param.getName(),param.getInsurant());
+
     }
 }

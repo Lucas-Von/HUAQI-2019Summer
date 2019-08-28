@@ -5,6 +5,8 @@ import financial_management.data.product.BondMapper;
 import financial_management.data.product.GoldMapper;
 import financial_management.data.product.StockMapper;
 import financial_management.entity.*;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.InvestRecProductVO;
 import financial_management.vo.product.InvestmentVO;
@@ -103,45 +105,51 @@ public class InvestmentServiceImpl implements InvestmentService {
      * @return void
      **/
     @Override
-    public void purchase(Long userId, String code, Integer amount, Double totalprice,String type) {
-        switch (type){
-            case "gold":
-                MyGoldPO po = new MyGoldPO();
-                po.setAmount(totalprice.floatValue());
-                po.setCode(code);
-                po.setUserId(userId);
-                //因为刚买，没有利润
-                po.setProfit(0.0F);
-                po.setProfitRate(0.0F);
-                po.setPurchasePrice(totalprice.floatValue());
-                po.setQuantity(amount);
-                goldMapper.insertMyGold(po);
-                break;
-            case "bond":
-                MyBondPO bondPO = new MyBondPO();
-                bondPO.setAmount(totalprice.floatValue());
-                bondPO.setCode(code);
-                bondPO.setUserId(userId);
-                //因为刚买，没有利润
-                bondPO.setProfit(0.0F);
-                bondPO.setProfitRate(0.0F);
-                bondPO.setPurchasePrice(totalprice.floatValue());
-                bondPO.setQuantity(amount);
-                bondMapper.insertMyBond(bondPO);
-                break;
-            case "forStock":
-            case "domStock":
-                MyStockPO myStockPO = new MyStockPO();
-                myStockPO.setAmount(totalprice.floatValue());
-                myStockPO.setCode(code);
-                myStockPO.setUserId(userId);
-                //因为刚买，没有利润
-                myStockPO.setProfit(0.0F);
-                myStockPO.setProfitRate(0.0F);
-                myStockPO.setPurchasePrice(totalprice.floatValue());
-                myStockPO.setQuantity(amount);
-                stockMapper.insertMyStock(myStockPO);
-                break;
+    public BasicResponse purchase(Long userId, String code, Integer amount, Double totalprice, String type) {
+        try {
+            switch (type) {
+                case "gold":
+                    MyGoldPO po = new MyGoldPO();
+                    po.setAmount(totalprice.floatValue());
+                    po.setCode(code);
+                    po.setUserId(userId);
+                    //因为刚买，没有利润
+                    po.setProfit(0.0F);
+                    po.setProfitRate(0.0F);
+                    po.setPurchasePrice(totalprice.floatValue());
+                    po.setQuantity(amount);
+                    goldMapper.insertMyGold(po);
+                    break;
+                case "bond":
+                    MyBondPO bondPO = new MyBondPO();
+                    bondPO.setAmount(totalprice.floatValue());
+                    bondPO.setCode(code);
+                    bondPO.setUserId(userId);
+                    //因为刚买，没有利润
+                    bondPO.setProfit(0.0F);
+                    bondPO.setProfitRate(0.0F);
+                    bondPO.setPurchasePrice(totalprice.floatValue());
+                    bondPO.setQuantity(amount);
+                    bondMapper.insertMyBond(bondPO);
+                    break;
+                case "forStock":
+                case "domStock":
+                    MyStockPO myStockPO = new MyStockPO();
+                    myStockPO.setAmount(totalprice.floatValue());
+                    myStockPO.setCode(code);
+                    myStockPO.setUserId(userId);
+                    //因为刚买，没有利润
+                    myStockPO.setProfit(0.0F);
+                    myStockPO.setProfitRate(0.0F);
+                    myStockPO.setPurchasePrice(totalprice.floatValue());
+                    myStockPO.setQuantity(amount);
+                    stockMapper.insertMyStock(myStockPO);
+                    break;
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return new BasicResponse<>(ResponseStatus.STATUS_INVESTMENTPRODUCT_UNFINED,null);
         }
     }
 

@@ -48,12 +48,4 @@ public interface ManageMapper {
      */
     void editRecAlloc(RecAllocParam recAllocParam);
 
-    /**
-     * 获取平台所有用户近7/30/90天的收益率
-     *
-     * @param days
-     * @return
-     */
-    Double getRecentProfitRate(@Param("days") int days);
-
 }

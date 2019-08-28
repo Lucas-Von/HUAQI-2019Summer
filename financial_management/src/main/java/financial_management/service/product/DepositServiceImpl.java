@@ -57,17 +57,23 @@ public class DepositServiceImpl implements DepositService {
     }
 
     @Override
-    public void purchase(Long userId, String productName, Double amount) {
+    public boolean purchase(Long userId, String productName, Double amount) {
 
         DepositProductPO product = mapper.selectProductByName(productName);
 
         MyDepoPO po = new MyDepoPO();
-        po.setUserId(userId);
-        po.setProductId(product.getId());
-        po.setAmount(amount.floatValue());
-        po.setMaturity(DateConverterUtil.moveForwardByDay(new Date(),product.getLength()));
+        try {
+            po.setUserId(userId);
+            po.setProductId(product.getId());
+            po.setAmount(amount.floatValue());
+            po.setMaturity(DateConverterUtil.moveForwardByDay(new Date(), product.getLength()));
 
-        mapper.insertMyProduct(po);
+            mapper.insertMyProduct(po);
+            return true;
+        }
+        catch (NullPointerException e){
+            return false;
+        }
     }
 
     public ProductVO4Order getProduct(Long id){

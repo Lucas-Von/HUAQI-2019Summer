@@ -62,6 +62,11 @@
         select * from deposit_recommend
     </select>
 
+    <select id="ifExistDepositRecommend" resultType="boolean">
+        select count(id)
+        from deposit_recommend where id = #{id}
+    </select>
+
     <!--<select id="selectAllProducts" resultMap="DepositProduct">-->
         <!--select * from deposit_product;-->
     <!--</select>-->

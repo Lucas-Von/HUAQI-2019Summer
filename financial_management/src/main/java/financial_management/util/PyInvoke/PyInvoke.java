@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PyInvoke {
 
-    private static final String invokeCmd = "python";
+    private static final String invokeCmd = "D:\\Python3\\python";
 
     /**
      *
@@ -38,6 +38,7 @@ public class PyInvoke {
             }
         }
         cmd.append(stringBuffer.toString());
+        System.out.println(cmd.toString());
         Runtime runtime = Runtime.getRuntime();
         try {
             Process process = runtime.exec(cmd.toString());

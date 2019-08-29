@@ -10,7 +10,7 @@ import java.util.List;
 public class PyInvokeDemo {
     public static void main(String[] args) {
         PyParam pyParam = new PyParamDemo(100, "ASD");
-        List<Object> invokeResult = PyInvoke.invoke(PyFunc.FUN_1, pyParam, PyResponseDemo.class);
+        List<Object> invokeResult = PyInvoke.invoke(PyFunc.DEMO, pyParam, PyResponseDemo.class);
         List<PyResponseDemo> list = new ArrayList<>();
         for (Object object : invokeResult){
             list.add((PyResponseDemo) object);

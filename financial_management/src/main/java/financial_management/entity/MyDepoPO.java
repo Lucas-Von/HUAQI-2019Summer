@@ -1,5 +1,7 @@
 package financial_management.entity;
 
+import financial_management.vo.product.MyDepositVO;
+
 import java.util.Date;
 
 /**
@@ -10,41 +12,45 @@ import java.util.Date;
  **/
 public class MyDepoPO {
     /**
-     * @Description //用户Id
-     **/
-    Long userId;
-
-    /**
      * @Description //产品Id
      **/
-    Long productId;
-
+    private Long id;
+    /**
+     * @Description //用户Id
+     **/
+    private Long userId;
+    /**
+     * @Description //类型（0表示平台内，1表示平台外）
+     **/
+    private Integer type;
     /**
      * @Description //持有额度
      **/
-    Float amount;
-
-    /**
-    * @Description //到期时间
-     **/
-    Date maturity;
-
-    /**
-     * @Description //类别，不入库，由productID sql加载
-     **/
-    String type;
-
+    private Double amount;
     /**
      * @Description //名称，不入库，由productID sql加载
      **/
-    String name;
-
+    private String name;
     /**
-     * @Author jyh
      * @Description //利率
-     * @Date 18:53 2019/8/21
      **/
-    Double rate;
+    private Double rate;
+    /**
+    * @Description //到期时间
+     **/
+    private Date endtime;
+    /**
+     * @Description //占比
+     **/
+    private Double proportion;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getUserId() {
         return userId;
@@ -54,36 +60,20 @@ public class MyDepoPO {
         this.userId = userId;
     }
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
-
-    public Date getMaturity() {
-        return maturity;
-    }
-
-    public void setMaturity(Date maturity) {
-        this.maturity = maturity;
-    }
-
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public String getName() {
@@ -102,5 +92,56 @@ public class MyDepoPO {
         this.rate = rate;
     }
 
+    public Date getEndtime() {
+        return endtime;
+    }
 
+    public void setEndtime(Date endtime) {
+        this.endtime = endtime;
+    }
+
+    public Double getProportion() {
+        return proportion;
+    }
+
+    public void setProportion(Double proportion) {
+        this.proportion = proportion;
+    }
+
+    public MyDepositVO getMyDepositVO(){
+        return new MyDepositVO(id, name, type, amount, rate, endtime, proportion);
+    }
+
+    public MyDepoPO() {
+    }
+
+    public MyDepoPO(Integer type,
+                    Double amount,
+                    String name,
+                    Double rate,
+                    Date endtime) {
+        this.type = type;
+        this.amount = amount;
+        this.name = name;
+        this.rate = rate;
+        this.endtime = endtime;
+    }
+
+    public MyDepoPO(Long id,
+                    Long userId,
+                    Integer type,
+                    Double amount,
+                    String name,
+                    Double rate,
+                    Date endtime,
+                    Double proportion) {
+        this.id = id;
+        this.userId = userId;
+        this.type = type;
+        this.amount = amount;
+        this.name = name;
+        this.rate = rate;
+        this.endtime = endtime;
+        this.proportion = proportion;
+    }
 }

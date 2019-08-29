@@ -1,21 +1,20 @@
-package financial_management.vo.product;
+package financial_management.parameter.product;
+
+import financial_management.entity.MyDepoPO;
 
 import java.util.Date;
 
 /**
- * @Description TODO
- * @Author 233loser
- * @Date 2019/8/18 16:22
- * @Version 1.0
- **/
-public class MyDepositVO {
+ * @author xyh
+ * @date 2019/8/28
+ */
+public class SelfDepositParam {
     private Long id;
     private String name;
-    private int type;
+    private Integer type;
     private Double amount;
     private Double rate;
     private Date endtime;
-    private Double proportion;
 
     public Long getId() {
         return id;
@@ -33,11 +32,11 @@ public class MyDepositVO {
         this.name = name;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -65,30 +64,24 @@ public class MyDepositVO {
         this.endtime = endtime;
     }
 
-    public Double getProportion() {
-        return proportion;
+    public MyDepoPO getMyDepoPO(){
+        return new MyDepoPO(type, amount,name, rate, endtime);
     }
 
-    public void setProportion(Double proportion) {
-        this.proportion = proportion;
+    public SelfDepositParam() {
     }
 
-    public MyDepositVO() {
-    }
-
-    public MyDepositVO(Long id,
-                       String name,
-                       int type,
-                       Double amount,
-                       Double rate,
-                       Date endtime,
-                       Double proportion) {
+    public SelfDepositParam(Long id,
+                            String name,
+                            Integer type,
+                            Double amount,
+                            Double rate,
+                            Date endtime) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.amount = amount;
         this.rate = rate;
         this.endtime = endtime;
-        this.proportion = proportion;
     }
 }

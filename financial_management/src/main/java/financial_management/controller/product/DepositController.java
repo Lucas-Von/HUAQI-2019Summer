@@ -6,12 +6,14 @@ import financial_management.bl.product.InsuranceService;
 import financial_management.bl.product.InvestmentService;
 import financial_management.parameter.product.DepositPurchaseParam;
 
+import financial_management.parameter.product.SelfDepositParam;
 import financial_management.util.JwtUtil;
 
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.product.DepRecProductVO;
 import financial_management.vo.product.MyDepositVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,20 +34,31 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class DepositController {
-
+    @Autowired
+    private DepositService depositService;
 
     @Autowired
-    DepositService depositService;
+    private JwtUtil jwtUtil;
 
-    @Autowired
-    JwtUtil jwtUtil;
-
-    @GetMapping(value = "/product/deposit")
-    public BasicResponse MyDeposit(HttpServletRequest request){
-        List<MyDepositVO> vos = depositService.getSelfDeposits(jwtUtil.getIdFromRequest(request));
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
+    @GetMapping(value = "/product/deposit/get")
+    public BasicResponse getSelfDeposits(HttpServletRequest request){
+        return depositService.getSelfDeposits(jwtUtil.getIdFromRequest(request));
     }
 
+    @PostMapping(value = "/product/deposit/add")
+    public BasicResponse addSelfDeposit(@RequestBody SelfDepositParam selfDepositParam, HttpServletRequest request){
+        return depositService.addSelfDeposit(selfDepositParam,jwtUtil.getIdFromRequest(request));
+    }
+
+    @PostMapping(value = "/product/deposit/update")
+    public BasicResponse updateSelfDeposit(@RequestBody SelfDepositParam selfDepositParam){
+        return depositService.updateSelfDeposit(selfDepositParam);
+    }
+
+    @PostMapping(value = "/product/deposit/delete")
+    public BasicResponse deleteSelfDeposit(@RequestParam Long id){
+        return depositService.deleteSelfDeposit(id);
+    }
 
     @GetMapping(value = "/product/deposit/recommend")
     public BasicResponse RecommendDepProduct(HttpServletRequest request){

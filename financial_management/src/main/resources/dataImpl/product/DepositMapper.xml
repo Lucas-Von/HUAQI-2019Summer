@@ -1,31 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="financial_management.data.product.DepositMapper">
-    <select id="selectAllProducts" resultMap="DepositProduct">
-        select * from deposit_product;
-    </select>
 
-    <select id="selectSelfProducts" resultMap="MyProducts">
-        select md.user_id,
-            md.amount,
-            md.maturity,
-            md.product_id,
-            dp.name,
-            dp.type,
-            dp.rate
-        from my_depo md
-        inner join deposit_product dp
-        on md.product_id = dp.id
-        where md.user_id = #{userId}
-    </select>
-
-    <select id="selectProductByName" resultMap="DepositProduct">
-        select * from deposit_product where name=#{name}
-    </select>
-
-    <insert id="insertMyProduct" parameterType="financial_management.entity.MyDepoPO">
-        insert  into my_depo (user_id, product_id, amount, maturity) values (#{userId},#{productId},#{amount},#{maturity})
+    <insert id="insertMyProduct" useGeneratedKeys="true" keyProperty="id">
+        insert into my_depo (user_id, type, amount, name, rate, endtime)
+        values (#{userId},#{type},#{amount},#{name},#{rate},#{endtime})
     </insert>
+
+    <update id="updateMyProduct">
+        update my_depo set type = #{type}, amount = #{amount}, name = #{name},rate = #{rate}, endtime = #{endtime}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMyProduct">
+        delete from my_depo
+        where id = #{id}
+    </delete>
+
+    <update id="updateProportion">
+        update my_depo set proportion = #{proportion}
+        where id = #{id}
+    </update>
+
+    <select id="selectMyProduct" resultMap="MyProducts">
+        select * from my_depo
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectMyProductAmount" resultType="Double">
+        select sum(amount)
+        from my_depo
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectSimpleMyProduct" resultMap="MyProducts">
+        select * from my_depo
+        where id = #{id}
+    </select>
+
+    <select id="ifExistMyProduct" resultType="boolean">
+        select count(id)
+        from my_depo where id = #{id}
+    </select>
+
+    <!--<select id="selectAllProducts" resultMap="DepositProduct">-->
+        <!--select * from deposit_product;-->
+    <!--</select>-->
+
+    <!--<select id="selectSelfProducts" resultMap="MyProducts">-->
+        <!--select md.user_id,-->
+            <!--md.amount,-->
+            <!--md.maturity,-->
+            <!--md.product_id,-->
+            <!--dp.name,-->
+            <!--dp.type,-->
+            <!--dp.rate-->
+        <!--from my_depo md-->
+        <!--inner join deposit_product dp-->
+        <!--on md.product_id = dp.id-->
+        <!--where md.user_id = #{userId}-->
+    <!--</select>-->
+
+    <!--<select id="selectProductByName" resultMap="DepositProduct">-->
+        <!--select * from deposit_product where name=#{name}-->
+    <!--</select>-->
+
+
 
     <resultMap id="DepositProduct" type="financial_management.entity.DepositProductPO">
         <id property="id" column="id"/>
@@ -36,13 +76,14 @@
     </resultMap>
 
     <resultMap id="MyProducts" type="financial_management.entity.MyDepoPO">
+        <result column="id" property="id"/>
         <result column="user_id" property="userId"/>
-        <result column="product_id" property="productId"/>
-        <result column="amount" property="amount"/>
-        <result column="maturity" property="maturity"/>
         <result column="type" property="type"/>
+        <result column="amount" property="amount"/>
         <result column="name" property="name"/>
         <result column="rate" property="rate"/>
+        <result column="endtime" property="endtime"/>
+        <result column="proportion" property="proportion"/>
     </resultMap>
 
 </mapper>

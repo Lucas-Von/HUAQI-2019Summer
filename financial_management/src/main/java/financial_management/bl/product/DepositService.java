@@ -1,5 +1,7 @@
 package financial_management.bl.product;
 
+import financial_management.parameter.product.SelfDepositParam;
+import financial_management.vo.BasicResponse;
 import financial_management.vo.product.DepRecProductVO;
 import financial_management.vo.product.FundBasicVO;
 import financial_management.vo.product.FundVO;
@@ -14,10 +16,46 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface DepositService {
+    /**
+     * 查看拥有的储蓄产品
+     * @param userId
+     * @return
+     */
+    BasicResponse getSelfDeposits(Long userId);
 
-    List<MyDepositVO> getSelfDeposits(Long userId);
+    /**
+     * 用户添加一储蓄产品
+     * @param selfDepositParam
+     * @return
+     */
+    BasicResponse addSelfDeposit(SelfDepositParam selfDepositParam, Long userId);
 
+    /**
+     * 用户更新一储蓄产品
+     * @param selfDepositParam
+     * @return
+     */
+    BasicResponse updateSelfDeposit(SelfDepositParam selfDepositParam);
+
+    /**
+     * 用户删除一储蓄产品
+     * @param id
+     * @return
+     */
+    BasicResponse deleteSelfDeposit(Long id);
+
+    /**
+     * 查看所有储蓄产品（弃用）
+     * @return
+     */
     List<DepRecProductVO> getAllDeposits();
 
+    /**
+     * 购买储蓄产品（弃用）
+     * @param userId
+     * @param productName
+     * @param amount
+     * @return
+     */
     boolean purchase(Long userId,String productName,Double amount);
 }

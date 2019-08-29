@@ -127,8 +127,12 @@ public class DepositServiceImpl implements DepositService {
     @Override
     public BasicResponse deleteDepositRecommend(Long id){
         try {
-            depositMapper.deleteDepositRecommend(id);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            if(depositMapper.ifExistDepositRecommend(id)) {
+                depositMapper.deleteDepositRecommend(id);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            }else {
+                return new BasicResponse(ResponseStatus.STATUS_DEPOSITPRODUCT_UNFINED);
+            }
         }catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

@@ -19,6 +19,7 @@
 -- Table structure for table `article`
 --
 
+
 DROP TABLE IF EXISTS `article`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -231,18 +232,17 @@ CREATE TABLE `deposit_recommend` (
   `name` varchar(255) DEFAULT NULL,
   `currency` varchar(255) DEFAULT NULL,
   `information` varchar(255) DEFAULT NULL,
-  `rate` double(5,0) DEFAULT NULL,
+  `rate` double(11,5) DEFAULT NULL,
   `start_time` date DEFAULT NULL,
   `end_time` date DEFAULT NULL,
-  `
-start_amount` double(2,0) DEFAULT NULL,
-  `
-risk_level` int(11) DEFAULT NULL,
+  `start_amount` double DEFAULT NULL,
+  `risk_level` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+
 -- Dumping data for table `deposit_recommend`
 --
 
@@ -251,8 +251,6 @@ LOCK TABLES `deposit_recommend` WRITE;
 /*!40000 ALTER TABLE `deposit_recommend` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `dom_stock`
 --
 
 DROP TABLE IF EXISTS `dom_stock`;

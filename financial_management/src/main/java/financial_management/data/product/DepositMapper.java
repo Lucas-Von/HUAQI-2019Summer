@@ -96,6 +96,13 @@ public interface DepositMapper {
      */
     List<DepositRecommendPO> selectDepositRecommend();
 
+    /**
+     * 判断一推荐储蓄是否存在
+     * @param id
+     * @return
+     */
+    Boolean ifExistDepositRecommend(@Param("id") Long id);
+
 //    List<DepositProductPO> selectAllProducts();
 //
 //    List<MyDepoPO> selectSelfProducts(Long userId);

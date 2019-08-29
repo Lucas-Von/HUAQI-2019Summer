@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="financial_management.data.order.TradeRecordMapper">
-    <resultMap id="original" type="financial_management.entity.TradeRecordPO">
+<mapper namespace="financial_management.data.order.PersonalTradeMapper">
+    <resultMap id="original" type="financial_management.entity.PersonalTradePO">
         <id column="id" jdbcType="BIGINT" property="ID"/>
         <result column="trade_id" jdbcType="BIGINT" property="transID"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -9,6 +9,7 @@
         <result column="product_id" jdbcType="BIGINT" property="productID"/>
         <result column="amount" jdbcType="FLOAT" property="amount"/>
         <result column="price" jdbcType="FLOAT" property="price"/>
+        <result column="fee" jdbcType="FLOAT" property="fee"/>
         <result column="total" jdbcType="FLOAT" property="total"/>
         <result column="user_id" jdbcType="BIGINT" property="userID"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
@@ -17,24 +18,24 @@
 
     <select id="selectByUserID" resultMap="original">
         select *
-        from trade_record
+        from personal_trade
         where user_id = #{userID,jdbcType=BIGINT}
     </select>
 
     <select id="selectByID" resultMap="original">
         select *
-        from trade_record
+        from personal_trade
         where id = #{ID,jdbcType=BIGINT}
     </select>
 
-    <insert id="insert" parameterType="financial_management.entity.TradeRecordPO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
-        insert into trade_record (id, trans_id, create_time, complete_time, type, product_id, amount, price, total,
+    <insert id="insert" parameterType="financial_management.entity.PersonalTradePO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
+        insert into personal_trade (id, trans_id, create_time, complete_time, type, product_id, amount, price, fee, total,
                                   user_id, status, is_customize)
-        values (#{ID},#{transID},#{createTime},#{completeTime},#{type},#{productID},{amount},#{price},#{total},#{userID},#{status},#{isCustomize})
+        values (#{ID},#{transID},#{createTime},#{completeTime},#{type},#{productID},#{amount},#{price},#{fee},#{total},#{userID},#{status},#{isCustomize})
     </insert>
 
-    <update id="update" parameterType="financial_management.entity.TradeRecordPO">
-        update trade_record
+    <update id="update" parameterType="financial_management.entity.PersonalTradePO">
+        update personal_trade
         set complete_time = #{CompleteTime},
             status = #{status}
         where id = #{ID};

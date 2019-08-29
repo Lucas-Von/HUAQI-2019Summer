@@ -21,12 +21,12 @@ public class OrderController {
 
     @GetMapping("trade")
     public BasicResponse getTradeRecordsByUserID(HttpServletRequest request) {
-        return orderService.getTradeRecordByUser(jwtUtil.getIdFromRequest(request));
+        return orderService.getPersonalTradeRecordByUser(jwtUtil.getIdFromRequest(request));
     }
 
     @GetMapping("trade/{ID}")
     public BasicResponse getTradeRecordByRecordID(@PathVariable Long ID) {
-        return orderService.getTradeRecordByRecord(ID);
+        return orderService.getPersonalTradeRecordByRecord(ID);
     }
 
     @GetMapping("transfer")

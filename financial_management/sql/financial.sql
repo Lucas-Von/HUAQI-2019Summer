@@ -611,10 +611,12 @@ INSERT INTO `rec_alloc` VALUES ('1', '0.5', '0.02', '0.08', '0.4');
 INSERT INTO `rec_alloc` VALUES ('2', '0.8', '0.02', '0.08', '0.1');
 
 -- ----------------------------
--- Table structure for trade_record
+-- Table structure for personal_trade
 -- ----------------------------
 DROP TABLE IF EXISTS `trade_record`;
-CREATE TABLE `trade_record` (
+
+DROP TABLE IF EXISTS `personal_trade`;
+CREATE TABLE `personal_trade` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `trans_id` bigint(255) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -623,6 +625,7 @@ CREATE TABLE `trade_record` (
   `product_id` bigint(255) NOT NULL,
   `amount` float NOT NULL,
   `price` float NOT NULL,
+  `fee` float NOT NULL,
   `total` float NOT NULL,
   `user_id` bigint(255) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
@@ -633,6 +636,23 @@ CREATE TABLE `trade_record` (
 -- ----------------------------
 -- Records of trade_record
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for platform_trade
+-- ----------------------------
+
+DROP TABLE IF EXISTS `platform_trade`;
+CREATE TABLE `platform_trade` (
+    `id` bigint(255) NOT NULL AUTO_INCREMENT,
+    `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `product` varchar(45) NOT NULL,
+    `amount` int(11) NOT NULL,
+    `price` float NOT NULL,
+    `total` float NOT NULL,
+    `real_total` float NOT NULL,
+    `status` int(11) NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for transfer_record

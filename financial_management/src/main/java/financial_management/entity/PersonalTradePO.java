@@ -2,7 +2,7 @@ package financial_management.entity;
 
 import java.util.Date;
 
-public class TradeRecordPO{
+public class PersonalTradePO {
     //交易记录ID
     private Long ID;
 
@@ -26,6 +26,9 @@ public class TradeRecordPO{
 
     //交易时产品每份价格
     private Float price;
+
+    //交易手续费
+    private Float fee;
 
     //交易订单总价
     private Float total;
@@ -101,6 +104,14 @@ public class TradeRecordPO{
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Float getFee() {
+        return fee;
+    }
+
+    public void setFee(Float fee) {
+        this.fee = fee;
     }
 
     public Float getTotal() {

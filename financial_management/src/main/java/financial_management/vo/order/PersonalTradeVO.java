@@ -1,20 +1,39 @@
 package financial_management.vo.order;
 
-import financial_management.entity.TradeRecordPO;
+import financial_management.entity.PersonalTradePO;
 
 import java.util.Date;
 
-public class TradeRecordVO {
-    private long ID;
+public class PersonalTradeVO {
+    //ID，需要插入记录时请填null
+    private Long ID;
+
+    //调仓记录ID
     private long transID;
+
+    //交易时间填在这个属性里面
     private Date createTime;
+
+    //暂时没用
     private Date completeTime;
-    private String type;
+
+    private Type type;
+
     private ProductVO4Order product;
+
+    //数量，买入为正，卖出为负
     private float amount;
+
     private float price;
+
+    //手续费
+    private float fee;
+
     private float total;
+
     private long userID;
+
+    //暂时没用，随便填或不填
     private int status;
 
     public long getID() {
@@ -49,11 +68,11 @@ public class TradeRecordVO {
         this.completeTime = completeTime;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -81,6 +100,14 @@ public class TradeRecordVO {
         this.price = price;
     }
 
+    public float getFee() {
+        return fee;
+    }
+
+    public void setFee(float fee) {
+        this.fee = fee;
+    }
+
     public float getTotal() {
         return total;
     }
@@ -105,33 +132,30 @@ public class TradeRecordVO {
         this.status = status;
     }
 
-    public TradeRecordVO() {
+    public PersonalTradeVO() {
     }
 
-    public TradeRecordVO(TradeRecordPO po) {
+    public PersonalTradeVO(PersonalTradePO po) {
         ID = po.getID();
         transID = po.getTransID();
         createTime = po.getCreateTime();
         completeTime = po.getCompleteTime();
-        type = po.getType();
+        type = Type.valueOf(po.getType().toUpperCase());
         amount = po.getAmount();
         price = po.getPrice();
+        fee = po.getFee();
         total = po.getTotal();
         userID = po.getUserID();
         status = po.getStatus();
     }
 
-    public TradeRecordVO(long ID, long transID, Date createTime, Date completeTime, String type, ProductVO4Order product, float amount, float price, float total, long userID, int status) {
-        this.ID = ID;
-        this.transID = transID;
-        this.createTime = createTime;
-        this.completeTime = completeTime;
-        this.type = type;
-        this.product = product;
-        this.amount = amount;
-        this.price = price;
-        this.total = total;
-        this.userID = userID;
-        this.status = status;
+    public enum Type{
+        FUND,
+        DEPOSIT,
+        INSURANCE,
+        GOLD,
+        BOND,
+        DOMSTOCK,
+        FORSTOCK;
     }
 }

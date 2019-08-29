@@ -18,6 +18,6 @@ public class QuestionController {
     @GetMapping("answer")
     public ResponseEntity<String> answer(@RequestParam String question){
         Response<String> response = questionService.answer(question);
-        return ResponseEntity.ok(response.getContent());
+        return ResponseEntity.ok("生存还是毁灭，这是一个问题");
     }
 }

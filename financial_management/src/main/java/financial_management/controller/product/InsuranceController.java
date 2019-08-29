@@ -1,6 +1,8 @@
 package financial_management.controller.product;
 
 import financial_management.bl.product.InsuranceService;
+import financial_management.entity.InsProductPO;
+import financial_management.entity.MyInsPO;
 import financial_management.parameter.product.InsurancePurchaseParam;
 import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
@@ -34,21 +36,51 @@ public class InsuranceController {
     JwtUtil jwtUtil;
 
     @GetMapping(value = "/product/insurance")
-    public BasicResponse MyInsurance(HttpServletRequest request){
-        List<MyInsuranceVO> vos = service.getMyInsurance(jwtUtil.getIdFromRequest(request));
-
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+    public BasicResponse MyInsurance(HttpServletRequest request) {
+        List<MyInsPO> myInsurances = new ArrayList<>();
+        MyInsPO myInsPO1 = new MyInsPO(5L, "cxk", 1L, new Date(), 20000f);
+        MyInsPO myInsPO2 = new MyInsPO(1L, "xyh", 2L, new Date(), 2828f);
+        myInsurances.add(myInsPO1);
+        myInsurances.add(myInsPO2);
+        List<MyInsuranceVO> vos = new ArrayList<>();
+        if (myInsurances.size() > 0) {
+            myInsurances.stream().forEach(o -> {
+                MyInsuranceVO vo = new MyInsuranceVO(o);
+                vos.add(vo);
+            });
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
     @GetMapping(value = "/product/insurance/recommend")
-            public BasicResponse RecommendedProduct(HttpServletRequest request){
-        List<InsRecProductVO> vos = service.getAllInsProduct();
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+    public BasicResponse RecommendedProduct(HttpServletRequest request) {
+        List<InsProductPO> insProducts = new ArrayList<>();
+        InsProductPO insProductPO1 = new InsProductPO();
+        insProductPO1.setId(1L);
+        insProductPO1.setName("金盛人寿");
+        insProductPO1.setType("分红险");
+        insProductPO1.setPrice(30000f);
+        insProductPO1.setCompensation(2000f);
+        insProductPO1.setLength(365);
+        InsProductPO insProductPO2 = new InsProductPO();
+        insProductPO2.setId(2L);
+        insProductPO2.setName("英大泰和");
+        insProductPO2.setType("全能险");
+        insProductPO2.setPrice(25000f);
+        insProductPO2.setCompensation(1400f);
+        insProductPO2.setLength(365);
+        insProducts.add(insProductPO1);
+        insProducts.add(insProductPO2);
+        List<InsRecProductVO> vos = new ArrayList<>();
+        insProducts.stream().forEach(o->{
+            InsRecProductVO vo = new InsRecProductVO(o);
+            vos.add(vo);
+        });
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
     @PostMapping(value = "/product/insurance")
-    public BasicResponse purchaseInsurance(@RequestBody InsurancePurchaseParam param, HttpServletRequest request){
-        return  service.purchase(jwtUtil.getIdFromRequest(request),param.getName(),param.getInsurant());
-
+    public BasicResponse purchaseInsurance(@RequestBody InsurancePurchaseParam param, HttpServletRequest request) {
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
     }
 }

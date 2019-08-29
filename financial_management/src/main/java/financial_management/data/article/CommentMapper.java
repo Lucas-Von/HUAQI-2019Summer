@@ -4,6 +4,7 @@ import financial_management.entity.CommentPO;
 import financial_management.entity.LightPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @author xyh
  * @date 2019/8/17
  */
+@Repository
 @Mapper
 public interface CommentMapper {
     /**

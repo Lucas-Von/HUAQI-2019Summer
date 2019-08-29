@@ -49,10 +49,10 @@
             d.name as name,
             md.amount as money,
             d.rate as annualizedRate,
-            md.maturity as expirationDate
+            md.endtime as expirationDate
         from my_depo md
         inner join deposit_product d
-        on md.product_id = d.id
+        on md.id = d.id
         where md.user_id = #{userId}
     </select>
 

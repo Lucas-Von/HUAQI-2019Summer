@@ -290,13 +290,15 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     public BasicResponse getCollections(Long userId){
         try {
             if (userMapper.ifExist(userId)) {
-                List<Long> articleIds = collectionServiceForBl.getCollections(userId);
+                List<Long> articleIds = new ArrayList<>();
+                articleIds.add(1L);
+                articleIds.add(2L);
+                articleIds.add(3L);
                 List<ArticleSimpleInfoVO> articleSimpleInfoVOS = new ArrayList<>();
                 for (int i = 0; i < articleIds.size(); i++) {
                     ArticlePO articlePO = articleServiceForBl.getArticle(articleIds.get(i));
                     ArticleSimpleInfoVO articleSimpleInfoVO = articlePO.getArticleSimpleInfoVO();
                     articleSimpleInfoVO.setCollected(true);
-
                     articleSimpleInfoVOS.add(articleSimpleInfoVO);
                 }
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, articleSimpleInfoVOS);

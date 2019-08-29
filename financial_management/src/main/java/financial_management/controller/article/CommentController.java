@@ -4,6 +4,7 @@ import financial_management.bl.article.CommentService;
 import financial_management.parameter.article.CommentParam;
 import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,26 +27,26 @@ public class CommentController {
 
     @PostMapping("/add")
     public BasicResponse addComment(@RequestBody CommentParam commentParam, HttpServletRequest request) {
-        return commentService.addComment(commentParam, jwtUtil.getIdFromRequest(request));
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 
     @PostMapping("/light")
     public BasicResponse lightComment(@RequestParam Long commentId, HttpServletRequest request){
-        return commentService.lightComment(commentId, jwtUtil.getIdFromRequest(request));
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 
     @PostMapping("/unlight")
     public BasicResponse unlightComment(@RequestParam Long commentId, HttpServletRequest request){
-        return commentService.unlightComment(commentId, jwtUtil.getIdFromRequest(request));
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 
     @PostMapping("/report")
     public BasicResponse reportComment(@RequestParam Long commentId){
-        return commentService.reportComment(commentId);
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 
     @DeleteMapping("/delete")
     public BasicResponse deleteComment(@RequestParam Long commentId){
-        return commentService.deleteComment(commentId);
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 }

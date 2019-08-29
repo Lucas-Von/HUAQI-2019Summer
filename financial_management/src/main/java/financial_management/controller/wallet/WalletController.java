@@ -28,48 +28,39 @@ public class WalletController {
     JwtUtil jwtUtil;
 
     @PostMapping(value = "/recharge")
-    public BasicResponse recharging(@RequestBody RechargeParam param, HttpServletRequest request){
-
-        //逻辑部分
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+    public BasicResponse recharging(@RequestBody RechargeParam param, HttpServletRequest request) {
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
     }
 
     @PostMapping(value = "/payment/balance")
-    public BasicResponse payment(@RequestBody PaymentParam payment,HttpServletRequest request){
-
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+    public BasicResponse payment(@RequestBody PaymentParam payment, HttpServletRequest request) {
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
     }
 
     @PostMapping(value = "/withdraw")
-    public BasicResponse withdraw(@RequestBody WithdrawParam withdraw){
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+    public BasicResponse withdraw(@RequestBody WithdrawParam withdraw) {
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
     }
 
     @PostMapping(value = "/binding")
-    public BasicResponse cardBinding(@RequestBody BindingParam binding){
+    public BasicResponse cardBinding(@RequestBody BindingParam binding) {
         BindingVO vo = new BindingVO();
-
         vo.setBound(true);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vo);
     }
 
     @GetMapping(value = "/balance")
-    public BasicResponse checkBalance(HttpServletRequest request){
+    public BasicResponse checkBalance(HttpServletRequest request) {
         //逻辑部分
         BalanceVO balance = new BalanceVO();
         balance.setBalance(2000L);
         balance.setCardid("3211233211233211");
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,balance);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, balance);
     }
 
     @PostMapping(value = "/payment/thirdparty")
     public BasicResponse payByCard(HttpServletRequest request, @RequestBody ThirdPartyPaymentParam param) {
-        if (true) {
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
-
-        }
-        else {
-            return new BasicResponse<>(ResponseStatus.STATUS_PAYPASSWORD_WRONG,null);
-        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
     }
+
 }

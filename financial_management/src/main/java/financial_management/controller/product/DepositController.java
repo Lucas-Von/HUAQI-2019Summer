@@ -6,6 +6,7 @@ import financial_management.bl.product.InsuranceService;
 import financial_management.bl.product.InvestmentService;
 import financial_management.parameter.product.DepositPurchaseParam;
 
+import financial_management.parameter.product.DepositRecommendParam;
 import financial_management.parameter.product.SelfDepositParam;
 import financial_management.util.JwtUtil;
 
@@ -58,6 +59,26 @@ public class DepositController {
     @PostMapping(value = "/product/deposit/delete")
     public BasicResponse deleteSelfDeposit(@RequestParam Long id){
         return depositService.deleteSelfDeposit(id);
+    }
+
+    @PostMapping(value = "/product/deposit/recommend/add")
+    public BasicResponse addDepositRecommend(@RequestBody DepositRecommendParam depositRecommendParam){
+        return depositService.addDepositRecommend(depositRecommendParam);
+    }
+
+    @PostMapping(value = "/product/deposit/recommend/update")
+    public BasicResponse updateDepositRecommend(@RequestBody DepositRecommendParam depositRecommendParam){
+        return depositService.updateDepositRecommend(depositRecommendParam);
+    }
+
+    @PostMapping(value = "/product/deposit/recommend/delete")
+    public BasicResponse deleteDepositRecommend(@RequestParam Long id){
+        return depositService.deleteDepositRecommend(id);
+    }
+
+    @GetMapping(value = "/product/deposit/recommend/get")
+    public BasicResponse getDepositRecommend(){
+        return depositService.getDepositRecommend();
     }
 
     @GetMapping(value = "/product/deposit/recommend")

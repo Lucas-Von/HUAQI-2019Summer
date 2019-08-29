@@ -43,6 +43,30 @@
         from my_depo where id = #{id}
     </select>
 
+    <insert id="insertDepositRecommend" useGeneratedKeys="true" keyProperty="id">
+        insert into deposit_recommend (name,currency,information,rate,start_time,end_time,start_amount,risk_level)
+        values (#{name},#{currency},#{information},#{rate},#{startTime},#{endTime},#{startAmount},#{riskLevel})
+    </insert>
+
+    <update id="updateDepositRecommend">
+        update deposit_recommend set name = #{name}, currency = #{currency}, information = #{information},rate = #{rate},start_time = #{startTime}, end_time = #{endTime},start_amount = #{startAmount},risk_level = #{riskLevel}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDepositRecommend">
+        delete from deposit_recommend
+        where id = #{id}
+    </delete>
+
+    <select id="selectDepositRecommend" resultMap="DepositRecommendPO">
+        select * from deposit_recommend
+    </select>
+
+    <select id="ifExistDepositRecommend" resultType="boolean">
+        select count(id)
+        from deposit_recommend where id = #{id}
+    </select>
+
     <!--<select id="selectAllProducts" resultMap="DepositProduct">-->
         <!--select * from deposit_product;-->
     <!--</select>-->
@@ -84,6 +108,18 @@
         <result column="rate" property="rate"/>
         <result column="endtime" property="endtime"/>
         <result column="proportion" property="proportion"/>
+    </resultMap>
+
+    <resultMap id="DepositRecommendPO" type="financial_management.entity.DepositRecommendPO">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="currency" property="currency"/>
+        <result column="information" property="information"/>
+        <result column="rate" property="rate"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="start_amount" property="startAmount"/>
+        <result column="risk_level" property="riskLevel"/>
     </resultMap>
 
 </mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.order.PlatformTradeMapper">
+    <resultMap id="original" type="financial_management.entity.PlatformTradePO">
+        <id column="id" jdbcType="BIGINT" property="ID"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="product" jdbcType="VARCHAR" property="product"/>
+        <result column="amount" jdbcType="INTEGER" property="amount"/>
+        <result column="price" jdbcType="FLOAT" property="price"/>
+        <result column="total" jdbcType="FLOAT" property="total"/>
+        <result column="real_total" jdbcType="FLOAT" property="realTotal"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="original">
+        select *
+        from platform_trade
+    </select>
+
+    <insert id="insert" parameterType="financial_management.entity.PlatformTradePO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
+        insert into platform_trade (id, time, product, amount, price, total, real_total, status)
+        values (#{ID},#{time},#{product},#{amount},#{price},#{total},#{realTotal},#{status});
+    </insert>
+</mapper>

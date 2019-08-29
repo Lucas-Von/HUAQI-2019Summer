@@ -2,14 +2,17 @@ package financial_management.service.order.impl;
 
 import financial_management.bl.order.OrderService;
 import financial_management.bl.product.ProductService4Order;
-import financial_management.data.order.TradeRecordMapper;
+import financial_management.data.order.PersonalTradeMapper;
+import financial_management.data.order.PlatformTradeMapper;
 import financial_management.data.order.TransferRecordMapper;
-import financial_management.entity.TradeRecordPO;
+import financial_management.entity.PersonalTradePO;
+import financial_management.entity.PlatformTradePO;
 import financial_management.entity.TransferRecordPO;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
+import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.ProductVO4Order;
-import financial_management.vo.order.TradeRecordVO;
+import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.TransferRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,18 +23,20 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    private TradeRecordMapper tradeRecordMapper;
+    private PersonalTradeMapper personalTradeMapper;
+    @Autowired
+    private PlatformTradeMapper platformTradeMapper;
     @Autowired
     private TransferRecordMapper transferRecordMapper;
     @Autowired
     private ProductService4Order productService4Order;
 
     @Override
-    public BasicResponse<List<TradeRecordVO>> getTradeRecordByUser(Long ID) {
-        List<TradeRecordPO> tradeRecordPOS = tradeRecordMapper.selectByUserID(ID);
-        List<TradeRecordVO> vos = new ArrayList<>(tradeRecordPOS.size());
-        for (TradeRecordPO po : tradeRecordPOS) {
-            TradeRecordVO vo = new TradeRecordVO(po);
+    public BasicResponse<List<PersonalTradeVO>> getPersonalTradeRecordByUser(Long ID) {
+        List<PersonalTradePO> personalTradePOS = personalTradeMapper.selectByUserID(ID);
+        List<PersonalTradeVO> vos = new ArrayList<>(personalTradePOS.size());
+        for (PersonalTradePO po : personalTradePOS) {
+            PersonalTradeVO vo = new PersonalTradeVO(po);
             ProductVO4Order vo4Order = productService4Order.getProducts(po.getProductID(), po.getType());
             if (vo4Order.getName() != null) {
                 vo.setProduct(productService4Order.getProducts(po.getProductID(), po.getType()));
@@ -43,13 +48,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BasicResponse<TradeRecordVO> getTradeRecordByRecord(Long ID) {
-        BasicResponse<TradeRecordVO> response;
-        TradeRecordPO po = tradeRecordMapper.selectByID(ID);
+    public BasicResponse<PersonalTradeVO> getPersonalTradeRecordByRecord(Long ID) {
+        BasicResponse<PersonalTradeVO> response;
+        PersonalTradePO po = personalTradeMapper.selectByID(ID);
         if (po == null) {
             response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
         } else {
-            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,new TradeRecordVO(po));
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,new PersonalTradeVO(po));
         }
         return response;
     }
@@ -77,11 +82,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BasicResponse<?> addTradeRecord(TradeRecordVO tradeRecordVO, boolean isCustomize) {
-        TradeRecordPO po = assembleTradeRecordPO(tradeRecordVO);
+    public BasicResponse<?> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize) {
+        PersonalTradePO po = assemblePersonalTradePO(personalTradeVO);
         po.setID(null);
         po.setIsCustomize(isCustomize);
-        long id = tradeRecordMapper.insert(po);
+        long id = personalTradeMapper.insert(po);
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
     }
 
@@ -94,18 +99,50 @@ public class OrderServiceImpl implements OrderService {
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
     }
 
-    private static TradeRecordPO assembleTradeRecordPO(TradeRecordVO vo){
-        TradeRecordPO po = new TradeRecordPO();
+    @Override
+    public BasicResponse<List<PlatformTradeVO>> getAllPlatformTradeRecord() {
+        List<PlatformTradePO> pos = platformTradeMapper.selectAll();
+        List<PlatformTradeVO> vos = new ArrayList<>(pos.size());
+        for (PlatformTradePO po:pos){
+            vos.add(new PlatformTradeVO(po));
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+    }
+
+    @Override
+    public BasicResponse<?> addPlatfromTradeRecord(PlatformTradeVO platformTradeVO) {
+        PlatformTradePO po = assemblePlatformTradePO(platformTradeVO);
+        po.setID(null);
+        long id = platformTradeMapper.insert(po);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
+    }
+
+    private static PersonalTradePO assemblePersonalTradePO(PersonalTradeVO vo){
+        PersonalTradePO po = new PersonalTradePO();
         po.setID(vo.getID());
         po.setTransID(vo.getTransID());
         po.setCreateTime(vo.getCreateTime());
         po.setCompleteTime(vo.getCompleteTime());
-        po.setType(vo.getType());
+        po.setType(vo.getType().name().toUpperCase());
         po.setProductID(vo.getProduct().getpID());
         po.setAmount(vo.getAmount());
         po.setPrice(vo.getPrice());
+        po.setFee(vo.getFee());
         po.setTotal(vo.getTotal());
         po.setUserID(vo.getUserID());
+        po.setStatus(vo.getStatus());
+        return po;
+    }
+
+    private static PlatformTradePO assemblePlatformTradePO(PlatformTradeVO vo){
+        PlatformTradePO po = new PlatformTradePO();
+        po.setID(vo.getID());
+        po.setTime(vo.getTime());
+        po.setProduct(vo.getProduct());
+        po.setAmount(vo.getAmount());
+        po.setPrice(vo.getPrice());
+        po.setTotal(vo.getTotal());
+        po.setRealTotal(vo.getRealTotal());
         po.setStatus(vo.getStatus());
         return po;
     }

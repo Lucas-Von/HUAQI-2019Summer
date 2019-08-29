@@ -237,7 +237,7 @@ CREATE TABLE `deposit_recommend` (
   `start_amount` double DEFAULT NULL,
   `risk_level` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -687,7 +687,7 @@ CREATE TABLE `my_depo` (
   `endtime` date DEFAULT NULL,
   `proportion` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -912,6 +912,8 @@ CREATE TABLE `questionnaire` (
   `gold` float DEFAULT NULL,
   `bond` float DEFAULT NULL,
   `answer` varchar(255) DEFAULT NULL,
+  `record_time` date NOT NULL,
+  `origin_assets` float NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `questionnaire_user_id_uindex` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -923,7 +925,7 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,20,500,30,15,35,26,'6～12个月(中长期或长期)'),(2,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(3,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(4,56,500,30,25,35,26,'6～12个月(中长期或长期)'),(5,56,500,30,25,35,26,'6～12个月(中长期或长期)');
+INSERT INTO `questionnaire` VALUES (1,20,500,30,15,35,26,'6～12个月(中长期或长期)','2019-08-22',626),(2,56,500,30,25,35,26,'6～12个月(中长期或长期)','2019-08-23',672),(3,56,500,30,25,35,26,'6～12个月(中长期或长期)','2019-08-24',672),(4,56,500,30,25,35,26,'6～12个月(中长期或长期)','2019-08-25',672),(5,56,500,30,25,35,26,'6～12个月(中长期或长期)','2019-08-29',672);
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1008,7 +1010,7 @@ CREATE TABLE `user` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `profile_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1038,4 +1040,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-29 21:04:08
+-- Dump completed on 2019-08-29 22:15:49

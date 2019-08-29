@@ -386,6 +386,18 @@ CREATE TABLE `light` (
 INSERT INTO `light` VALUES ('5', '1');
 
 -- ----------------------------
+-- Table structure for max_invest
+-- ----------------------------
+DROP TABLE IF EXISTS `max_invest`;
+CREATE TABLE `max_invest` (
+    `user_id` bigint(255) NOT NULL,
+    `type` varchar(45) NOT NULL,
+    `max` float NOT NULL,
+    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id,type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for message
 -- ----------------------------
 DROP TABLE IF EXISTS `message`;

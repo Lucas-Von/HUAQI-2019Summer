@@ -3,6 +3,7 @@ package financial_management.service.order.stub;
 import financial_management.bl.order.OrderService;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
+import financial_management.vo.order.MaxInvestVO;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.TransferRecordVO;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -152,6 +154,11 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
+    public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord() {
+        return null;
+    }
+
+    @Override
     public BasicResponse<List<PlatformTradeVO>> getAllPlatformTradeRecord() {
         return null;
     }
@@ -170,4 +177,15 @@ public class OrderServiceStub implements OrderService {
     public BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO, boolean isCustomize) {
         return null;
     }
+
+    @Override
+    public BasicResponse<MaxInvestVO> getMaxInvestBy(Long userID, String type) {
+        return null;
+    }
+
+    @Override
+    public BasicResponse<Float> getInvestBy(Long userID, String type, Date date) {
+        return null;
+    }
 }
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.order.MaxInvestMapper">
+    <resultMap id="original" type="financial_management.entity.MaxInvestPO">
+        <result column="user_id" jdbcType="BIGINT" property="userID"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="max" jdbcType="FLOAT" property="max"/>
+        <result column="date" jdbcType="TIMESTAMP" property="date"/>
+    </resultMap>
+
+    <select id="selectByUserID" resultMap="original">
+        select *
+        from max_invest
+        where user_id = #{userID}
+    </select>
+
+    <select id="selectByUserIDAndType" resultMap="original">
+        select *
+        from max_invest
+        where user_id = #{userID}
+        and type = #{type}
+    </select>
+
+    <insert id="insert" parameterType="financial_management.entity.MaxInvestPO" useGeneratedKeys="false">
+        insert into max_invest (user_id, type, max, date)
+        values (#{userID},#{type},#{max},#{date});
+    </insert>
+
+    <update id="update" parameterType="financial_management.entity.MaxInvestPO">
+        update max_invest
+        set max = #{max},
+            date = #{date}
+        where user_id = #{userID}
+        and type = #{type}
+    </update>
+</mapper>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80012
 File Encoding         : 65001
 
-Date: 2019-08-29 13:13:15
+Date: 2019-08-29 20:50:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -299,6 +299,22 @@ CREATE TABLE `gold` (
 INSERT INTO `gold` VALUES ('1', '国际现货黄金', 'XAUUSD', '1513.26');
 
 -- ----------------------------
+-- Table structure for gold_history_config
+-- ----------------------------
+DROP TABLE IF EXISTS `gold_history_config`;
+CREATE TABLE `gold_history_config` (
+  `userId` bigint(20) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `sum` double DEFAULT NULL,
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of gold_history_config
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for if_changed_email
 -- ----------------------------
 DROP TABLE IF EXISTS `if_changed_email`;
@@ -397,12 +413,16 @@ INSERT INTO `light` VALUES ('5', '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `max_invest`;
 CREATE TABLE `max_invest` (
-    `user_id` bigint(255) NOT NULL,
-    `type` varchar(45) NOT NULL,
-    `max` float NOT NULL,
-    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_id,type)
+  `user_id` bigint(255) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `max` float NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of max_invest
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for message
@@ -544,6 +564,51 @@ INSERT INTO `my_stock` VALUES ('5', '601991', '20003', '2123', '0.043', '200', '
 INSERT INTO `my_stock` VALUES ('5', '000000', '123123', '2333', '0.013', '200', '23133');
 
 -- ----------------------------
+-- Table structure for personal_trade
+-- ----------------------------
+DROP TABLE IF EXISTS `personal_trade`;
+CREATE TABLE `personal_trade` (
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `trans_id` bigint(255) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `complete_time` timestamp NULL DEFAULT NULL,
+  `type` varchar(45) NOT NULL,
+  `product_id` bigint(255) NOT NULL,
+  `amount` float NOT NULL,
+  `price` float NOT NULL,
+  `fee` float NOT NULL,
+  `total` float NOT NULL,
+  `user_id` bigint(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `is_customize` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of personal_trade
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for platform_trade
+-- ----------------------------
+DROP TABLE IF EXISTS `platform_trade`;
+CREATE TABLE `platform_trade` (
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `product` varchar(45) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `total` float NOT NULL,
+  `real_total` float NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of platform_trade
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for property
 -- ----------------------------
 DROP TABLE IF EXISTS `property`;
@@ -607,50 +672,6 @@ INSERT INTO `rec_alloc` VALUES ('1', '0.5', '0.02', '0.08', '0.4');
 INSERT INTO `rec_alloc` VALUES ('2', '0.8', '0.02', '0.08', '0.1');
 
 -- ----------------------------
--- Table structure for personal_trade
--- ----------------------------
-DROP TABLE IF EXISTS `trade_record`;
-
-DROP TABLE IF EXISTS `personal_trade`;
-CREATE TABLE `personal_trade` (
-  `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `trans_id` bigint(255) NOT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `complete_time` timestamp NULL DEFAULT NULL,
-  `type` varchar(45) NOT NULL,
-  `product_id` bigint(255) NOT NULL,
-  `amount` float NOT NULL,
-  `price` float NOT NULL,
-  `fee` float NOT NULL,
-  `total` float NOT NULL,
-  `user_id` bigint(255) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `is_customize` bit(1) DEFAULT b'0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of trade_record
--- ----------------------------
-
--- ----------------------------
--- Table structure for platform_trade
--- ----------------------------
-
-DROP TABLE IF EXISTS `platform_trade`;
-CREATE TABLE `platform_trade` (
-    `id` bigint(255) NOT NULL AUTO_INCREMENT,
-    `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `product` varchar(45) NOT NULL,
-    `amount` int(11) NOT NULL,
-    `price` float NOT NULL,
-    `total` float NOT NULL,
-    `real_total` float NOT NULL,
-    `status` int(11) NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
 -- Table structure for transfer_record
 -- ----------------------------
 DROP TABLE IF EXISTS `transfer_record`;
@@ -691,7 +712,7 @@ CREATE TABLE `user` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `profile_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user

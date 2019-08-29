@@ -4,6 +4,7 @@ import financial_management.bl.property.EstateService;
 import financial_management.data.property.EstateMapper;
 import financial_management.entity.property.*;
 import financial_management.service.property.manage.ManageServiceForBl;
+import financial_management.service.property.questionnaire.QuestionnaireServiceForBl;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.property.*;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,8 +28,28 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Autowired
     private ManageServiceForBl manageServiceForBl;
 
+    @Autowired
+    private QuestionnaireServiceForBl questionnaireServiceForBl;
+
     /**
      * 获取用户资产概况
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getOverviewByUser(Long userId) {
+        try {
+            OverviewVO overviewVO = new OverviewVO(questionnaireServiceForBl.getRecordTime(userId), questionnaireServiceForBl.getOriginAssets(userId), getTotalAsset(userId));
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, overviewVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户资产记录
      *
      * @param userId
      * @returnn

@@ -1,5 +1,7 @@
 package financial_management.parameter.property;
 
+import java.util.Date;
+
 public class QuestionnaireParam {
 
     /**
@@ -10,37 +12,47 @@ public class QuestionnaireParam {
     /**
      * 现金
      */
-    private int funds;
+    private double funds;
 
     /**
      * 储蓄
      */
-    private int saving;
+    private double saving;
 
     /**
      * 保险
      */
-    private int insurance;
+    private double insurance;
 
     /**
      * 股票
      */
-    private int stocks;
+    private double stocks;
 
     /**
      * 黄金
      */
-    private int gold;
+    private double gold;
 
     /**
      * 债券
      */
-    private int bond;
+    private double bond;
 
     /**
      * 用户的回答
      */
     private String answer;
+
+    /**
+     * 第一次填写问卷的时间
+     */
+    private Date recordTime;
+
+    /**
+     * 第一份问卷的资产总额
+     */
+    private double originAssets;
 
     public Long getUserId() {
         return userId;
@@ -50,51 +62,51 @@ public class QuestionnaireParam {
         this.userId = userId;
     }
 
-    public int getFunds() {
+    public double getFunds() {
         return funds;
     }
 
-    public void setFunds(int funds) {
+    public void setFunds(double funds) {
         this.funds = funds;
     }
 
-    public int getSaving() {
+    public double getSaving() {
         return saving;
     }
 
-    public void setSaving(int saving) {
+    public void setSaving(double saving) {
         this.saving = saving;
     }
 
-    public int getInsurance() {
+    public double getInsurance() {
         return insurance;
     }
 
-    public void setInsurance(int insurance) {
+    public void setInsurance(double insurance) {
         this.insurance = insurance;
     }
 
-    public int getStocks() {
+    public double getStocks() {
         return stocks;
     }
 
-    public void setStocks(int stocks) {
+    public void setStocks(double stocks) {
         this.stocks = stocks;
     }
 
-    public int getGold() {
+    public double getGold() {
         return gold;
     }
 
-    public void setGold(int gold) {
+    public void setGold(double gold) {
         this.gold = gold;
     }
 
-    public int getBond() {
+    public double getBond() {
         return bond;
     }
 
-    public void setBond(int bond) {
+    public void setBond(double bond) {
         this.bond = bond;
     }
 
@@ -106,4 +118,15 @@ public class QuestionnaireParam {
         this.answer = answer;
     }
 
+    public Date getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(Date recordTime) {
+        this.recordTime = recordTime;
+    }
+
+    public double getOriginAssets() {
+        return this.funds + this.saving + this.insurance + this.stocks + this.gold + this.bond;
+    }
 }

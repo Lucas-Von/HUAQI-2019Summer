@@ -16,7 +16,7 @@ import java.util.List;
 public interface EstateMapper {
 
     /**
-     * 获取用户资产概况
+     * 获取用户资产记录
      *
      * @param userId
      * @return

@@ -9,12 +9,14 @@ import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @author lt
  * @date 2019/08/18 20:01
  */
 @Service
-public class QuestionnaireServiceImpl implements QuestionnaireService {
+public class QuestionnaireServiceImpl implements QuestionnaireService, QuestionnaireServiceForBl {
 
     @Autowired
     private QuestionnaireMapper questionnaireMapper;
@@ -76,6 +78,37 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户第一次填写问卷的时间
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Date getRecordTime(Long userId) {
+        try {
+            return questionnaireMapper.getRecordTime(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Date();
+        }
+    }
+
+    /**
+     * 获取用户第一份问卷的资产总额
+     *
+     * @param userId
+     * @return
+     */
+    public double getOriginAssets(Long userId) {
+        try {
+            return questionnaireMapper.getOriginAssets(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 

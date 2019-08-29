@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 /**
  * @author lt
  * @date 2019/08/17 15:02
@@ -36,5 +38,21 @@ public interface QuestionnaireMapper {
      * @return
      */
     void updateQuest(QuestionnaireParam questionnaireParam);
+
+    /**
+     * 获取用户第一次填写问卷的时间
+     *
+     * @param userId
+     * @return
+     */
+    Date getRecordTime(@Param("userId") Long userId);
+
+    /**
+     * 获取用户第一份问卷的资产总额
+     *
+     * @param userId
+     * @return
+     */
+    Double getOriginAssets(@Param("userId") Long userId);
 
 }

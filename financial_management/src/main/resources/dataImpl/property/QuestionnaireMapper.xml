@@ -6,10 +6,18 @@
         select count(user_id) from questionnaire where user_id = #{userId}
     </select>
 
+    <select id="getRecordTime" resultType="Date">
+        select record_time as recordTime from questionnaire where user_id = #{userId}
+    </select>
+
+    <select id="getOriginAssets" resultType="Double">
+        select origin_assets as originAssets from questionnaire where user_id = #{userId}
+    </select>
+
     <insert id="insertQuest" parameterType="financial_management.parameter.property.QuestionnaireParam"
             useGeneratedKeys="true" keyProperty="id">
-        insert into questionnaire(user_id, funds, saving, insurance, stocks, gold, bond, answer)
-        values(#{userId}, #{funds}, #{saving},  #{insurance}, #{stocks}, #{gold}, #{bond}, #{answer})
+        insert into questionnaire(user_id, funds, saving, insurance, stocks, gold, bond, answer, record_time, origin_assets)
+        values(#{userId}, #{funds}, #{saving},  #{insurance}, #{stocks}, #{gold}, #{bond}, #{answer}, #{recordTime}, #{originAssets})
     </insert>
 
     <insert id="updateQuest" parameterType="financial_management.parameter.property.QuestionnaireParam"

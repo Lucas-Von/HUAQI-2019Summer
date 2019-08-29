@@ -38,7 +38,6 @@ public class PyInvoke {
             }
         }
         cmd.append(stringBuffer.toString());
-        System.out.println(cmd.toString());
         Runtime runtime = Runtime.getRuntime();
         try {
             Process process = runtime.exec(cmd.toString());

@@ -1,5 +1,7 @@
 package financial_management.bl.product;
 
+import financial_management.entity.DepositRecommendPO;
+import financial_management.parameter.product.DepositRecommendParam;
 import financial_management.parameter.product.SelfDepositParam;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.product.DepRecProductVO;
@@ -43,6 +45,33 @@ public interface DepositService {
      * @return
      */
     BasicResponse deleteSelfDeposit(Long id);
+
+    /**
+     * 添加一个推荐储蓄产品
+     * @param depositRecommendParam
+     * @return
+     */
+    BasicResponse addDepositRecommend(DepositRecommendParam depositRecommendParam);
+
+    /**
+     * 更新一个推荐储蓄产品
+     * @param depositRecommendParam
+     * @return
+     */
+    BasicResponse updateDepositRecommend(DepositRecommendParam depositRecommendParam);
+
+    /**
+     * 删除一个推荐储蓄产品
+     * @param id
+     * @return
+     */
+    BasicResponse deleteDepositRecommend(Long id);
+
+    /**
+     * 查看所有的推荐储蓄产品
+     * @return
+     */
+    BasicResponse getDepositRecommend();
 
     /**
      * 查看所有储蓄产品（弃用）

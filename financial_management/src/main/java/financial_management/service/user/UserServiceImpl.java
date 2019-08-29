@@ -202,9 +202,9 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
             if (userMapper.ifExistEmail(email)) {
                 // 发送邮件
                 StringBuffer sb = new StringBuffer("点击下面链接修改邮箱，链接只能使用一次，请尽快完成操作！</br>");
-                sb.append("<a href=\"http://localhost:8080/springmvc/user/register?action=activate&email=");
+                sb.append("<a href=\"http://localhost:8080/changeEmail/");
                 sb.append(email);
-                sb.append("\">http://localhost:8080/springmvc/user/register?action=activate&email=");
+                sb.append("\">http://localhost:8080/changeEmail/");
                 sb.append(email);
                 sb.append("</a>");
 

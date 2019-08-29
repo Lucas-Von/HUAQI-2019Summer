@@ -3,8 +3,10 @@ package financial_management.service.product;
 import financial_management.bl.product.DepositService;
 import financial_management.data.product.DepositMapper;
 import financial_management.entity.DepositProductPO;
+import financial_management.entity.DepositRecommendPO;
 import financial_management.entity.MyDepoPO;
 import financial_management.entity.property.DepositPO;
+import financial_management.parameter.product.DepositRecommendParam;
 import financial_management.parameter.product.SelfDepositParam;
 import financial_management.util.DateConverterUtil;
 import financial_management.vo.BasicResponse;
@@ -96,6 +98,46 @@ public class DepositServiceImpl implements DepositService {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
+    }
+
+    @Override
+    public BasicResponse addDepositRecommend(DepositRecommendParam depositRecommendParam){
+        try {
+            DepositRecommendPO depositRecommendPO = depositRecommendParam.getDepositRecommendPO();
+            depositMapper.insertDepositRecommend(depositRecommendPO);
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public BasicResponse updateDepositRecommend(DepositRecommendParam depositRecommendParam){
+        try {
+            DepositRecommendPO depositRecommendPO = depositRecommendParam.getDepositRecommendPO();
+            depositMapper.updateDepositRecommend(depositRecommendPO);
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public BasicResponse deleteDepositRecommend(Long id){
+        try {
+            depositMapper.deleteDepositRecommend(id);
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public BasicResponse getDepositRecommend(){
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositMapper.selectDepositRecommend());
     }
 
     @Override

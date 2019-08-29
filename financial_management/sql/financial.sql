@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80012
 File Encoding         : 65001
 
-Date: 2019-08-29 09:27:19
+Date: 2019-08-29 10:07:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -169,6 +169,29 @@ CREATE TABLE `deposit_product` (
 INSERT INTO `deposit_product` VALUES ('1', '产品1', '类型1', '0.0575', '365');
 INSERT INTO `deposit_product` VALUES ('2', '产品2', '克苏鲁', '0.0175', '200');
 INSERT INTO `deposit_product` VALUES ('3', '产品3', '花旗杯', '0.025', '365');
+
+-- ----------------------------
+-- Table structure for deposit_recommend
+-- ----------------------------
+DROP TABLE IF EXISTS `deposit_recommend`;
+CREATE TABLE `deposit_recommend` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `currency` varchar(255) DEFAULT NULL,
+  `information` varchar(255) DEFAULT NULL,
+  `rate` double(5,0) DEFAULT NULL,
+  `start_time` date DEFAULT NULL,
+  `end_time` date DEFAULT NULL,
+  `
+start_amount` double(2,0) DEFAULT NULL,
+  `
+risk_level` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of deposit_recommend
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for dom_stock

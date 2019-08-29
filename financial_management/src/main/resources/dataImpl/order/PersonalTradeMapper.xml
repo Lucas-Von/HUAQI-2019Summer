@@ -21,11 +21,38 @@
         from personal_trade
         where user_id = #{userID,jdbcType=BIGINT}
     </select>
+    
+    <select id="selectByUserIDAndType" resultMap="original">
+        select *
+        from personal_trade
+        where user_id = #{userID,jdbcType=BIGINT}
+        and type = #{type}
+        <if test="#{date} != null">
+            and date(create_time) = date(#{date,jdbcType=TIMESTAMP})
+        </if>
+    </select>
+
+    <select id="selectByDate" resultMap="original">
+        select *
+        from personal_trade
+        where date(create_time) = date(#{date,jdbcType=TIMESTAMP})
+        and type=#{type}
+    </select>
 
     <select id="selectByID" resultMap="original">
         select *
         from personal_trade
         where id = #{ID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectSum" resultType="java.lang.Float">
+        select sum(total)
+        from personal_trade
+        where user_id = #{userID}
+        and type = #{type}
+        <if test="#{date} != null">
+            and date(create_time) = date(#{date,jdbcType=TIMESTAMP})
+        </if>
     </select>
 
     <insert id="insert" parameterType="financial_management.entity.PersonalTradePO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">

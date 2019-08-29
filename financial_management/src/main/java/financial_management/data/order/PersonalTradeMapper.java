@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -12,7 +13,14 @@ import java.util.List;
 public interface PersonalTradeMapper {
     List<PersonalTradePO> selectByUserID(@Param("userID") Long userID);
 
+    List<PersonalTradePO> selectByUserIDAndType
+            (@Param("userID") Long userID, @Param("type") String type, @Param("date") Date date);
+
+    List<PersonalTradePO> selectByDate(@Param("date") Date date, @Param("type") String type);
+
     PersonalTradePO selectByID(@Param("ID") Long ID);
+
+    Float selectSum(@Param("userID") Long userID, @Param("type") String type, @Param("date") Date date);
 
     Long insert(PersonalTradePO personalTradePO);
 

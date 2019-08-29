@@ -2,22 +2,22 @@ package financial_management.service.order.impl;
 
 import financial_management.bl.order.OrderService;
 import financial_management.bl.product.ProductService4Order;
+import financial_management.data.order.MaxInvestMapper;
 import financial_management.data.order.PersonalTradeMapper;
 import financial_management.data.order.PlatformTradeMapper;
 import financial_management.data.order.TransferRecordMapper;
+import financial_management.entity.MaxInvestPO;
 import financial_management.entity.PersonalTradePO;
 import financial_management.entity.PlatformTradePO;
 import financial_management.entity.TransferRecordPO;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
-import financial_management.vo.order.PlatformTradeVO;
-import financial_management.vo.order.ProductVO4Order;
-import financial_management.vo.order.PersonalTradeVO;
-import financial_management.vo.order.TransferRecordVO;
+import financial_management.vo.order.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,6 +30,8 @@ public class OrderServiceImpl implements OrderService {
     private TransferRecordMapper transferRecordMapper;
     @Autowired
     private ProductService4Order productService4Order;
+    @Autowired
+    private MaxInvestMapper maxInvestMapper;
 
     @Override
     public BasicResponse<List<PersonalTradeVO>> getPersonalTradeRecordByUser(Long ID) {
@@ -54,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         if (po == null) {
             response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
         } else {
-            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,new PersonalTradeVO(po));
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new PersonalTradeVO(po));
         }
         return response;
     }
@@ -63,20 +65,20 @@ public class OrderServiceImpl implements OrderService {
     public BasicResponse<List<TransferRecordVO>> getTransferRecordByUser(Long ID) {
         List<TransferRecordPO> transferRecordPOS = transferRecordMapper.selectByUserID(ID);
         List<TransferRecordVO> vos = new ArrayList<>(transferRecordPOS.size());
-        for (TransferRecordPO po:transferRecordPOS){
+        for (TransferRecordPO po : transferRecordPOS) {
             vos.add(new TransferRecordVO(po));
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
     @Override
     public BasicResponse<TransferRecordVO> getTransferRecordByRecord(Long ID) {
         BasicResponse<TransferRecordVO> response;
         TransferRecordPO po = transferRecordMapper.selectByID(ID);
-        if (po == null){
-            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST,null);
+        if (po == null) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
         } else {
-            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,new TransferRecordVO(po));
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new TransferRecordVO(po));
         }
         return response;
     }
@@ -87,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
         po.setID(null);
         po.setIsCustomize(isCustomize);
         long id = personalTradeMapper.insert(po);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
     }
 
     @Override
@@ -96,17 +98,27 @@ public class OrderServiceImpl implements OrderService {
         po.setID(null);
         po.setIsCustomize(isCustomize);
         long id = transferRecordMapper.insert(po);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+    }
+
+    @Override
+    public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord() {
+        List<PersonalTradePO> pos = personalTradeMapper.selectByDate(new Date(), PersonalTradeVO.Type.BOND.name().toUpperCase());
+        List<PersonalTradeVO> vos = new ArrayList<>(pos.size());
+        for (PersonalTradePO po : pos) {
+            vos.add(new PersonalTradeVO(po));
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
     @Override
     public BasicResponse<List<PlatformTradeVO>> getAllPlatformTradeRecord() {
         List<PlatformTradePO> pos = platformTradeMapper.selectAll();
         List<PlatformTradeVO> vos = new ArrayList<>(pos.size());
-        for (PlatformTradePO po:pos){
+        for (PlatformTradePO po : pos) {
             vos.add(new PlatformTradeVO(po));
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
     @Override
@@ -114,10 +126,27 @@ public class OrderServiceImpl implements OrderService {
         PlatformTradePO po = assemblePlatformTradePO(platformTradeVO);
         po.setID(null);
         long id = platformTradeMapper.insert(po);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
     }
 
-    private static PersonalTradePO assemblePersonalTradePO(PersonalTradeVO vo){
+    @Override
+    public BasicResponse<MaxInvestVO> getMaxInvestBy(Long userID, String type) {
+        BasicResponse<MaxInvestVO> response;
+        MaxInvestPO po = maxInvestMapper.selectByUserIDAndType(userID, type);
+        if (po != null) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new MaxInvestVO(po));
+        } else {
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new MaxInvestVO(userID, type, (float) 0, null));
+        }
+        return response;
+    }
+
+    @Override
+    public BasicResponse<Float> getInvestBy(Long userID, String type, Date date) {
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeMapper.selectSum(userID, type, date));
+    }
+
+    private static PersonalTradePO assemblePersonalTradePO(PersonalTradeVO vo) {
         PersonalTradePO po = new PersonalTradePO();
         po.setID(vo.getID());
         po.setTransID(vo.getTransID());
@@ -134,7 +163,7 @@ public class OrderServiceImpl implements OrderService {
         return po;
     }
 
-    private static PlatformTradePO assemblePlatformTradePO(PlatformTradeVO vo){
+    private static PlatformTradePO assemblePlatformTradePO(PlatformTradeVO vo) {
         PlatformTradePO po = new PlatformTradePO();
         po.setID(vo.getID());
         po.setTime(vo.getTime());
@@ -147,7 +176,7 @@ public class OrderServiceImpl implements OrderService {
         return po;
     }
 
-    private static TransferRecordPO assembleTransferRecordPO(TransferRecordVO vo){
+    private static TransferRecordPO assembleTransferRecordPO(TransferRecordVO vo) {
         TransferRecordPO po = new TransferRecordPO();
         po.setID(vo.getID());
         po.setCreateTime(vo.getCreateTime());

@@ -14,7 +14,7 @@ public interface TransferRecordMapper {
 
     TransferRecordPO selectByID(@Param("ID") Long ID);
 
-    Long insert(TransferRecordPO transferRecordPO);
+    Integer insert(TransferRecordPO transferRecordPO);
 
     Integer update(TransferRecordPO transferRecordPO);
 }

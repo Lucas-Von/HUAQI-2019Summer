@@ -39,4 +39,14 @@ public class MaxInvestPO {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public MaxInvestPO(Long userID, String type, Float max, Date date) {
+        this.userID = userID;
+        this.type = type;
+        this.max = max;
+        this.date = date;
+    }
+
+    public MaxInvestPO() {
+    }
 }

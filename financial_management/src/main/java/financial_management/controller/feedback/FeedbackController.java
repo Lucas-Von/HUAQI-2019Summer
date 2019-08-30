@@ -27,12 +27,12 @@ public class FeedbackController {
     }
 
     @PostMapping("")
-    public BasicResponse postFeedback(@RequestBody FeedbackParam feedbackParam) {
+    public BasicResponse<?> postFeedback(@RequestBody FeedbackParam feedbackParam) {
         return feedbackService.postFeedback(feedbackParam);
     }
 
     @PostMapping("/{ID}")
-    public BasicResponse solve(@PathVariable long ID, @RequestBody SolveParam solveParam) {
+    public BasicResponse<?> solve(@PathVariable long ID, @RequestBody SolveParam solveParam) {
         return feedbackService.solveFeedback(ID, solveParam);
     }
 

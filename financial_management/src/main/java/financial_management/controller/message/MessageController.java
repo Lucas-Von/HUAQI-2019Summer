@@ -20,32 +20,32 @@ public class MessageController {
     private JwtUtil jwtUtil;
 
     @GetMapping("get")
-    public BasicResponse getMessagesByUser(HttpServletRequest request) {
+    public BasicResponse<?> getMessagesByUser(HttpServletRequest request) {
         return messageService.getMessagesByUser(jwtUtil.getIdFromRequest(request));
     }
 
     @GetMapping("get/{type}")
-    public BasicResponse getMessagesByUser(HttpServletRequest request, @PathVariable int type) {
+    public BasicResponse<?> getMessagesByUser(HttpServletRequest request, @PathVariable int type) {
         return messageService.getMessagesByUser(jwtUtil.getIdFromRequest(request), type);
     }
 
     @GetMapping("get/{type}/{page}")
-    public BasicResponse getMessagesByUser(HttpServletRequest request, @PathVariable int type, @PathVariable int page) {
+    public BasicResponse<?> getMessagesByUser(HttpServletRequest request, @PathVariable int type, @PathVariable int page) {
         return messageService.getMessagesByUser(jwtUtil.getIdFromRequest(request), type, page);
     }
 
     @GetMapping("getNew")
-    public BasicResponse getNewMessageByUser(HttpServletRequest request) {
+    public BasicResponse<?> getNewMessageByUser(HttpServletRequest request) {
         return messageService.getNewMessageByUser(jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping("hasRead")
-    public BasicResponse readNewMessage(HttpServletRequest request, @RequestParam int type) {
+    public BasicResponse<?> readNewMessage(HttpServletRequest request, @RequestParam int type) {
         return messageService.readNewMessages(jwtUtil.getIdFromRequest(request), type);
     }
 
     @DeleteMapping("del/{ID}")
-    public BasicResponse delMessageByMessageID(@PathVariable Long ID) {
+    public BasicResponse<?> delMessageByMessageID(@PathVariable Long ID) {
         return messageService.removeMessageByMessageID(ID);
     }
 

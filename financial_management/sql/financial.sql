@@ -287,7 +287,7 @@ CREATE TABLE `feedback` (
   `QQ` varchar(15) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `solved` bit(1) NOT NULL DEFAULT b'0',
-  `solver_ID` bigint(255) DEFAULT NULL,
+  `solver_ID` bigint(255) NULL DEFAULT NULL,
   `solve_time` timestamp NULL DEFAULT NULL,
   `solve_text` text,
   PRIMARY KEY (`id`)

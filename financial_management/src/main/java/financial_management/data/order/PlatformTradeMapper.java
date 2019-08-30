@@ -11,5 +11,5 @@ import java.util.List;
 public interface PlatformTradeMapper {
     List<PlatformTradePO> selectAll();
 
-    Long insert(PlatformTradePO platformTradePO);
+    Integer insert(PlatformTradePO platformTradePO);
 }

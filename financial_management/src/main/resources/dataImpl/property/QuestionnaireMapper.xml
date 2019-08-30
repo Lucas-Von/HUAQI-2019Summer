@@ -27,4 +27,8 @@
         where user_id = #{userId}
     </insert>
 
+    <select id="getInvestPrefer" resultType="string">
+        select invest_prefer from recommend where user_id = #{userId}
+    </select>
+
 </mapper>

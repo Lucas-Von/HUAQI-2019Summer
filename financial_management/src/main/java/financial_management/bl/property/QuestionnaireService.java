@@ -26,11 +26,19 @@ public interface QuestionnaireService {
     BasicResponse viewQuestionnaire();
 
     /**
-     * 保存问卷内容
+     * 保存&更新问卷内容
      *
      * @param questionnaireParam
      * @return
      */
     BasicResponse addQuestionnaire(QuestionnaireParam questionnaireParam);
+
+    /**
+     * 获取投资偏好
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getInvestPrefer(Long userId);
 
 }

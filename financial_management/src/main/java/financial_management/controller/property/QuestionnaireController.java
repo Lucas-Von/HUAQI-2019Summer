@@ -40,4 +40,10 @@ public class QuestionnaireController {
         return questionnaireService.addQuestionnaire(questionnaireParam);
     }
 
+    @GetMapping("/questionnaire/getInvestPrefer")
+    public BasicResponse getInvestPrefer(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return questionnaireService.getInvestPrefer(userId);
+    }
+
 }

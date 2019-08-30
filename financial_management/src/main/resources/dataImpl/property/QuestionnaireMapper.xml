@@ -11,7 +11,11 @@
     </select>
 
     <select id="getOriginAssets" resultType="Double">
-        select origin_assets as originAssets from questionnaire where user_id = #{userId}
+        select coalesce(origin_assets, 0) as originAssets from questionnaire where user_id = #{userId}
+    </select>
+
+    <select id="getInvestPrefer" resultType="string">
+        select invest_prefer from recommend where user_id = #{userId}
     </select>
 
     <insert id="insertQuest" parameterType="financial_management.parameter.property.QuestionnaireParam"
@@ -26,9 +30,5 @@
         set funds = #{funds}, saving = #{saving}, insurance = #{insurance}, stocks = #{stocks}, gold = #{gold}, bond = #{bond}, answer = #{answer}
         where user_id = #{userId}
     </insert>
-
-    <select id="getInvestPrefer" resultType="string">
-        select invest_prefer from recommend where user_id = #{userId}
-    </select>
 
 </mapper>

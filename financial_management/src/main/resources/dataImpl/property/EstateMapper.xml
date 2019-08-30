@@ -80,6 +80,16 @@
         where user_id = #{userId} and DATE_SUB(CURDATE(), INTERVAL 30 DAY);
     </select>
 
+    <select id="getCompleteProList" resultMap="FortunePO">
+        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, gold, bond
+        from fortune
+        where user_id = #{userId}
+    </select>
+
+    <select id="getFortuneUpdateTime" resultType="date">
+        select Max(record_date) from fortune where user_id = #{userId}
+    </select>
+
     <resultMap id="EstatePO" type="financial_management.entity.property.EstatePO">
     </resultMap>
 

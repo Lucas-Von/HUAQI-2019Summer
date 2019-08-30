@@ -40,7 +40,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getOverviewByUser(Long userId) {
         try {
-            OverviewVO overviewVO = new OverviewVO(questionnaireServiceForBl.getRecordTime(userId), questionnaireServiceForBl.getOriginAssets(userId), getTotalAsset(userId));
+            OverviewVO overviewVO = new OverviewVO(questionnaireServiceForBl.getRecordTime(userId), getFortuneUpdateTime(userId), questionnaireServiceForBl.getOriginAssets(userId), getTotalAsset(userId));
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, overviewVO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -254,6 +254,28 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     }
 
     /**
+     * 获取用户自注册起每天的资产列表
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getCompleteProList(Long userId) {
+        try {
+            List<FortunePO> completeFortunePOList = estateMapper.getCompleteProList(userId);
+            List<FortuneVO> completeFortuneVOList = new ArrayList<>();
+            completeFortunePOList.stream().forEach(completeFortunePO -> {
+                FortuneVO dailyFortuneVO = new FortuneVO(completeFortunePO.getRecordDate(), completeFortunePO.getFunds(), completeFortunePO.getSaving(), completeFortunePO.getInsurance(), completeFortunePO.getStocks(), completeFortunePO.getGold(), completeFortunePO.getBond());
+                completeFortuneVOList.add(dailyFortuneVO);
+            });
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, completeFortuneVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
      * 获取用户自身的推荐资产配置
      *
      * @param userId
@@ -270,6 +292,23 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
+
+    /**
+     * 获取资产上次更新时间
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Date getFortuneUpdateTime(Long userId) {
+        try {
+            return estateMapper.getFortuneUpdateTime(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Date();
+        }
+    }
+
 
     /**
      * 计算用户总资产

@@ -42,7 +42,6 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'标题1','摘要1',NULL,'内容1',1,'金融,理财',8,'2019-08-30 02:43:06'),(2,'标题2','摘要2',NULL,'内容2',1,'金融',6,'2019-08-30 02:42:53'),(3,'标题3','摘要3',NULL,'内容3',2,'科技',13,'2019-08-30 02:41:29'),(7,'hhh','3206841998090700','aDSaaaa','153604998@qq.com',1,'',24,'2019-08-30 02:38:37');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +67,6 @@ CREATE TABLE `bond` (
 
 LOCK TABLES `bond` WRITE;
 /*!40000 ALTER TABLE `bond` DISABLE KEYS */;
-INSERT INTO `bond` VALUES (1,'19国债10','019620',100),(2,'19国债20','019621',1000);
 /*!40000 ALTER TABLE `bond` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,7 +136,6 @@ CREATE TABLE `collection` (
 
 LOCK TABLES `collection` WRITE;
 /*!40000 ALTER TABLE `collection` DISABLE KEYS */;
-INSERT INTO `collection` VALUES (5,1),(5,2),(1,7);
 /*!40000 ALTER TABLE `collection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +162,6 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (1,5,1,'评论！！！','2019-08-18 15:08:17'),(2,5,1,'评论？？？','2019-08-18 15:08:41'),(3,1,7,'asdfghjkl','2019-08-30 02:28:27');
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,7 +211,6 @@ CREATE TABLE `deposit_product` (
 
 LOCK TABLES `deposit_product` WRITE;
 /*!40000 ALTER TABLE `deposit_product` DISABLE KEYS */;
-INSERT INTO `deposit_product` VALUES (1,'产品1','类型1',0.0575,365),(2,'产品2','克苏鲁',0.0175,200),(3,'产品3','花旗杯',0.025,365);
 /*!40000 ALTER TABLE `deposit_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +241,6 @@ CREATE TABLE `deposit_recommend` (
 
 LOCK TABLES `deposit_recommend` WRITE;
 /*!40000 ALTER TABLE `deposit_recommend` DISABLE KEYS */;
-INSERT INTO `deposit_recommend` VALUES (1,'推荐储蓄产品','人民币','详细信息',0.38000,'2019-01-02','2019-01-02',10000,1);
 /*!40000 ALTER TABLE `deposit_recommend` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +266,6 @@ CREATE TABLE `dom_stock` (
 
 LOCK TABLES `dom_stock` WRITE;
 /*!40000 ALTER TABLE `dom_stock` DISABLE KEYS */;
-INSERT INTO `dom_stock` VALUES (1,'大唐发电','601991',4.06),(2,'东方财富','300059',13.82);
 /*!40000 ALTER TABLE `dom_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +300,6 @@ CREATE TABLE `feedback` (
 
 LOCK TABLES `feedback` WRITE;
 /*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-INSERT INTO `feedback` VALUES (1,'为什么不开大？',1,'喂，老板，他刚才又没开大；我没骂他，我上局就没骂他；这个人应该是思想出了问题','2019-08-27 07:27:58',1,NULL,NULL,'123456@789.com',_binary '',7,'2019-08-27 07:27:58','对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区'),(2,'一个数学问题',1,'1+1=?','2019-08-27 07:27:58',1,NULL,NULL,'123456@789.com',_binary '\0',0,NULL,NULL);
 /*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,7 +325,6 @@ CREATE TABLE `for_stock` (
 
 LOCK TABLES `for_stock` WRITE;
 /*!40000 ALTER TABLE `for_stock` DISABLE KEYS */;
-INSERT INTO `for_stock` VALUES (1,'外唐发电','613991',14.06),(2,'外方财富','000000',113.82);
 /*!40000 ALTER TABLE `for_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,7 +353,7 @@ CREATE TABLE `fortune` (
 
 LOCK TABLES `fortune` WRITE;
 /*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
-INSERT INTO `fortune` VALUES (1,'2019-08-01',25,30,25,50,60,80),(1,'2019-08-02',25,30,25,50,60,80),(1,'2019-08-03',25,30,25,50,60,80),(1,'2019-08-04',25,30,25,50,60,80),(1,'2019-08-05',25,30,25,50,60,80),(1,'2019-08-22',25,30,25,50,60,80),(1,'2019-08-23',28,30,25,80,60,80);
+INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,500,1500),(1,'2019-08-22',2600,2600,2400,2500,500,1500),(2,'2019-08-28',3000,2600,2400,2500,500,1500),(1,'2019-08-28',8000,2600,2400,2500,500,1500),(1,'2019-08-29',2600,9600,2400,2500,500,1500);
 /*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,7 +377,6 @@ CREATE TABLE `fund` (
 
 LOCK TABLES `fund` WRITE;
 /*!40000 ALTER TABLE `fund` DISABLE KEYS */;
-INSERT INTO `fund` VALUES ('并夕夕',0.0548,'2019-03-02');
 /*!40000 ALTER TABLE `fund` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,34 +402,7 @@ CREATE TABLE `gold` (
 
 LOCK TABLES `gold` WRITE;
 /*!40000 ALTER TABLE `gold` DISABLE KEYS */;
-INSERT INTO `gold` VALUES (1,'国际现货黄金','XAUUSD',1513.26);
 /*!40000 ALTER TABLE `gold` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `gold_history_config`
---
-
-DROP TABLE IF EXISTS `gold_history_config`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `gold_history_config` (
-  `user_id` bigint(20) DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  `amount` int(11) DEFAULT NULL,
-  `sum` double DEFAULT NULL,
-  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` int(11)DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gold_history_config`
---
-
-LOCK TABLES `gold_history_config` WRITE;
-/*!40000 ALTER TABLE `gold_history_config` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gold_history_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -462,7 +425,6 @@ CREATE TABLE `if_changed_email` (
 
 LOCK TABLES `if_changed_email` WRITE;
 /*!40000 ALTER TABLE `if_changed_email` DISABLE KEYS */;
-INSERT INTO `if_changed_email` VALUES ('153604998@qq.com',3,'2019-08-30 03:13:20');
 /*!40000 ALTER TABLE `if_changed_email` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,7 +448,6 @@ CREATE TABLE `if_changed_password` (
 
 LOCK TABLES `if_changed_password` WRITE;
 /*!40000 ALTER TABLE `if_changed_password` DISABLE KEYS */;
-INSERT INTO `if_changed_password` VALUES ('153604998@qq.com',3,'2019-08-22 14:39:17');
 /*!40000 ALTER TABLE `if_changed_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -514,7 +475,6 @@ CREATE TABLE `ins_product` (
 
 LOCK TABLES `ins_product` WRITE;
 /*!40000 ALTER TABLE `ins_product` DISABLE KEYS */;
-INSERT INTO `ins_product` VALUES (1,'金盛人寿','分红险',30000,2000,365),(2,'英大泰和','全能险',25000,1400,365);
 /*!40000 ALTER TABLE `ins_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -585,7 +545,6 @@ CREATE TABLE `light` (
 
 LOCK TABLES `light` WRITE;
 /*!40000 ALTER TABLE `light` DISABLE KEYS */;
-INSERT INTO `light` VALUES (5,1);
 /*!40000 ALTER TABLE `light` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -639,7 +598,6 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (1,'2019-08-26 07:27:58',1,1,'尊敬的用户，您的账户有新的调仓操作，请确认',_binary '',_binary '\0'),(2,'2019-08-27 07:27:58',1,4,'尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区',_binary '\0',_binary '\0'),(3,'2019-08-27 07:56:53',0,NULL,'文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(4,'2019-08-30 02:29:12',0,NULL,'文章：《hhh》下的评论：“asdfghjkl”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(5,'2019-08-30 02:37:28',0,NULL,'文章：《hhh》下的评论：“asdfghjkl”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(6,'2019-08-30 02:38:44',0,NULL,'文章：《hhh》下的评论：“asdfghjkl”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(7,'2019-08-30 02:38:46',0,NULL,'文章：《hhh》下的评论：“asdfghjkl”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0');
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -667,7 +625,7 @@ CREATE TABLE `my_bond` (
 
 LOCK TABLES `my_bond` WRITE;
 /*!40000 ALTER TABLE `my_bond` DISABLE KEYS */;
-INSERT INTO `my_bond` VALUES (5,'019620',30000,100,0.003,23000,234234),(1,'019620',30000,100,0.003,23000,234234);
+INSERT INTO `my_bond` VALUES (1,'8888',200,300,1.5,500,6);
 /*!40000 ALTER TABLE `my_bond` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -697,7 +655,7 @@ CREATE TABLE `my_depo` (
 
 LOCK TABLES `my_depo` WRITE;
 /*!40000 ALTER TABLE `my_depo` DISABLE KEYS */;
-INSERT INTO `my_depo` VALUES (1,5,1,20000,NULL,NULL,'2019-08-19',NULL),(2,5,2,1000,NULL,NULL,'2019-08-19',NULL),(3,1,0,10000,'个人储蓄产品',0.00000,'2019-01-02',0.2857142857142857),(4,1,0,10000,'个人储蓄产品',0.00000,'2019-01-02',0.2857142857142857),(5,1,1,5000,'个人储蓄产品5',0.38000,'2019-01-02',0.14285714285714285),(6,1,0,10000,'个人储蓄产品',1.00000,'2019-01-02',0.2857142857142857);
+INSERT INTO `my_depo` VALUES (1,1,1,50,'长实储蓄',0.56000,'2020-08-30',2);
 /*!40000 ALTER TABLE `my_depo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -722,7 +680,7 @@ CREATE TABLE `my_fund` (
 
 LOCK TABLES `my_fund` WRITE;
 /*!40000 ALTER TABLE `my_fund` DISABLE KEYS */;
-INSERT INTO `my_fund` VALUES (5,2000,'2019-08-22','123456');
+INSERT INTO `my_fund` VALUES (1,200,'2019-08-30','888888');
 /*!40000 ALTER TABLE `my_fund` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -748,7 +706,7 @@ CREATE TABLE `my_gold` (
 
 LOCK TABLES `my_gold` WRITE;
 /*!40000 ALTER TABLE `my_gold` DISABLE KEYS */;
-INSERT INTO `my_gold` VALUES (1,100,1,10000,50);
+INSERT INTO `my_gold` VALUES (1,50,2,66,300);
 /*!40000 ALTER TABLE `my_gold` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -774,7 +732,7 @@ CREATE TABLE `my_ins` (
 
 LOCK TABLES `my_ins` WRITE;
 /*!40000 ALTER TABLE `my_ins` DISABLE KEYS */;
-INSERT INTO `my_ins` VALUES (5,'cxk',1,'2019-02-12',20000);
+INSERT INTO `my_ins` VALUES (1,'20',25,'2020-08-30',30);
 /*!40000 ALTER TABLE `my_ins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -802,7 +760,7 @@ CREATE TABLE `my_stock` (
 
 LOCK TABLES `my_stock` WRITE;
 /*!40000 ALTER TABLE `my_stock` DISABLE KEYS */;
-INSERT INTO `my_stock` VALUES (5,'601991',20003,2123,0.043,200,23133),(5,'000000',123123,2333,0.013,200,23133);
+INSERT INTO `my_stock` VALUES (1,'8888',200,300,1.5,500,6);
 /*!40000 ALTER TABLE `my_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -924,36 +882,37 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,20,500,30,15,35,26,'6～12个月(中长期或长期)','2019-08-22',626),(2,56,500,30,25,35,26,'6～12个月(中长期或长期)','2019-08-23',672),(3,56,500,30,25,35,26,'6～12个月(中长期或长期)','2019-08-24',672),(4,56,500,30,25,35,26,'6～12个月(中长期或长期)','2019-08-25',672),(5,56,500,30,25,35,26,'6～12个月(中长期或长期)','2019-08-29',672);
+INSERT INTO `questionnaire` VALUES (1,250,250,250,250,250,250,'1～3个月(短期)','2019-08-22',1500),(2,500,500,500,500,500,500,'3～6个月(中期)','2019-08-23',3000),(3,250,250,250,250,250,250,'6～12个月(中长期或长期)','2019-08-24',1500),(4,500,500,500,500,500,500,'1年以上','2019-08-29',3000);
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `rec_alloc`
+-- Table structure for table `recommend`
 --
 
-DROP TABLE IF EXISTS `rec_alloc`;
+DROP TABLE IF EXISTS `recommend`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rec_alloc` (
+CREATE TABLE `recommend` (
   `user_id` bigint(255) NOT NULL,
   `funds_rate` float DEFAULT NULL,
   `saving_rate` float DEFAULT NULL,
   `insurance_rate` float DEFAULT NULL,
   `invest_rate` float DEFAULT NULL,
+  `invest_prefer` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rec_alloc`
+-- Dumping data for table `recommend`
 --
 
-LOCK TABLES `rec_alloc` WRITE;
-/*!40000 ALTER TABLE `rec_alloc` DISABLE KEYS */;
-INSERT INTO `rec_alloc` VALUES (1,0.5,0.02,0.08,0.4),(2,0.8,0.02,0.08,0.1);
-/*!40000 ALTER TABLE `rec_alloc` ENABLE KEYS */;
+LOCK TABLES `recommend` WRITE;
+/*!40000 ALTER TABLE `recommend` DISABLE KEYS */;
+INSERT INTO `recommend` VALUES (1,0.25,0.25,0.26,0.24,'保守型'),(2,0.25,0.25,0.26,0.24,'稳健保守型'),(3,0.25,0.25,0.26,0.24,'稳健型'),(4,0.25,0.25,0.26,0.24,'稳健进取型'),(5,0.25,0.25,0.26,0.24,'进取型');
+/*!40000 ALTER TABLE `recommend` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1039,4 +998,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-30 11:18:11
+-- Dump completed on 2019-08-30 17:24:25

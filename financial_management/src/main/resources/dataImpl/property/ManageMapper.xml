@@ -13,12 +13,12 @@
             u.identity_num as identityNum,
             u.username as nick,
             u.email as email,
-            ra.funds_rate as fundsRate,
-            ra.saving_rate as savingRate,
-            ra.insurance_rate as insuranceRate,
-            ra.invest_rate as investRate
+            r.funds_rate as fundsRate,
+            r.saving_rate as savingRate,
+            r.insurance_rate as insuranceRate,
+            r.invest_rate as investRate
         from user u
-        inner join rec_alloc ra
+        inner join recommend r
         on u.user_id =  ra.user_id
     </select>
 
@@ -29,17 +29,17 @@
             u.identity_num as identityNum,
             u.username as nick,
             u.email as email,
-            ra.funds_rate as fundsRate,
-            ra.saving_rate as savingRate,
-            ra.insurance_rate as insuranceRate,
-            ra.invest_rate as investRate
-        from user u, rec_alloc ra
+            r.funds_rate as fundsRate,
+            r.saving_rate as savingRate,
+            r.insurance_rate as insuranceRate,
+            r.invest_rate as investRate
+        from user u, recommend r
         where u.user_id = #{userId} and ra.user_id = #{userId};
     </select>
 
     <insert id="editRecAlloc" parameterType="financial_management.parameter.property.RecAllocParam"
             useGeneratedKeys="true" keyProperty="id">
-        update rec_alloc
+        update recommend
         set funds_rate = #{fundsRate}, saving_rate = #{savingRate}, insurance_rate = #{insuranceRate}, invest_rate = #{investRate}
         where user_id = #{userId}
     </insert>

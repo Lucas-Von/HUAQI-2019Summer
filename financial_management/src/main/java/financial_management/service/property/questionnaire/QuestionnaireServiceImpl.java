@@ -59,7 +59,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     }
 
     /**
-     * 添加问卷内容
+     * 添加&更新问卷内容
      *
      * @param questionnaireParam
      * @return
@@ -78,6 +78,23 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取投资偏好
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getInvestPrefer(Long userId) {
+        try {
+            String investPrefer = questionnaireMapper.getInvestPrefer(userId);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investPrefer);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST);
         }
     }
 

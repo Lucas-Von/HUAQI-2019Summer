@@ -1,7 +1,5 @@
 package financial_management.vo.property;
 
-import financial_management.entity.property.EstatePO;
-
 import java.util.Date;
 
 /**
@@ -16,6 +14,11 @@ public class OverviewVO {
     private Date startRecordTime;
 
     /**
+     * 资产更新时间
+     */
+    private Date fortuneUpdateTime;
+
+    /**
      * 资产净值
      */
     private double assetsEquity;
@@ -25,8 +28,9 @@ public class OverviewVO {
      */
     private double totalAssets;
 
-    public OverviewVO(Date startRecordTime, double originAssets, double totalAssets) {
+    public OverviewVO(Date startRecordTime, Date fortuneUpdateTime, double originAssets, double totalAssets) {
         this.startRecordTime = startRecordTime;
+        this.fortuneUpdateTime = fortuneUpdateTime;
         this.totalAssets = totalAssets;
         this.assetsEquity = totalAssets / originAssets;
     }
@@ -37,6 +41,10 @@ public class OverviewVO {
 
     public Date getStartRecordTime() {
         return startRecordTime;
+    }
+
+    public Date getFortuneUpdateTime() {
+        return fortuneUpdateTime;
     }
 
     public double getAssetsEquity() {

@@ -17,5 +17,7 @@ public interface MessageService {
 
     BasicResponse<?> readNewMessages(Long userID, int type);
 
+    BasicResponse<?> readNewMessage(Long userID, Long messageID);
+
     BasicResponse<?> removeMessageByMessageID(Long ID);
 }

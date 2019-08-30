@@ -44,9 +44,13 @@ public class MessageController {
         return messageService.readNewMessages(jwtUtil.getIdFromRequest(request), type);
     }
 
+    @PostMapping("read/{ID}")
+    public BasicResponse<?> readNewMessage(HttpServletRequest request, @PathVariable long ID) {
+        return messageService.readNewMessage(jwtUtil.getIdFromRequest(request), ID);
+    }
+
     @DeleteMapping("del/{ID}")
     public BasicResponse<?> delMessageByMessageID(@PathVariable Long ID) {
         return messageService.removeMessageByMessageID(ID);
     }
-
 }

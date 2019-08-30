@@ -18,12 +18,16 @@ public interface OrderService {
 
     BasicResponse<TransferRecordVO> getTransferRecordByRecord(Long ID);
 
-    //获取今日所有个人交易记录
+    //获取今日所有个人交易记录（这个方法只是债券）
     BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord();
+
+    //获取今日所有个人交易记录（按类型）
+    BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(PersonalTradeVO.Type type);
 
     //获取平台交易记录
     BasicResponse<List<PlatformTradeVO>> getAllPlatformTradeRecord();
 
+    //新增个人交易记录
     BasicResponse<?> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize);
 
     //新增平台交易记录

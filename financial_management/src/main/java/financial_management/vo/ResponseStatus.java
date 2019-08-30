@@ -44,6 +44,7 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_TIME_OUT = new ResponseStatus("8009", "Time out");
 
     public static final ResponseStatus STATUS_FEEDBACK_NOT_EXIST = new ResponseStatus("9001","反馈不存在");
+    public static final ResponseStatus STATUS_SOLVE_FAIL = new ResponseStatus("9001","答复失败");
 
     public String code;
 

@@ -1,49 +1,25 @@
 package financial_management.entity;
 
-/**
- * @Description 用户持有的股票实体类
- * @Author 233loser
- * @Date 2019/8/14 12:44
- * @Version 1.0
- **/
-public class MyStockPO {
-    /**
-     * @Description //用户Id
-     **/
-    Long userId;
+public class MyQDIIPO {
+    private Long userId;
 
-    /**
-     * @Description //股票代码
-     **/
-    String code;
+    private String code;
 
-    /**
-     * @Description //购买价格
-     **/
-    Float purchasePrice;
+    private Float purchasePrice;
 
-    Integer purchaseAmount;
+    private Float purchaseAmount;
 
-    Float purchaseTotal;
+    private Float purchaseTotal;
 
-    /**
-     * @Description 单位持有成本价
-     */
-    Float holdPrice;
+    private Float holdPrice;
 
-    /**
-     * @Description //持有数量
-     **/
-    Float holdAmount;
+    private Float holdAmount;
 
-    /**
-     * @Description //持有额
-     **/
-    Float holdTotal;
+    private Float holdTotal;
 
-    Float profit;
+    private Float profit;
 
-    Float profitRate;
+    private Float profitRate;
 
     public Long getUserId() {
         return userId;
@@ -69,27 +45,11 @@ public class MyStockPO {
         this.purchasePrice = purchasePrice;
     }
 
-    public Float getHoldAmount() {
-        return holdAmount;
-    }
-
-    public void setHoldAmount(float holdAmount) {
-        this.holdAmount = holdAmount;
-    }
-
-    public Float getHoldTotal() {
-        return holdTotal;
-    }
-
-    public void setHoldTotal(Float holdTotal) {
-        this.holdTotal = holdTotal;
-    }
-
-    public Integer getPurchaseAmount() {
+    public Float getPurchaseAmount() {
         return purchaseAmount;
     }
 
-    public void setPurchaseAmount(Integer purchaseAmount) {
+    public void setPurchaseAmount(Float purchaseAmount) {
         this.purchaseAmount = purchaseAmount;
     }
 
@@ -107,6 +67,22 @@ public class MyStockPO {
 
     public void setHoldPrice(Float holdPrice) {
         this.holdPrice = holdPrice;
+    }
+
+    public Float getHoldAmount() {
+        return holdAmount;
+    }
+
+    public void setHoldAmount(Float holdAmount) {
+        this.holdAmount = holdAmount;
+    }
+
+    public Float getHoldTotal() {
+        return holdTotal;
+    }
+
+    public void setHoldTotal(Float holdTotal) {
+        this.holdTotal = holdTotal;
     }
 
     public Float getProfit() {

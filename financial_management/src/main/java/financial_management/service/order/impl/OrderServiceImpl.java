@@ -88,8 +88,36 @@ public class OrderServiceImpl implements OrderService {
         PersonalTradePO po = assemblePersonalTradePO(personalTradeVO);
         po.setID(null);
         po.setIsCustomize(isCustomize);
-        long id = personalTradeMapper.insert(po);
+        long id;
+        try {
+            id = personalTradeMapper.insert(po);
+        } catch (Exception e) {
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+        }
+
+        //更新最大投资金额
+        long userID = personalTradeVO.getUserID();
+        String type = personalTradeVO.getType().name().toUpperCase();
+        MaxInvestPO max = maxInvestMapper.selectByUserIDAndType(userID, type);
+        float latestSum = personalTradeMapper.selectSum(userID, type, null);
+        if (max.getMax() < latestSum) {
+            max.setMax(latestSum);
+            max.setDate(new Date());
+            maxInvestMapper.update(max);
+        }
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+    }
+
+    @Override
+    public BasicResponse<?> addPlatfromTradeRecord(PlatformTradeVO platformTradeVO) {
+        PlatformTradePO po = assemblePlatformTradePO(platformTradeVO);
+        po.setID(null);
+        try {
+            long id = platformTradeMapper.insert(po);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+        } catch (Exception e) {
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+        }
     }
 
     @Override
@@ -97,13 +125,27 @@ public class OrderServiceImpl implements OrderService {
         TransferRecordPO po = assembleTransferRecordPO(transferRecordVO);
         po.setID(null);
         po.setIsCustomize(isCustomize);
-        long id = transferRecordMapper.insert(po);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+        try {
+            long id = transferRecordMapper.insert(po);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+        } catch (Exception e) {
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+        }
     }
 
     @Override
     public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord() {
         List<PersonalTradePO> pos = personalTradeMapper.selectByDate(new Date(), PersonalTradeVO.Type.BOND.name().toUpperCase());
+        List<PersonalTradeVO> vos = new ArrayList<>(pos.size());
+        for (PersonalTradePO po : pos) {
+            vos.add(new PersonalTradeVO(po));
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
+    }
+
+    @Override
+    public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(PersonalTradeVO.Type type) {
+        List<PersonalTradePO> pos = personalTradeMapper.selectByDate(new Date(), type.name().toUpperCase());
         List<PersonalTradeVO> vos = new ArrayList<>(pos.size());
         for (PersonalTradePO po : pos) {
             vos.add(new PersonalTradeVO(po));
@@ -121,13 +163,6 @@ public class OrderServiceImpl implements OrderService {
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
-    @Override
-    public BasicResponse<?> addPlatfromTradeRecord(PlatformTradeVO platformTradeVO) {
-        PlatformTradePO po = assemblePlatformTradePO(platformTradeVO);
-        po.setID(null);
-        long id = platformTradeMapper.insert(po);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
-    }
 
     @Override
     public BasicResponse<MaxInvestVO> getMaxInvestBy(Long userID, String type) {
@@ -149,7 +184,6 @@ public class OrderServiceImpl implements OrderService {
     private static PersonalTradePO assemblePersonalTradePO(PersonalTradeVO vo) {
         PersonalTradePO po = new PersonalTradePO();
         po.setID(vo.getID());
-        po.setTransID(vo.getTransID());
         po.setCreateTime(vo.getCreateTime());
         po.setCompleteTime(vo.getCompleteTime());
         po.setType(vo.getType().name().toUpperCase());

@@ -9,7 +9,7 @@ package financial_management.parameter.product;
 public class InvestmentPurchaseParam {
 
     String code;
-    Integer amount;
+    Float amount;
     Double totalprice;
     String type;
 
@@ -29,11 +29,11 @@ public class InvestmentPurchaseParam {
         this.code = code;
     }
 
-    public Integer getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 

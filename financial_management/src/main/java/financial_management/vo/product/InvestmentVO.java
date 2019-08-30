@@ -12,7 +12,7 @@ public class InvestmentVO {
     String type;
     String code;
     Double latestprice;
-    Integer amount;
+    Float amount;
     Double holdings;
     Double incomeamount;
     Double incomerate;
@@ -49,11 +49,11 @@ public class InvestmentVO {
         this.latestprice = latestprice;
     }
 
-    public Integer getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 
@@ -84,7 +84,7 @@ public class InvestmentVO {
     public InvestmentVO() {
     }
 
-    public InvestmentVO(String name, String type, String code, Double latestprice, Integer amount, Double holdings, Double incomeamount, Double incomerate) {
+    public InvestmentVO(String name, String type, String code, Double latestprice, Float amount, Double holdings, Double incomeamount, Double incomerate) {
         this.name = name;
         this.type = type;
         this.code = code;

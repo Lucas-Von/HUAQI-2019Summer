@@ -81,6 +81,7 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
         }
     }
 
+    @Deprecated
     @Override
     public BasicResponse<?> postMessageToUserBy(Long userID, String content) {
         MessagePO po = new MessagePO();
@@ -93,6 +94,18 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
     }
 
+    @Override
+    public BasicResponse<?> postMessageToUserBy(Long userID, String content, MsgType msgType) {
+        MessagePO po = new MessagePO();
+        po.setTime(new Date());
+        po.setUserID(userID);
+        po.setContent(content);
+        po.setType(msgType.getType());
+        po.setIsRead(false);
+        po.setIsDelete(false);
+        long id = messageMapper.insertMessage(po);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
+    }
 
     private static MessagePO assembleMessagePO(MessageVO messageVO){
         MessagePO messagePO = new MessagePO();

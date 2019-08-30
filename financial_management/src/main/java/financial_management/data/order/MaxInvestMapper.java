@@ -5,10 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface MaxInvestMapper {
-    MaxInvestPO selectByUserID(@Param("userID") Long userID);
+    List<MaxInvestPO> selectByUserID(@Param("userID") Long userID);
 
     MaxInvestPO selectByUserIDAndType(@Param("userID") Long userID,@Param("type") String type);
 

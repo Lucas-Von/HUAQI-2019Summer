@@ -35,7 +35,7 @@ public class MyBondPO {
     /**
      * @Description //持有数量
      **/
-    Integer quantity;
+    Float quantity;
 
     /**
      * @Description //持有额
@@ -90,11 +90,11 @@ public class MyBondPO {
 //    }
 
 
-    public Integer getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 

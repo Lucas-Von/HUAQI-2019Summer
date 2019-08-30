@@ -39,11 +39,11 @@ public class InvestmentServiceImpl implements InvestmentService {
     public List<InvestmentVO> getSelfInvProduct(Long userId) {
         List<InvestmentVO> investments = new ArrayList<>();
         List<MyGoldPO> golds = goldMapper.selectSelfGold(userId);
-        golds.stream().forEach(o->{
-            GoldPO gold = goldMapper.selectGoldByCode(o.getCode());
-            InvestmentVO vo =new InvestmentVO(gold.getName(),"黄金",o.getCode(),gold.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
-            investments.add(vo);
-        });
+//        golds.stream().forEach(o->{
+//            GoldPO gold = goldMapper.selectGoldByCode(o.getCode());
+//            InvestmentVO vo =new InvestmentVO(gold.getName(),"黄金",o.getCode(),gold.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
+//            investments.add(vo);
+//        });
 
         List<MyBondPO> bonds = bondMapper.selectSelfBond(userId);
         bonds.stream().forEach(o->{
@@ -109,16 +109,16 @@ public class InvestmentServiceImpl implements InvestmentService {
         try {
             switch (type) {
                 case "gold":
-                    MyGoldPO po = new MyGoldPO();
-                    po.setAmount(totalprice.floatValue());
-                    po.setCode(code);
-                    po.setUserId(userId);
-                    //因为刚买，没有利润
-                    po.setProfit(0.0F);
-                    po.setProfitRate(0.0F);
-                    po.setPurchasePrice(totalprice.floatValue());
-                    po.setQuantity(amount);
-                    goldMapper.insertMyGold(po);
+//                    MyGoldPO po = new MyGoldPO();
+//                    po.setAmount(totalprice.floatValue());
+//                    po.setCode(code);
+//                    po.setUserId(userId);
+//                    //因为刚买，没有利润
+//                    po.setProfit(0.0F);
+//                    po.setProfitRate(0.0F);
+//                    po.setPurchasePrice(totalprice.floatValue());
+//                    po.setQuantity(amount);
+//                    goldMapper.insertMyGold(po);
                     break;
                 case "bond":
                     MyBondPO bondPO = new MyBondPO();

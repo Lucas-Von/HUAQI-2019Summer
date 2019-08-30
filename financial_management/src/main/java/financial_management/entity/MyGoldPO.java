@@ -8,39 +8,21 @@ package financial_management.entity;
  **/
 public class MyGoldPO {
     /**
-     * @Description //用户Id
-     **/
-    Long userId;
-
+     * 用户ID
+     */
+    private Long userId;
     /**
-     * @Description //黄金代码
-     **/
-    String code;
-
+     * 所有配置数量
+     */
+    private Integer amount;
     /**
-     * @Description //购买价格，用于计算累计盈亏额
-     **/
-    Float purchasePrice;
-
+     * 剩余未买黄金的钱
+     */
+    private Double diff;
     /**
-     * @Description //累计盈亏额
-     **/
-    Float profit;
-
-    /**
-     * @Description //累计盈亏率
-     **/
-    Float profitRate;
-
-    /**
-     * @Description //持有数量
-     **/
-    Integer quantity;
-
-    /**
-     * @Description //持有额
-     **/
-    Float amount;
+     * 所有配置金额
+     */
+    private Double sum;
 
     public Long getUserId() {
         return userId;
@@ -50,51 +32,37 @@ public class MyGoldPO {
         this.userId = userId;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Float getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(Float purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
-    public Float getProfit() {
-        return profit;
-    }
-
-    public void setProfit(Float profit) {
-        this.profit = profit;
-    }
-
-    public Float getProfitRate() {
-        return profitRate;
-    }
-
-    public void setProfitRate(Float profitRate) {
-        this.profitRate = profitRate;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Float getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Double getDiff() {
+        return diff;
+    }
+
+    public void setDiff(Double diff) {
+        this.diff = diff;
+    }
+
+    public Double getSum() {
+        return sum;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
+    }
+
+    public MyGoldPO() {
+    }
+
+    public MyGoldPO(Long userId, Integer amount, Double diff, Double sum) {
+        this.userId = userId;
+        this.amount = amount;
+        this.diff = diff;
+        this.sum = sum;
     }
 }

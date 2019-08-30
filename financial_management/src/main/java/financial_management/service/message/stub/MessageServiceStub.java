@@ -80,6 +80,11 @@ public class MessageServiceStub implements MessageService {
     }
 
     @Override
+    public BasicResponse<?> readNewMessage(Long userID, Long messageID) {
+        return null;
+    }
+
+    @Override
     public BasicResponse<?> removeMessageByMessageID(Long ID) {
         return null;
     }

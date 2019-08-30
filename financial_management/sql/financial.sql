@@ -424,7 +424,7 @@ DROP TABLE IF EXISTS `gold_history_config`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gold_history_config` (
-  `userId` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
   `price` double DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `sum` double DEFAULT NULL,

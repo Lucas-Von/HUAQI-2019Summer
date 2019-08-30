@@ -12,7 +12,7 @@
             coalesce(q.insurance, 0) as insuranceOutPlatform,
             coalesce(sum(ms.amount), 0) as stocksInPlatform,
             coalesce(q.stocks, 0) as stocksOutPlatform,
-            coalesce(sum(mg.amount), 0) as goldInPlatform,
+            coalesce(sum(mg.sum), 0) as goldInPlatform,
             coalesce(q.gold, 0) as goldOutPlatform,
             coalesce(sum(mb.amount), 0) as bondInPlatform,
             coalesce(q.bond, 0) as bondOutPlatform

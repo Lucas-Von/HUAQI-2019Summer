@@ -42,7 +42,7 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'标题1','摘要1',NULL,'内容1',1,'金融,理财',1,'2019-08-21 12:16:15'),(2,'标题2','摘要2',NULL,'内容2',1,'金融',5,'2019-08-21 12:16:26'),(3,'标题3','摘要3',NULL,'内容3',2,'科技',3,'2019-08-21 12:16:29'),(7,'hhh','3206841998090700','aDSaaaa','153604998@qq.com',1,'',0,'2019-08-21 12:31:53');
+INSERT INTO `article` VALUES (1,'标题1','摘要1',NULL,'内容1',1,'金融,理财',8,'2019-08-30 02:43:06'),(2,'标题2','摘要2',NULL,'内容2',1,'金融',6,'2019-08-30 02:42:53'),(3,'标题3','摘要3',NULL,'内容3',2,'科技',13,'2019-08-30 02:41:29'),(7,'hhh','3206841998090700','aDSaaaa','153604998@qq.com',1,'',24,'2019-08-30 02:38:37');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,7 +138,7 @@ CREATE TABLE `collection` (
 
 LOCK TABLES `collection` WRITE;
 /*!40000 ALTER TABLE `collection` DISABLE KEYS */;
-INSERT INTO `collection` VALUES (5,1),(5,2);
+INSERT INTO `collection` VALUES (5,1),(5,2),(1,7);
 /*!40000 ALTER TABLE `collection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,7 +156,7 @@ CREATE TABLE `comment` (
   `content` varchar(10000) DEFAULT NULL,
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +165,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (1,5,1,'评论！！！','2019-08-18 15:08:17'),(2,5,1,'评论？？？','2019-08-18 15:08:41');
+INSERT INTO `comment` VALUES (1,5,1,'评论！！！','2019-08-18 15:08:17'),(2,5,1,'评论？？？','2019-08-18 15:08:41'),(3,1,7,'asdfghjkl','2019-08-30 02:28:27');
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -461,7 +461,7 @@ CREATE TABLE `if_changed_email` (
 
 LOCK TABLES `if_changed_email` WRITE;
 /*!40000 ALTER TABLE `if_changed_email` DISABLE KEYS */;
-INSERT INTO `if_changed_email` VALUES ('153604998@qq.com',3,'2019-08-22 14:38:45');
+INSERT INTO `if_changed_email` VALUES ('153604998@qq.com',3,'2019-08-30 03:13:20');
 /*!40000 ALTER TABLE `if_changed_email` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -629,7 +629,7 @@ CREATE TABLE `message` (
   `is_read` bit(1) DEFAULT NULL,
   `is_delete` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -638,7 +638,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (1,'2019-08-26 07:27:58',1,1,'尊敬的用户，您的账户有新的调仓操作，请确认',_binary '',_binary '\0'),(2,'2019-08-27 07:27:58',1,4,'尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区',_binary '\0',_binary '\0'),(3,'2019-08-27 07:56:53',0,NULL,'文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0');
+INSERT INTO `message` VALUES (1,'2019-08-26 07:27:58',1,1,'尊敬的用户，您的账户有新的调仓操作，请确认',_binary '',_binary '\0'),(2,'2019-08-27 07:27:58',1,4,'尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区',_binary '\0',_binary '\0'),(3,'2019-08-27 07:56:53',0,NULL,'文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(4,'2019-08-30 02:29:12',0,NULL,'文章：《hhh》下的评论：“asdfghjkl”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(5,'2019-08-30 02:37:28',0,NULL,'文章：《hhh》下的评论：“asdfghjkl”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(6,'2019-08-30 02:38:44',0,NULL,'文章：《hhh》下的评论：“asdfghjkl”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(7,'2019-08-30 02:38:46',0,NULL,'文章：《hhh》下的评论：“asdfghjkl”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0');
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -666,7 +666,7 @@ CREATE TABLE `my_bond` (
 
 LOCK TABLES `my_bond` WRITE;
 /*!40000 ALTER TABLE `my_bond` DISABLE KEYS */;
-INSERT INTO `my_bond` VALUES (5,'019620',30000,100,0.003,23000,234234);
+INSERT INTO `my_bond` VALUES (5,'019620',30000,100,0.003,23000,234234),(1,'019620',30000,100,0.003,23000,234234);
 /*!40000 ALTER TABLE `my_bond` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -734,12 +734,10 @@ DROP TABLE IF EXISTS `my_gold`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_gold` (
   `user_id` bigint(255) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
-  `purchase_price` float DEFAULT NULL,
-  `profit` float DEFAULT NULL,
-  `profit_rate` float DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `amount` float DEFAULT NULL
+  `amount` int(11) DEFAULT NULL,
+  `diff` double DEFAULT NULL,
+  `sum` double DEFAULT NULL,
+  `profit` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -749,7 +747,7 @@ CREATE TABLE `my_gold` (
 
 LOCK TABLES `my_gold` WRITE;
 /*!40000 ALTER TABLE `my_gold` DISABLE KEYS */;
-INSERT INTO `my_gold` VALUES (5,'XAUUSD',20000,200,0.03,2000,23123);
+INSERT INTO `my_gold` VALUES (1,100,1,10000,50);
 /*!40000 ALTER TABLE `my_gold` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1040,4 +1038,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-29 22:15:49
+-- Dump completed on 2019-08-30 11:18:11

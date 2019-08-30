@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @Description TODO
@@ -56,13 +55,13 @@ public class InvestmentServiceImpl implements InvestmentService {
 
         domStocks.stream().forEach(o->{
             DomStockPO domStock = stockMapper.selectDomStockByCode(o.getCode());
-            InvestmentVO vo =new InvestmentVO(domStock.getName(),"国内股票",o.getCode(),domStock.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
+            InvestmentVO vo =new InvestmentVO(domStock.getName(),"国内股票",o.getCode(),domStock.getLatestPrice().doubleValue(),o.getHoldAmount(),o.getHoldTotal().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
             investments.add(vo);
         });
-        List<MyStockPO> forStocks = stockMapper.selectSelfForStock(userId);
+        List<MyQDIIPO> forStocks = stockMapper.selectSelfForStock(userId);
         forStocks.stream().forEach(o->{
             ForStockPO forStock = stockMapper.selectForStockByCode(o.getCode());
-            InvestmentVO vo =new InvestmentVO(forStock.getName(),"海外股票",o.getCode(),forStock.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
+            InvestmentVO vo =new InvestmentVO(forStock.getName(),"海外股票",o.getCode(),forStock.getLatestPrice().doubleValue(),o.getHoldAmount(),o.getHoldTotal().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
             investments.add(vo);
         });
 
@@ -105,7 +104,7 @@ public class InvestmentServiceImpl implements InvestmentService {
      * @return void
      **/
     @Override
-    public BasicResponse purchase(Long userId, String code, Integer amount, Double totalprice, String type) {
+    public BasicResponse purchase(Long userId, String code, Float amount, Double totalprice, String type) {
         try {
             switch (type) {
                 case "gold":
@@ -135,14 +134,14 @@ public class InvestmentServiceImpl implements InvestmentService {
                 case "forStock":
                 case "domStock":
                     MyStockPO myStockPO = new MyStockPO();
-                    myStockPO.setAmount(totalprice.floatValue());
+                    myStockPO.setHoldTotal(totalprice.floatValue());
                     myStockPO.setCode(code);
                     myStockPO.setUserId(userId);
                     //因为刚买，没有利润
                     myStockPO.setProfit(0.0F);
                     myStockPO.setProfitRate(0.0F);
                     myStockPO.setPurchasePrice(totalprice.floatValue());
-                    myStockPO.setQuantity(amount);
+                    myStockPO.setHoldAmount(amount);
                     stockMapper.insertMyStock(myStockPO);
                     break;
             }

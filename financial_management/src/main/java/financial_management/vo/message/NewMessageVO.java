@@ -1,6 +1,9 @@
 package financial_management.vo.message;
 
 public class NewMessageVO {
+    //调仓消息是1
+    //系统消息是2
+    //回复提醒是3
     private int type;
     private String latest;
     private int unreadAmount;

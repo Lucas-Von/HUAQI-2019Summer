@@ -2,6 +2,7 @@ package financial_management.data.product;
 
 import financial_management.entity.DomStockPO;
 import financial_management.entity.ForStockPO;
+import financial_management.entity.MyQDIIPO;
 import financial_management.entity.MyStockPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -24,9 +25,15 @@ public interface StockMapper {
 
     List<MyStockPO> selectSelfDomStock(Long userId);
 
-    List<MyStockPO> selectSelfForStock(Long userId);
+    List<MyQDIIPO> selectSelfForStock(Long userId);
 
-    int insertMyStock(MyStockPO po);
+    Integer insertMyStock(MyStockPO po);
+
+    Integer insertMyQDII(MyQDIIPO po);
+
+    Integer updateMyStock(MyStockPO po);
+
+    Integer updateMyQDII(MyQDIIPO po);
 
     DomStockPO selectDomStockByCode(String code);
 

@@ -8,7 +8,7 @@ public class PersonalTradeVO {
     //ID，需要插入记录时请填null
     private Long ID;
 
-    //调仓记录ID
+    //调仓记录ID（已废弃）
     private long transID;
 
     //交易时间填在这个属性里面
@@ -36,11 +36,11 @@ public class PersonalTradeVO {
     //暂时没用，随便填或不填
     private int status;
 
-    public long getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(long ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 

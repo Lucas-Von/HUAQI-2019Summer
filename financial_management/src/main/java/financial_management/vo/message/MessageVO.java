@@ -8,7 +8,12 @@ public class MessageVO {
     private Long ID;
     private Date time;
     private Long userID;
+
+    //调仓消息是1
+    //系统消息是2
+    //回复提醒是3
     private Integer type;
+
     private String content;
     private Boolean readed;
 

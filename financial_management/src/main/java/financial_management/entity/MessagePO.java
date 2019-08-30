@@ -13,6 +13,9 @@ public class MessagePO {
     private Long userID;
 
     //消息类型
+    //调仓消息是1
+    //系统消息是2
+    //回复提醒是3
     private Integer type;
 
     //消息内容

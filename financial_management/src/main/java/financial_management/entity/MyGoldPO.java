@@ -35,7 +35,7 @@ public class MyGoldPO {
     /**
      * @Description //持有数量
      **/
-    Integer quantity;
+    Float quantity;
 
     /**
      * @Description //持有额
@@ -82,11 +82,11 @@ public class MyGoldPO {
         this.profitRate = profitRate;
     }
 
-    public Integer getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 

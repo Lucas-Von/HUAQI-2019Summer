@@ -17,6 +17,6 @@ public interface InvestmentService {
 
     List<InvestRecProductVO> getAllInvProduct();
 
-    BasicResponse purchase(Long userId, String code, Integer amount, Double totalprice, String type);
+    BasicResponse purchase(Long userId, String code, Float amount, Double totalprice, String type);
 
 }

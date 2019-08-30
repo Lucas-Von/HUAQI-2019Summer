@@ -184,7 +184,7 @@ DROP TABLE IF EXISTS `dom_stock`;
 CREATE TABLE `dom_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `code` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL UNIQUE,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -255,7 +255,7 @@ DROP TABLE IF EXISTS `for_stock`;
 CREATE TABLE `for_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `code` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL UNIQUE,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -529,19 +529,39 @@ INSERT INTO `my_ins` VALUES ('5', 'cxk', '1', '2019-02-12', '20000');
 DROP TABLE IF EXISTS `my_stock`;
 CREATE TABLE `my_stock` (
   `user_id` bigint(255) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
-  `purchase_price` float DEFAULT NULL,
-  `profit` float DEFAULT NULL,
-  `profit_rate` float DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `amount` float DEFAULT NULL
+  `code` varchar(255) NOT NULL,
+  `purchase_price` float NOT NULL,
+  `purchase_amount` int(11) NOT NULL,
+  `purchase_total` float NOT NULL,
+  `hold_price` float NOT NULL,
+  `hold_amount` int(11) NOT NULL,
+  `hold_total` float NOT NULL,
+  `profit` float NULL,
+  `profit_rate` float NULL,
+  PRIMARY KEY (user_id,code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of my_stock
 -- ----------------------------
-INSERT INTO `my_stock` VALUES ('5', '601991', '20003', '2123', '0.043', '200', '23133');
-INSERT INTO `my_stock` VALUES ('5', '000000', '123123', '2333', '0.013', '200', '23133');
+INSERT INTO `my_stock` VALUES (1,'601991',1.0,1000,1000.0,99.9,100,999.0,-1.0,-0.001);
+
+DROP TABLE IF EXISTS `my_qdii`;
+CREATE TABLE `my_qdii` (
+    `user_id` bigint(255) NOT NULL,
+    `code` varchar(45) NOT NULL,
+    `purchase_price` float NOT NULL,
+    `purchase_amount` float NOT NULL,
+    `purchase_total` float NOT NULL,
+    `hold_price` float NOT NULL,
+    `hold_amount` float NOT NULL,
+    `hold_total` float NOT NULL,
+    `profit` float NULL,
+    `profit_rate` float NULL,
+    PRIMARY KEY (user_id,code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO my_qdii VALUES (1,'613991',1.0,1000,1000.0,99.9,100,999.0,-1.0,-0.001);
 
 -- ----------------------------
 -- Table structure for property
@@ -614,7 +634,7 @@ DROP TABLE IF EXISTS `trade_record`;
 DROP TABLE IF EXISTS `personal_trade`;
 CREATE TABLE `personal_trade` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `trans_id` bigint(255) NOT NULL,
+  `trans_id` bigint(255) NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `complete_time` timestamp NULL DEFAULT NULL,
   `type` varchar(45) NOT NULL,

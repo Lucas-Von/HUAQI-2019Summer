@@ -50,9 +50,11 @@ public class FeedbackServiceImpl implements FeedbackService {
         int updated = feedbackMapper.update(po);
         if (updated == 1) {
             Long userID = feedbackMapper.selectByID(ID).getUserID();
-            messageInterface.postMessageToUserBy(userID,"尊敬的用户，您的问题反馈有了新的答复: "+po.getSolveText());
+            messageInterface.postMessageToUserBy(userID,"尊敬的用户，您的问题反馈有了新的答复: "+po.getSolveText(), MessageInterface.MsgType.INTERACT_MSG);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+        } else {
+            return new BasicResponse<>(ResponseStatus.STATUS_SOLVE_FAIL, null);
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
     }
 
     @Override

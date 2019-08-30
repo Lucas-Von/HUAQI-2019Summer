@@ -2,49 +2,113 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="financial_management.data.product.StockMapper">
     <select id="selectAllDomStock" resultMap="DomProduct">
-        select * from dom_stock
+        select *
+        from dom_stock
     </select>
 
     <select id="selectAllForStock" resultMap="ForProduct">
-        select * from for_stock
+        select *
+        from for_stock
     </select>
 
     <select id="selectSelfDomStock" resultMap="MyStockProduct">
-        select *from my_stock where code in(select code from dom_stock) and user_id = #{userId};
+        select *
+        from my_stock
+        where code = #{code}
+          and user_id = #{userId};
     </select>
 
-    <select id="selectSelfForStock" resultMap="MyStockProduct">
-        select *from my_stock where code in(select code from for_stock) and user_id = #{userId};
+    <select id="selectSelfForStock" resultMap="qdii">
+        select *
+        from my_qdii
+        where code = #{code}
+          and user_id = #{userId};
     </select>
 
     <insert id="insertMyStock" parameterType="financial_management.entity.MyStockPO">
-        insert into my_stock (user_id, code, purchase_price, profit, profit_rate, quantity, amount) values (#{userId},#{code},#{purchasePrice},#{profit},#{profitRate},#{quantity},#{amount})
+        insert into my_stock (user_id, code, purchase_price, purchase_amount, purchase_total, hold_price, hold_amount,
+                              hold_total)
+        values (#{userId}, #{code}, #{purchasePrice}, #{purchaseAmount}, #{purchaseTotal}, #{holdPrice}, #{holdAmount},
+                #{holdTotal});
     </insert>
 
+    <insert id="insertMyQDII" parameterType="financial_management.entity.MyQDIIPO">
+        insert into my_qdii (user_id, code, purchase_price, purchase_amount, purchase_total, hold_price, hold_amount,
+                             hold_total)
+        values (#{userId}, #{code}, #{purchasePrice}, #{purchaseAmount}, #{purchaseTotal}, #{holdPrice}, #{holdAmount},
+                #{holdTotal});
+    </insert>
+
+    <update id="updateMyStock" parameterType="financial_management.entity.MyStockPO">
+        update my_stock
+        set hold_price  = #{holdPrice},
+            hold_amount = #{holdAmount},
+            hold_total  = #{holdTotal},
+            profit = #{profit},
+            profit_rate = ${profitRate}
+        where user_id = #{userId}
+          and code = #{code}
+    </update>
+
+    <update id="updateMyQDII" parameterType="financial_management.entity.MyQDIIPO">
+        update my_qdii
+        set hold_price  = #{holdPrice},
+            hold_amount = #{holdAmount},
+            hold_total  = #{holdTotal},
+            profit = #{profit},
+            profit_rate = ${profitRate}
+        where user_id = #{userId}
+          and code = #{code}
+    </update>
+
     <select id="selectDomStockByCode" resultMap="DomProduct">
-        select *from dom_stock where code=#{code}
+        select *
+        from dom_stock
+        where code = #{code}
     </select>
 
     <select id="selectForStockByCode" resultMap="ForProduct">
-        select *from for_stock where code=#{code}
+        select *
+        from for_stock
+        where code = #{code}
     </select>
 
     <select id="selectForStockById" resultMap="ForProduct">
-        select *from for_stock where id=#{Id}
+        select *
+        from for_stock
+        where id = #{Id}
     </select>
 
     <select id="selectDomStockById" resultMap="DomProduct">
-        select *from dom_stock where id=#{Id}
+        select *
+        from dom_stock
+        where id = #{Id}
     </select>
 
     <resultMap id="MyStockProduct" type="financial_management.entity.MyStockPO">
         <result property="code" column="code"/>
         <result property="userId" column="user_id"/>
         <result property="purchasePrice" column="purchase_price"/>
+        <result property="purchaseAmount" column="purchase_amount"/>
+        <result property="purchaseTotal" column="purchase_total"/>
+        <result property="holdPrice" column="hold_price"/>
+        <result property="holdAmount" column="hold_amount"/>
+        <result property="holdTotal" column="hold_total"/>
         <result property="profit" column="profit"/>
-        <result property="profitRate" column="profit_rate"/>
-        <result property="quantity" column="quantity"/>
-        <result property="amount" column="amount"/>
+        <result property="profit_rate" column="profitRate"/>
+    </resultMap>
+
+    <resultMap id="qdii" type="financial_management.entity.MyQDIIPO">
+        <result property="code" column="code"/>
+        <result property="userId" column="user_id"/>
+        <result property="purchasePrice" column="purchase_price"/>
+        <result property="purchaseAmount" column="purchase_amount"/>
+        <result property="purchaseTotal" column="purchase_total"/>
+        <result property="holdPrice" column="hold_price"/>
+        <result property="holdAmount" column="hold_amount"/>
+        <result property="holdTotal" column="hold_total"/>
+        <result property="profit" column="profit"/>
+        <result property="profit_rate" column="profitRate"/>
     </resultMap>
 
     <resultMap id="DomProduct" type="financial_management.entity.DomStockPO">
@@ -60,7 +124,4 @@
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
     </resultMap>
-
-
-
 </mapper>

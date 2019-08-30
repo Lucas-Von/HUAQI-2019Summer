@@ -26,7 +26,7 @@ public class OrderServiceStub implements OrderService {
 
     {
         vo = new PersonalTradeVO();
-        vo.setID(1);
+        vo.setID(1L);
         vo.setTransID(1);
         try {
             vo.setCreateTime(sdf.parse("2019-08-09 09:09:09"));
@@ -42,7 +42,7 @@ public class OrderServiceStub implements OrderService {
         vo.setStatus(1);
 
         vo1 = new PersonalTradeVO();
-        vo1.setID(2);
+        vo1.setID(2L);
         vo1.setTransID(2);
         try {
             vo1.setCreateTime(sdf.parse("2019-08-19 09:09:09"));
@@ -58,7 +58,7 @@ public class OrderServiceStub implements OrderService {
         vo1.setStatus(1);
 
         vo2 = new PersonalTradeVO();
-        vo2.setID(3);
+        vo2.setID(3L);
         vo2.setTransID(2);
         try {
             vo.setCreateTime(sdf.parse("2019-08-09 09:09:20"));
@@ -159,17 +159,22 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
+    public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(PersonalTradeVO.Type type) {
+        return null;
+    }
+
+    @Override
     public BasicResponse<List<PlatformTradeVO>> getAllPlatformTradeRecord() {
         return null;
     }
 
     @Override
-    public BasicResponse<?> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize) {
+    public BasicResponse<Long> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize) {
         return null;
     }
 
     @Override
-    public BasicResponse<?> addPlatfromTradeRecord(PlatformTradeVO platformTradeVO) {
+    public BasicResponse<Long> addPlatfromTradeRecord(PlatformTradeVO platformTradeVO) {
         return null;
     }
 

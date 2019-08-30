@@ -762,11 +762,7 @@ CREATE TABLE `my_stock` (
 -- Dumping data for table `my_stock`
 --
 
-LOCK TABLES `my_stock` WRITE;
-/*!40000 ALTER TABLE `my_stock` DISABLE KEYS */;
-INSERT INTO `my_stock` VALUES (1,'8888',200,300,1.5,500,6);
-/*!40000 ALTER TABLE `my_stock` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `my_stock` VALUES (1,'601991',1.0,1000,1000.0,99.9,100,999.0,-1.0,-0.001);
 
 --
 -- Table structure for table `personal_trade`
@@ -799,11 +795,6 @@ LOCK TABLES `personal_trade` WRITE;
 /*!40000 ALTER TABLE `personal_trade` DISABLE KEYS */;
 /*!40000 ALTER TABLE `personal_trade` ENABLE KEYS */;
 UNLOCK TABLES;
-
--- ----------------------------
--- Records of my_stock
--- ----------------------------
-INSERT INTO `my_stock` VALUES (1,'601991',1.0,1000,1000.0,99.9,100,999.0,-1.0,-0.001);
 
 DROP TABLE IF EXISTS `my_qdii`;
 CREATE TABLE `my_qdii` (

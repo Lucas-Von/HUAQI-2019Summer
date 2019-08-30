@@ -100,8 +100,11 @@ public class OrderServiceImpl implements OrderService {
         //更新最大投资金额
         long userID = personalTradeVO.getUserID();
         String type = personalTradeVO.getType().name().toUpperCase();
+        Float latestSum = personalTradeMapper.selectSum(userID, type, null);
         MaxInvestPO max = maxInvestMapper.selectByUserIDAndType(userID, type);
-        float latestSum = personalTradeMapper.selectSum(userID, type, null);
+        if (latestSum == null){
+            latestSum = 0.0f;
+        }
         if (max == null) {
             max = new MaxInvestPO(userID, type, latestSum, new Date());
             int insert = maxInvestMapper.insert(max);

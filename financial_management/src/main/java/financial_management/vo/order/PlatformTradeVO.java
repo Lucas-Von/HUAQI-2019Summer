@@ -89,4 +89,7 @@ public class PlatformTradeVO {
         realTotal = po.getRealTotal();
         status = po.getStatus();
     }
+
+    public PlatformTradeVO() {
+    }
 }

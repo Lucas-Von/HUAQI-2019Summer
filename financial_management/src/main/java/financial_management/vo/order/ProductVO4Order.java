@@ -29,5 +29,12 @@ public class ProductVO4Order {
         this.code = code;
     }
 
+    public ProductVO4Order(Long pID, String name, String code) {
+        this.pID = pID;
+        this.name = name;
+        this.code = code;
+    }
 
+    public ProductVO4Order() {
+    }
 }

@@ -25,5 +25,7 @@ public interface MessageMapper {
 
     Integer readMessageByTypeAndUserID(@Param("type") Integer type, @Param("userID") Long userID);
 
+    Integer readMessageByMessageID(@Param("ID") Long ID);
+
     Integer deleteMessage(@Param("ID") Long ID);
 }

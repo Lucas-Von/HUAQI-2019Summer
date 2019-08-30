@@ -3,13 +3,38 @@
 <mapper namespace="financial_management.data.product.GoldMapper">
 
     <insert id="insertGoldHistoryConfig">
-        insert into gold_history_config(user_id,price,amount,sum)
-        values(#{userId},#{price},#{mdContent},#{htmlContent},#{category},#{tags})
+        insert into gold_history_config(user_id,price,amount,sum,status)
+        values(#{userId},#{price},#{amount},#{sum},#{status})
     </insert>
 
-    <select id="selectSelfGold" resultMap="MyGoldProduct">
-        select * from my_gold where user_id=#{userId}
+    <select id="selectGoldHistoryConfig" resultMap="GoldHistoryConfigPO">
+        select * from gold_history_config
+        where user_id = #{userId}
     </select>
+
+    <select id="ifExistSelfGold" resultType="boolean">
+        select count(user_id)
+        from my_gold where user_id = #{userId}
+    </select>
+
+    <insert id="insertSelfGold">
+        insert into my_gold(user_id,amount,diff,sum)
+        values(#{userId},#{amount},#{diff},#{sum})
+    </insert>
+
+    <update id="updateSelfGold">
+        update my_gold set amount = #{amount},diff = #{diff},sum = #{sum}
+        where user_id = #{userId}
+    </update>
+
+    <select id="selectSelfGold" resultMap="MyGoldProduct">
+        select * from my_gold where user_id = #{userId}
+    </select>
+
+    <update id="updateGoldProfit">
+        update my_gold set profit = #{profit}
+        where user_id = #{userId}
+    </update>
 
 
     <select id="selectAllGold" resultMap="GoldProduct">
@@ -49,6 +74,7 @@
         <result property="amount" column="amount"/>
         <result property="sum" column="sum"/>
         <result property="time" column="time"/>
+        <result property="status" column="status"/>
     </resultMap>
 
 </mapper>

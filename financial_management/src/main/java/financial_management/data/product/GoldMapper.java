@@ -4,6 +4,7 @@ import financial_management.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -30,16 +31,23 @@ public interface GoldMapper {
     List<GoldHistoryConfigPO> selectGoldHistoryConfig(@Param("userId") Long userId);
 
     /**
-     * 插入用户当前黄金配置信息
-     * @param myDepoPO
+     * 判断一个用户是否配置过黄金
+     * @param userId
+     * @return
      */
-    void insertSelfGold(MyDepoPO myDepoPO);
+    boolean ifExistSelfGold(@Param("userId") Long userId);
+
+    /**
+     * 插入用户当前黄金配置信息
+     * @param myGoldPO
+     */
+    void insertSelfGold(MyGoldPO myGoldPO);
 
     /**
      * 修改用户当前黄金配置信息
-     * @param myDepoPO
+     * @param myGoldPO
      */
-    void updateSelfGold(MyDepoPO myDepoPO);
+    void updateSelfGold(MyGoldPO myGoldPO);
 
     /**
      * 获得一个用户当前黄金配置信息
@@ -47,6 +55,13 @@ public interface GoldMapper {
      * @return
      */
     List<MyGoldPO> selectSelfGold(@Param("userId") Long userId);
+
+    /**
+     * 更新一个用户的黄金收益
+     * @param userId
+     * @param profit
+     */
+    void updateGoldProfit(@Param("userId") Long userId, @Param("profit") Double profit);
 
     int insertMyGold(MyGoldPO po);
 

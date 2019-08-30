@@ -1,5 +1,7 @@
 package financial_management.entity;
 
+import financial_management.vo.product.DepositRecommendVO;
+
 import java.util.Date;
 
 /**
@@ -114,6 +116,10 @@ public class DepositRecommendPO {
 
     public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
+    }
+
+    public DepositRecommendVO getDepositRecommendVO(){
+        return new DepositRecommendVO(id, name, currency, information, rate, startTime, endTime, startAmount, riskLevel);
     }
 
     public DepositRecommendPO() {

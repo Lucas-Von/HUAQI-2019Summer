@@ -5,11 +5,29 @@ package financial_management.util.PyInvoke.PyResponse;
  * @date 2019/8/29
  */
 public class GoldConfigResponse {
+    /**
+     * 即时配置价格
+     */
     private double price2deploy;
+    /**
+     * 即时配置数量
+     */
     private int account2deployed;
+    /**
+     * 即时配置成功金额
+     */
     private double money2deployed;
+    /**
+     * 所有配置数量
+     */
     private int accounet_all_deployed;
+    /**
+     * 所有配置金额
+     */
     private double money_all_deployed;
+    /**
+     * 更新后的diff项
+     */
     private double diff_all_deployed;
 
     public double getPrice2deploy() {

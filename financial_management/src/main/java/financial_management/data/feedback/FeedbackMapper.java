@@ -16,7 +16,7 @@ public interface FeedbackMapper {
 
     Integer selectAmountOfUnsolve();
 
-    Long insert(FeedBackPO feedBackPO);
+    Integer insert(FeedBackPO feedBackPO);
 
     Integer update(FeedBackPO feedBackPO);
 }

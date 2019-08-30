@@ -287,7 +287,7 @@ CREATE TABLE `feedback` (
   `QQ` varchar(15) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `solved` bit(1) NOT NULL DEFAULT b'0',
-  `solver_ID` bigint(255) DEFAULT NULL,
+  `solver_ID` bigint(255) NULL DEFAULT NULL,
   `solve_time` timestamp NULL DEFAULT NULL,
   `solve_text` text,
   PRIMARY KEY (`id`)
@@ -786,7 +786,7 @@ CREATE TABLE `personal_trade` (
     `fee`           float       NOT NULL,
     `total`         float       NOT NULL,
     `user_id`       bigint(255) NOT NULL,
-    `status`        int(11)     NOT NULL DEFAULT '0',
+    `status`        int(11)     NULL     DEFAULT '0',
     `is_customize`  bit(1)               DEFAULT b'0',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -832,7 +832,7 @@ CREATE TABLE `platform_trade` (
   `price` float NOT NULL,
   `total` float NOT NULL,
   `real_total` float NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

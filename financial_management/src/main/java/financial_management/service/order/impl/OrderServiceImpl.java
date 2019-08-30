@@ -88,9 +88,11 @@ public class OrderServiceImpl implements OrderService {
         PersonalTradePO po = assemblePersonalTradePO(personalTradeVO);
         po.setID(null);
         po.setIsCustomize(isCustomize);
-        long id;
         try {
-            id = personalTradeMapper.insert(po);
+            int insert = personalTradeMapper.insert(po);
+            if (insert != 1) {
+                return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+            }
         } catch (Exception e) {
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
         }
@@ -98,14 +100,23 @@ public class OrderServiceImpl implements OrderService {
         //更新最大投资金额
         long userID = personalTradeVO.getUserID();
         String type = personalTradeVO.getType().name().toUpperCase();
+        Float latestSum = personalTradeMapper.selectSum(userID, type, null);
         MaxInvestPO max = maxInvestMapper.selectByUserIDAndType(userID, type);
-        float latestSum = personalTradeMapper.selectSum(userID, type, null);
-        if (max.getMax() < latestSum) {
+        if (latestSum == null){
+            latestSum = 0.0f;
+        }
+        if (max == null) {
+            max = new MaxInvestPO(userID, type, latestSum, new Date());
+            int insert = maxInvestMapper.insert(max);
+            if (insert != 1) {
+                return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+            }
+        } else if (max.getMax() < latestSum) {
             max.setMax(latestSum);
             max.setDate(new Date());
             maxInvestMapper.update(max);
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
     }
 
     @Override
@@ -113,8 +124,12 @@ public class OrderServiceImpl implements OrderService {
         PlatformTradePO po = assemblePlatformTradePO(platformTradeVO);
         po.setID(null);
         try {
-            long id = platformTradeMapper.insert(po);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+            int insert = platformTradeMapper.insert(po);
+            if (insert == 1) {
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
+            } else {
+                return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+            }
         } catch (Exception e) {
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
         }
@@ -126,8 +141,12 @@ public class OrderServiceImpl implements OrderService {
         po.setID(null);
         po.setIsCustomize(isCustomize);
         try {
-            long id = transferRecordMapper.insert(po);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+            int insert = transferRecordMapper.insert(po);
+            if (insert == 1) {
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
+            } else {
+                return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+            }
         } catch (Exception e) {
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
         }

@@ -22,7 +22,7 @@ public interface PersonalTradeMapper {
 
     Float selectSum(@Param("userID") Long userID, @Param("type") String type, @Param("date") Date date);
 
-    Long insert(PersonalTradePO personalTradePO);
+    Integer insert(PersonalTradePO personalTradePO);
 
     Integer update(PersonalTradePO personalTradePO);
 }

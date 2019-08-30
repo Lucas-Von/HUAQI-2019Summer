@@ -10,7 +10,7 @@
             coalesce(q.saving, 0) as savingOutPlatform,
             coalesce(sum(mi.price), 0) as insuranceInPlatform,
             coalesce(q.insurance, 0) as insuranceOutPlatform,
-            coalesce(sum(ms.amount), 0) as stocksInPlatform,
+            coalesce(sum(ms.purchase_price), 0) as stocksInPlatform,
             coalesce(q.stocks, 0) as stocksOutPlatform,
             coalesce(sum(mg.sum), 0) as goldInPlatform,
             coalesce(q.gold, 0) as goldOutPlatform,

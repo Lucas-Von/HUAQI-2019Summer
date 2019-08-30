@@ -18,7 +18,7 @@ public class IncomeController {
     private IncomeService incomeService;
 
     @GetMapping("/income/getRecentProfitRate")
-    public BasicResponse getRecentProfitRate(int days) {
+    public BasicResponse getRecentProfitRate(@RequestParam int days) {
         return incomeService.getRecentProfitRate(days);
     }
 

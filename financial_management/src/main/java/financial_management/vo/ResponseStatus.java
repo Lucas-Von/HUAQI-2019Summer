@@ -24,6 +24,9 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_DEPOSITPRODUCT_UNFINED = new ResponseStatus("5002","储蓄产品已被下架或不存在");
     public static final ResponseStatus STATUS_INSURANCEPRODUCT_UNFINED = new ResponseStatus("5003","保险产品已被下架或不存在");
     public static final ResponseStatus STATUS_INVESTMENTPRODUCT_UNFINED = new ResponseStatus("5004","投资产品已被下架或不存在");
+    public static final ResponseStatus STATUS_TRANSACTION_WRONG = new ResponseStatus("5005","买卖黄金时python函数出错");
+    public static final ResponseStatus STATUS_GOLD_NOT_CONFIG = new ResponseStatus("5006","用户未配置过黄金");
+    public static final ResponseStatus STATUS_GOLD_NOT_ENOUGH = new ResponseStatus("5007","剩余黄金不够取出需要的金额");
 
     public static final ResponseStatus STATUS_QUESTIONNAIRE_EXIST = new ResponseStatus("6001","The user has filled out the questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_NOT_EXIST = new ResponseStatus("6002","The user has not filled out the questionnaire.");

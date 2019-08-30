@@ -109,7 +109,13 @@ public class MyDepoPO {
     }
 
     public MyDepositVO getMyDepositVO(){
-        return new MyDepositVO(id, name, type, amount, rate, endtime, proportion);
+        String stringType = "";
+        if(type == 0){
+            stringType = "平台内持有";
+        }else {
+            stringType = "平台外持有";
+        }
+        return new MyDepositVO(id, name, stringType, amount, rate, endtime, proportion);
     }
 
     public MyDepoPO() {

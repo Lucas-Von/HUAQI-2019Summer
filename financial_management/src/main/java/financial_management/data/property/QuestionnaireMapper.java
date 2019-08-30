@@ -40,6 +40,14 @@ public interface QuestionnaireMapper {
     void updateQuest(QuestionnaireParam questionnaireParam);
 
     /**
+     * 获取投资偏好
+     *
+     * @param userId
+     * @return
+     */
+    String getInvestPrefer(@Param("userId") Long userId);
+
+    /**
      * 获取用户第一次填写问卷的时间
      *
      * @param userId

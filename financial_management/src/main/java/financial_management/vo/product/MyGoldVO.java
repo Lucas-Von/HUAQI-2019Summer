@@ -1,33 +1,14 @@
-package financial_management.entity;
-
-import financial_management.vo.product.MyGoldVO;
+package financial_management.vo.product;
 
 /**
- * @Description 用户持有的黄金实体类
- * @Author 233loser
- * @Date 2019/8/14 12:50
- * @Version 1.0
- **/
-public class MyGoldPO {
-    /**
-     * 用户ID
-     */
+ * @author xyh
+ * @date 2019/8/30
+ */
+public class MyGoldVO {
     private Long userId;
-    /**
-     * 所有配置数量
-     */
     private Integer amount;
-    /**
-     * 剩余未买黄金的钱
-     */
     private Double diff;
-    /**
-     * 所有配置金额
-     */
     private Double sum;
-    /**
-     * 收益
-     */
     private Double profit;
 
     public Long getUserId() {
@@ -70,17 +51,14 @@ public class MyGoldPO {
         this.profit = profit;
     }
 
-    public MyGoldVO getMyGoldVO(){
-        return new MyGoldVO(userId, amount, diff, sum, profit);
+    public MyGoldVO() {
     }
 
-    public MyGoldPO() {
-    }
-
-    public MyGoldPO(Long userId, Integer amount, Double diff, Double sum) {
+    public MyGoldVO(Long userId, Integer amount, Double diff, Double sum, Double profit) {
         this.userId = userId;
         this.amount = amount;
         this.diff = diff;
         this.sum = sum;
+        this.profit = profit;
     }
 }

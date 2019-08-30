@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -78,5 +79,21 @@ public interface EstateMapper {
      * @return
      */
     List<InvestPO> getDailyInvList(@Param("userId") Long userId);
+
+    /**
+     * 获取用户自注册起每天的资产列表
+     *
+     * @param userId
+     * @return
+     */
+    List<FortunePO> getCompleteProList(@Param("userId") Long userId);
+
+    /**
+     * 获取资产上次更新时间
+     *
+     * @param userId
+     * @return
+     */
+    Date getFortuneUpdateTime(@Param("userId") Long userId);
 
 }

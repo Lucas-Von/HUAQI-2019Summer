@@ -12,10 +12,7 @@ import financial_management.util.DateConverterUtil;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.ProductVO4Order;
-import financial_management.vo.product.DepRecProductVO;
-import financial_management.vo.product.FundBasicVO;
-import financial_management.vo.product.FundVO;
-import financial_management.vo.product.MyDepositVO;
+import financial_management.vo.product.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,8 +37,16 @@ public class DepositServiceImpl implements DepositService {
             List<MyDepoPO> pos = depositMapper.selectMyProduct(userId);
             List<MyDepositVO> myDeposits = new ArrayList<>();
             pos.forEach(o -> {
-                MyDepositVO vo = o.getMyDepositVO();
-                myDeposits.add(vo);
+                if(o.getType() == 0) {
+                    MyDepositVO vo = o.getMyDepositVO();
+                    myDeposits.add(vo);
+                }
+            });
+            pos.forEach(o -> {
+                if(o.getType() == 1) {
+                    MyDepositVO vo = o.getMyDepositVO();
+                    myDeposits.add(vo);
+                }
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, myDeposits);
         }catch (Exception e) {
@@ -141,7 +146,13 @@ public class DepositServiceImpl implements DepositService {
 
     @Override
     public BasicResponse getDepositRecommend(){
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositMapper.selectDepositRecommend());
+        List<DepositRecommendPO> depositRecommendPOS = depositMapper.selectDepositRecommend();
+        List<DepositRecommendVO> depositRecommendVOS = new ArrayList<>();
+        for(int i=0;i<depositRecommendPOS.size();i++){
+            DepositRecommendPO depositRecommendPO = depositRecommendPOS.get(i);
+            depositRecommendVOS.add(depositRecommendPO.getDepositRecommendVO());
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositRecommendVOS);
     }
 
     @Override

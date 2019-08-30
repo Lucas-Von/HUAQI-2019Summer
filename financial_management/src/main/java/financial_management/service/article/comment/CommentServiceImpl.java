@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService, CommentServiceForBl {
             commentPO.setContent(commentParam.getContent());
             commentPO.setUserId(userId);
             commentMapper.insertComment(commentPO);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,commentPO.getId());
         }catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

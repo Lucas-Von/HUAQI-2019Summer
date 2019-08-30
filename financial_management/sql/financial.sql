@@ -428,7 +428,8 @@ CREATE TABLE `gold_history_config` (
   `price` double DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `sum` double DEFAULT NULL,
-  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` int(11)DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

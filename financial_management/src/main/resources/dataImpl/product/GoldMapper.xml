@@ -2,10 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="financial_management.data.product.GoldMapper">
 
+    <insert id="insertGoldHistoryConfig">
+        insert into gold_history_config(user_id,price,amount,sum)
+        values(#{userId},#{price},#{mdContent},#{htmlContent},#{category},#{tags})
+    </insert>
+
     <select id="selectSelfGold" resultMap="MyGoldProduct">
         select * from my_gold where user_id=#{userId}
     </select>
-
 
 
     <select id="selectAllGold" resultMap="GoldProduct">

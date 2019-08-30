@@ -105,4 +105,25 @@
     <resultMap id="InvestPO" type="financial_management.entity.property.InvestPO">
     </resultMap>
 
+    <insert id="updateFortuneByDay">
+        insert into fortune(user_id,record_date,funds,saving,insurance,stocks,gold,bond)
+        select
+            u.user_id,
+            CURDATE(),
+            coalesce(sum(mf.balance), 0),
+            coalesce(sum(md.amount), 0),
+            coalesce(sum(mi.price), 0),
+            coalesce(sum(ms.purchase_price), 0),
+            coalesce(sum(mg.sum), 0),
+            coalesce(sum(mb.amount), 0)
+        from user u
+            left join my_fund mf on mf.user_id = u.user_id
+            left join my_depo md on md.user_id = u.user_id
+            left join my_ins mi on mi.user_id = u.user_id
+            left join my_stock ms on ms.user_id = u.user_id
+            left join my_gold mg on mg.user_id = u.user_id
+            left join my_bond mb on mb.user_id = u.user_id
+        group by u.user_id
+    </insert>
+
 </mapper>

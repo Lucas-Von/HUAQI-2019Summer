@@ -3,6 +3,7 @@ package financial_management.data.property;
 import financial_management.entity.property.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -96,4 +97,6 @@ public interface EstateMapper {
      */
     Date getFortuneUpdateTime(@Param("userId") Long userId);
 
+//    @Scheduled(cron = "0/1 * * * * ?")
+    void updateFortuneByDay();
 }

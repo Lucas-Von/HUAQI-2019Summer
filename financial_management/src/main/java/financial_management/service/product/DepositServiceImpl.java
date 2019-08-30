@@ -37,8 +37,16 @@ public class DepositServiceImpl implements DepositService {
             List<MyDepoPO> pos = depositMapper.selectMyProduct(userId);
             List<MyDepositVO> myDeposits = new ArrayList<>();
             pos.forEach(o -> {
-                MyDepositVO vo = o.getMyDepositVO();
-                myDeposits.add(vo);
+                if(o.getType() == 0) {
+                    MyDepositVO vo = o.getMyDepositVO();
+                    myDeposits.add(vo);
+                }
+            });
+            pos.forEach(o -> {
+                if(o.getType() == 1) {
+                    MyDepositVO vo = o.getMyDepositVO();
+                    myDeposits.add(vo);
+                }
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, myDeposits);
         }catch (Exception e) {

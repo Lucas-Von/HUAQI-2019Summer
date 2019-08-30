@@ -47,7 +47,7 @@ public class DepositController {
         MyDepoPO myDepoPO1 = new MyDepoPO();
         myDepoPO1.setId(1L);
         myDepoPO1.setUserId(5L);
-        myDepoPO1.setType(1);
+        myDepoPO1.setType(0);
         myDepoPO1.setAmount(20000.0);
         myDepoPO1.setName("个人储蓄产品1");
         myDepoPO1.setRate(0.38);
@@ -57,7 +57,7 @@ public class DepositController {
         MyDepoPO myDepoPO2 = new MyDepoPO();
         myDepoPO2.setId(2L);
         myDepoPO2.setUserId(1L);
-        myDepoPO2.setType(2);
+        myDepoPO2.setType(1);
         myDepoPO2.setAmount(20000.0);
         myDepoPO2.setName("个人储蓄产品2");
         myDepoPO2.setRate(0.88);

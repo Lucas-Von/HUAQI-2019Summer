@@ -11,7 +11,7 @@ import java.util.Date;
 public class MyDepositVO {
     private Long id;
     private String name;
-    private int type;
+    private String type;
     private Double amount;
     private Double rate;
     private Date endtime;
@@ -33,11 +33,11 @@ public class MyDepositVO {
         this.name = name;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -78,7 +78,7 @@ public class MyDepositVO {
 
     public MyDepositVO(Long id,
                        String name,
-                       int type,
+                       String type,
                        Double amount,
                        Double rate,
                        Date endtime,

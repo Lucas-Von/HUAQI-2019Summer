@@ -65,6 +65,9 @@ public class MessageVO {
         this.readed = readed;
     }
 
+    public MessageVO() {
+    }
+
     public MessageVO(Long ID, Date time, Long userID, Integer type, String content, Boolean readed) {
         this.ID = ID;
         this.time = time;

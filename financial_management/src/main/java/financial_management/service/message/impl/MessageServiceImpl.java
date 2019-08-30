@@ -23,9 +23,6 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
     @Override
     public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID) {
         List<MessagePO> messages = messageMapper.selectByUserID(ID);
-        for (MessagePO po : messages) {
-            System.out.println(po.getTime());
-        }
         return getListBasicResponseOnSuccess(messages);
     }
 
@@ -60,7 +57,7 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
             vo.setType(type);
             vo.setUnreadAmount(messageMapper.selectAmountOfUnreadByTypeAndUserID(type, ID));
             MessagePO po = messageMapper.selectLatestMessageByTypeAndUserID(type, ID);
-            vo.setLatest(po==null?"没有最新消息":po.getContent());
+            vo.setLatest(po == null ? "没有最新消息" : po.getContent());
             newMessages.add(vo);
         }
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, newMessages);
@@ -74,7 +71,7 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
 
     @Override
     public BasicResponse<?> removeMessageByMessageID(Long ID) {
-        if (messageMapper.deleteMessage(ID)==1) {
+        if (messageMapper.deleteMessage(ID) == 1) {
             return new BasicResponse<>(ResponseStatus.STATUS_MESSAGE_DELETE_SUCCESS, null);
         } else {
             return new BasicResponse<>(ResponseStatus.STATUS_MESSAGE_DELETE_FAIL, null);
@@ -90,8 +87,8 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
         po.setContent(content);
         po.setIsRead(false);
         po.setIsDelete(false);
-        long id = messageMapper.insertMessage(po);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
+        int insert = messageMapper.insertMessage(po);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
     }
 
     @Override
@@ -103,17 +100,16 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
         po.setType(msgType.getType());
         po.setIsRead(false);
         po.setIsDelete(false);
-        long id = messageMapper.insertMessage(po);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,id);
-    }
-
-    private static MessagePO assembleMessagePO(MessageVO messageVO){
-        MessagePO messagePO = new MessagePO();
-        messagePO.setID(messageVO.getID());
-        messagePO.setTime(messageVO.getTime());
-        messagePO.setContent(messageVO.getContent());
-        messagePO.setType(messageVO.getType());
-        messagePO.setIsRead(messageVO.getReaded());
-        return messagePO;
+        try {
+            int insert = messageMapper.insertMessage(po);
+            if (insert == 1) {
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
+            } else {
+                return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+        }
     }
 }

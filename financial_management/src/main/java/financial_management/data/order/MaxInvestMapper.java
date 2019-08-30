@@ -14,7 +14,7 @@ public interface MaxInvestMapper {
 
     MaxInvestPO selectByUserIDAndType(@Param("userID") Long userID,@Param("type") String type);
 
-    void insert(MaxInvestPO maxInvestPO);
+    Integer insert(MaxInvestPO maxInvestPO);
 
     Integer update(MaxInvestPO maxInvestPO);
 }

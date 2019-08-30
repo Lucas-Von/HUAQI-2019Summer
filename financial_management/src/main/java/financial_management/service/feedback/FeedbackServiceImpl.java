@@ -35,8 +35,17 @@ public class FeedbackServiceImpl implements FeedbackService {
         po.setEmail(feedbackParam.getEmail());
         po.setCreateTime(new Date());
         po.setSolved(false);
-        long id = feedbackMapper.insert(po);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, id);
+        try {
+            int insert = feedbackMapper.insert(po);
+            if (insert == 1) {
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
+            } else {
+                return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+        }
     }
 
     @Override
@@ -44,16 +53,20 @@ public class FeedbackServiceImpl implements FeedbackService {
         FeedBackPO po = new FeedBackPO();
         po.setID(ID);
         po.setSolved(true);
-        po.setSolverID(solveParam.getSolverID());
         po.setSolveTime(new Date());
         po.setSolveText(solveParam.getContent());
         int updated = feedbackMapper.update(po);
-        if (updated == 1) {
-            Long userID = feedbackMapper.selectByID(ID).getUserID();
-            messageInterface.postMessageToUserBy(userID,"尊敬的用户，您的问题反馈有了新的答复: "+po.getSolveText(), MessageInterface.MsgType.INTERACT_MSG);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
-        } else {
-            return new BasicResponse<>(ResponseStatus.STATUS_SOLVE_FAIL, null);
+        try {
+            if (updated == 1) {
+                Long userID = feedbackMapper.selectByID(ID).getUserID();
+                messageInterface.postMessageToUserBy(userID, "尊敬的用户，您的问题反馈有了新的答复: " + po.getSolveText(), MessageInterface.MsgType.INTERACT_MSG);
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+            } else {
+                return new BasicResponse<>(ResponseStatus.STATUS_SOLVE_FAIL, null);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
         }
     }
 

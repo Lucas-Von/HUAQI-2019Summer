@@ -32,8 +32,7 @@ public class ManageController {
 
 
     @GetMapping("/manage/getRecAlloc")
-    public BasicResponse getRecAlloc(HttpServletRequest request) {
-        Long userId = jwtUtil.getIdFromRequest(request);
+    public BasicResponse getRecAlloc(@RequestParam Long userId) {
         return manageService.getRecAlloc(userId);
     }
 

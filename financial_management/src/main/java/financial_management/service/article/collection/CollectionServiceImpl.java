@@ -56,6 +56,25 @@ public class CollectionServiceImpl implements CollectionService, CollectionServi
     }
 
     @Override
+    public BasicResponse deleteCollections(List<Long> articleIds, Long userId){
+        try {
+            for(int i=0;i<articleIds.size();i++){
+                Long articleId = articleIds.get(i);
+                if (collectionMapper.ifCollected(userId, articleId)) {
+                    CollectionPO collectionPO = new CollectionPO();
+                    collectionPO.setUserId(userId);
+                    collectionPO.setArticleId(articleId);
+                    collectionMapper.deleteCollection(collectionPO);
+                }
+            }
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
     public boolean ifCollected(Long userId, Long articleId) {
         return collectionMapper.ifCollected(userId, articleId);
     }

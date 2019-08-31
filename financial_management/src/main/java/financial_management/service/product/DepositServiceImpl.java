@@ -146,13 +146,18 @@ public class DepositServiceImpl implements DepositService {
 
     @Override
     public BasicResponse getDepositRecommend(){
-        List<DepositRecommendPO> depositRecommendPOS = depositMapper.selectDepositRecommend();
-        List<DepositRecommendVO> depositRecommendVOS = new ArrayList<>();
-        for(int i=0;i<depositRecommendPOS.size();i++){
-            DepositRecommendPO depositRecommendPO = depositRecommendPOS.get(i);
-            depositRecommendVOS.add(depositRecommendPO.getDepositRecommendVO());
+        try {
+            List<DepositRecommendPO> depositRecommendPOS = depositMapper.selectDepositRecommend();
+            List<DepositRecommendVO> depositRecommendVOS = new ArrayList<>();
+            for (int i = 0; i < depositRecommendPOS.size(); i++) {
+                DepositRecommendPO depositRecommendPO = depositRecommendPOS.get(i);
+                depositRecommendVOS.add(depositRecommendPO.getDepositRecommendVO());
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositRecommendVOS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositRecommendVOS);
     }
 
     @Override

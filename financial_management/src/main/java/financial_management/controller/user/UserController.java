@@ -46,11 +46,7 @@ public class UserController {
 
     @PostMapping("/login/email")
     public BasicResponse loginByEmail(@RequestBody UserLoginParam userLoginParam){
-        UsernameVO usernameVO = new UsernameVO();
-        usernameVO.setUsername("xyhhh");
-        usernameVO.setToken(jwtUtil.generateToken(1 + ""));
-        usernameVO.setProfilePhoto("https://i.loli.net/2019/08/14/mUZcISHpWrx1aPM.jpg");
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, usernameVO);
+        return userService.loginByEmail(userLoginParam);
     }
 
     @PostMapping("/update/username")

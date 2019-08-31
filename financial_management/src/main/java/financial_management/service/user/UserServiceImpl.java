@@ -96,16 +96,20 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
     @Override
     public BasicResponse loginByEmail(UserLoginParam userLoginParam){
         try {
-            UserPO userPO = userMapper.selectUserByEmail(userLoginParam.getEmail());
-            String password = getCryptPassword(userLoginParam.getPassword());
-            if (userPO.getPassword().equals(password)) {
-                UsernameVO usernameVO = new UsernameVO();
-                usernameVO.setUsername(userPO.getUsername());
-                usernameVO.setToken(jwtUtil.generateToken(userPO.getUserId() + ""));
-                usernameVO.setProfilePhoto(userPO.getProfilePhoto());
-                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, usernameVO);
-            } else {
-                return new BasicResponse(ResponseStatus.STATUS_PASSWORD_WRONG);
+            if (userMapper.ifExistEmail(userLoginParam.getEmail())) {
+                UserPO userPO = userMapper.selectUserByEmail(userLoginParam.getEmail());
+                String password = getCryptPassword(userLoginParam.getPassword());
+                if (userPO.getPassword().equals(password)) {
+                    UsernameVO usernameVO = new UsernameVO();
+                    usernameVO.setUsername(userPO.getUsername());
+                    usernameVO.setToken(jwtUtil.generateToken(userPO.getUserId() + ""));
+                    usernameVO.setProfilePhoto(userPO.getProfilePhoto());
+                    return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, usernameVO);
+                } else {
+                    return new BasicResponse(ResponseStatus.STATUS_PASSWORD_WRONG);
+                }
+            }else {
+                return new BasicResponse(ResponseStatus.STATUS_USER_NOT_EXIST);
             }
         }catch (Exception e) {
             e.printStackTrace();

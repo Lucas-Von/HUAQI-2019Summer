@@ -9,9 +9,9 @@ public interface MessageInterface {
     BasicResponse<?> postMessageToUserBy(Long userID, String content, MsgType msgType);
 
     enum MsgType{
-        TRANSFER_MSG(1),
-        SYSTEM_MSG(2),
-        INTERACT_MSG(3);
+        TRANSFER_MSG(1),//调仓消息
+        SYSTEM_MSG(2),//系统消息
+        INTERACT_MSG(3);//暂且叫互动消息，包括文章互动和反馈答复
 
         public int getType() {
             return type;

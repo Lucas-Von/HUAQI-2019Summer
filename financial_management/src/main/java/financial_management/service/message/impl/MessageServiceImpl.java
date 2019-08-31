@@ -65,8 +65,22 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
 
     @Override
     public BasicResponse<?> readNewMessages(Long userID, int type) {
-        messageMapper.readMessageByTypeAndUserID(type, userID);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+        try {
+            int read = messageMapper.readMessageByTypeAndUserID(type, userID);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, read);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+        }
+    }
+
+    @Override
+    public BasicResponse<?> readNewMessage(Long userID, Long messageID) {
+        if (messageMapper.readMessageByMessageID(messageID) == 1) {
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, messageID);
+        } else {
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+        }
     }
 
     @Override

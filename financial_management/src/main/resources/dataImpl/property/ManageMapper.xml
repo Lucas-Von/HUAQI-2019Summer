@@ -19,7 +19,7 @@
             r.invest_rate as investRate
         from user u
         inner join recommend r
-        on u.user_id =  ra.user_id
+        on u.user_id =  r.user_id
     </select>
 
     <select id="getRecAlloc" resultMap="RecAllocPO">
@@ -34,7 +34,7 @@
             r.insurance_rate as insuranceRate,
             r.invest_rate as investRate
         from user u, recommend r
-        where u.user_id = #{userId} and ra.user_id = #{userId};
+        where u.user_id = #{userId} and r.user_id = #{userId};
     </select>
 
     <insert id="editRecAlloc" parameterType="financial_management.parameter.property.RecAllocParam"

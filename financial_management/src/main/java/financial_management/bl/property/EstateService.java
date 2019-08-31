@@ -41,14 +41,6 @@ public interface EstateService {
     BasicResponse getNewlyIncome(Long userId);
 
     /**
-     * 获取用户储蓄产品列表
-     *
-     * @param userId
-     * @return
-     */
-    BasicResponse getDepositList(Long userId);
-
-    /**
      * 获取用户指定资产类型信息列表
      *
      * @param userId, assetType

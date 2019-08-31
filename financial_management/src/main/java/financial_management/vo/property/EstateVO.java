@@ -51,16 +51,16 @@ public class EstateVO {
      */
     private double investOutPlatform;
 
-    public EstateVO(double fundsInPlatform, double fundsOutPlatform, double savingInPlatform, double savingOutPlatform, double insuranceInPlatform, double insuranceOutPlatform, double stocksInPlatform, double stocksOutPlatform, double goldInPlatform, double goldOutPlatform, double bondInPlatform, double bondOutPlatform) {
+    public EstateVO(double fundsInPlatform, double fundsOutPlatform, double savingInPlatform, double savingOutPlatform, double insuranceInPlatform, double insuranceOutPlatform, double stocksInPlatform, double stocksOutPlatform, double qdiiInPlatform, double qdiiOutPlatform, double goldInPlatform, double goldOutPlatform, double bondInPlatform, double bondOutPlatform) {
         this.fundsInPlatform = fundsInPlatform;
         this.fundsOutPlatform = fundsOutPlatform;
         this.savingInPlatform = savingInPlatform;
         this.savingOutPlatform = savingOutPlatform;
         this.insuranceInPlatform = insuranceInPlatform;
         this.insuranceOutPlatform = insuranceOutPlatform;
-        this.investInPlatform = stocksInPlatform + goldInPlatform + bondInPlatform;
-        this.investOutPlatform = stocksOutPlatform + goldOutPlatform + bondOutPlatform;
-        this.totalAsset = fundsInPlatform + fundsOutPlatform + savingInPlatform + savingOutPlatform + insuranceInPlatform + insuranceOutPlatform + stocksInPlatform + stocksOutPlatform + goldInPlatform + goldOutPlatform + bondInPlatform + bondOutPlatform;
+        this.investInPlatform = stocksInPlatform + qdiiInPlatform + goldInPlatform + bondInPlatform;
+        this.investOutPlatform = stocksOutPlatform + qdiiOutPlatform + goldOutPlatform + bondOutPlatform;
+        this.totalAsset = fundsInPlatform + fundsOutPlatform + savingInPlatform + savingOutPlatform + insuranceInPlatform + insuranceOutPlatform + stocksInPlatform + stocksOutPlatform + qdiiInPlatform + qdiiOutPlatform + goldInPlatform + goldOutPlatform + bondInPlatform + bondOutPlatform;
     }
 
     public EstateVO() {

@@ -58,7 +58,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     public BasicResponse getPropertyByUser(Long userId) {
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
-            EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getStocksInPlatform(), estatePO.getStocksOutPlatform(), estatePO.getGoldInPlatform(), estatePO.getGoldOutPlatform(), estatePO.getBondInPlatform(), estatePO.getBondOutPlatform());
+            EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getStocksInPlatform(), estatePO.getStocksOutPlatform(), estatePO.getQdiiInPlatform(), estatePO.getQdiiOutPlatform(), estatePO.getGoldInPlatform(), estatePO.getGoldOutPlatform(), estatePO.getBondInPlatform(), estatePO.getBondOutPlatform());
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, estateVO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,39 +93,12 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     public BasicResponse getNewlyIncome(Long userId) {
         try {
             RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
-            double today = recentInvPO.getTodayStocks() + recentInvPO.getTodayGold() + recentInvPO.getTodayBond();
-            double yesterday = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, today - yesterday);
+            double yesterday = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayQdii() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
+            double dayBeforeYesterday = recentInvPO.getDayBeforeYesterdayStocks() + recentInvPO.getDayBeforeYesterdayQdii() + recentInvPO.getDayBeforeYesterdayGold() + recentInvPO.getDayBeforeYesterdayBond();
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, yesterday - dayBeforeYesterday);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
-        }
-    }
-
-    /**
-     * 获取用户储蓄产品列表
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public BasicResponse getDepositList(Long userId) {
-        try {
-            List<DepositPO> depositPOList = estateMapper.getDepositList(userId);
-            List<DepositVO> depositVOList = new ArrayList<>();
-            double accTotal = 0;
-            for (DepositPO depositPO : depositPOList) {
-                accTotal += depositPO.getMoney();
-            }
-            final double total = accTotal;
-            depositPOList.stream().forEach(deposit -> {
-                DepositVO depositVO = new DepositVO(deposit.getName(), deposit.getMoney(), total, deposit.getAnnualizedRate(), deposit.getExpirationDate());
-                depositVOList.add(depositVO);
-            });
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositVOList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
 
@@ -152,8 +125,8 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                     subEstateVO = new SubEstateVO(totalAsset, estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform());
                     break;
                 case "investment":
-                    double investInPlatform = estatePO.getStocksInPlatform() + estatePO.getGoldInPlatform() + estatePO.getBondInPlatform();
-                    double investOutPlatform = estatePO.getStocksOutPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondOutPlatform();
+                    double investInPlatform = estatePO.getStocksInPlatform() + estatePO.getQdiiInPlatform() + estatePO.getGoldInPlatform() + estatePO.getBondInPlatform();
+                    double investOutPlatform = estatePO.getStocksOutPlatform() + estatePO.getQdiiOutPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondOutPlatform();
                     subEstateVO = new SubEstateVO(totalAsset, investInPlatform, investOutPlatform);
                 default:
                     break;
@@ -177,7 +150,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             List<FortunePO> monthlyFortunePOList = estateMapper.getMonthlyProList(userId);
             List<FortuneVO> monthlyFortuneVOList = new ArrayList<>();
             monthlyFortunePOList.stream().forEach(monthlyFortunePO -> {
-                FortuneVO monthlyFortuneVO = new FortuneVO(monthlyFortunePO.getRecordDate(), monthlyFortunePO.getFunds(), monthlyFortunePO.getSaving(), monthlyFortunePO.getInsurance(), monthlyFortunePO.getStocks(), monthlyFortunePO.getGold(), monthlyFortunePO.getBond());
+                FortuneVO monthlyFortuneVO = new FortuneVO(monthlyFortunePO.getRecordDate(), monthlyFortunePO.getFunds(), monthlyFortunePO.getSaving(), monthlyFortunePO.getInsurance(), monthlyFortunePO.getStocks(), monthlyFortunePO.getQdii(), monthlyFortunePO.getGold(), monthlyFortunePO.getBond());
                 monthlyFortuneVOList.add(monthlyFortuneVO);
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, monthlyFortuneVOList);
@@ -199,7 +172,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             List<InvestPO> monthlyInvestPOList = estateMapper.getMonthlyInvList(userId);
             List<InvestVO> monthlyInvestVOList = new ArrayList<>();
             monthlyInvestPOList.stream().forEach(monthlyInvestPO -> {
-                InvestVO monthlyInvestVO = new InvestVO(monthlyInvestPO.getRecordDate(), monthlyInvestPO.getStocks(), monthlyInvestPO.getGold(), monthlyInvestPO.getBond());
+                InvestVO monthlyInvestVO = new InvestVO(monthlyInvestPO.getRecordDate(), monthlyInvestPO.getStocks(), monthlyInvestPO.getQdii(), monthlyInvestPO.getGold(), monthlyInvestPO.getBond());
                 monthlyInvestVOList.add(monthlyInvestVO);
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, monthlyInvestVOList);
@@ -221,7 +194,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             List<FortunePO> dailyFortunePOList = estateMapper.getDailyProList(userId);
             List<FortuneVO> dailyFortuneVOList = new ArrayList<>();
             dailyFortunePOList.stream().forEach(dailyFortunePO -> {
-                FortuneVO dailyFortuneVO = new FortuneVO(dailyFortunePO.getRecordDate(), dailyFortunePO.getFunds(), dailyFortunePO.getSaving(), dailyFortunePO.getInsurance(), dailyFortunePO.getStocks(), dailyFortunePO.getGold(), dailyFortunePO.getBond());
+                FortuneVO dailyFortuneVO = new FortuneVO(dailyFortunePO.getRecordDate(), dailyFortunePO.getFunds(), dailyFortunePO.getSaving(), dailyFortunePO.getInsurance(), dailyFortunePO.getStocks(), dailyFortunePO.getQdii(), dailyFortunePO.getGold(), dailyFortunePO.getBond());
                 dailyFortuneVOList.add(dailyFortuneVO);
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, dailyFortuneVOList);
@@ -243,7 +216,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             List<InvestPO> dailyInvestPOList = estateMapper.getDailyInvList(userId);
             List<InvestVO> dailyInvestVOList = new ArrayList<>();
             dailyInvestPOList.stream().forEach(dailyInvestPO -> {
-                InvestVO dailyInvestVO = new InvestVO(dailyInvestPO.getRecordDate(), dailyInvestPO.getStocks(), dailyInvestPO.getGold(), dailyInvestPO.getBond());
+                InvestVO dailyInvestVO = new InvestVO(dailyInvestPO.getRecordDate(), dailyInvestPO.getStocks(), dailyInvestPO.getQdii(), dailyInvestPO.getGold(), dailyInvestPO.getBond());
                 dailyInvestVOList.add(dailyInvestVO);
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, dailyInvestVOList);
@@ -265,7 +238,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             List<FortunePO> completeFortunePOList = estateMapper.getCompleteProList(userId);
             List<FortuneVO> completeFortuneVOList = new ArrayList<>();
             completeFortunePOList.stream().forEach(completeFortunePO -> {
-                FortuneVO dailyFortuneVO = new FortuneVO(completeFortunePO.getRecordDate(), completeFortunePO.getFunds(), completeFortunePO.getSaving(), completeFortunePO.getInsurance(), completeFortunePO.getStocks(), completeFortunePO.getGold(), completeFortunePO.getBond());
+                FortuneVO dailyFortuneVO = new FortuneVO(completeFortunePO.getRecordDate(), completeFortunePO.getFunds(), completeFortunePO.getSaving(), completeFortunePO.getInsurance(), completeFortunePO.getStocks(), completeFortunePO.getQdii(), completeFortunePO.getGold(), completeFortunePO.getBond());
                 completeFortuneVOList.add(dailyFortuneVO);
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, completeFortuneVOList);
@@ -309,7 +282,6 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
         }
     }
 
-
     /**
      * 计算用户总资产
      *
@@ -320,9 +292,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     public double getTotalAsset(Long userId) {
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
-            return estatePO.getFundsInPlatform() + estatePO.getFundsOutPlatform() + estatePO.getSavingInPlatform() + estatePO.getSavingOutPlatform()
-                    + estatePO.getInsuranceInPlatform() + estatePO.getInsuranceOutPlatform() + estatePO.getStocksInPlatform() + estatePO.getStocksOutPlatform()
-                    + estatePO.getGoldInPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondInPlatform() + estatePO.getBondOutPlatform();
+            return estatePO.getFundsInPlatform() + estatePO.getFundsOutPlatform() + estatePO.getSavingInPlatform() + estatePO.getSavingOutPlatform() + estatePO.getInsuranceInPlatform() + estatePO.getInsuranceOutPlatform() + estatePO.getStocksInPlatform() + estatePO.getStocksOutPlatform() + estatePO.getQdiiInPlatform() + estatePO.getQdiiOutPlatform() + estatePO.getGoldInPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondInPlatform() + estatePO.getBondOutPlatform();
         } catch (Exception e) {
             e.printStackTrace();
             return 0;

@@ -3,7 +3,7 @@
 <mapper namespace="financial_management.data.property.ManageMapper">
 
     <select id="isAdmin" resultType="boolean">
-        select count(user_id) from user where user_id = #{adminId} and name = "admin"
+        select count(user_id) from user where user_id = #{adminId} and name = "admin" and email = "admin"
     </select>
 
     <select id="getRecAllocList" resultMap="RecAllocPO">

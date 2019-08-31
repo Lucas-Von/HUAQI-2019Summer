@@ -47,12 +47,6 @@ public class EstateController {
         return estateService.getNewlyIncome(userId);
     }
 
-    @GetMapping("/estate/getDepositList")
-    public BasicResponse getDepositList(HttpServletRequest request) {
-        Long userId = jwtUtil.getIdFromRequest(request);
-        return estateService.getDepositList(userId);
-    }
-
     @GetMapping("/estate/getFundsInfoList")
     public BasicResponse getFundsInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);

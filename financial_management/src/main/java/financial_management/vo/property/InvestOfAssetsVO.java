@@ -12,6 +12,11 @@ public class InvestOfAssetsVO {
     private double stocks;
 
     /**
+     * 股指
+     */
+    private double qdii;
+
+    /**
      * 黄金
      */
     private double gold;
@@ -21,8 +26,9 @@ public class InvestOfAssetsVO {
      */
     private double bond;
 
-    public InvestOfAssetsVO(double stocks, double gold, double bond) {
+    public InvestOfAssetsVO(double stocks, double qdii, double gold, double bond) {
         this.stocks = stocks;
+        this.qdii = qdii;
         this.gold = gold;
         this.bond = bond;
     }
@@ -35,23 +41,16 @@ public class InvestOfAssetsVO {
         return stocks;
     }
 
-    public void setStocks(double stocks) {
-        this.stocks = stocks;
+    public double getQdii() {
+        return qdii;
     }
 
     public double getGold() {
         return gold;
     }
 
-    public void setGold(double gold) {
-        this.gold = gold;
-    }
-
     public double getBond() {
         return bond;
     }
 
-    public void setBond(double bond) {
-        this.bond = bond;
-    }
 }

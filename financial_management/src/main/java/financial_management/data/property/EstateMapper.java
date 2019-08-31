@@ -42,14 +42,6 @@ public interface EstateMapper {
     RecentInvPO getNewlyIncome(@Param("userId") Long userId);
 
     /**
-     * 获取用户储蓄产品列表
-     *
-     * @param userId
-     * @return
-     */
-    List<DepositPO> getDepositList(@Param("userId") Long userId);
-
-    /**
      * 获取用户自注册起所有月份的资产列表
      *
      * @param userId

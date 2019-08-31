@@ -33,7 +33,7 @@ CREATE TABLE `article` (
   `pageviews` bigint(255) unsigned DEFAULT '0',
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`article_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `comment` (
   `content` varchar(10000) DEFAULT NULL,
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +202,7 @@ CREATE TABLE `deposit_product` (
   `rate` float DEFAULT NULL,
   `length` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +232,7 @@ CREATE TABLE `deposit_recommend` (
   `start_amount` double DEFAULT NULL,
   `risk_level` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,10 +254,11 @@ DROP TABLE IF EXISTS `dom_stock`;
 CREATE TABLE `dom_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `code` varchar(255) DEFAULT NULL UNIQUE,
+  `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -287,7 +288,7 @@ CREATE TABLE `feedback` (
   `QQ` varchar(15) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `solved` bit(1) NOT NULL DEFAULT b'0',
-  `solver_ID` bigint(255) NULL DEFAULT NULL,
+  `solver_ID` bigint(255) DEFAULT NULL,
   `solve_time` timestamp NULL DEFAULT NULL,
   `solve_text` text,
   PRIMARY KEY (`id`)
@@ -300,8 +301,7 @@ CREATE TABLE `feedback` (
 
 LOCK TABLES `feedback` WRITE;
 /*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-INSERT INTO `feedback` VALUES ('1', '为什么不开大？', '1', '喂，老板，他刚才又没开大；我没骂他，我上局就没骂他；这个人应该是思想出了问题', '2019-08-27 15:27:58', '1', null, null, '123456@789.com', '', '7', '2019-08-27 15:27:58', '对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区');
-INSERT INTO `feedback` VALUES ('2', '一个数学问题', '1', '1+1=?', '2019-08-27 15:27:58', '1', null, null, '123456@789.com', '\0', '0', null, null);
+INSERT INTO `feedback` VALUES (1,'为什么不开大？',1,'喂，老板，他刚才又没开大；我没骂他，我上局就没骂他；这个人应该是思想出了问题','2019-08-27 15:27:58',1,NULL,NULL,'123456@789.com',_binary '',7,'2019-08-27 15:27:58','对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区'),(2,'一个数学问题',1,'1+1=?','2019-08-27 15:27:58',1,NULL,NULL,'123456@789.com',_binary '\0',0,NULL,NULL);
 /*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -315,10 +315,11 @@ DROP TABLE IF EXISTS `for_stock`;
 CREATE TABLE `for_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `code` varchar(255) DEFAULT NULL UNIQUE,
+  `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,12 +341,13 @@ DROP TABLE IF EXISTS `fortune`;
 CREATE TABLE `fortune` (
   `user_id` bigint(255) NOT NULL,
   `record_date` date NOT NULL,
-  `funds` float DEFAULT NULL,
-  `saving` float DEFAULT NULL,
-  `insurance` float DEFAULT NULL,
-  `stocks` float DEFAULT NULL,
-  `gold` float DEFAULT NULL,
-  `bond` float DEFAULT NULL
+  `funds` double DEFAULT NULL,
+  `saving` double DEFAULT NULL,
+  `insurance` double DEFAULT NULL,
+  `stocks` double DEFAULT NULL,
+  `qdii` double DEFAULT NULL,
+  `gold` double DEFAULT NULL,
+  `bond` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -355,7 +357,7 @@ CREATE TABLE `fortune` (
 
 LOCK TABLES `fortune` WRITE;
 /*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
-INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,500,1500),(1,'2019-08-22',2600,2600,2400,2500,500,1500),(2,'2019-08-28',3000,2600,2400,2500,500,1500),(1,'2019-08-28',8000,2600,2400,2500,500,1500),(1,'2019-08-29',2600,9600,2400,2500,500,1500);
+INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,200,500,1500),(1,'2019-08-22',2600,2600,2400,2500,400,500,1500),(2,'2019-08-28',3000,2600,2400,2500,800,500,1500),(1,'2019-08-28',8000,2600,2400,2500,1600,500,1500),(1,'2019-08-29',2600,9600,2400,2500,3200,500,1500),(1,'2019-08-30',2600,9800,2400,2800,3200,500,1500);
 /*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -395,7 +397,7 @@ CREATE TABLE `gold` (
   `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -468,7 +470,7 @@ CREATE TABLE `ins_product` (
   `compensation` float DEFAULT NULL,
   `length` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -591,7 +593,7 @@ CREATE TABLE `message` (
   `is_read` bit(1) DEFAULT NULL,
   `is_delete` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -600,9 +602,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES ('1', '2019-08-26 15:27:58', '1', '1', '尊敬的用户，您的账户有新的调仓操作，请确认', 0, 0);
-INSERT INTO `message` VALUES ('2', '2019-08-27 15:27:58', '1', '3', '尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区', 0, 0);
-INSERT INTO `message` VALUES ('3', '2019-08-27 15:56:53', '2', '3', '文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！', 0, 0);
+INSERT INTO `message` VALUES (1,'2019-08-26 15:27:58',1,1,'尊敬的用户，您的账户有新的调仓操作，请确认',_binary '\0',_binary '\0'),(2,'2019-08-27 15:27:58',1,3,'尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区',_binary '\0',_binary '\0'),(3,'2019-08-27 15:56:53',2,3,'文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0');
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -651,7 +651,7 @@ CREATE TABLE `my_depo` (
   `endtime` date DEFAULT NULL,
   `proportion` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -742,6 +742,38 @@ INSERT INTO `my_ins` VALUES (1,'20',25,'2020-08-30',30);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `my_qdii`
+--
+
+DROP TABLE IF EXISTS `my_qdii`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `my_qdii` (
+  `user_id` bigint(255) NOT NULL,
+  `code` varchar(45) NOT NULL,
+  `purchase_price` float NOT NULL,
+  `purchase_amount` float NOT NULL,
+  `purchase_total` float NOT NULL,
+  `hold_price` float NOT NULL,
+  `hold_amount` float NOT NULL,
+  `hold_total` float NOT NULL,
+  `profit` float DEFAULT NULL,
+  `profit_rate` float DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `my_qdii`
+--
+
+LOCK TABLES `my_qdii` WRITE;
+/*!40000 ALTER TABLE `my_qdii` DISABLE KEYS */;
+INSERT INTO `my_qdii` VALUES (1,'613991',1,1000,1000,99.9,100,999,-1,-0.001);
+/*!40000 ALTER TABLE `my_qdii` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `my_stock`
 --
 
@@ -757,9 +789,9 @@ CREATE TABLE `my_stock` (
   `hold_price` float NOT NULL,
   `hold_amount` int(11) NOT NULL,
   `hold_total` float NOT NULL,
-  `profit` float NULL,
-  `profit_rate` float NULL,
-  PRIMARY KEY (user_id,code)
+  `profit` float DEFAULT NULL,
+  `profit_rate` float DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -767,29 +799,35 @@ CREATE TABLE `my_stock` (
 -- Dumping data for table `my_stock`
 --
 
-INSERT INTO `my_stock` VALUES (1,'601991',1.0,1000,1000.0,99.9,100,999.0,-1.0,-0.001);
+LOCK TABLES `my_stock` WRITE;
+/*!40000 ALTER TABLE `my_stock` DISABLE KEYS */;
+INSERT INTO `my_stock` VALUES (1,'601991',1,1000,1000,99.9,100,999,-1,-0.001);
+/*!40000 ALTER TABLE `my_stock` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `personal_trade`
 --
 
 DROP TABLE IF EXISTS `personal_trade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personal_trade` (
-    `id`            bigint(255) NOT NULL AUTO_INCREMENT,
-    `trans_id`      bigint(255) NULL,
-    `create_time`   timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `complete_time` timestamp   NULL     DEFAULT NULL,
-    `type`          varchar(45) NOT NULL,
-    `product_id`    bigint(255) NOT NULL,
-    `amount`        float       NOT NULL,
-    `price`         float       NOT NULL,
-    `fee`           float       NOT NULL,
-    `total`         float       NOT NULL,
-    `user_id`       bigint(255) NOT NULL,
-    `status`        int(11)     NULL     DEFAULT '0',
-    `is_customize`  bit(1)               DEFAULT b'0',
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `trans_id` bigint(255) DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `complete_time` timestamp NULL DEFAULT NULL,
+  `type` varchar(45) NOT NULL,
+  `product_id` bigint(255) NOT NULL,
+  `amount` float NOT NULL,
+  `price` float NOT NULL,
+  `fee` float NOT NULL,
+  `total` float NOT NULL,
+  `user_id` bigint(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `is_customize` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -801,22 +839,6 @@ LOCK TABLES `personal_trade` WRITE;
 /*!40000 ALTER TABLE `personal_trade` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `my_qdii`;
-CREATE TABLE `my_qdii` (
-    `user_id` bigint(255) NOT NULL,
-    `code` varchar(45) NOT NULL,
-    `purchase_price` float NOT NULL,
-    `purchase_amount` float NOT NULL,
-    `purchase_total` float NOT NULL,
-    `hold_price` float NOT NULL,
-    `hold_amount` float NOT NULL,
-    `hold_total` float NOT NULL,
-    `profit` float NULL,
-    `profit_rate` float NULL,
-    PRIMARY KEY (user_id,code)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO my_qdii VALUES (1,'613991',1.0,1000,1000.0,99.9,100,999.0,-1.0,-0.001);
 --
 -- Table structure for table `platform_trade`
 --
@@ -832,7 +854,7 @@ CREATE TABLE `platform_trade` (
   `price` float NOT NULL,
   `total` float NOT NULL,
   `real_total` float NOT NULL,
-  `status` int(11) NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -847,32 +869,6 @@ LOCK TABLES `platform_trade` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `property`
---
-
-DROP TABLE IF EXISTS `property`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `property` (
-  `user_id` bigint(255) NOT NULL,
-  `admin_id` bigint(255) NOT NULL,
-  `view_type` varchar(45) DEFAULT NULL,
-  `pro_or_invest` varchar(45) DEFAULT NULL,
-  `asset_type` varchar(45) DEFAULT NULL,
-  `prefers` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `property`
---
-
-LOCK TABLES `property` WRITE;
-/*!40000 ALTER TABLE `property` DISABLE KEYS */;
-/*!40000 ALTER TABLE `property` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `questionnaire`
 --
 
@@ -881,15 +877,15 @@ DROP TABLE IF EXISTS `questionnaire`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionnaire` (
   `user_id` bigint(255) NOT NULL,
-  `funds` float DEFAULT NULL,
-  `saving` float DEFAULT NULL,
-  `insurance` float DEFAULT NULL,
-  `stocks` float DEFAULT NULL,
-  `gold` float DEFAULT NULL,
-  `bond` float DEFAULT NULL,
+  `funds` double DEFAULT NULL,
+  `saving` double DEFAULT NULL,
+  `insurance` double DEFAULT NULL,
+  `stocks` double DEFAULT NULL,
+  `gold` double DEFAULT NULL,
+  `bond` double DEFAULT NULL,
   `answer` varchar(255) DEFAULT NULL,
   `record_time` date NOT NULL,
-  `origin_assets` float NOT NULL,
+  `origin_assets` double NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `questionnaire_user_id_uindex` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -914,10 +910,10 @@ DROP TABLE IF EXISTS `recommend`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recommend` (
   `user_id` bigint(255) NOT NULL,
-  `funds_rate` float DEFAULT NULL,
-  `saving_rate` float DEFAULT NULL,
-  `insurance_rate` float DEFAULT NULL,
-  `invest_rate` float DEFAULT NULL,
+  `funds_rate` double DEFAULT NULL,
+  `saving_rate` double DEFAULT NULL,
+  `insurance_rate` double DEFAULT NULL,
+  `invest_rate` double DEFAULT NULL,
   `invest_prefer` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
@@ -930,7 +926,7 @@ CREATE TABLE `recommend` (
 
 LOCK TABLES `recommend` WRITE;
 /*!40000 ALTER TABLE `recommend` DISABLE KEYS */;
-INSERT INTO `recommend` VALUES (1,0.25,0.25,0.26,0.24,'保守型'),(2,0.25,0.25,0.26,0.24,'稳健保守型'),(3,0.25,0.25,0.26,0.24,'稳健型'),(4,0.25,0.25,0.26,0.24,'稳健进取型'),(5,0.25,0.25,0.26,0.24,'进取型');
+INSERT INTO `recommend` VALUES (1,0.25,0.25,0.25999999046325684,0.23999999463558197,'保守型'),(2,0.25,0.25,0.25999999046325684,0.23999999463558197,'稳健保守型'),(3,0.25,0.25,0.25999999046325684,0.23999999463558197,'稳健型'),(4,0.25,0.25,0.25999999046325684,0.23999999463558197,'稳健进取型'),(5,0.25,0.25,0.25999999046325684,0.23999999463558197,'进取型');
 /*!40000 ALTER TABLE `recommend` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1017,4 +1013,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-30 17:24:25
+-- Dump completed on 2019-08-31 10:08:32

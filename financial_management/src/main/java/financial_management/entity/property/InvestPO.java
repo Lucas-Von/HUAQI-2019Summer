@@ -21,6 +21,11 @@ public class InvestPO {
     private double stocks;
 
     /**
+     * 股指
+     */
+    private double qdii;
+
+    /**
      * 黄金
      */
     private double gold;
@@ -44,6 +49,14 @@ public class InvestPO {
 
     public void setStocks(double stocks) {
         this.stocks = stocks;
+    }
+
+    public double getQdii() {
+        return qdii;
+    }
+
+    public void setQdii(double qdii) {
+        this.qdii = qdii;
     }
 
     public double getGold() {

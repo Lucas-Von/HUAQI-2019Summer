@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author xyh
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/article/collection")
+@RequestMapping("/article")
 public class CollectionController {
     @Autowired
     private JwtUtil jwtUtil;
@@ -24,13 +25,18 @@ public class CollectionController {
     @Autowired
     private CollectionService collectionService;
 
-    @PostMapping("/add")
+    @PostMapping("/collection/add")
     public BasicResponse addCollection(@RequestParam Long articleId, HttpServletRequest request){
         return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/collection/delete")
     public BasicResponse deleteCollection(@RequestParam Long articleId, HttpServletRequest request){
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+    }
+
+    @DeleteMapping("/collections/delete")
+    public BasicResponse deleteCollections(@RequestParam List<Long> articleIds, HttpServletRequest request){
         return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
     }
 }

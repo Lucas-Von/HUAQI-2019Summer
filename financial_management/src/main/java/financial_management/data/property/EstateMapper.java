@@ -97,6 +97,6 @@ public interface EstateMapper {
      */
     Date getFortuneUpdateTime(@Param("userId") Long userId);
 
-//    @Scheduled(cron = "0/1 * * * * ?")
+    @Scheduled(cron = "0 0 23 * * ?")
     void updateFortuneByDay();
 }

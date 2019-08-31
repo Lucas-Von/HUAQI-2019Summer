@@ -107,7 +107,7 @@
     </resultMap>
 
     <insert id="updateFortuneByDay">
-        insert into fortune(user_id,record_date,funds,saving,insurance,stocks,gold,bond)
+        insert into fortune(user_id, record_date, funds, saving, insurance, stocks, gold, bond, qdii)
         select
             u.user_id,
             CURDATE(),
@@ -117,6 +117,7 @@
             coalesce(sum(ms.hold_total), 0),
             coalesce(sum(mg.sum), 0),
             coalesce(sum(mb.purchase_price), 0)
+            coalesce(sum(mq.hold_total), 0)
         from user u
             left join my_fund mf on mf.user_id = u.user_id
             left join my_depo md on md.user_id = u.user_id
@@ -124,6 +125,7 @@
             left join my_stock ms on ms.user_id = u.user_id
             left join my_gold mg on mg.user_id = u.user_id
             left join my_bond mb on mb.user_id = u.user_id
+            left join my_qdii mq on mq.user_id = u.user_id
         group by u.user_id
     </insert>
 

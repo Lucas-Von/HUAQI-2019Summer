@@ -22,6 +22,8 @@
         insert into my_bond (user_id, code, purchase_price, profit, profit_rate, quantity, amount) values (#{userId},#{code},#{purchasePrice},#{profit},#{profitRate},#{quantity},#{amount})
     </insert>
 
+
+
     <resultMap id="MyBondProduct" type="financial_management.entity.MyBondPO">
         <result property="code" column="code"/>
         <result property="userId" column="user_id"/>
@@ -32,7 +34,7 @@
         <result property="amount" column="amount"/>
     </resultMap>
 
-    <resultMap id="BondProduct" type="financial_management.entity.BondPO">
+    <resultMap id="BondProduct" type="financial_management.entity.product.BondPO">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="code" column="code"/>

@@ -1,9 +1,8 @@
 package financial_management.data.product;
 
-import financial_management.entity.BondPO;
+import financial_management.entity.product.BondPO;
 import financial_management.entity.MyBondPO;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

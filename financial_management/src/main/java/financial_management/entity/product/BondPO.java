@@ -1,4 +1,4 @@
-package financial_management.entity;
+package financial_management.entity.product;
 
 /**
  * @Description 债券实体类

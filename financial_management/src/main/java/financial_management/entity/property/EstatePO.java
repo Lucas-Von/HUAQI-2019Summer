@@ -49,6 +49,16 @@ public class EstatePO {
     private double stocksOutPlatform;
 
     /**
+     * 用户平台内股指数额
+     */
+    private double qdiiInPlatform;
+
+    /**
+     * 用户平台外股指数额
+     */
+    private double qdiiOutPlatform;
+
+    /**
      * 用户平台内黄金数额
      */
     private double goldInPlatform;
@@ -130,6 +140,22 @@ public class EstatePO {
 
     public void setStocksOutPlatform(double stocksOutPlatform) {
         this.stocksOutPlatform = stocksOutPlatform;
+    }
+
+    public double getQdiiInPlatform() {
+        return qdiiInPlatform;
+    }
+
+    public void setQdiiInPlatform(double qdiiInPlatform) {
+        this.qdiiInPlatform = qdiiInPlatform;
+    }
+
+    public double getQdiiOutPlatform() {
+        return qdiiOutPlatform;
+    }
+
+    public void setQdiiOutPlatform(double qdiiOutPlatform) {
+        this.qdiiOutPlatform = qdiiOutPlatform;
     }
 
     public double getGoldInPlatform() {

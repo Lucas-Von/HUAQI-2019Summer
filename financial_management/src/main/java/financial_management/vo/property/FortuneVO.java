@@ -18,9 +18,9 @@ public class FortuneVO {
      */
     private double asset;
 
-    public FortuneVO(Date recordDate, double funds, double saving, double insurance, double stocks, double gold, double bond) {
+    public FortuneVO(Date recordDate, double funds, double saving, double insurance, double stocks, double qdii, double gold, double bond) {
         this.recordDate = recordDate;
-        this.asset = funds + saving + insurance + stocks + gold + bond;
+        this.asset = funds + saving + insurance + stocks + qdii + gold + bond;
     }
 
     public FortuneVO() {

@@ -9,24 +9,14 @@ package financial_management.entity.property;
 public class RecentInvPO {
 
     /**
-     * 今日股票
-     */
-    private double todayStocks;
-
-    /**
-     * 今日黄金
-     */
-    private double todayGold;
-
-    /**
-     * 今日债券
-     */
-    private double todayBond;
-
-    /**
      * 昨日股票
      */
     private double yesterdayStocks;
+
+    /**
+     * 昨日股指
+     */
+    private double yesterdayQdii;
 
     /**
      * 昨日黄金
@@ -38,29 +28,25 @@ public class RecentInvPO {
      */
     private double yesterdayBond;
 
-    public double getTodayStocks() {
-        return todayStocks;
-    }
+    /**
+     * 前日股票
+     */
+    private double dayBeforeYesterdayStocks;
 
-    public void setTodayStocks(double todayStocks) {
-        this.todayStocks = todayStocks;
-    }
+    /**
+     * 前日股指
+     */
+    private double dayBeforeYesterdayQdii;
 
-    public double getTodayGold() {
-        return todayGold;
-    }
+    /**
+     * 前日黄金
+     */
+    private double dayBeforeYesterdayGold;
 
-    public void setTodayGold(double todayGold) {
-        this.todayGold = todayGold;
-    }
-
-    public double getTodayBond() {
-        return todayBond;
-    }
-
-    public void setTodayBond(double todayBond) {
-        this.todayBond = todayBond;
-    }
+    /**
+     * 前日债券
+     */
+    private double dayBeforeYesterdayBond;
 
     public double getYesterdayStocks() {
         return yesterdayStocks;
@@ -68,6 +54,14 @@ public class RecentInvPO {
 
     public void setYesterdayStocks(double yesterdayStocks) {
         this.yesterdayStocks = yesterdayStocks;
+    }
+
+    public double getYesterdayQdii() {
+        return yesterdayQdii;
+    }
+
+    public void setYesterdayQdii(double yesterdayQdii) {
+        this.yesterdayQdii = yesterdayQdii;
     }
 
     public double getYesterdayGold() {
@@ -84,6 +78,38 @@ public class RecentInvPO {
 
     public void setYesterdayBond(double yesterdayBond) {
         this.yesterdayBond = yesterdayBond;
+    }
+
+    public double getDayBeforeYesterdayStocks() {
+        return dayBeforeYesterdayStocks;
+    }
+
+    public void setDayBeforeYesterdayStocks(double dayBeforeYesterdayStocks) {
+        this.dayBeforeYesterdayStocks = dayBeforeYesterdayStocks;
+    }
+
+    public double getDayBeforeYesterdayQdii() {
+        return dayBeforeYesterdayQdii;
+    }
+
+    public void setDayBeforeYesterdayQdii(double dayBeforeYesterdayQdii) {
+        this.dayBeforeYesterdayQdii = dayBeforeYesterdayQdii;
+    }
+
+    public double getDayBeforeYesterdayGold() {
+        return dayBeforeYesterdayGold;
+    }
+
+    public void setDayBeforeYesterdayGold(double dayBeforeYesterdayGold) {
+        this.dayBeforeYesterdayGold = dayBeforeYesterdayGold;
+    }
+
+    public double getDayBeforeYesterdayBond() {
+        return dayBeforeYesterdayBond;
+    }
+
+    public void setDayBeforeYesterdayBond(double dayBeforeYesterdayBond) {
+        this.dayBeforeYesterdayBond = dayBeforeYesterdayBond;
     }
 
 }

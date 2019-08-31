@@ -18,9 +18,9 @@ public class InvestVO {
      */
     private double invest;
 
-    public InvestVO(Date recordDate, double stocks, double gold, double bond) {
+    public InvestVO(Date recordDate, double stocks, double qdii, double gold, double bond) {
         this.recordDate = recordDate;
-        this.invest = stocks + gold + bond;
+        this.invest = stocks + qdii + gold + bond;
     }
 
     public InvestVO() {

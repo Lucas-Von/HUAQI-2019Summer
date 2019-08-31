@@ -12,76 +12,77 @@
             coalesce(q.insurance, 0) as insuranceOutPlatform,
             coalesce(sum(ms.purchase_price), 0) as stocksInPlatform,
             coalesce(q.stocks, 0) as stocksOutPlatform,
+            coalesce(sum(mq.purchase_price), 0) as qdiiInPlatform,
+            coalesce(q.stocks, 0) as qdiiOutPlatform,
             coalesce(sum(mg.sum), 0) as goldInPlatform,
             coalesce(q.gold, 0) as goldOutPlatform,
             coalesce(sum(mb.amount), 0) as bondInPlatform,
             coalesce(q.bond, 0) as bondOutPlatform
-        from questionnaire q, my_fund mf, my_depo md, my_ins mi, my_stock ms, my_gold mg, my_bond mb
-        where q.user_id = #{userId} and mf.user_id = #{userId} and md.user_id = #{userId} and mi.user_id = #{userId}
-            and ms.user_id = #{userId} and mg.user_id = #{userId} and mb.user_id = #{userId};
+        from questionnaire q
+            left join my_fund mf on mf.user_id = q.user_id
+            left join my_depo md on md.user_id = q.user_id
+            left join my_ins mi on mi.user_id = q.user_id
+            left join my_qdii mq on mq.user_id = q.user_id
+            left join my_stock ms on ms.user_id = q.user_id
+            left join my_gold mg on mg.user_id = q.user_id
+            left join my_bond mb on mb.user_id = q.user_id
+        where q.user_id = #{userId};
     </select>
 
     <select id="getTotalIncome" resultType="Double">
-        select coalesce(sum(ms.profit + mg.profit + mb.profit), 0)
-        from my_stock ms, my_gold mg, my_bond mb
-        where ms.user_id = #{userId} and mg.user_id = #{userId} and mb.user_id = #{userId};
+        select coalesce(sum(ms.profit + mq.profit + mg.profit + mb.profit), 0)
+        from my_stock ms
+            left join my_qdii mq on mq.user_id = ms.user_id
+            left join my_gold mg on mg.user_id = ms.user_id
+            left join my_bond mb on mb.user_id = ms.user_id
+        where ms.user_id = #{userId};
     </select>
 
     <select id="getNewlyIncome" resultMap="RecentInvPO">
         select
-            coalesce(today.stocks, 0) as todayStocks,
-            coalesce(today.gold, 0) as todayGold,
-            coalesce(today.bond, 0) as todayBond,
             coalesce(yesterday.stocks, 0) as yesterdayStocks,
+            coalesce(yesterday.qdii, 0) as yesterdayQdii,
             coalesce(yesterday.gold, 0) as yesterdayGold,
-            coalesce(yesterday.bond, 0) as yesterdayBond
+            coalesce(yesterday.bond, 0) as yesterdayBond,
+            coalesce(dayBeforeYesterday.stocks, 0) as dayBeforeYesterdayStocks,
+            coalesce(dayBeforeYesterday.qdii, 0) as dayBeforeYesterdayQdii,
+            coalesce(dayBeforeYesterday.gold, 0) as dayBeforeYesterdayGold,
+            coalesce(dayBeforeYesterday.bond, 0) as dayBeforeYesterdayBond
         from
-            (select stocks, gold, bond
+            (select stocks, qdii, gold, bond
                 from fortune
-                where user_id = #{userId} and record_date = CURDATE()) today,
-            (select stocks, gold, bond
+                where user_id = #{userId} and record_date = DATE_SUB(CURDATE(), INTERVAL 1 DAY)) yesterday,
+            (select stocks, qdii, gold, bond
                 from fortune
-                where user_id = #{userId} and record_date = DATE_SUB(CURDATE(), INTERVAL 1 DAY)) yesterday
-    </select>
-
-    <select id="getDepositList" resultMap="DepositPO">
-        select
-            d.name as name,
-            md.amount as money,
-            d.rate as annualizedRate,
-            md.maturity as expirationDate
-        from my_depo md
-        inner join deposit_product d
-        on md.product_id = d.id
-        where md.user_id = #{userId}
+                where user_id = #{userId} and record_date = DATE_SUB(CURDATE(), INTERVAL 2 DAY)) dayBeforeYesterday
     </select>
 
     <select id="getMonthlyProList" resultMap="FortunePO">
-        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, gold, bond
+        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, qdii, gold, bond
         from fortune
         where user_id = #{userId} and record_date REGEXP "01$";
     </select>
 
     <select id="getMonthlyInvList" resultMap="InvestPO">
-        select user_id as userId, record_date as recordDate, stocks, gold, bond
+        select user_id as userId, record_date as recordDate, stocks, qdii, gold, bond
         from fortune
         where user_id = #{userId} and record_date REGEXP "01$";
     </select>
 
     <select id="getDailyProList" resultMap="FortunePO">
-        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, gold, bond
+        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, qdii, gold, bond
         from fortune
         where user_id = #{userId} and DATE_SUB(CURDATE(), INTERVAL 30 DAY);
     </select>
 
     <select id="getDailyInvList" resultMap="InvestPO">
-        select user_id as userId, record_date as recordDate, stocks, gold, bond
+        select user_id as userId, record_date as recordDate, stocks, qdii, gold, bond
         from fortune
         where user_id = #{userId} and DATE_SUB(CURDATE(), INTERVAL 30 DAY);
     </select>
 
     <select id="getCompleteProList" resultMap="FortunePO">
-        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, gold, bond
+        select user_id as userId, record_date as recordDate, funds, saving, insurance, stocks, qdii, gold, bond
         from fortune
         where user_id = #{userId}
     </select>

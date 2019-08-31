@@ -28,10 +28,12 @@ public enum PyFunc {
 //    保险
 //      推荐
         INSURANCE_RECOMMEND("Insurance_Recommend.py"),
-//    用户投资偏好
-        INVEST_PREFERENCE("Invest_Preference.py"),
-//    财务脆弱性+总体资产配置
-        FIN_FRAGILITY_ASSET_ALLOCATION("Fin_Fragility_Asset_Allocation.py");
+//    机器学习
+        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning.py"),
+//    财务脆弱性
+        QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
+//    资产配置
+        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
 
     public String path;
 

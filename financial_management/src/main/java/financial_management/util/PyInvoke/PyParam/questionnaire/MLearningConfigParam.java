@@ -1,13 +1,12 @@
-package financial_management.parameter.property;
+package financial_management.util.PyInvoke.PyParam.questionnaire;
 
-import java.util.Date;
+import financial_management.util.PyInvoke.PyParam.PyParam;
 
-public class QuestionnaireParam {
-
-    /**
-     * 用户id
-     */
-    private Long userId;
+/**
+ * @author lt
+ * @date 2019/08/31 16:35
+ */
+public class MLearningConfigParam extends PyParam {
 
     /**
      * 现金
@@ -49,22 +48,19 @@ public class QuestionnaireParam {
      */
     private String answer;
 
-    /**
-     * 第一次填写问卷的时间
-     */
-    private Date recordTime;
-
-    /**
-     * 第一份问卷的资产总额
-     */
-    private double originAssets;
-
-    public Long getUserId() {
-        return userId;
+    public MLearningConfigParam(double funds, double saving, double insurance, double stocks, double qdii, double gold, double bond, String answer) {
+        this.funds = funds;
+        this.saving = saving;
+        this.insurance = insurance;
+        this.stocks = stocks;
+        this.qdii = qdii;
+        this.gold = gold;
+        this.bond = bond;
+        this.answer = answer;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public MLearningConfigParam() {
+
     }
 
     public double getFunds() {
@@ -129,18 +125,6 @@ public class QuestionnaireParam {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public Date getRecordTime() {
-        return recordTime;
-    }
-
-    public void setRecordTime(Date recordTime) {
-        this.recordTime = recordTime;
-    }
-
-    public double getOriginAssets() {
-        return this.funds + this.saving + this.insurance + this.stocks + this.qdii + this.gold + this.bond;
     }
 
 }

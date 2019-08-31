@@ -1,5 +1,6 @@
 package financial_management.data.property;
 
+import financial_management.entity.property.QuestionnaireConfigPO;
 import financial_management.parameter.property.QuestionnaireParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -62,5 +63,10 @@ public interface QuestionnaireMapper {
      * @return
      */
     Double getOriginAssets(@Param("userId") Long userId);
+
+    /**
+     * 插入用户问卷答案的分析结果
+     */
+    void insertQuestionnaireConfig(QuestionnaireConfigPO questionnaireConfigPO);
 
 }

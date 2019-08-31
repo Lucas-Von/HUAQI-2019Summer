@@ -16,7 +16,7 @@
             r.funds_rate as fundsRate,
             r.saving_rate as savingRate,
             r.insurance_rate as insuranceRate,
-            r.invest_rate as investRate
+            r.investment_rate as investRate
         from user u
         inner join recommend r
         on u.user_id =  r.user_id
@@ -32,7 +32,7 @@
             r.funds_rate as fundsRate,
             r.saving_rate as savingRate,
             r.insurance_rate as insuranceRate,
-            r.invest_rate as investRate
+            r.investment_rate as investRate
         from user u, recommend r
         where u.user_id = #{userId} and r.user_id = #{userId};
     </select>
@@ -40,7 +40,7 @@
     <insert id="editRecAlloc" parameterType="financial_management.parameter.property.RecAllocParam"
             useGeneratedKeys="true" keyProperty="id">
         update recommend
-        set funds_rate = #{fundsRate}, saving_rate = #{savingRate}, insurance_rate = #{insuranceRate}, invest_rate = #{investRate}
+        set funds_rate = #{fundsRate}, saving_rate = #{savingRate}, insurance_rate = #{insuranceRate}, investment_rate = #{investRate}
         where user_id = #{userId}
     </insert>
 

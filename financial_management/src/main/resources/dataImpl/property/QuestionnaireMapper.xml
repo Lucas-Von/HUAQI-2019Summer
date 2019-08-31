@@ -31,4 +31,10 @@
         where user_id = #{userId}
     </insert>
 
+    <insert id="insertQuestionnaireConfig" parameterType="financial_management.entity.property.QuestionnaireConfigPO"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into recommend(user_id, invest_analysis_tag, volatility, yield, funds_rate, saving_rate, insurance_rate, investment_rate, stocks_rate, qdii_rate, gold_rate, bond_rate, total_volatility, total_yield, invest_prefer)
+        values(#{userId}, #{invest_analysis_tag}, #{volatility}, #{yield}, #{insurance_rate}, #{funds_rate}, #{saving_rate}, #{investment_rate}, #{stocks_rate}, #{qdii_rate}, #{gold_rate}, #{bond_rate}, #{total_volatility}, #{total_yield}, #{total_risk_level})
+    </insert>
+
 </mapper>

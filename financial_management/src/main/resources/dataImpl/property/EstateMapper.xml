@@ -113,7 +113,7 @@
             coalesce(sum(mf.balance), 0),
             coalesce(sum(md.amount), 0),
             coalesce(sum(mi.price), 0),
-            coalesce(sum(ms.purchase_total), 0),
+            coalesce(sum(ms.hold_total), 0),
             coalesce(sum(mg.sum), 0),
             coalesce(sum(mb.purchase_price), 0)
         from user u

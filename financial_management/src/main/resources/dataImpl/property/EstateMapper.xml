@@ -116,7 +116,7 @@
             coalesce(sum(mi.price), 0),
             coalesce(sum(ms.hold_total), 0),
             coalesce(sum(mg.sum), 0),
-            coalesce(sum(mb.purchase_price), 0)
+            coalesce(sum(mb.purchase_price), 0),
             coalesce(sum(mq.hold_total), 0)
         from user u
             left join my_fund mf on mf.user_id = u.user_id

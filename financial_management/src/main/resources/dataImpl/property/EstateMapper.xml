@@ -126,6 +126,7 @@
             left join my_gold mg on mg.user_id = u.user_id
             left join my_bond mb on mb.user_id = u.user_id
             left join my_qdii mq on mq.user_id = u.user_id
+        where u.user_id != 0
         group by u.user_id
     </insert>
 

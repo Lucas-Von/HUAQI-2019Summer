@@ -26,22 +26,6 @@ public interface EstateMapper {
     EstatePO getPropertyByUser(@Param("userId") Long userId);
 
     /**
-     * 获取用户累计收益
-     *
-     * @param userId
-     * @return
-     */
-    Double getTotalIncome(@Param("userId") Long userId);
-
-    /**
-     * 获取用户昨日收益
-     *
-     * @param userId
-     * @return
-     */
-    RecentInvPO getNewlyIncome(@Param("userId") Long userId);
-
-    /**
      * 获取用户自注册起所有月份的资产列表
      *
      * @param userId
@@ -88,6 +72,30 @@ public interface EstateMapper {
      * @return
      */
     Date getFortuneUpdateTime(@Param("userId") Long userId);
+
+    /**
+     * 获取用户累计收益
+     *
+     * @param userId
+     * @return
+     */
+    Double getTotalIncome(@Param("userId") Long userId);
+
+    /**
+     * 获取用户昨日收益
+     *
+     * @param userId
+     * @return
+     */
+    RecentInvPO getNewlyIncome(@Param("userId") Long userId);
+
+    /**
+     * 获取平台所有用户近7/30/90天的收益率
+     *
+     * @param days
+     * @return
+     */
+    IncomePO getRecentProfitRate(@Param("days") int days);
 
     @Scheduled(cron = "0 0 23 * * ?")
     void updateFortuneByDay();

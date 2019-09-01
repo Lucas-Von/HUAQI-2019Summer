@@ -67,42 +67,6 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     }
 
     /**
-     * 获取用户累计收益
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public BasicResponse getTotalIncome(Long userId) {
-        try {
-            double totalIncome = estateMapper.getTotalIncome(userId);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, totalIncome);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
-        }
-    }
-
-    /**
-     * 获取用户昨日收益
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public BasicResponse getNewlyIncome(Long userId) {
-        try {
-            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
-            double yesterday = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayQdii() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
-            double dayBeforeYesterday = recentInvPO.getDayBeforeYesterdayStocks() + recentInvPO.getDayBeforeYesterdayQdii() + recentInvPO.getDayBeforeYesterdayGold() + recentInvPO.getDayBeforeYesterdayBond();
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, yesterday - dayBeforeYesterday);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
-        }
-    }
-
-    /**
      * 获取用户指定资产类型信息列表
      *
      * @param userId, assetType
@@ -260,6 +224,59 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
             RecAllocPO recAllocPO = manageServiceForBl.getRecAllocPO(userId);
             MyRecAllocVO myRecAllocVO = new MyRecAllocVO(recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, myRecAllocVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户累计收益
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getTotalIncome(Long userId) {
+        try {
+            double totalIncome = estateMapper.getTotalIncome(userId);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, totalIncome);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户最新收益
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getNewlyIncome(Long userId) {
+        try {
+            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
+            double current = recentInvPO.getCurrentStocks() + recentInvPO.getCurrentQdii() + recentInvPO.getCurrentGold() + recentInvPO.getCurrentBond();
+            double yesterday = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayQdii() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, current - yesterday);
+        } catch (Exception e) {
+            return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
+        }
+    }
+
+    /**
+     * 获取平台所有用户近7/30/90天的收益率
+     *
+     * @param days
+     * @return
+     */
+    @Override
+    public BasicResponse getRecentProfitRate(int days) {
+        try {
+            IncomePO incomePO = estateMapper.getRecentProfitRate(days);
+            double profitRate = 0;
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, profitRate);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

@@ -35,18 +35,6 @@ public class EstateController {
         return estateService.getPropertyByUser(userId);
     }
 
-    @GetMapping("/estate/getTotalIncome")
-    public BasicResponse getTotalIncome(HttpServletRequest request) {
-        Long userId = jwtUtil.getIdFromRequest(request);
-        return estateService.getTotalIncome(userId);
-    }
-
-    @GetMapping("/estate/getNewlyIncome")
-    public BasicResponse getNewlyIncome(HttpServletRequest request) {
-        Long userId = jwtUtil.getIdFromRequest(request);
-        return estateService.getNewlyIncome(userId);
-    }
-
     @GetMapping("/estate/getFundsInfoList")
     public BasicResponse getFundsInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
@@ -105,6 +93,23 @@ public class EstateController {
     public BasicResponse getMyRecAlloc(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getMyRecAlloc(userId);
+    }
+
+    @GetMapping("/income/getTotalIncome")
+    public BasicResponse getTotalIncome(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getTotalIncome(userId);
+    }
+
+    @GetMapping("/income/getNewlyIncome")
+    public BasicResponse getNewlyIncome(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getNewlyIncome(userId);
+    }
+
+    @GetMapping("/income/getRecentProfitRate")
+    public BasicResponse getRecentProfitRate(@RequestParam int days) {
+        return estateService.getRecentProfitRate(days);
     }
 
 }

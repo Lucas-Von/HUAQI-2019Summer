@@ -25,22 +25,6 @@ public interface EstateService {
     BasicResponse getPropertyByUser(Long userId);
 
     /**
-     * 获取用户累计收益
-     *
-     * @param userId
-     * @return
-     */
-    BasicResponse getTotalIncome(Long userId);
-
-    /**
-     * 获取用户昨日收益
-     *
-     * @param userId
-     * @return
-     */
-    BasicResponse getNewlyIncome(Long userId);
-
-    /**
      * 获取用户指定资产类型信息列表
      *
      * @param userId, assetType
@@ -95,5 +79,30 @@ public interface EstateService {
      * @return
      */
     BasicResponse getMyRecAlloc(Long userId);
+
+    /**
+     * 获取用户累计收益
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getTotalIncome(Long userId);
+
+
+    /**
+     * 获取用户最新收益
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getNewlyIncome(Long userId);
+
+    /**
+     * 获取平台所有用户近7/30/90天的收益率
+     *
+     * @param days
+     * @return
+     */
+    BasicResponse getRecentProfitRate(int days);
 
 }

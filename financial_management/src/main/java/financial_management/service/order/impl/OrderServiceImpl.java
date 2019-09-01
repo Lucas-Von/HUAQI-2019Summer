@@ -12,10 +12,14 @@ import financial_management.entity.PlatformTradePO;
 import financial_management.entity.TransferRecordPO;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
-import financial_management.vo.order.*;
+import financial_management.vo.order.PersonalTradeVO;
+import financial_management.vo.order.PlatformTradeVO;
+import financial_management.vo.order.ProductVO4Order;
+import financial_management.vo.order.TransferRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -102,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
         String type = personalTradeVO.getType().name().toUpperCase();
         Float latestSum = personalTradeMapper.selectSum(userID, type, null);
         MaxInvestPO max = maxInvestMapper.selectByUserIDAndType(userID, type);
-        if (latestSum == null){
+        if (latestSum == null) {
             latestSum = 0.0f;
         }
         if (max == null) {
@@ -184,20 +188,28 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public BasicResponse<MaxInvestVO> getMaxInvestBy(Long userID, String type) {
-        BasicResponse<MaxInvestVO> response;
+    public Double getMaxInvestBy(Long userID, String type) {
+        //BasicResponse<MaxInvestVO> response;
         MaxInvestPO po = maxInvestMapper.selectByUserIDAndType(userID, type);
         if (po != null) {
-            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new MaxInvestVO(po));
+            return new BigDecimal(po.getMax()).doubleValue();
+            //response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new MaxInvestVO(po));
         } else {
-            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new MaxInvestVO(userID, type, (float) 0, null));
+            return Double.NaN;
+            //response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new MaxInvestVO(userID, type, (float) 0, null));
         }
-        return response;
+        //return response;
     }
 
     @Override
-    public BasicResponse<Float> getInvestBy(Long userID, String type, Date date) {
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeMapper.selectSum(userID, type, date));
+    public Double getInvestBy(Long userID, String type, Date date) {
+        Float sum = personalTradeMapper.selectSum(userID, type, date);
+        if (sum != null) {
+            return new BigDecimal(sum).doubleValue();
+        } else {
+            return Double.NaN;
+        }
+        //return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeMapper.selectSum(userID, type, date));
     }
 
     private static PersonalTradePO assemblePersonalTradePO(PersonalTradeVO vo) {

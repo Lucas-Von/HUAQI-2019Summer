@@ -3,7 +3,6 @@ package financial_management.service.order.stub;
 import financial_management.bl.order.OrderService;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
-import financial_management.vo.order.MaxInvestVO;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.TransferRecordVO;
@@ -184,12 +183,12 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
-    public BasicResponse<MaxInvestVO> getMaxInvestBy(Long userID, String type) {
+    public Double getMaxInvestBy(Long userID, String type) {
         return null;
     }
 
     @Override
-    public BasicResponse<Float> getInvestBy(Long userID, String type, Date date) {
+    public Double getInvestBy(Long userID, String type, Date date) {
         return null;
     }
 }

@@ -15,6 +15,12 @@
         `id`, `time`, `user_id`, `type`, `content`, `is_read`, `is_delete`
     </sql>
 
+    <select id="selectByID" resultMap="original">
+        select *
+        from message
+        where id = #{ID}
+    </select>
+
     <select id="selectByUserID" resultMap="original">
         select
         <include refid="all"/>
@@ -73,6 +79,12 @@
         where type = #{type}
           and user_id = #{userID}
           and is_read = 0
+    </update>
+
+    <update id="readMessageByMessageID">
+        update message
+        set is_read = 1
+        where id = #{ID}
     </update>
 
     <update id="deleteMessage" parameterType="financial_management.entity.MessagePO">

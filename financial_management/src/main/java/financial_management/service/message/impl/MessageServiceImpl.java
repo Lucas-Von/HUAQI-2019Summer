@@ -76,7 +76,12 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
 
     @Override
     public BasicResponse<?> readNewMessage(Long userID, Long messageID) {
-        if (messageMapper.readMessageByMessageID(messageID) == 1) {
+        MessagePO po = messageMapper.selectByID(messageID);
+        if (po == null) {
+            return new BasicResponse<>(ResponseStatus.STATUS_MESSAGE_NOT_EXIST, null);
+        } else if (!po.getUserID().equals(userID)) {
+            return new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, null);
+        } else if (messageMapper.readMessageByMessageID(messageID) == 1) {
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, messageID);
         } else {
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);

@@ -1,7 +1,7 @@
 package financial_management.bl.question;
 
-import financial_management.entity.Response;
+import financial_management.vo.BasicResponse;
 
 public interface QuestionService {
-    public Response<String> answer(String question);
+    public BasicResponse<String> answer(String question, Long userID);
 }

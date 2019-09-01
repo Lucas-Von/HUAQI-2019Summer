@@ -16,6 +16,7 @@ import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.ProductVO4Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class Stock_SorryIDontKnowWhereToPlace {
     @Autowired
     private StockMapper stockMapper;
@@ -38,7 +40,8 @@ public class Stock_SorryIDontKnowWhereToPlace {
         }
         float whereCanIGetTargetAmount = 0;
         StockAdjustParam param = new StockAdjustParam(whereCanIGetTargetAmount, sum);
-        List<Object> result = PyInvoke.invoke(PyFunc.STOCK_MONEY_ADJUST, param, StockAdjustment.class);
+        //List<Object> result = PyInvoke.invoke(PyFunc.STOCK_MONEY_ADJUST, param, StockAdjustment.class);
+        List<Object> result = getStubData();
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
@@ -221,5 +224,12 @@ public class Stock_SorryIDontKnowWhereToPlace {
     private float computeHoldPrice(double newTotal, double newPrice) {
         //舍入模式？
         return new BigDecimal(newTotal).divide(new BigDecimal(newPrice), RoundingMode.HALF_UP).floatValue();
+    }
+
+    private List<Object> getStubData(){
+        List<Object> result = new ArrayList<>(2);
+        result.add(new StockAdjustment("123456","随便",1000,1000.0f,1.0f));
+        result.add(new StockAdjustment("654321","可以",-1000,-1000.0f,1.0f));
+        return result;
     }
 }

@@ -54,4 +54,7 @@ public class StockAdjustment {
         this.m_already_deployed = m_already_deployed;
         this.price_deployed = price_deployed;
     }
+
+    public StockAdjustment() {
+    }
 }

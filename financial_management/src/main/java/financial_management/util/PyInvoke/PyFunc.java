@@ -38,7 +38,8 @@ public enum PyFunc {
     public String path;
 
     PyFunc(String path){
-        this.path = "..\\PyFuncs\\" + path;
+        this.path = "." +
+                ".\\PyFuncs\\" + path;
     }
 
 }

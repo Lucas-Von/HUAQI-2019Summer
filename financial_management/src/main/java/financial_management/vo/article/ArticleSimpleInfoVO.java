@@ -14,6 +14,7 @@ public class ArticleSimpleInfoVO {
     private Long pageviews;
     private Timestamp time;
     private String tags;
+    private Integer category;
 
     public Long getArticleId() {
         return articleId;
@@ -71,6 +72,15 @@ public class ArticleSimpleInfoVO {
         this.tags = tags;
     }
 
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
+
     public ArticleSimpleInfoVO() {
     }
 
@@ -79,13 +89,15 @@ public class ArticleSimpleInfoVO {
                                String summary,
                                Long pageviews,
                                Timestamp time,
-                               String tags) {
+                               String tags,
+                               Integer category) {
         this.articleId = articleId;
         this.title = title;
         this.summary = summary;
         this.pageviews = pageviews;
         this.time = time;
         this.tags = tags;
+        this.category = category;
     }
 
     public ArticleSimpleInfoVO(Long articleId,

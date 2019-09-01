@@ -116,7 +116,7 @@
             coalesce(sum(mi.price), 0),
             coalesce(sum(ms.hold_total), 0),
             coalesce(sum(mg.sum), 0),
-            coalesce(sum(mb.purchase_price), 0),
+            coalesce(sum(mb.fund_share * mb.net_worth), 0),
             coalesce(sum(mq.hold_total), 0)
         from user u
             left join my_fund mf on mf.user_id = u.user_id
@@ -124,7 +124,7 @@
             left join my_ins mi on mi.user_id = u.user_id
             left join my_stock ms on ms.user_id = u.user_id
             left join my_gold mg on mg.user_id = u.user_id
-            left join my_bond mb on mb.user_id = u.user_id
+            left join user_bond_fund mb on mb.user_id = u.user_id
             left join my_qdii mq on mq.user_id = u.user_id
         where u.user_id != 0
         group by u.user_id

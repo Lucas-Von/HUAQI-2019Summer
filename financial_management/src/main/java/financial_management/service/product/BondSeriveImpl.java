@@ -191,25 +191,25 @@ public class BondSeriveImpl {
     public void selfRecord(Long userId ,Float nationalFund,Float corporateFund,Integer sign,Float rate){
         Date time = new Date();
         //TODO 接函数4
-        Boolean tradeSign = false;
-        Float amount = 0.1F;
-        amount = tradeSign?-amount:amount;
-        //接东哥
-        PersonalTradeVO vo = new PersonalTradeVO();
-        //数量
-        vo.setTotal(amount);
-        //种类
-        vo.setType(PersonalTradeVO.Type.BOND);
-        //手续费
-        vo.setFee(0.0F);
-        //用户Id
-        vo.setUserID(userId);
-        //创建时间
-        vo.setCreateTime(new Date());
-        vo.setID(null);
-        vo.setAmount(null);
-        vo.setPrice(null);
-        orderService.addPersonalTradeRecord(vo,false);
+//        Boolean tradeSign = false;
+//        Float amount = 0.1F;
+//        amount = tradeSign?-amount:amount;
+//        //接东哥
+//        PersonalTradeVO vo = new PersonalTradeVO();
+//        //数量
+//        vo.setTotal(amount);
+//        //种类
+//        vo.setType(PersonalTradeVO.Type.BOND);
+//        //手续费
+//        vo.setFee(0.0F);
+//        //用户Id
+//        vo.setUserID(userId);
+//        //创建时间
+//        vo.setCreateTime(new Date());
+//        vo.setID(null);
+//        vo.setAmount(null);
+//        vo.setPrice(null);
+//        orderService.addPersonalTradeRecord(vo,false);
 
     }
 

@@ -122,7 +122,7 @@ public class ArticlePO {
     }
 
     public ArticleSimpleInfoVO getArticleSimpleInfoVO(){
-        return new ArticleSimpleInfoVO(articleId, title, summary, pageviews, time, tags);
+        return new ArticleSimpleInfoVO(articleId, title, summary, pageviews, time, tags, category);
     }
 
     public ArticleAdminVO getArticleAdminVO(){

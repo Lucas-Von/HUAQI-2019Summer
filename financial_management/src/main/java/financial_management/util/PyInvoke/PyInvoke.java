@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PyInvoke {
 
-    private static final String invokeCmd = "D:\\Python3\\python";
+    private static final String invokeCmd = "python";
 
     /**
      *

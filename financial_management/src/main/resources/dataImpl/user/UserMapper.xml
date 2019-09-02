@@ -82,7 +82,7 @@
 
     <select id="getUserAmount" resultType="long">
         select count(user_id)
-        from user where status = 1
+        from user where status = 1 and email != 'admin'
     </select>
 
     <insert id="insertIfChangedEmail">

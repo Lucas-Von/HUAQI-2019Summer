@@ -67,6 +67,7 @@ CREATE TABLE `bond` (
 
 LOCK TABLES `bond` WRITE;
 /*!40000 ALTER TABLE `bond` DISABLE KEYS */;
+INSERT INTO bond VALUES (1,'债券1','8888',99);
 /*!40000 ALTER TABLE `bond` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,6 +322,7 @@ CREATE TABLE `dom_stock` (
 
 LOCK TABLES `dom_stock` WRITE;
 /*!40000 ALTER TABLE `dom_stock` DISABLE KEYS */;
+INSERT INTO dom_stock VALUES (1,'啊啊啊啊？','601991',99);
 /*!40000 ALTER TABLE `dom_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -382,6 +384,7 @@ CREATE TABLE `for_stock` (
 
 LOCK TABLES `for_stock` WRITE;
 /*!40000 ALTER TABLE `for_stock` DISABLE KEYS */;
+INSERT INTO for_stock VALUES (1,'阿这','123123',12);
 /*!40000 ALTER TABLE `for_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -838,8 +841,8 @@ CREATE TABLE `my_qdii` (
   `hold_price` float NOT NULL,
   `hold_amount` float NOT NULL,
   `hold_total` float NOT NULL,
-  `profit` float DEFAULT NULL,
-  `profit_rate` float DEFAULT NULL,
+  `profit` float NOT NULL DEFAULT 0,
+  `profit_rate` float NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_id`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -850,7 +853,7 @@ CREATE TABLE `my_qdii` (
 
 LOCK TABLES `my_qdii` WRITE;
 /*!40000 ALTER TABLE `my_qdii` DISABLE KEYS */;
-INSERT INTO `my_qdii` VALUES (1,'613991',1,1000,1000,99.9,100,999,-1,-0.001);
+INSERT INTO `my_qdii` VALUES (1,'123123',1,1000,1000,99.9,100,999,-1,-0.001);
 /*!40000 ALTER TABLE `my_qdii` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -870,8 +873,8 @@ CREATE TABLE `my_stock` (
   `hold_price` float NOT NULL,
   `hold_amount` int(11) NOT NULL,
   `hold_total` float NOT NULL,
-  `profit` float DEFAULT NULL,
-  `profit_rate` float DEFAULT NULL,
+  `profit` float NOT NULL DEFAULT 0,
+  `profit_rate` float NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_id`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1133,6 +1136,17 @@ LOCK TABLES `transfer_record` WRITE;
 /*!40000 ALTER TABLE `transfer_record` DISABLE KEYS */;
 /*!40000 ALTER TABLE `transfer_record` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `stock_adjustment`;
+CREATE TABLE `stock_adjustment` (
+    `date` timestamp NOT NULL,
+    `stock_code` varchar(6) NOT NULL,
+    `stockname` varchar(50) NOT NULL,
+    `account_deployed_change` int(11) NOT NULL,
+    `m_already_deployed` float NOT NULL,
+    `price_deployed` float NOT NULL,
+    PRIMARY KEY (`date`,`stock_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `user`

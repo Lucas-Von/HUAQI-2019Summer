@@ -14,15 +14,13 @@
     <select id="selectSelfDomStock" resultMap="MyStockProduct">
         select *
         from my_stock
-        where code = #{code}
-          and user_id = #{userId};
+        where user_id = #{userId};
     </select>
 
     <select id="selectSelfForStock" resultMap="qdii">
         select *
         from my_qdii
-        where code = #{code}
-          and user_id = #{userId};
+        where user_id = #{userId};
     </select>
 
     <insert id="insertMyStock" parameterType="financial_management.entity.MyStockPO">
@@ -45,9 +43,9 @@
             hold_amount = #{holdAmount},
             hold_total  = #{holdTotal},
             profit = #{profit},
-            profit_rate = ${profitRate}
-        where user_id = #{userId}
-          and code = #{code}
+            profit_rate = #{profitRate}
+        where `user_id` = #{userId,jdbcType=BIGINT}
+          and `code` = #{code,jdbcType=VARCHAR};
     </update>
 
     <update id="updateMyQDII" parameterType="financial_management.entity.MyQDIIPO">
@@ -56,9 +54,9 @@
             hold_amount = #{holdAmount},
             hold_total  = #{holdTotal},
             profit = #{profit},
-            profit_rate = ${profitRate}
-        where user_id = #{userId}
-          and code = #{code}
+            profit_rate = #{profitRate}
+        where `user_id` = #{userId,jdbcType=BIGINT}
+          and `code` = #{code,jdbcType=VARCHAR};
     </update>
 
     <select id="selectDomStockByCode" resultMap="DomProduct">
@@ -95,7 +93,7 @@
         <result property="holdAmount" column="hold_amount"/>
         <result property="holdTotal" column="hold_total"/>
         <result property="profit" column="profit"/>
-        <result property="profit_rate" column="profitRate"/>
+        <result property="profitRate" column="profit_rate"/>
     </resultMap>
 
     <resultMap id="qdii" type="financial_management.entity.MyQDIIPO">
@@ -108,7 +106,7 @@
         <result property="holdAmount" column="hold_amount"/>
         <result property="holdTotal" column="hold_total"/>
         <result property="profit" column="profit"/>
-        <result property="profit_rate" column="profitRate"/>
+        <result property="profitRate" column="profit_rate"/>
     </resultMap>
 
     <resultMap id="DomProduct" type="financial_management.entity.DomStockPO">

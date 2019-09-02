@@ -1,4 +1,4 @@
-package financial_management.bl.stock;
+package financial_management.bl.product;
 
 import financial_management.FinancialManagementApplication;
 import financial_management.service.property.estate.Stock_SorryIDontKnowWhereToPlace;
@@ -10,12 +10,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = FinancialManagementApplication.class)
-public class PythonInvokeTest {
+public class AdjustWithoutPyInvoke {
     @Autowired
-    Stock_SorryIDontKnowWhereToPlace service = new Stock_SorryIDontKnowWhereToPlace();
+    private Stock_SorryIDontKnowWhereToPlace service;
 
     @Test
-    public void changeDomStockTest(){
+    public void changeDomStock_normal(){
         service.changeDomStock(1L);
     }
 }

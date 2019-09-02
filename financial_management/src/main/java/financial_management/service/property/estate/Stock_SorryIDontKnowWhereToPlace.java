@@ -34,13 +34,13 @@ public class Stock_SorryIDontKnowWhereToPlace {
 
     public void changeDomStock(Long userId) {
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
-        float sum = 0;
-        for (MyStockPO po : mydoms) {
-            sum += po.getHoldTotal();
-        }
-        float whereCanIGetTargetAmount = 0;
-        StockAdjustParam param = new StockAdjustParam(whereCanIGetTargetAmount, sum);
-        //List<Object> result = PyInvoke.invoke(PyFunc.STOCK_MONEY_ADJUST, param, StockAdjustment.class);
+//        float sum = 0;
+//        for (MyStockPO po : mydoms) {
+//            sum += po.getHoldTotal();
+//        }
+//        float whereCanIGetTargetAmount = 0;
+//        StockAdjustParam param = new StockAdjustParam(whereCanIGetTargetAmount, sum);
+//        List<Object> result = PyInvoke.invoke(PyFunc.STOCK_MONEY_ADJUST, param, StockAdjustment.class);
         List<Object> result = getStubData();
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
@@ -53,13 +53,14 @@ public class Stock_SorryIDontKnowWhereToPlace {
 
     public void changeForStock(Long userId) {
         List<MyQDIIPO> myfors = stockMapper.selectSelfForStock(userId);
-        float sum = 0;
-        for (MyQDIIPO po : myfors) {
-            sum += po.getHoldTotal();
-        }
-        float whereCanIGetTargetAmount = 0;
-        StockAdjustParam param = new StockAdjustParam(whereCanIGetTargetAmount, sum);
-        List<Object> result = PyInvoke.invoke(PyFunc.STOCK_MONEY_ADJUST, param, QDIIAdjustment.class);
+//        float sum = 0;
+//        for (MyQDIIPO po : myfors) {
+//            sum += po.getHoldTotal();
+//        }
+//        float whereCanIGetTargetAmount = 0;
+        //StockAdjustParam param = new StockAdjustParam(whereCanIGetTargetAmount, sum);
+        //List<Object> result = PyInvoke.invoke(PyFunc.STOCK_MONEY_ADJUST, param, QDIIAdjustment.class);
+        List<Object> result = getStubData();
         if (result != null) {
             List<QDIIAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
@@ -71,16 +72,17 @@ public class Stock_SorryIDontKnowWhereToPlace {
 
     public void weeklyDomTransfer(Long userId) {
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
-        List<List<Object>> hold = new ArrayList<>(mydoms.size());
-        for (MyStockPO po : mydoms) {
-            List<Object> stockInfo = new ArrayList<>(2);
-            stockInfo.add(po.getCode());
-            stockInfo.add(po.getHoldAmount());
-            hold.add(stockInfo);
-        }
-        float whereCanIGetTargetAmount = 0;
-        StockWeeklyTransferParam param = new StockWeeklyTransferParam(whereCanIGetTargetAmount, hold);
-        List<Object> result = PyInvoke.invoke(PyFunc.STOCK_ADJUST_WEEKLY, param, StockAdjustment.class);
+//        List<List<Object>> hold = new ArrayList<>(mydoms.size());
+//        for (MyStockPO po : mydoms) {
+//            List<Object> stockInfo = new ArrayList<>(2);
+//            stockInfo.add(po.getCode());
+//            stockInfo.add(po.getHoldAmount());
+//            hold.add(stockInfo);
+//        }
+//        float whereCanIGetTargetAmount = 0;
+        //StockWeeklyTransferParam param = new StockWeeklyTransferParam(whereCanIGetTargetAmount, hold);
+        //List<Object> result = PyInvoke.invoke(PyFunc.STOCK_ADJUST_WEEKLY, param, StockAdjustment.class);
+        List<Object> result = getStubData();
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
@@ -92,16 +94,17 @@ public class Stock_SorryIDontKnowWhereToPlace {
 
     public void weeklyForTransfer(Long userId) {
         List<MyQDIIPO> myfors = stockMapper.selectSelfForStock(userId);
-        List<List<Object>> hold = new ArrayList<>(myfors.size());
-        for (MyQDIIPO po : myfors) {
-            List<Object> stockInfo = new ArrayList<>(2);
-            stockInfo.add(po.getCode());
-            stockInfo.add(po.getHoldAmount());
-            hold.add(stockInfo);
-        }
-        float whereCanIGetTargetAmount = 1;
-        StockWeeklyTransferParam param = new StockWeeklyTransferParam(whereCanIGetTargetAmount, hold);
-        List<Object> result = PyInvoke.invoke(PyFunc.STOCK_ADJUST_WEEKLY, param, QDIIAdjustment.class);
+//        List<List<Object>> hold = new ArrayList<>(myfors.size());
+//        for (MyQDIIPO po : myfors) {
+//            List<Object> stockInfo = new ArrayList<>(2);
+//            stockInfo.add(po.getCode());
+//            stockInfo.add(po.getHoldAmount());
+//            hold.add(stockInfo);
+//        }
+//        float whereCanIGetTargetAmount = 1;
+        //StockWeeklyTransferParam param = new StockWeeklyTransferParam(whereCanIGetTargetAmount, hold);
+        //List<Object> result = PyInvoke.invoke(PyFunc.STOCK_ADJUST_WEEKLY, param, QDIIAdjustment.class);
+        List<Object> result = getStubData();
         if (result != null) {
             List<QDIIAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {

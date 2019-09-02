@@ -46,24 +46,31 @@ public class InvestmentServiceImpl implements InvestmentService {
 //        });
 
         List<MyBondPO> bonds = bondMapper.selectSelfBond(userId);
-        bonds.stream().forEach(o->{
+        bonds.stream().forEach(o -> {
             BondPO bond = bondMapper.selectBondByCode(o.getCode());
-            InvestmentVO vo =new InvestmentVO(bond.getName(),"债券",o.getCode(),bond.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
-            investments.add(vo);
+            if (bond != null) {
+                InvestmentVO vo = new InvestmentVO(bond.getName(), "债券", o.getCode(), bond.getLatestPrice().doubleValue(), o.getQuantity(), o.getAmount().doubleValue(), o.getProfit().doubleValue(), o.getProfitRate().doubleValue());
+                investments.add(vo);
+            }
         });
 
         List<MyStockPO> domStocks = stockMapper.selectSelfDomStock(userId);
 
-        domStocks.stream().forEach(o->{
+        domStocks.stream().forEach(o -> {
             DomStockPO domStock = stockMapper.selectDomStockByCode(o.getCode());
-            InvestmentVO vo =new InvestmentVO(domStock.getName(),"国内股票",o.getCode(),domStock.getLatestPrice().doubleValue(),o.getHoldAmount(),o.getHoldTotal().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
-            investments.add(vo);
+            if (domStock != null) {
+                InvestmentVO vo = new InvestmentVO(domStock.getName(), "国内股票", o.getCode(), domStock.getLatestPrice().doubleValue(), o.getHoldAmount(), o.getHoldTotal().doubleValue(), o.getProfit().doubleValue(), o.getProfitRate().doubleValue());
+                investments.add(vo);
+            }
         });
+
         List<MyQDIIPO> forStocks = stockMapper.selectSelfForStock(userId);
-        forStocks.stream().forEach(o->{
+        forStocks.stream().forEach(o -> {
             ForStockPO forStock = stockMapper.selectForStockByCode(o.getCode());
-            InvestmentVO vo =new InvestmentVO(forStock.getName(),"海外股票",o.getCode(),forStock.getLatestPrice().doubleValue(),o.getHoldAmount(),o.getHoldTotal().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
-            investments.add(vo);
+            if (forStock != null) {
+                InvestmentVO vo = new InvestmentVO(forStock.getName(), "海外股票", o.getCode(), forStock.getLatestPrice().doubleValue(), o.getHoldAmount(), o.getHoldTotal().doubleValue(), o.getProfit().doubleValue(), o.getProfitRate().doubleValue());
+                investments.add(vo);
+            }
         });
 
         return investments;
@@ -74,35 +81,35 @@ public class InvestmentServiceImpl implements InvestmentService {
         List<InvestRecProductVO> invests = new ArrayList<>();
 
         List<GoldPO> gold = goldMapper.selectAllGold();
-        gold.stream().forEach(o->{
-            InvestRecProductVO vo = new InvestRecProductVO(o.getName(),o.getCode(),o.getLatestPrice().doubleValue());
+        gold.stream().forEach(o -> {
+            InvestRecProductVO vo = new InvestRecProductVO(o.getName(), o.getCode(), o.getLatestPrice().doubleValue());
             invests.add(vo);
         });
         List<BondPO> bond = bondMapper.selectAllBond();
-        bond.stream().forEach(o->{
-            InvestRecProductVO vo = new InvestRecProductVO(o.getName(),o.getCode(),o.getLatestPrice().doubleValue());
+        bond.stream().forEach(o -> {
+            InvestRecProductVO vo = new InvestRecProductVO(o.getName(), o.getCode(), o.getLatestPrice().doubleValue());
             invests.add(vo);
         });
 
         List<DomStockPO> domStocks = stockMapper.selectAllDomStock();
-        domStocks.stream().forEach(o->{
-            InvestRecProductVO vo = new InvestRecProductVO(o.getName(),o.getCode(),o.getLatestPrice().doubleValue());
+        domStocks.stream().forEach(o -> {
+            InvestRecProductVO vo = new InvestRecProductVO(o.getName(), o.getCode(), o.getLatestPrice().doubleValue());
             invests.add(vo);
         });
         List<ForStockPO> forStocks = stockMapper.selectAllForStock();
-        forStocks.stream().forEach(o->{
-            InvestRecProductVO vo = new InvestRecProductVO(o.getName(),o.getCode(),o.getLatestPrice().doubleValue());
+        forStocks.stream().forEach(o -> {
+            InvestRecProductVO vo = new InvestRecProductVO(o.getName(), o.getCode(), o.getLatestPrice().doubleValue());
             invests.add(vo);
         });
         return invests;
     }
 
     /**
+     * @return void
      * @Author jyh
      * @Description //TODO amount和holdings有什么区别
      * @Date 20:32 2019/8/21
      * @Param [userId, code, amount, totalprice, type]
-     * @return void
      **/
     @Override
     public BasicResponse purchase(Long userId, String code, Float amount, Double totalprice, String type) {
@@ -146,22 +153,21 @@ public class InvestmentServiceImpl implements InvestmentService {
                     stockMapper.insertMyStock(myStockPO);
                     break;
             }
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
-        }catch (NullPointerException e){
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+        } catch (NullPointerException e) {
             e.printStackTrace();
-            return new BasicResponse<>(ResponseStatus.STATUS_INVESTMENTPRODUCT_UNFINED,null);
+            return new BasicResponse<>(ResponseStatus.STATUS_INVESTMENTPRODUCT_UNFINED, null);
         }
     }
 
-    public ProductVO4Order getProduct(Long id,String type) {
+    public ProductVO4Order getProduct(Long id, String type) {
 
-        switch (type){
+        switch (type) {
             case "gold":
-                GoldPO po= goldMapper.selectById(id);
-                if (po == null){
+                GoldPO po = goldMapper.selectById(id);
+                if (po == null) {
                     return getNullProduct();
-                }
-                else {
+                } else {
                     ProductVO4Order vo = new ProductVO4Order();
                     vo.setpID(id);
                     vo.setCode(po.getCode());
@@ -170,10 +176,9 @@ public class InvestmentServiceImpl implements InvestmentService {
                 }
             case "bond":
                 BondPO bond = bondMapper.selectBondById(id);
-                if (bond == null){
+                if (bond == null) {
                     return getNullProduct();
-                }
-                else {
+                } else {
                     ProductVO4Order vo = new ProductVO4Order();
                     vo.setpID(id);
                     vo.setCode(bond.getCode());
@@ -182,33 +187,31 @@ public class InvestmentServiceImpl implements InvestmentService {
                 }
             case "forStock":
                 ForStockPO forStock = stockMapper.selectForStockById(id);
-                if (forStock == null){
+                if (forStock == null) {
                     return getNullProduct();
-                }
-                else {
+                } else {
                     ProductVO4Order vo = new ProductVO4Order();
                     vo.setpID(id);
                     vo.setCode(forStock.getCode());
                     vo.setName(forStock.getName());
                     return vo;
                 }
-             default:
-                 DomStockPO domStock = stockMapper.selectDomStockById(id);
-                 if (domStock == null){
-                     return getNullProduct();
-                 }
-                 else {
-                     ProductVO4Order vo = new ProductVO4Order();
-                     vo.setpID(id);
-                     vo.setCode(domStock.getCode());
-                     vo.setName(domStock.getName());
-                     return vo;
-                 }
+            default:
+                DomStockPO domStock = stockMapper.selectDomStockById(id);
+                if (domStock == null) {
+                    return getNullProduct();
+                } else {
+                    ProductVO4Order vo = new ProductVO4Order();
+                    vo.setpID(id);
+                    vo.setCode(domStock.getCode());
+                    vo.setName(domStock.getName());
+                    return vo;
+                }
         }
 
     }
 
-    public ProductVO4Order getNullProduct(){
+    public ProductVO4Order getNullProduct() {
         ProductVO4Order vo = new ProductVO4Order();
         vo.setName(null);
         vo.setCode(null);

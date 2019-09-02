@@ -24,4 +24,92 @@ public interface EstateServiceForBl {
      */
     Date getFortuneUpdateTime(Long userId);
 
+    /**
+     * 获取用户最新的投资收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getNewlyInvestRate(Long userId);
+
+    /**
+     * 获取用户最新的股票收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getNewlyStocksRate(Long userId);
+
+    /**
+     * 获取用户最新的股指收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getNewlyQdiiRate(Long userId);
+
+    /**
+     * 获取用户最新的黄金收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getNewlyGoldRate(Long userId);
+
+    /**
+     * 获取用户最新的债券收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getNewlyBondRate(Long userId);
+
+    /**
+     * 获取用户累计的股票收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getTotalStocksRate(Long userId);
+
+    /**
+     * 获取用户累计的投资收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getTotalInvestRate(Long userId);
+
+    /**
+     * 获取用户累计的股指收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getTotalQdiiRate(Long userId);
+
+    /**
+     * 获取用户累计的黄金收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getTotalGoldRate(Long userId);
+
+    /**
+     * 获取用户累计的债券收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getTotalBondRate(Long userId);
+
+    /**
+     * 获取债券的days日收益率
+     *
+     * @param bondId, days
+     * @return
+     */
+    double getBondProfitOfDays(Long bondId, int days);
+
 }

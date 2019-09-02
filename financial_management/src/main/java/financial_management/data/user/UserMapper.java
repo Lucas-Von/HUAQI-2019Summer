@@ -131,6 +131,14 @@ public interface UserMapper {
     Long getUserAmount();
 
     /**
+     * 获取除管理员外的用户id列表
+     *
+     * @param
+     * @return
+     */
+    List<Long> getUserIdList();
+
+    /**
      * 在能否修改邮箱表中插入一个用户
      * @param email
      */

@@ -125,6 +125,30 @@ INSERT INTO `bond_foundation` VALUES (1,'国债',1000,200000,200,0.2,'2019-09-01
 UNLOCK TABLES;
 
 --
+-- Table structure for table `bond_rate_log`
+--
+
+DROP TABLE IF EXISTS `bond_rate_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bond_rate_log` (
+  `fund_id` bigint(255) DEFAULT NULL,
+  `fund_name` varchar(45) DEFAULT NULL,
+  `net_worth` double DEFAULT NULL,
+  `time` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bond_rate_log`
+--
+
+LOCK TABLES `bond_rate_log` WRITE;
+/*!40000 ALTER TABLE `bond_rate_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bond_rate_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `card`
 --
 
@@ -411,7 +435,7 @@ CREATE TABLE `fortune` (
 
 LOCK TABLES `fortune` WRITE;
 /*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
-INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,200,500,1500),(1,'2019-08-22',2600,2600,2400,2500,400,500,1500),(2,'2019-08-28',3000,2600,2400,2500,800,500,1500),(1,'2019-08-28',8000,2600,2400,2500,1600,500,1500),(1,'2019-08-29',2600,9600,2400,2500,3200,500,1500),(1,'2019-08-30',2600,9800,2400,2800,3200,500,1500),(1,'2019-08-31',2600,9800,2400,2800,3200,500,1500);
+INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,200,500,1500),(1,'2019-08-22',2600,2600,2400,2500,400,500,1500),(1,'2019-08-28',8000,2600,2400,2500,1600,500,1500),(1,'2019-08-29',2600,9600,2400,2500,3200,500,1500),(1,'2019-08-30',2600,9800,2400,2800,3200,500,1500),(1,'2019-08-31',2600,9800,2400,2800,3200,500,1500),(1,'2019-09-01',2600,9800,2400,2800,3300,500,1500),(2,'2019-09-01',2600,9800,2400,2800,3300,500,1500),(1,'2019-09-02',200,50,30,999,999,66,0),(2,'2019-09-02',0,0,0,0,0,0,0),(3,'2019-09-02',0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1036,34 +1060,6 @@ INSERT INTO `questionnaire` VALUES (1,250,250,250,250,250,250,'1～3个月(短�
 UNLOCK TABLES;
 
 --
--- Table structure for table `rec_alloc`
---
-
-DROP TABLE IF EXISTS `rec_alloc`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rec_alloc` (
-  `user_id` bigint(255) NOT NULL,
-  `funds_rate` float DEFAULT NULL,
-  `saving_rate` float DEFAULT NULL,
-  `insurance_rate` float DEFAULT NULL,
-  `invest_rate` float DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `rec_alloc`
---
-
-LOCK TABLES `rec_alloc` WRITE;
-/*!40000 ALTER TABLE `rec_alloc` DISABLE KEYS */;
-INSERT INTO `rec_alloc` VALUES (1,0.5,0.02,0.08,0.4),(2,0.8,0.02,0.08,0.1);
-/*!40000 ALTER TABLE `rec_alloc` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `recommend`
 --
 
@@ -1211,4 +1207,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-01 17:12:13
+-- Dump completed on 2019-09-02 23:55:42

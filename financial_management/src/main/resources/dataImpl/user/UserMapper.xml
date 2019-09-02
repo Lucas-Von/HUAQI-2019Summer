@@ -125,6 +125,10 @@
         from if_changed_password where email = #{email}
     </select>
 
+    <select id="getUserIdList" resultType="Long">
+        select user_id from user where name != "admin" and email != "admin"
+    </select>
+
     <update id="changeStatusInIfChangedPassword">
         update if_changed_password set status = #{status}
         where email = #{email}

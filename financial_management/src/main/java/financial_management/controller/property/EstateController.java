@@ -107,9 +107,14 @@ public class EstateController {
         return estateService.getNewlyIncome(userId);
     }
 
-    @GetMapping("/income/getRecentProfitRate")
-    public BasicResponse getRecentProfitRate(@RequestParam int days) {
-        return estateService.getRecentProfitRate(days);
+    @GetMapping("/income/getAveNewlyRate")
+    public BasicResponse getAveNewlyRate() {
+        return estateService.getAveNewlyRate();
+    }
+
+    @GetMapping("/income/getAveTotalRate")
+    public BasicResponse getAveTotalRate() {
+        return estateService.getAveTotalRate();
     }
 
 }

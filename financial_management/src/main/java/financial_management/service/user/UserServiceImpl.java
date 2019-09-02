@@ -468,6 +468,11 @@ public class UserServiceImpl implements UserService, UserServiceForBl {
         }
     }
 
+    @Override
+    public List<Long> getUserIdList() {
+        return userMapper.getUserIdList();
+    }
+
     /**
      * 获得加密后的密码
      * @param password

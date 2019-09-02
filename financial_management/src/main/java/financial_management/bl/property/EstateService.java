@@ -98,11 +98,19 @@ public interface EstateService {
     BasicResponse getNewlyIncome(Long userId);
 
     /**
-     * 获取平台所有用户近7/30/90天的收益率
+     * 获取平台所有用户最新的投资收益率
      *
-     * @param days
+     * @param
      * @return
      */
-    BasicResponse getRecentProfitRate(int days);
+    BasicResponse getAveNewlyRate();
+
+    /**
+     * 获取平台所有用户累计的投资收益率
+     *
+     * @param
+     * @return
+     */
+    BasicResponse getAveTotalRate();
 
 }

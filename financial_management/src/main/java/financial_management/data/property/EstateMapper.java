@@ -90,12 +90,28 @@ public interface EstateMapper {
     RecentInvPO getNewlyIncome(@Param("userId") Long userId);
 
     /**
-     * 获取平台所有用户近7/30/90天的收益率
+     * 获取用户累计的投资收益率
      *
-     * @param days
+     * @param userId
      * @return
      */
-    IncomePO getRecentProfitRate(@Param("days") int days);
+    TotalIncomePO getTotalInvestRate(@Param("userId") Long userId);
+
+    /**
+     * 判断是否存在days天的债券收益记录
+     *
+     * @param bondId, days
+     * @return
+     */
+    boolean ifExistDaysBondLog(@Param("bondId") Long bondId, @Param("days") int days);
+
+    /**
+     * 获取债券的days日收益率
+     *
+     * @param bondId, days
+     * @return
+     */
+    BondIncomePO getBondProfitOfDays(@Param("bondId") Long bondId, @Param("days") int days);
 
     @Scheduled(cron = "0 0 23 * * ?")
     void updateFortuneByDay();

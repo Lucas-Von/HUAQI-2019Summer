@@ -22,7 +22,7 @@ public class MyDepoPO {
     /**
      * @Description //类型（0表示平台内，1表示平台外）
      **/
-    private Integer type;
+    private Integer type = 1;
     /**
      * @Description //持有额度
      **/
@@ -121,12 +121,10 @@ public class MyDepoPO {
     public MyDepoPO() {
     }
 
-    public MyDepoPO(Integer type,
-                    Double amount,
+    public MyDepoPO(Double amount,
                     String name,
                     Double rate,
                     Date endtime) {
-        this.type = type;
         this.amount = amount;
         this.name = name;
         this.rate = rate;

@@ -11,7 +11,6 @@ import java.util.Date;
 public class SelfDepositParam {
     private Long id;
     private String name;
-    private Integer type;
     private Double amount;
     private Double rate;
     private Date endtime;
@@ -30,14 +29,6 @@ public class SelfDepositParam {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public Double getAmount() {
@@ -65,7 +56,7 @@ public class SelfDepositParam {
     }
 
     public MyDepoPO getMyDepoPO(){
-        return new MyDepoPO(type, amount,name, rate, endtime);
+        return new MyDepoPO(amount,name, rate, endtime);
     }
 
     public SelfDepositParam() {
@@ -73,13 +64,11 @@ public class SelfDepositParam {
 
     public SelfDepositParam(Long id,
                             String name,
-                            Integer type,
                             Double amount,
                             Double rate,
                             Date endtime) {
         this.id = id;
         this.name = name;
-        this.type = type;
         this.amount = amount;
         this.rate = rate;
         this.endtime = endtime;

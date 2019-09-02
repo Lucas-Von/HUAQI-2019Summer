@@ -10,6 +10,8 @@ import java.util.List;
 @Mapper
 @Repository
 public interface MessageMapper {
+    MessagePO selectByID(@Param("ID") Long ID);
+
     List<MessagePO> selectByUserID(@Param("userID") Long userID);
 
     List<MessagePO> selectByUserIDandType(@Param("userID") Long userID, @Param("type") Integer type);

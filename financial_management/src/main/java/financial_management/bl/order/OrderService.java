@@ -1,7 +1,6 @@
 package financial_management.bl.order;
 
 import financial_management.vo.BasicResponse;
-import financial_management.vo.order.MaxInvestVO;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.TransferRecordVO;
@@ -36,8 +35,8 @@ public interface OrderService {
     BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO, boolean isCustomize);
 
     //获取累计净投入峰值
-    BasicResponse<MaxInvestVO> getMaxInvestBy(Long userID, String type);
+    Double getMaxInvestBy(Long userID, String type);
 
     //获取当日&累计净投入，date为null则为累计
-    BasicResponse<Float> getInvestBy(Long userID, String type, Date date);
+    Double getInvestBy(Long userID, String type, Date date);
 }

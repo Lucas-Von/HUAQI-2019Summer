@@ -1,24 +1,27 @@
-/*
-Navicat MySQL Data Transfer
+-- MySQL dump 10.13  Distrib 5.7.25, for Win64 (x86_64)
+--
+-- Host: localhost    Database: financial
+-- ------------------------------------------------------
+-- Server version	5.7.25-log
 
-Source Server         : test
-Source Server Version : 80012
-Source Host           : localhost:3306
-Source Database       : financial
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-Target Server Type    : MYSQL
-Target Server Version : 80012
-File Encoding         : 65001
+--
+-- Table structure for table `article`
+--
 
-Date: 2019-09-01 09:46:58
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for article
--- ----------------------------
 DROP TABLE IF EXISTS `article`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `article` (
   `article_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) DEFAULT NULL,
@@ -31,15 +34,24 @@ CREATE TABLE `article` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`article_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of article
--- ----------------------------
+--
+-- Dumping data for table `article`
+--
 
--- ----------------------------
--- Table structure for bond
--- ----------------------------
+LOCK TABLES `article` WRITE;
+/*!40000 ALTER TABLE `article` DISABLE KEYS */;
+/*!40000 ALTER TABLE `article` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bond`
+--
+
 DROP TABLE IF EXISTS `bond`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bond` (
   `id` bigint(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -47,30 +59,48 @@ CREATE TABLE `bond` (
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of bond
--- ----------------------------
+--
+-- Dumping data for table `bond`
+--
 
--- ----------------------------
--- Table structure for bond_and_fund
--- ----------------------------
+LOCK TABLES `bond` WRITE;
+/*!40000 ALTER TABLE `bond` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bond` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bond_and_fund`
+--
+
 DROP TABLE IF EXISTS `bond_and_fund`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bond_and_fund` (
   `fund_id` bigint(255) DEFAULT NULL,
   `bond_id` bigint(255) DEFAULT NULL,
   `investment_proportion` float DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of bond_and_fund
--- ----------------------------
+--
+-- Dumping data for table `bond_and_fund`
+--
 
--- ----------------------------
--- Table structure for bond_foundation
--- ----------------------------
+LOCK TABLES `bond_and_fund` WRITE;
+/*!40000 ALTER TABLE `bond_and_fund` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bond_and_fund` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bond_foundation`
+--
+
 DROP TABLE IF EXISTS `bond_foundation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bond_foundation` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `fund_name` varchar(255) DEFAULT NULL,
@@ -81,29 +111,48 @@ CREATE TABLE `bond_foundation` (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `debt_sum` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of bond_foundation
--- ----------------------------
+--
+-- Dumping data for table `bond_foundation`
+--
 
--- ----------------------------
--- Table structure for card
--- ----------------------------
+LOCK TABLES `bond_foundation` WRITE;
+/*!40000 ALTER TABLE `bond_foundation` DISABLE KEYS */;
+INSERT INTO `bond_foundation` VALUES (1,'国债',1000,200000,200,0.2,'2019-09-01 08:55:49',1000),(2,'企业债',1000,100000,100,0.2,'2019-09-01 08:55:49',1000);
+/*!40000 ALTER TABLE `bond_foundation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `card`
+--
+
 DROP TABLE IF EXISTS `card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `card` (
   `user_id` varchar(45) DEFAULT NULL,
   `cardnum` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of card
--- ----------------------------
+--
+-- Dumping data for table `card`
+--
 
--- ----------------------------
--- Table structure for cash
--- ----------------------------
+LOCK TABLES `card` WRITE;
+/*!40000 ALTER TABLE `card` DISABLE KEYS */;
+/*!40000 ALTER TABLE `card` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cash`
+--
+
 DROP TABLE IF EXISTS `cash`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cash` (
   `user_id` bigint(255) NOT NULL,
   `amount` float DEFAULT NULL,
@@ -111,28 +160,46 @@ CREATE TABLE `cash` (
   `payment_password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of cash
--- ----------------------------
+--
+-- Dumping data for table `cash`
+--
 
--- ----------------------------
--- Table structure for collection
--- ----------------------------
+LOCK TABLES `cash` WRITE;
+/*!40000 ALTER TABLE `cash` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cash` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `collection`
+--
+
 DROP TABLE IF EXISTS `collection`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `collection` (
   `user_id` bigint(255) NOT NULL,
   `article_id` bigint(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of collection
--- ----------------------------
+--
+-- Dumping data for table `collection`
+--
 
--- ----------------------------
--- Table structure for comment
--- ----------------------------
+LOCK TABLES `collection` WRITE;
+/*!40000 ALTER TABLE `collection` DISABLE KEYS */;
+/*!40000 ALTER TABLE `collection` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comment`
+--
+
 DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comment` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) DEFAULT NULL,
@@ -141,29 +208,47 @@ CREATE TABLE `comment` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of comment
--- ----------------------------
+--
+-- Dumping data for table `comment`
+--
 
--- ----------------------------
--- Table structure for deposit
--- ----------------------------
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deposit`
+--
+
 DROP TABLE IF EXISTS `deposit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `deposit` (
   `user_id` bigint(255) NOT NULL,
   `amount` float DEFAULT NULL,
   `percentage` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of deposit
--- ----------------------------
+--
+-- Dumping data for table `deposit`
+--
 
--- ----------------------------
--- Table structure for deposit_product
--- ----------------------------
+LOCK TABLES `deposit` WRITE;
+/*!40000 ALTER TABLE `deposit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deposit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deposit_product`
+--
+
 DROP TABLE IF EXISTS `deposit_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `deposit_product` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -172,15 +257,24 @@ CREATE TABLE `deposit_product` (
   `length` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of deposit_product
--- ----------------------------
+--
+-- Dumping data for table `deposit_product`
+--
 
--- ----------------------------
--- Table structure for deposit_recommend
--- ----------------------------
+LOCK TABLES `deposit_product` WRITE;
+/*!40000 ALTER TABLE `deposit_product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deposit_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deposit_recommend`
+--
+
 DROP TABLE IF EXISTS `deposit_recommend`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `deposit_recommend` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -193,15 +287,24 @@ CREATE TABLE `deposit_recommend` (
   `risk_level` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of deposit_recommend
--- ----------------------------
+--
+-- Dumping data for table `deposit_recommend`
+--
 
--- ----------------------------
--- Table structure for dom_stock
--- ----------------------------
+LOCK TABLES `deposit_recommend` WRITE;
+/*!40000 ALTER TABLE `deposit_recommend` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deposit_recommend` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dom_stock`
+--
+
 DROP TABLE IF EXISTS `dom_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dom_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -210,15 +313,24 @@ CREATE TABLE `dom_stock` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of dom_stock
--- ----------------------------
+--
+-- Dumping data for table `dom_stock`
+--
 
--- ----------------------------
--- Table structure for feedback
--- ----------------------------
+LOCK TABLES `dom_stock` WRITE;
+/*!40000 ALTER TABLE `dom_stock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dom_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `feedback`
+--
+
 DROP TABLE IF EXISTS `feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `feedback` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `title` varchar(80) NOT NULL,
@@ -235,17 +347,51 @@ CREATE TABLE `feedback` (
   `solve_text` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of feedback
--- ----------------------------
-INSERT INTO `feedback` VALUES ('1', '为什么不开大？', '1', '喂，老板，他刚才又没开大；我没骂他，我上局就没骂他；这个人应该是思想出了问题', '2019-08-27 23:27:58', '1', null, null, '123456@789.com', '', '7', '2019-08-27 23:27:58', '对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区');
-INSERT INTO `feedback` VALUES ('2', '一个数学问题', '1', '1+1=?', '2019-08-27 23:27:58', '1', null, null, '123456@789.com', '\0', '0', null, null);
+--
+-- Dumping data for table `feedback`
+--
 
--- ----------------------------
--- Table structure for fortune
--- ----------------------------
+LOCK TABLES `feedback` WRITE;
+/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
+INSERT INTO `feedback` VALUES (1,'为什么不开大？',1,'喂，老板，他刚才又没开大；我没骂他，我上局就没骂他；这个人应该是思想出了问题','2019-08-27 15:27:58',1,NULL,NULL,'123456@789.com',_binary '',7,'2019-08-27 15:27:58','对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区'),(2,'一个数学问题',1,'1+1=?','2019-08-27 15:27:58',1,NULL,NULL,'123456@789.com',_binary '\0',0,NULL,NULL);
+/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `for_stock`
+--
+
+DROP TABLE IF EXISTS `for_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `for_stock` (
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `latest_price` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `for_stock`
+--
+
+LOCK TABLES `for_stock` WRITE;
+/*!40000 ALTER TABLE `for_stock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `for_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fortune`
+--
+
 DROP TABLE IF EXISTS `fortune`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fortune` (
   `user_id` bigint(255) NOT NULL,
   `record_date` date NOT NULL,
@@ -257,52 +403,48 @@ CREATE TABLE `fortune` (
   `gold` double DEFAULT NULL,
   `bond` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of fortune
--- ----------------------------
-INSERT INTO `fortune` VALUES ('1', '2019-08-21', '2500', '2600', '2400', '2500', '200', '500', '1500');
-INSERT INTO `fortune` VALUES ('1', '2019-08-22', '2600', '2600', '2400', '2500', '400', '500', '1500');
-INSERT INTO `fortune` VALUES ('2', '2019-08-28', '3000', '2600', '2400', '2500', '800', '500', '1500');
-INSERT INTO `fortune` VALUES ('1', '2019-08-28', '8000', '2600', '2400', '2500', '1600', '500', '1500');
-INSERT INTO `fortune` VALUES ('1', '2019-08-29', '2600', '9600', '2400', '2500', '3200', '500', '1500');
-INSERT INTO `fortune` VALUES ('1', '2019-08-30', '2600', '9800', '2400', '2800', '3200', '500', '1500');
+--
+-- Dumping data for table `fortune`
+--
 
--- ----------------------------
--- Table structure for for_stock
--- ----------------------------
-DROP TABLE IF EXISTS `for_stock`;
-CREATE TABLE `for_stock` (
-  `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `code` varchar(255) DEFAULT NULL,
-  `latest_price` float DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+LOCK TABLES `fortune` WRITE;
+/*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
+INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,200,500,1500),(1,'2019-08-22',2600,2600,2400,2500,400,500,1500),(2,'2019-08-28',3000,2600,2400,2500,800,500,1500),(1,'2019-08-28',8000,2600,2400,2500,1600,500,1500),(1,'2019-08-29',2600,9600,2400,2500,3200,500,1500),(1,'2019-08-30',2600,9800,2400,2800,3200,500,1500),(1,'2019-08-31',2600,9800,2400,2800,3200,500,1500);
+/*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- ----------------------------
--- Records of for_stock
--- ----------------------------
+--
+-- Table structure for table `fund`
+--
 
--- ----------------------------
--- Table structure for fund
--- ----------------------------
 DROP TABLE IF EXISTS `fund`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fund` (
   `name` varchar(255) DEFAULT NULL,
   `rate` float DEFAULT NULL,
   `time` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of fund
--- ----------------------------
+--
+-- Dumping data for table `fund`
+--
 
--- ----------------------------
--- Table structure for gold
--- ----------------------------
+LOCK TABLES `fund` WRITE;
+/*!40000 ALTER TABLE `fund` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fund` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gold`
+--
+
 DROP TABLE IF EXISTS `gold`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gold` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -310,15 +452,24 @@ CREATE TABLE `gold` (
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of gold
--- ----------------------------
+--
+-- Dumping data for table `gold`
+--
 
--- ----------------------------
--- Table structure for gold_history_config
--- ----------------------------
+LOCK TABLES `gold` WRITE;
+/*!40000 ALTER TABLE `gold` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gold` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gold_history_config`
+--
+
 DROP TABLE IF EXISTS `gold_history_config`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gold_history_config` (
   `user_id` bigint(20) DEFAULT NULL,
   `price` double DEFAULT NULL,
@@ -327,63 +478,71 @@ CREATE TABLE `gold_history_config` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of gold_history_config
--- ----------------------------
-INSERT INTO `gold_history_config` VALUES ('1', '20', '4', '80', '2019-08-30 15:00:57', '0');
-INSERT INTO `gold_history_config` VALUES ('1', '20', '4', '80', '2019-08-30 21:12:40', '0');
-INSERT INTO `gold_history_config` VALUES ('1', '20', '4', '80', '2019-08-30 21:14:04', '0');
-INSERT INTO `gold_history_config` VALUES ('1', '20', '4', '80', '2019-08-30 21:17:01', '0');
-INSERT INTO `gold_history_config` VALUES ('1', '20', '20', '20', '2019-08-31 00:03:03', '0');
+--
+-- Dumping data for table `gold_history_config`
+--
 
--- ----------------------------
--- Table structure for if_changed_email
--- ----------------------------
+LOCK TABLES `gold_history_config` WRITE;
+/*!40000 ALTER TABLE `gold_history_config` DISABLE KEYS */;
+INSERT INTO `gold_history_config` VALUES (1,20,4,80,'2019-08-30 07:00:57',0),(1,20,4,80,'2019-08-30 13:12:40',0),(1,20,4,80,'2019-08-30 13:14:04',0),(1,20,4,80,'2019-08-30 13:17:01',0),(1,20,20,20,'2019-08-30 16:03:03',0);
+/*!40000 ALTER TABLE `gold_history_config` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `if_changed_email`
+--
+
 DROP TABLE IF EXISTS `if_changed_email`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `if_changed_email` (
   `email` varchar(255) DEFAULT NULL,
   `status` int(255) DEFAULT '1',
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of if_changed_email
--- ----------------------------
+--
+-- Dumping data for table `if_changed_email`
+--
 
--- ----------------------------
--- Table structure for if_changed_password
--- ----------------------------
+LOCK TABLES `if_changed_email` WRITE;
+/*!40000 ALTER TABLE `if_changed_email` DISABLE KEYS */;
+/*!40000 ALTER TABLE `if_changed_email` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `if_changed_password`
+--
+
 DROP TABLE IF EXISTS `if_changed_password`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `if_changed_password` (
   `email` varchar(255) DEFAULT NULL,
   `status` int(255) DEFAULT '1',
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of if_changed_password
--- ----------------------------
+--
+-- Dumping data for table `if_changed_password`
+--
 
--- ----------------------------
--- Table structure for insurance
--- ----------------------------
-DROP TABLE IF EXISTS `insurance`;
-CREATE TABLE `insurance` (
-  `user_id` bigint(255) NOT NULL,
-  `amount` float DEFAULT NULL,
-  `percentage` float DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+LOCK TABLES `if_changed_password` WRITE;
+/*!40000 ALTER TABLE `if_changed_password` DISABLE KEYS */;
+/*!40000 ALTER TABLE `if_changed_password` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- ----------------------------
--- Records of insurance
--- ----------------------------
+--
+-- Table structure for table `ins_product`
+--
 
--- ----------------------------
--- Table structure for ins_product
--- ----------------------------
 DROP TABLE IF EXISTS `ins_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ins_product` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -393,43 +552,94 @@ CREATE TABLE `ins_product` (
   `length` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of ins_product
--- ----------------------------
+--
+-- Dumping data for table `ins_product`
+--
 
--- ----------------------------
--- Table structure for investment
--- ----------------------------
+LOCK TABLES `ins_product` WRITE;
+/*!40000 ALTER TABLE `ins_product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ins_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `insurance`
+--
+
+DROP TABLE IF EXISTS `insurance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `insurance` (
+  `user_id` bigint(255) NOT NULL,
+  `amount` float DEFAULT NULL,
+  `percentage` float DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `insurance`
+--
+
+LOCK TABLES `insurance` WRITE;
+/*!40000 ALTER TABLE `insurance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `insurance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `investment`
+--
+
 DROP TABLE IF EXISTS `investment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `investment` (
   `user_id` bigint(255) NOT NULL,
   `amount` float DEFAULT NULL,
   `percentage` float DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of investment
--- ----------------------------
+--
+-- Dumping data for table `investment`
+--
 
--- ----------------------------
--- Table structure for light
--- ----------------------------
+LOCK TABLES `investment` WRITE;
+/*!40000 ALTER TABLE `investment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `investment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `light`
+--
+
 DROP TABLE IF EXISTS `light`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `light` (
   `user_id` bigint(255) NOT NULL,
   `comment_id` bigint(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of light
--- ----------------------------
+--
+-- Dumping data for table `light`
+--
 
--- ----------------------------
--- Table structure for max_invest
--- ----------------------------
+LOCK TABLES `light` WRITE;
+/*!40000 ALTER TABLE `light` DISABLE KEYS */;
+/*!40000 ALTER TABLE `light` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `max_invest`
+--
+
 DROP TABLE IF EXISTS `max_invest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `max_invest` (
   `user_id` bigint(255) NOT NULL,
   `type` varchar(45) NOT NULL,
@@ -437,15 +647,24 @@ CREATE TABLE `max_invest` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of max_invest
--- ----------------------------
+--
+-- Dumping data for table `max_invest`
+--
 
--- ----------------------------
--- Table structure for message
--- ----------------------------
+LOCK TABLES `max_invest` WRITE;
+/*!40000 ALTER TABLE `max_invest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `max_invest` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `message`
+--
+
 DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `message` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `time` timestamp NULL DEFAULT NULL,
@@ -456,18 +675,25 @@ CREATE TABLE `message` (
   `is_delete` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of message
--- ----------------------------
-INSERT INTO `message` VALUES ('1', '2019-08-26 23:27:58', '1', '1', '尊敬的用户，您的账户有新的调仓操作，请确认', '\0', '\0');
-INSERT INTO `message` VALUES ('2', '2019-08-27 23:27:58', '1', '3', '尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区', '\0', '\0');
-INSERT INTO `message` VALUES ('3', '2019-08-27 23:56:53', '2', '3', '文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！', '\0', '\0');
+--
+-- Dumping data for table `message`
+--
 
--- ----------------------------
--- Table structure for my_bond
--- ----------------------------
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (1,'2019-08-26 15:27:58',1,1,'尊敬的用户，您的账户有新的调仓操作，请确认',_binary '\0',_binary '\0'),(2,'2019-08-27 15:27:58',1,3,'尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区',_binary '\0',_binary '\0'),(3,'2019-08-27 15:56:53',2,3,'文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0');
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `my_bond`
+--
+
 DROP TABLE IF EXISTS `my_bond`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_bond` (
   `user_id` bigint(255) NOT NULL,
   `code` varchar(255) DEFAULT NULL,
@@ -477,16 +703,25 @@ CREATE TABLE `my_bond` (
   `quantity` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of my_bond
--- ----------------------------
-INSERT INTO `my_bond` VALUES ('1', '8888', '200', '300', '1.5', '500', '6');
+--
+-- Dumping data for table `my_bond`
+--
 
--- ----------------------------
--- Table structure for my_depo
--- ----------------------------
+LOCK TABLES `my_bond` WRITE;
+/*!40000 ALTER TABLE `my_bond` DISABLE KEYS */;
+INSERT INTO `my_bond` VALUES (1,'8888',200,300,1.5,500,6);
+/*!40000 ALTER TABLE `my_bond` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `my_depo`
+--
+
 DROP TABLE IF EXISTS `my_depo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_depo` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
@@ -498,32 +733,50 @@ CREATE TABLE `my_depo` (
   `proportion` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of my_depo
--- ----------------------------
-INSERT INTO `my_depo` VALUES ('1', '1', '1', '50', '长实储蓄', '0.56000', '2020-08-30', '2');
+--
+-- Dumping data for table `my_depo`
+--
 
--- ----------------------------
--- Table structure for my_fund
--- ----------------------------
+LOCK TABLES `my_depo` WRITE;
+/*!40000 ALTER TABLE `my_depo` DISABLE KEYS */;
+INSERT INTO `my_depo` VALUES (1,1,1,50,'长实储蓄',0.56000,'2020-08-30',2);
+/*!40000 ALTER TABLE `my_depo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `my_fund`
+--
+
 DROP TABLE IF EXISTS `my_fund`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_fund` (
   `user_id` bigint(255) NOT NULL,
   `balance` float DEFAULT NULL,
   `update_time` date DEFAULT NULL,
   `pay_password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of my_fund
--- ----------------------------
-INSERT INTO `my_fund` VALUES ('1', '200', '2019-08-30', '888888');
+--
+-- Dumping data for table `my_fund`
+--
 
--- ----------------------------
--- Table structure for my_gold
--- ----------------------------
+LOCK TABLES `my_fund` WRITE;
+/*!40000 ALTER TABLE `my_fund` DISABLE KEYS */;
+INSERT INTO `my_fund` VALUES (1,200,'2019-08-30','888888');
+/*!40000 ALTER TABLE `my_fund` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `my_gold`
+--
+
 DROP TABLE IF EXISTS `my_gold`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_gold` (
   `user_id` bigint(255) NOT NULL,
   `amount` int(11) DEFAULT NULL,
@@ -531,16 +784,25 @@ CREATE TABLE `my_gold` (
   `sum` double DEFAULT NULL,
   `profit` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of my_gold
--- ----------------------------
-INSERT INTO `my_gold` VALUES ('1', '50', '2', '66', '300');
+--
+-- Dumping data for table `my_gold`
+--
 
--- ----------------------------
--- Table structure for my_ins
--- ----------------------------
+LOCK TABLES `my_gold` WRITE;
+/*!40000 ALTER TABLE `my_gold` DISABLE KEYS */;
+INSERT INTO `my_gold` VALUES (1,50,2,66,300);
+/*!40000 ALTER TABLE `my_gold` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `my_ins`
+--
+
 DROP TABLE IF EXISTS `my_ins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_ins` (
   `user_id` bigint(255) NOT NULL,
   `beneficiary` varchar(255) DEFAULT NULL,
@@ -548,16 +810,25 @@ CREATE TABLE `my_ins` (
   `maturity` date DEFAULT NULL,
   `price` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of my_ins
--- ----------------------------
-INSERT INTO `my_ins` VALUES ('1', '20', '25', '2020-08-30', '30');
+--
+-- Dumping data for table `my_ins`
+--
 
--- ----------------------------
--- Table structure for my_qdii
--- ----------------------------
+LOCK TABLES `my_ins` WRITE;
+/*!40000 ALTER TABLE `my_ins` DISABLE KEYS */;
+INSERT INTO `my_ins` VALUES (1,'20',25,'2020-08-30',30);
+/*!40000 ALTER TABLE `my_ins` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `my_qdii`
+--
+
 DROP TABLE IF EXISTS `my_qdii`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_qdii` (
   `user_id` bigint(255) NOT NULL,
   `code` varchar(45) NOT NULL,
@@ -571,16 +842,25 @@ CREATE TABLE `my_qdii` (
   `profit_rate` float DEFAULT NULL,
   PRIMARY KEY (`user_id`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of my_qdii
--- ----------------------------
-INSERT INTO `my_qdii` VALUES ('1', '613991', '1', '1000', '1000', '99.9', '100', '999', '-1', '-0.001');
+--
+-- Dumping data for table `my_qdii`
+--
 
--- ----------------------------
--- Table structure for my_stock
--- ----------------------------
+LOCK TABLES `my_qdii` WRITE;
+/*!40000 ALTER TABLE `my_qdii` DISABLE KEYS */;
+INSERT INTO `my_qdii` VALUES (1,'613991',1,1000,1000,99.9,100,999,-1,-0.001);
+/*!40000 ALTER TABLE `my_qdii` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `my_stock`
+--
+
 DROP TABLE IF EXISTS `my_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_stock` (
   `user_id` bigint(255) NOT NULL,
   `code` varchar(255) NOT NULL,
@@ -594,16 +874,25 @@ CREATE TABLE `my_stock` (
   `profit_rate` float DEFAULT NULL,
   PRIMARY KEY (`user_id`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of my_stock
--- ----------------------------
-INSERT INTO `my_stock` VALUES ('1', '601991', '1', '1000', '1000', '99.9', '100', '999', '-1', '-0.001');
+--
+-- Dumping data for table `my_stock`
+--
 
--- ----------------------------
--- Table structure for personal_trade
--- ----------------------------
+LOCK TABLES `my_stock` WRITE;
+/*!40000 ALTER TABLE `my_stock` DISABLE KEYS */;
+INSERT INTO `my_stock` VALUES (1,'601991',1,1000,1000,99.9,100,999,-1,-0.001);
+/*!40000 ALTER TABLE `my_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `personal_trade`
+--
+
 DROP TABLE IF EXISTS `personal_trade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personal_trade` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `trans_id` bigint(255) DEFAULT NULL,
@@ -620,15 +909,24 @@ CREATE TABLE `personal_trade` (
   `is_customize` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of personal_trade
--- ----------------------------
+--
+-- Dumping data for table `personal_trade`
+--
 
--- ----------------------------
--- Table structure for platform_bond_fund
--- ----------------------------
+LOCK TABLES `personal_trade` WRITE;
+/*!40000 ALTER TABLE `personal_trade` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personal_trade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `platform_bond_fund`
+--
+
 DROP TABLE IF EXISTS `platform_bond_fund`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `platform_bond_fund` (
   `handling_fee` float DEFAULT NULL,
   `bond_property` float DEFAULT NULL,
@@ -637,15 +935,25 @@ CREATE TABLE `platform_bond_fund` (
   `return_rate_thirty` float DEFAULT '0',
   `return_rate_ninety` float DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of platform_bond_fund
--- ----------------------------
+--
+-- Dumping data for table `platform_bond_fund`
+--
 
--- ----------------------------
--- Table structure for platform_trade
--- ----------------------------
+LOCK TABLES `platform_bond_fund` WRITE;
+/*!40000 ALTER TABLE `platform_bond_fund` DISABLE KEYS */;
+INSERT INTO `platform_bond_fund` VALUES (0.1,300000,10000,0,0,0);
+/*!40000 ALTER TABLE `platform_bond_fund` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `platform_trade`
+--
+
 DROP TABLE IF EXISTS `platform_trade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `platform_trade` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -657,15 +965,24 @@ CREATE TABLE `platform_trade` (
   `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of platform_trade
--- ----------------------------
+--
+-- Dumping data for table `platform_trade`
+--
 
--- ----------------------------
--- Table structure for property
--- ----------------------------
+LOCK TABLES `platform_trade` WRITE;
+/*!40000 ALTER TABLE `platform_trade` DISABLE KEYS */;
+/*!40000 ALTER TABLE `platform_trade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `property`
+--
+
 DROP TABLE IF EXISTS `property`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `property` (
   `user_id` bigint(255) NOT NULL,
   `admin_id` bigint(255) NOT NULL,
@@ -674,15 +991,24 @@ CREATE TABLE `property` (
   `asset_type` varchar(45) DEFAULT NULL,
   `prefers` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of property
--- ----------------------------
+--
+-- Dumping data for table `property`
+--
 
--- ----------------------------
--- Table structure for questionnaire
--- ----------------------------
+LOCK TABLES `property` WRITE;
+/*!40000 ALTER TABLE `property` DISABLE KEYS */;
+/*!40000 ALTER TABLE `property` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `questionnaire`
+--
+
 DROP TABLE IF EXISTS `questionnaire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionnaire` (
   `user_id` bigint(255) NOT NULL,
   `funds` double DEFAULT NULL,
@@ -697,19 +1023,53 @@ CREATE TABLE `questionnaire` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `questionnaire_user_id_uindex` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of questionnaire
--- ----------------------------
-INSERT INTO `questionnaire` VALUES ('1', '250', '250', '250', '250', '250', '250', '1～3个月(短期)', '2019-08-22', '1500');
-INSERT INTO `questionnaire` VALUES ('2', '500', '500', '500', '500', '500', '500', '3～6个月(中期)', '2019-08-23', '3000');
-INSERT INTO `questionnaire` VALUES ('3', '250', '250', '250', '250', '250', '250', '6～12个月(中长期或长期)', '2019-08-24', '1500');
-INSERT INTO `questionnaire` VALUES ('4', '500', '500', '500', '500', '500', '500', '1年以上', '2019-08-29', '3000');
+--
+-- Dumping data for table `questionnaire`
+--
 
--- ----------------------------
--- Table structure for recommend
--- ----------------------------
+LOCK TABLES `questionnaire` WRITE;
+/*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
+INSERT INTO `questionnaire` VALUES (1,250,250,250,250,250,250,'1～3个月(短期)','2019-08-22',1500),(2,500,500,500,500,500,500,'3～6个月(中期)','2019-08-23',3000),(3,250,250,250,250,250,250,'6～12个月(中长期或长期)','2019-08-24',1500),(4,500,500,500,500,500,500,'1年以上','2019-08-29',3000);
+/*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rec_alloc`
+--
+
+DROP TABLE IF EXISTS `rec_alloc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rec_alloc` (
+  `user_id` bigint(255) NOT NULL,
+  `funds_rate` float DEFAULT NULL,
+  `saving_rate` float DEFAULT NULL,
+  `insurance_rate` float DEFAULT NULL,
+  `invest_rate` float DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rec_alloc`
+--
+
+LOCK TABLES `rec_alloc` WRITE;
+/*!40000 ALTER TABLE `rec_alloc` DISABLE KEYS */;
+INSERT INTO `rec_alloc` VALUES (1,0.5,0.02,0.08,0.4),(2,0.8,0.02,0.08,0.1);
+/*!40000 ALTER TABLE `rec_alloc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recommend`
+--
+
 DROP TABLE IF EXISTS `recommend`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recommend` (
   `user_id` bigint(255) NOT NULL,
   `invest_analysis_tag` varchar(45) DEFAULT NULL,
@@ -729,40 +1089,25 @@ CREATE TABLE `recommend` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of recommend
--- ----------------------------
-INSERT INTO `recommend` VALUES ('1', null, '0.5', '0.5', '0.25', '0.25', '0.25999999046325684', '0.23999999463558197', null, null, null, null, null, null, '保守型');
-INSERT INTO `recommend` VALUES ('2', null, '0.5', '0.5', '0.25', '0.25', '0.25999999046325684', '0.23999999463558197', null, null, null, null, null, null, '稳健保守型');
-INSERT INTO `recommend` VALUES ('3', null, '0.5', '0.5', '0.25', '0.25', '0.25999999046325684', '0.23999999463558197', null, null, null, null, null, null, '稳健型');
-INSERT INTO `recommend` VALUES ('4', null, '0.5', '0.5', '0.25', '0.25', '0.25999999046325684', '0.23999999463558197', null, null, null, null, null, null, '稳健进取型');
-INSERT INTO `recommend` VALUES ('5', null, '0.5', '0.5', '0.25', '0.25', '0.25999999046325684', '0.23999999463558197', null, null, null, null, null, null, '进取型');
+--
+-- Dumping data for table `recommend`
+--
 
--- ----------------------------
--- Table structure for rec_alloc
--- ----------------------------
-DROP TABLE IF EXISTS `rec_alloc`;
-CREATE TABLE `rec_alloc` (
-  `user_id` bigint(255) NOT NULL,
-  `funds_rate` float DEFAULT NULL,
-  `saving_rate` float DEFAULT NULL,
-  `insurance_rate` float DEFAULT NULL,
-  `invest_rate` float DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+LOCK TABLES `recommend` WRITE;
+/*!40000 ALTER TABLE `recommend` DISABLE KEYS */;
+INSERT INTO `recommend` VALUES (1,'稳健保守型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.2,0.2,0.2,0.4,0.2,0.5,'保守型'),(2,'稳健型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.2,0.2,0.4,0.2,0.3,0.2,'稳健保守型'),(3,'稳健进取型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.2,0.4,0.2,0.2,0.2,0.4,'稳健型'),(4,'进取型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.4,0.2,0.2,0.2,0.3,0.3,'稳健进取型'),(5,'保守型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.5,0.2,0.2,0.1,0.2,0.6,'进取型');
+/*!40000 ALTER TABLE `recommend` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- ----------------------------
--- Records of rec_alloc
--- ----------------------------
-INSERT INTO `rec_alloc` VALUES ('1', '0.5', '0.02', '0.08', '0.4');
-INSERT INTO `rec_alloc` VALUES ('2', '0.8', '0.02', '0.08', '0.1');
+--
+-- Table structure for table `transfer_record`
+--
 
--- ----------------------------
--- Table structure for transfer_record
--- ----------------------------
 DROP TABLE IF EXISTS `transfer_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `transfer_record` (
   `id` bigint(255) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -778,15 +1123,24 @@ CREATE TABLE `transfer_record` (
   `is_customize` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of transfer_record
--- ----------------------------
+--
+-- Dumping data for table `transfer_record`
+--
 
--- ----------------------------
--- Table structure for user
--- ----------------------------
+LOCK TABLES `transfer_record` WRITE;
+/*!40000 ALTER TABLE `transfer_record` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transfer_record` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
 DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `user_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `identity_num` varchar(45) DEFAULT NULL,
@@ -800,30 +1154,61 @@ CREATE TABLE `user` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `profile_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of user
--- ----------------------------
-INSERT INTO `user` VALUES ('1', '320684199809070018', 'xyh', '153604998@qq.com', '18951899427', '9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc', null, 'xyhhh', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001', '2019-08-17 09:58:08', 'xxx');
-INSERT INTO `user` VALUES ('2', '320684199809070019', 'xxyh', '153604998@qq.comm', null, null, null, 'xxyhhh', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001', '2019-08-20 14:46:34', null);
-INSERT INTO `user` VALUES ('3', '320684199809070020', 'xyh', '153604998@qq.commm', null, null, null, 'xyhhhhhh', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001', '2019-08-20 14:47:10', null);
-INSERT INTO `user` VALUES ('4', null, 'admin', 'admin', null, '9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc', null, 'admin', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001', '2019-08-27 07:28:19', 'https://i.loli.net/2019/08/14/mUZcISHpWrx1aPM.jpg');
-UPDATE `user` SET `user_id` = '0' WHERE `email` = 'admin';
+--
+-- Dumping data for table `user`
+--
 
--- ----------------------------
--- Table structure for user_bond_fund
--- ----------------------------
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (0,NULL,'admin','admin',NULL,'9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc',NULL,'admin',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-26 23:28:19','https://i.loli.net/2019/08/14/mUZcISHpWrx1aPM.jpg'),(1,'320684199809070018','xyh','153604998@qq.com','18951899427','9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc',NULL,'xyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-17 01:58:08','xxx'),(2,'320684199809070019','xxyh','153604998@qq.comm',NULL,NULL,NULL,'xxyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 06:46:34',NULL),(3,'320684199809070020','xyh','153604998@qq.commm',NULL,NULL,NULL,'xyhhhhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 06:47:10',NULL);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_bond_fund`
+--
+
 DROP TABLE IF EXISTS `user_bond_fund`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_bond_fund` (
   `user_id` bigint(255) DEFAULT NULL,
   `fund_name` varchar(255) DEFAULT NULL,
-  `bond_proportion` float DEFAULT NULL,
-  `fund_share` float DEFAULT NULL,
-  `net_worth` float DEFAULT NULL,
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `bond_proportion` double DEFAULT NULL,
+  `fund_share` double DEFAULT NULL,
+  `net_worth` double DEFAULT NULL,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `inject` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of user_bond_fund
--- ----------------------------
+--
+-- Dumping data for table `user_bond_fund`
+--
+
+LOCK TABLES `user_bond_fund` WRITE;
+/*!40000 ALTER TABLE `user_bond_fund` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_bond_fund` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'financial'
+--
+
+--
+-- Dumping routines for database 'financial'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-09-01 17:12:13

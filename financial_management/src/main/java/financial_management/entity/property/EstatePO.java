@@ -2,7 +2,7 @@ package financial_management.entity.property;
 
 /**
  * @author lt
- * @version 1.0
+ * @version 2.0
  * @description 用户资产信息
  * @date 2019/08/13 14:25
  */
@@ -19,19 +19,9 @@ public class EstatePO {
     private double fundsOutPlatform;
 
     /**
-     * 用户平台内储蓄数额
-     */
-    private double savingInPlatform;
-
-    /**
      * 用户平台外储蓄数额
      */
     private double savingOutPlatform;
-
-    /**
-     * 用户平台内保险数额
-     */
-    private double insuranceInPlatform;
 
     /**
      * 用户平台外保险数额
@@ -44,19 +34,9 @@ public class EstatePO {
     private double stocksInPlatform;
 
     /**
-     * 用户平台外股票数额
-     */
-    private double stocksOutPlatform;
-
-    /**
      * 用户平台内股指数额
      */
     private double qdiiInPlatform;
-
-    /**
-     * 用户平台外股指数额
-     */
-    private double qdiiOutPlatform;
 
     /**
      * 用户平台内黄金数额
@@ -64,19 +44,19 @@ public class EstatePO {
     private double goldInPlatform;
 
     /**
-     * 用户平台外黄金数额
-     */
-    private double goldOutPlatform;
-
-    /**
      * 用户平台内债券数额
      */
     private double bondInPlatform;
 
     /**
-     * 用户平台外债券数额
+     * 用户平台内投资数额
      */
-    private double bondOutPlatform;
+    private double investInPlatform;
+
+    /**
+     * 用户平台外投资数额
+     */
+    private double investOutPlatform;
 
     public double getFundsInPlatform() {
         return fundsInPlatform;
@@ -94,28 +74,12 @@ public class EstatePO {
         this.fundsOutPlatform = fundsOutPlatform;
     }
 
-    public double getSavingInPlatform() {
-        return savingInPlatform;
-    }
-
-    public void setSavingInPlatform(double savingInPlatform) {
-        this.savingInPlatform = savingInPlatform;
-    }
-
     public double getSavingOutPlatform() {
         return savingOutPlatform;
     }
 
     public void setSavingOutPlatform(double savingOutPlatform) {
         this.savingOutPlatform = savingOutPlatform;
-    }
-
-    public double getInsuranceInPlatform() {
-        return insuranceInPlatform;
-    }
-
-    public void setInsuranceInPlatform(double insuranceInPlatform) {
-        this.insuranceInPlatform = insuranceInPlatform;
     }
 
     public double getInsuranceOutPlatform() {
@@ -126,68 +90,31 @@ public class EstatePO {
         this.insuranceOutPlatform = insuranceOutPlatform;
     }
 
-    public double getStocksInPlatform() {
-        return stocksInPlatform;
-    }
-
     public void setStocksInPlatform(double stocksInPlatform) {
         this.stocksInPlatform = stocksInPlatform;
-    }
-
-    public double getStocksOutPlatform() {
-        return stocksOutPlatform;
-    }
-
-    public void setStocksOutPlatform(double stocksOutPlatform) {
-        this.stocksOutPlatform = stocksOutPlatform;
-    }
-
-    public double getQdiiInPlatform() {
-        return qdiiInPlatform;
     }
 
     public void setQdiiInPlatform(double qdiiInPlatform) {
         this.qdiiInPlatform = qdiiInPlatform;
     }
 
-    public double getQdiiOutPlatform() {
-        return qdiiOutPlatform;
-    }
-
-    public void setQdiiOutPlatform(double qdiiOutPlatform) {
-        this.qdiiOutPlatform = qdiiOutPlatform;
-    }
-
-    public double getGoldInPlatform() {
-        return goldInPlatform;
-    }
-
     public void setGoldInPlatform(double goldInPlatform) {
         this.goldInPlatform = goldInPlatform;
-    }
-
-    public double getGoldOutPlatform() {
-        return goldOutPlatform;
-    }
-
-    public void setGoldOutPlatform(double goldOutPlatform) {
-        this.goldOutPlatform = goldOutPlatform;
-    }
-
-    public double getBondInPlatform() {
-        return bondInPlatform;
     }
 
     public void setBondInPlatform(double bondInPlatform) {
         this.bondInPlatform = bondInPlatform;
     }
 
-    public double getBondOutPlatform() {
-        return bondOutPlatform;
+    public double getInvestInPlatform() {
+        return stocksInPlatform + qdiiInPlatform + goldInPlatform + bondInPlatform;
     }
 
-    public void setBondOutPlatform(double bondOutPlatform) {
-        this.bondOutPlatform = bondOutPlatform;
+    public double getInvestOutPlatform() {
+        return investOutPlatform;
     }
 
+    public void setInvestOutPlatform(double investOutPlatform) {
+        this.investOutPlatform = investOutPlatform;
+    }
 }

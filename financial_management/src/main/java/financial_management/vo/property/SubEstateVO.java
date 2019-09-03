@@ -17,7 +17,7 @@ public class SubEstateVO {
     private double subEstateInPlatform;
 
     /**
-     * 该类型资产平台内数额
+     * 该类型资产平台外数额
      */
     private double subEstateOutPlatform;
 

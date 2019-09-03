@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="financial_management.data.property.IncomeMapper">
+
+    <select id="getTotalIncome" resultType="Double">
+        select coalesce(sum(ms.profit), 0) + coalesce(sum(mq.profit), 0) + coalesce(sum(mg.profit), 0) + coalesce(sum(ubf.fund_share * ubf.net_worth - ubf.inject), 0)
+        from my_stock ms
+            left join my_qdii mq on mq.user_id = ms.user_id
+            left join my_gold mg on mg.user_id = ms.user_id
+            left join user_bond_fund ubf on ubf.user_id = ms.user_id
+        where ms.user_id = #{userId};
+    </select>
+
+    <select id="getNewlyIncome" resultMap="RecentInvPO">
+        select
+            coalesce(f.stocks, 0) as yesterdayStocks,
+            coalesce(f.qdii, 0) as yesterdayQdii,
+            coalesce(f.gold, 0) as yesterdayGold,
+            coalesce(f.bond, 0) as yesterdayBond,
+            coalesce(sum(ms.hold_total), 0) as currentStocks,
+            coalesce(sum(mq.hold_total), 0) as currentQdii,
+            coalesce(sum(mg.sum), 0) as currentGold,
+            coalesce(sum(ubf.fund_share * ubf.net_worth), 0) as currentBond
+        from fortune f
+            left join my_stock ms on ms.user_id = f.user_id
+            left join my_gold mg on mg.user_id = f.user_id
+            left join user_bond_fund ubf on ubf.user_id = f.user_id
+            left join my_qdii mq on mq.user_id = f.user_id
+        where f.user_id = #{userId} and f.record_date = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+    </select>
+
+    <select id="getTotalInvestRate" resultMap="TotalIncomePO">
+        select
+            coalesce(sum(ms.hold_total), 0) as totalStocks,
+            coalesce(sum(mq.hold_total), 0) as totalQdii,
+            coalesce(sum(mg.sum), 0) as totalGold,
+            coalesce(sum(ubf.fund_share * ubf.net_worth), 0) as totalBond
+        from my_stock ms
+            left join my_qdii mq on mq.user_id = ms.user_id
+            left join my_gold mg on mg.user_id = ms.user_id
+            left join user_bond_fund ubf on ubf.user_id = ms.user_id
+        where ms.user_id = #{userId};
+    </select>
+
+    <select id="ifExistDaysBondLog" resultType="boolean">
+        select (count(fund_id) >= #{days}) from bond_rate_log where time = DATE_SUB(CURDATE(), INTERVAL #{days} DAY) and fund_id = #{bondId}
+    </select>
+
+    <select id="getBondProfitOfDays" resultMap="BondIncomePO">
+        select
+            today.net_worth as todayNetWorth,
+            beforeDays.net_worth as beforeDaysNetWorth
+        from
+            (select net_worth form bond_rate_log where time = CURDATE() and fund_id = #{bondId}) today,
+            (select net_worth form bond_rate_log where time = DATE_SUB(CURDATE(), INTERVAL #{days} DAY) and fund_id = #{bondId}) beforeDays
+    </select>
+
+    <resultMap id="RecentInvPO" type="financial_management.entity.property.RecentInvPO">
+    </resultMap>
+
+    <resultMap id="TotalIncomePO" type="financial_management.entity.property.TotalIncomePO">
+    </resultMap>
+
+    <resultMap id="BondIncomePO" type="financial_management.entity.property.BondIncomePO">
+    </resultMap>
+
+</mapper>

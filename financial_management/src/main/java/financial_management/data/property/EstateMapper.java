@@ -66,52 +66,52 @@ public interface EstateMapper {
     List<FortunePO> getCompleteProList(@Param("userId") Long userId);
 
     /**
+     * 判断平台外现金&投资表中是否存在该用户的记录
+     *
+     * @param userId
+     * @reutrn
+     */
+    boolean ifExistOutRecord(@Param("userId") Long userId);
+
+    /**
+     * 插入用户平台外现金数额
+     *
+     * @param userId, fundsOutPlatform
+     * @return
+     */
+    void insertOutFundsRecord(@Param("userId") Long userId, @Param("fundsOutPlatform") double fundsOutPlatform);
+
+    /**
+     * 更新用户平台外现金数额
+     *
+     * @param userId, fundsOutPlatform
+     * @return
+     */
+    void updateOutFundsRecord(@Param("userId") Long userId, @Param("fundsOutPlatform") double fundsOutPlatform);
+
+    /**
+     * 插入用户平台外投资数额
+     *
+     * @param userId, investOutPlatform
+     * @return
+     */
+    void insertOutInvestRecord(@Param("userId") Long userId, @Param("investOutPlatform") double investOutPlatform);
+
+    /**
+     * 更新用户平台外现金数额
+     *
+     * @param userId, investOutPlatform
+     * @return
+     */
+    void updateOutInvestRecord(@Param("userId") Long userId, @Param("investOutPlatform") double investOutPlatform);
+
+    /**
      * 获取资产上次更新时间
      *
      * @param userId
      * @return
      */
     Date getFortuneUpdateTime(@Param("userId") Long userId);
-
-    /**
-     * 获取用户累计收益
-     *
-     * @param userId
-     * @return
-     */
-    Double getTotalIncome(@Param("userId") Long userId);
-
-    /**
-     * 获取用户昨日收益
-     *
-     * @param userId
-     * @return
-     */
-    RecentInvPO getNewlyIncome(@Param("userId") Long userId);
-
-    /**
-     * 获取用户累计的投资收益率
-     *
-     * @param userId
-     * @return
-     */
-    TotalIncomePO getTotalInvestRate(@Param("userId") Long userId);
-
-    /**
-     * 判断是否存在days天的债券收益记录
-     *
-     * @param bondId, days
-     * @return
-     */
-    boolean ifExistDaysBondLog(@Param("bondId") Long bondId, @Param("days") int days);
-
-    /**
-     * 获取债券的days日收益率
-     *
-     * @param bondId, days
-     * @return
-     */
-    BondIncomePO getBondProfitOfDays(@Param("bondId") Long bondId, @Param("days") int days);
 
     @Scheduled(cron = "0 0 23 * * ?")
     void updateFortuneByDay();

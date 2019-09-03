@@ -95,26 +95,16 @@ public class EstateController {
         return estateService.getMyRecAlloc(userId);
     }
 
-    @GetMapping("/income/getTotalIncome")
-    public BasicResponse getTotalIncome(HttpServletRequest request) {
+    @GetMapping("/estate/setFundsOutPlatform")
+    public BasicResponse setFundsOutPlatform(HttpServletRequest request, @RequestParam double fundsOutPlatform) {
         Long userId = jwtUtil.getIdFromRequest(request);
-        return estateService.getTotalIncome(userId);
+        return estateService.setFundsOutPlatform(userId, fundsOutPlatform);
     }
 
-    @GetMapping("/income/getNewlyIncome")
-    public BasicResponse getNewlyIncome(HttpServletRequest request) {
+    @GetMapping("/estate/setInvestOutPlatform")
+    public BasicResponse setInvestOutPlatform(HttpServletRequest request, @RequestParam double investOutPlatform) {
         Long userId = jwtUtil.getIdFromRequest(request);
-        return estateService.getNewlyIncome(userId);
-    }
-
-    @GetMapping("/income/getAveNewlyRate")
-    public BasicResponse getAveNewlyRate() {
-        return estateService.getAveNewlyRate();
-    }
-
-    @GetMapping("/income/getAveTotalRate")
-    public BasicResponse getAveTotalRate() {
-        return estateService.getAveTotalRate();
+        return estateService.setInvestOutPlatform(userId, investOutPlatform);
     }
 
 }

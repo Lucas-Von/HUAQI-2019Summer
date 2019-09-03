@@ -7,8 +7,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-@Mapper
+/**
+ * @author lt
+ * @date 2019/09/03 19:45
+ */
 @Repository
+@Mapper
 public interface IncomeMapper {
 
     /**

@@ -1,42 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="financial_management.data.product.BondFundMapper">
-    <select id="selectExpectReturnRate" resultType="float">
-        select expect_return_rate from bond_foundation where fund_name = #{name}
-    </select>
+
 
     <update id="updateInvestRateByName">
-        update user_bond_fund set bond_proportion = #{rate} where fund_name = #{name} and user_id = #{userId}
+        update user_bond_fund set bond_proportion = #{rate} where fund_name = #{product} and user_id = #{userId}
     </update>
 
     <insert id="insertvestRateByName">
-        insert into user_bond_fund (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time) values (#{userId},#{name},#{rate},0.0,0.0,#{time})
+        insert into user_bond_fund (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time) values (#{userId},#{product},#{rate},0.0,0.0,#{time})
     </insert>
 
     <select id="selectUserBond" resultMap="UserBond">
-        select * from user_bond_fund where user_id = #{userId} and fund_name = #{name} limit 1
+        select * from user_bond_fund where user_id = #{userId} and fund_name = #{product} limit 1
     </select>
 
     <select id="selectBondFundByName" resultMap="BondFund">
-        select * from bond_foundation where fund_name = #{name}
+        select * from bond_foundation where fund_name = #{product}
     </select>
 
     <update id="updateSumPurchaseByName">
-        update bond_foundation set debt_sum = #{sum} where fund_name = #{name}
-    </update>
-
-    <update id="updateRestProperty">
-        update platform_bond_fund set residual_property = #{amount}
+        update bond_foundation set debt_sum = #{sum} where fund_name = #{product}
     </update>
 
     <select id="selectAllBond" resultMap="BondProduct">
         select * from bond
     </select>
-
-    <update id="updateBondPrice">
-        update  bond set latest_price = #{price} where id = #{id}
-    </update>
-
 
 
     <select id="selectAllBondAndFund" resultMap="BondAndFund">
@@ -46,21 +35,22 @@
           adf.investment_proportion,
           bond.latest_price,
           bond.code,
-          bond.name
+          bond.name,
+          bond.latest_price*adf.amount total
         from bond_and_fund adf inner join bond on adf.bond_id = bond.id where adf.fund_id=#{fundId}
     </select>
 
 
     <update id="updateBondFundNetWorthy">
-        update bond_foundation set fund_unit_value = #{price} where fund_name = #{name}
+        update bond_foundation set fund_unit_value = #{price} where fund_name = #{product}
     </update>
 
 
     <update id="updateFundScale">
-        update bond_foundation set fund_scale = #{sum} where fund_name = #{name}
+        update bond_foundation set fund_scale = #{sum} where fund_name = #{product}
     </update>
 
-    <select id="selectBondPlatform" resultType="financial_management.entity.product.BondPlatformPO">
+    <select id="selectBondPlatform" resultType="financial_management.entity.bond.BondPlatformPO">
         select handling_fee handlingFee,
         bond_property bondAssets,
         residual_property residualAssets
@@ -75,16 +65,8 @@
         update bond_foundation set debt_sum  = 0
     </update>
 
-    <update id="updateUserShare">
-        update user_bond_fund set fund_share = fund_share+#{quantity} where fund_name =#{name} and user_id =#{id}
-    </update>
-
     <update id="updateTotalShare">
-        update bond_foundation set fund_share = #{amount} where fund_name = #{name}
-    </update>
-
-    <update id="updateReturnRate">
-        update platform_bond_fund set return_rate_seven = #{seven},return_rate_thirty = #{thirty},return_rate_ninety=#{ninety}
+        update bond_foundation set fund_share = #{amount} where fund_name = #{product}
     </update>
 
     <delete id="deleteBondAndFund">
@@ -95,15 +77,42 @@
         insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) values (#{fundId},#{bondId},#{investment},#{amount})
     </insert>
 
-    <insert id="insertBondFund" parameterType="financial_management.entity.product.BondFoundationPO">
+    <insert id="insertBondFund" parameterType="financial_management.entity.bond.BondFoundationPO">
         insert into bond_foundation (fund_name, fund_share, fund_scale, fund_unit_value, expect_return_rate, update_time, debt_sum) values (#{fundName},#{fundShare},#{fundScale},#{fundUnitValue},#{expectReturnRate},#{updateTime},#{debtSum})
     </insert>
 
-    <insert id="insertBondPlatform" parameterType="financial_management.entity.product.BondPlatformPO">
+    <insert id="insertBondPlatform" parameterType="financial_management.entity.bond.BondPlatformPO">
         insert into platform_bond_fund (handling_fee, bond_property, residual_property) values (#{handlingFee},#{bondAssets},#{residualAssets})
     </insert>
 
-    <resultMap id="UserBond" type="financial_management.entity.product.UserBondPO">
+    <update id="updateUserFundShare">
+        update user_bond_fund set fund_share = #{amount} where user_id = #{id} and fund_name = #{product}
+    </update>
+
+    <insert id="insertRateLog">
+        insert  into bond_rate_log (fund_id, net_worth, "time") values (#{id},#{netWorth},#{time})
+    </insert>
+
+    <update id="updateBondPriceByCode">
+        update bond set latest_price = #{price} where code = #{code}
+    </update>
+
+    <select id="selectBondByCode" resultMap="BondProduct">
+        select * from bond where code = #{code}
+    </select>
+
+    <insert id="insertBond">
+        insert into bond (code, latest_price) values (#{code},#{price})
+    </insert>
+
+    <select id="selectRateList" resultType="financial_management.entity.bond.RateList">
+        select commission_rate_one rate1,
+        commission_rate_two rate2,
+        commission_rate_three rate3
+        from platform_bond_fund limit 1
+    </select>
+
+    <resultMap id="UserBond" type="financial_management.entity.bond.UserBondPO">
         <result property="userId" column="user_id"/>
         <result property="fundName" column="fund_name"/>
         <result property="bondProportion" column="bond_proportion"/>
@@ -112,7 +121,7 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
-    <resultMap id="BondFund" type="financial_management.entity.product.BondFoundationPO">
+    <resultMap id="BondFund" type="financial_management.entity.bond.BondFoundationPO">
         <id property="id" column="id" />
         <result property="fundName" column="fund_name"/>
         <result property="fundShare" column="fund_share"/>
@@ -123,19 +132,20 @@
         <result property="debtSum" column="debt_sum"/>
     </resultMap>
 
-    <resultMap id="BondProduct" type="financial_management.entity.product.BondPO">
+    <resultMap id="BondProduct" type="financial_management.entity.bond.BondPO">
         <id property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="name" column="product"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
     </resultMap>
 
-    <resultMap id="BondAndFund" type="financial_management.entity.product.BondAndFundPO">
+    <resultMap id="BondAndFund" type="financial_management.entity.bond.BondAndFundPO">
         <result property="quantity" column="amount"/>
         <result property="price" column="latest_price"/>
         <result property="bondCode" column="code"/>
         <result property="investProportion" column="investment_proportion"/>
         <result property="bondName" column="name"/>
+        <result property="amount" column="total"/>
     </resultMap>
 
 

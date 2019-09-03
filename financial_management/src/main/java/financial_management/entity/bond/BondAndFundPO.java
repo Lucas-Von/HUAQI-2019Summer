@@ -1,4 +1,4 @@
-package financial_management.entity.product;
+package financial_management.entity.bond;
 
 /**
  * @Description TODO
@@ -11,7 +11,7 @@ public class BondAndFundPO {
     String bondName;
     String bondCode;
     Float investProportion;
-    Integer quantity;
+    Float quantity;
     Float amount;
     Float price;
 
@@ -39,11 +39,11 @@ public class BondAndFundPO {
         this.investProportion = investProportion;
     }
 
-    public Integer getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 

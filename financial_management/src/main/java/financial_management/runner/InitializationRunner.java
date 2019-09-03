@@ -1,8 +1,8 @@
 package financial_management.runner;
 
 import financial_management.data.product.BondFundMapper;
-import financial_management.entity.product.BondFoundationPO;
-import financial_management.entity.product.BondPlatformPO;
+import financial_management.entity.bond.BondFoundationPO;
+import financial_management.entity.bond.BondPlatformPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

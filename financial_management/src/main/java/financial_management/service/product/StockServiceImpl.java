@@ -121,6 +121,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public double getTotalStockByUser(long userID) {
+
         double total = 0;
         List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
         for (MyStockPO myStockPO:myStockPOS){
@@ -128,6 +129,7 @@ public class StockServiceImpl implements StockService {
         }
         return total;
     }
+
 
     @Override
     public double getTotalQDIIByUser(long userID){

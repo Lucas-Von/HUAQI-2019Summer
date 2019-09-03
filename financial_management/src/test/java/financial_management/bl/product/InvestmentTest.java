@@ -28,6 +28,6 @@ public class InvestmentTest {
 
     @Test
     public void getStockAndQDIIByUser_normal(){
-        assertEquals(999+999,stockService.getStockAndQDIIByUser(1),1);
+        assertEquals(999+999,stockService.getStockByUser(1),1);
     }
 }

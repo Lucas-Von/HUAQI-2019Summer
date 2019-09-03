@@ -11,6 +11,7 @@ import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author lt
  * @date 2019/09/03 19:49
  */
+@Service
 public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
 
     @Autowired

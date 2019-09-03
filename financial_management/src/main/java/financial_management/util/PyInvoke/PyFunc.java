@@ -15,11 +15,11 @@ public enum PyFunc {
         QDII_ADJUST_MONTHLY("QDII_Adjust_Monthly.py"),
 //    债券
 //      首次购买
-        BOND_FIRST_PURCHASE("First_Purchase.py"),
+        BOND_FIRST_PURCHASE("First_PurchaseVO.py"),
 //      调整持有额
         BOND_ADJUSTMENT("Adjustment.py"),
 //      每天购买
-        BOND_DAILY_PURCHASE("Daily_Purchase.py"),
+        BOND_DAILY_PURCHASE("Daily_PurchaseVO.py"),
 //      指数维护
         BOND_INDEX_MAINTENANCE("Index_Maintenance.py"),
 //    黄金

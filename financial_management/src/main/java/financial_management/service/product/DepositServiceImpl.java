@@ -167,7 +167,7 @@ public class DepositServiceImpl implements DepositService {
 //        List<DepRecProductVO> depositProductVOs = new ArrayList<>();
 //
 //        depositProducts.stream().forEach(o->{
-//            DepRecProductVO vo = new DepRecProductVO(o.getName(),o.getLength(),o.getRate().doubleValue());
+//            DepRecProductVO vo = new DepRecProductVO(o.getProduct(),o.getLength(),o.getRate().doubleValue());
 //            depositProductVOs.add(vo);
 //        });
 //        return depositProductVOs;
@@ -177,13 +177,13 @@ public class DepositServiceImpl implements DepositService {
     @Override
     public boolean purchase(Long userId, String productName, Double amount) {
 
-//        DepositProductPO product = depositMapper.selectProductByName(productName);
+//        DepositProductPO bond = depositMapper.selectProductByName(productName);
 
         MyDepoPO po = new MyDepoPO();
         try {
             po.setUserId(userId);
             po.setAmount(amount);
-//            po.setMaturity(DateConverterUtil.moveForwardByDay(new Date(), product.getLength()));
+//            po.setMaturity(DateConverterUtil.moveForwardByDay(new Date(), bond.getLength()));
             depositMapper.insertMyProduct(po);
             return true;
         }
@@ -199,7 +199,7 @@ public class DepositServiceImpl implements DepositService {
 //                ProductVO4Order vo = new ProductVO4Order();
 //                vo.setCode(null);
 //                vo.setpID(id);
-//                vo.setName(i.getName());
+//                vo.setProduct(i.getProduct());
 //                return vo;
 //            }
 //        }

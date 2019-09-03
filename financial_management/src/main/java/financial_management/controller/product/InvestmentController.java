@@ -6,6 +6,7 @@ import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.product.InvestRecProductVO;
+import financial_management.vo.product.InvestmentBriefProductVO;
 import financial_management.vo.product.InvestmentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +42,8 @@ public class InvestmentController {
 
     @GetMapping(value = "/product/invest")
     public BasicResponse investConsult(HttpServletRequest request){
-        List<InvestmentVO> investments = service.getSelfInvProduct(jwtUtil.getIdFromRequest(request));
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,investments);
+        List<InvestmentBriefProductVO> res = service.getBriefProducts(jwtUtil.getIdFromRequest(request));
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,res);
     }
 
     @GetMapping(value = "/product/invest/recommend")

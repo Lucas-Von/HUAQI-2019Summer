@@ -11,7 +11,7 @@
 	<groupId>citigroup</groupId>
 	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>financial_management</name>
+	<product>financial_management</product>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

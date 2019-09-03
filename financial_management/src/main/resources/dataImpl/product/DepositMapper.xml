@@ -3,12 +3,12 @@
 <mapper namespace="financial_management.data.product.DepositMapper">
 
     <insert id="insertMyProduct" useGeneratedKeys="true" keyProperty="id">
-        insert into my_depo (user_id, type, amount, name, rate, endtime)
-        values (#{userId},#{type},#{amount},#{name},#{rate},#{endtime})
+        insert into my_depo (user_id, type, amount, product, rate, endtime)
+        values (#{userId},#{type},#{amount},#{product},#{rate},#{endtime})
     </insert>
 
     <update id="updateMyProduct">
-        update my_depo set type = #{type}, amount = #{amount}, name = #{name},rate = #{rate}, endtime = #{endtime}
+        update my_depo set type = #{type}, amount = #{amount}, product = #{product},rate = #{rate}, endtime = #{endtime}
         where id = #{id}
     </update>
 
@@ -44,12 +44,12 @@
     </select>
 
     <insert id="insertDepositRecommend" useGeneratedKeys="true" keyProperty="id">
-        insert into deposit_recommend (name,currency,information,rate,start_time,end_time,start_amount,risk_level)
-        values (#{name},#{currency},#{information},#{rate},#{startTime},#{endTime},#{startAmount},#{riskLevel})
+        insert into deposit_recommend (product,currency,information,rate,start_time,end_time,start_amount,risk_level)
+        values (#{product},#{currency},#{information},#{rate},#{startTime},#{endTime},#{startAmount},#{riskLevel})
     </insert>
 
     <update id="updateDepositRecommend">
-        update deposit_recommend set name = #{name}, currency = #{currency}, information = #{information},rate = #{rate},start_time = #{startTime}, end_time = #{endTime},start_amount = #{startAmount},risk_level = #{riskLevel}
+        update deposit_recommend set product = #{product}, currency = #{currency}, information = #{information},rate = #{rate},start_time = #{startTime}, end_time = #{endTime},start_amount = #{startAmount},risk_level = #{riskLevel}
         where id = #{id}
     </update>
 
@@ -76,7 +76,7 @@
             <!--md.amount,-->
             <!--md.maturity,-->
             <!--md.product_id,-->
-            <!--dp.name,-->
+            <!--dp.product,-->
             <!--dp.type,-->
             <!--dp.rate-->
         <!--from my_depo md-->
@@ -86,7 +86,7 @@
     <!--</select>-->
 
     <!--<select id="selectProductByName" resultMap="DepositProduct">-->
-        <!--select * from deposit_product where name=#{name}-->
+        <!--select * from deposit_product where product=#{product}-->
     <!--</select>-->
 
 
@@ -94,7 +94,7 @@
     <resultMap id="DepositProduct" type="financial_management.entity.DepositProductPO">
         <id property="id" column="id"/>
         <result property="length" column="length"/>
-        <result property="name" column="name"/>
+        <result property="product" column="product"/>
         <result property="rate" column="rate"/>
         <result property="type" column="type"/>
     </resultMap>
@@ -104,7 +104,7 @@
         <result column="user_id" property="userId"/>
         <result column="type" property="type"/>
         <result column="amount" property="amount"/>
-        <result column="name" property="name"/>
+        <result column="product" property="product"/>
         <result column="rate" property="rate"/>
         <result column="endtime" property="endtime"/>
         <result column="proportion" property="proportion"/>
@@ -112,7 +112,7 @@
 
     <resultMap id="DepositRecommendPO" type="financial_management.entity.DepositRecommendPO">
         <result column="id" property="id"/>
-        <result column="name" property="name"/>
+        <result column="product" property="product"/>
         <result column="currency" property="currency"/>
         <result column="information" property="information"/>
         <result column="rate" property="rate"/>

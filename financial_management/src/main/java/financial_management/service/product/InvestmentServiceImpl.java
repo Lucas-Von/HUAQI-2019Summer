@@ -1,15 +1,20 @@
 package financial_management.service.product;
 
 import financial_management.bl.product.InvestmentService;
+import financial_management.bl.product.StockService;
 import financial_management.data.product.BondMapper;
 import financial_management.data.product.GoldMapper;
 import financial_management.data.product.StockMapper;
 import financial_management.entity.*;
-import financial_management.entity.product.BondPO;
+import financial_management.entity.bond.BondPO;
+import financial_management.service.product.bond.BondServiceForBl;
+import financial_management.service.product.gold.GoldServiceForBl;
+import financial_management.service.property.income.IncomeServiceForBl;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.InvestRecProductVO;
+import financial_management.vo.product.InvestmentBriefProductVO;
 import financial_management.vo.product.InvestmentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +32,18 @@ import java.util.List;
 public class InvestmentServiceImpl implements InvestmentService {
 
     @Autowired
+    StockService stockService;
+
+    @Autowired
+    IncomeServiceForBl incomeServiceForBl;
+
+    @Autowired
+    GoldServiceForBl goldServiceForBl;
+
+    @Autowired
+    BondServiceForBl bondServiceForBl;
+
+    @Autowired
     StockMapper stockMapper;
 
     @Autowired
@@ -41,7 +58,7 @@ public class InvestmentServiceImpl implements InvestmentService {
         List<MyGoldPO> golds = goldMapper.selectSelfGold(userId);
 //        golds.stream().forEach(o->{
 //            GoldPO gold = goldMapper.selectGoldByCode(o.getCode());
-//            InvestmentVO vo =new InvestmentVO(gold.getName(),"黄金",o.getCode(),gold.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
+//            InvestmentVO vo =new InvestmentVO(gold.getProduct(),"黄金",o.getCode(),gold.getLatestPrice().doubleValue(),o.getQuantity(),o.getAmount().doubleValue(),o.getProfit().doubleValue(),o.getProfitRate().doubleValue());
 //            investments.add(vo);
 //        });
 
@@ -217,5 +234,29 @@ public class InvestmentServiceImpl implements InvestmentService {
         vo.setCode(null);
         vo.setpID(null);
         return vo;
+    }
+
+    @Override
+    public List<InvestmentBriefProductVO> getBriefProducts(Long userId) {
+        List<InvestmentBriefProductVO> briefProductVOS = new ArrayList<>();
+
+        Double goldAmount = goldServiceForBl.getTotalGoldByUser(userId);
+        Double bondAmount = bondServiceForBl.getAmountByUser(userId);
+        Double stockAmount = stockService.getTotalStockByUser(userId);
+        Double qdAmount = stockService.getTotalQDIIByUser(userId);
+        Double sum = goldAmount+bondAmount+stockAmount+qdAmount;
+
+        InvestmentBriefProductVO vo = new InvestmentBriefProductVO("黄金",goldAmount,sum,incomeServiceForBl.getTotalGoldIncome(userId));
+        briefProductVOS.add(vo);
+
+        InvestmentBriefProductVO vo2 = new InvestmentBriefProductVO("债券",bondAmount,sum,incomeServiceForBl.getTotalGoldIncome(userId));
+        briefProductVOS.add(vo);
+
+        InvestmentBriefProductVO vo3 = new InvestmentBriefProductVO("股票",stockAmount,sum,incomeServiceForBl.getTotalGoldIncome(userId));
+        briefProductVOS.add(vo);
+
+        InvestmentBriefProductVO vo4 = new InvestmentBriefProductVO("股指",qdAmount,sum,incomeServiceForBl.getTotalGoldIncome(userId));
+        briefProductVOS.add(vo);
+        return briefProductVOS;
     }
 }

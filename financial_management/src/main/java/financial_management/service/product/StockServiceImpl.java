@@ -120,12 +120,18 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public double getStockAndQDIIByUser(long userID) {
+    public double getTotalStockByUser(long userID) {
         double total = 0;
         List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
         for (MyStockPO myStockPO:myStockPOS){
             total += myStockPO.getHoldTotal().doubleValue();
         }
+        return total;
+    }
+
+    @Override
+    public double getTotalQDIIByUser(long userID){
+        double total = 0;
         List<MyQDIIPO> myQDIIPOS = stockMapper.selectSelfForStock(userID);
         for (MyQDIIPO myQDIIPO:myQDIIPOS){
             total += myQDIIPO.getHoldTotal().doubleValue();

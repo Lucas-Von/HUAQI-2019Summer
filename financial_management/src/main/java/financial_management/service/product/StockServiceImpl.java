@@ -1,6 +1,7 @@
-package financial_management.service.property.estate;
+package financial_management.service.product;
 
 import financial_management.bl.order.OrderService;
+import financial_management.bl.product.StockService;
 import financial_management.data.product.StockMapper;
 import financial_management.entity.DomStockPO;
 import financial_management.entity.ForStockPO;
@@ -25,13 +26,14 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class Stock_SorryIDontKnowWhereToPlace {
+public class StockServiceImpl implements StockService {
     @Autowired
     private StockMapper stockMapper;
     @Autowired
     @Qualifier(value = "orderServiceImpl")
     private OrderService orderService;
 
+    @Override
     public void changeDomStock(Long userId) {
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
 //        float sum = 0;
@@ -51,6 +53,7 @@ public class Stock_SorryIDontKnowWhereToPlace {
         }
     }
 
+    @Override
     public void changeForStock(Long userId) {
         List<MyQDIIPO> myfors = stockMapper.selectSelfForStock(userId);
 //        float sum = 0;
@@ -70,6 +73,7 @@ public class Stock_SorryIDontKnowWhereToPlace {
         }
     }
 
+    @Override
     public void weeklyDomTransfer(Long userId) {
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
 //        List<List<Object>> hold = new ArrayList<>(mydoms.size());
@@ -92,6 +96,7 @@ public class Stock_SorryIDontKnowWhereToPlace {
         }
     }
 
+    @Override
     public void weeklyForTransfer(Long userId) {
         List<MyQDIIPO> myfors = stockMapper.selectSelfForStock(userId);
 //        List<List<Object>> hold = new ArrayList<>(myfors.size());
@@ -112,6 +117,20 @@ public class Stock_SorryIDontKnowWhereToPlace {
             }
             forAdjust(adjustments, myfors, userId);
         }
+    }
+
+    @Override
+    public double getStockAndQDIIByUser(long userID) {
+        double total = 0;
+        List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
+        for (MyStockPO myStockPO:myStockPOS){
+            total += myStockPO.getHoldTotal().doubleValue();
+        }
+        List<MyQDIIPO> myQDIIPOS = stockMapper.selectSelfForStock(userID);
+        for (MyQDIIPO myQDIIPO:myQDIIPOS){
+            total += myQDIIPO.getHoldTotal().doubleValue();
+        }
+        return total;
     }
 
     private void domAdjust(List<StockAdjustment> adjustments, List<MyStockPO> mydoms, Long userID) {

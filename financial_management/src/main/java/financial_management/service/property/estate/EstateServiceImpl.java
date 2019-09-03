@@ -1,17 +1,14 @@
 package financial_management.service.property.estate;
 
-import financial_management.bl.order.OrderService;
 import financial_management.bl.property.EstateService;
 import financial_management.data.property.EstateMapper;
 import financial_management.entity.property.*;
 import financial_management.service.property.manage.ManageServiceForBl;
 import financial_management.service.property.questionnaire.QuestionnaireServiceForBl;
-import financial_management.service.user.UserServiceForBl;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.property.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,17 +26,10 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     private EstateMapper estateMapper;
 
     @Autowired
-    private UserServiceForBl userServiceForBl;
-
-    @Autowired
     private ManageServiceForBl manageServiceForBl;
 
     @Autowired
     private QuestionnaireServiceForBl questionnaireServiceForBl;
-
-    @Autowired
-    @Qualifier("orderServiceImpl")
-    private OrderService orderService;
 
     /**
      * 获取用户资产概况
@@ -68,7 +58,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     public BasicResponse getPropertyByUser(Long userId) {
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
-            EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getStocksInPlatform(), estatePO.getStocksOutPlatform(), estatePO.getQdiiInPlatform(), estatePO.getQdiiOutPlatform(), estatePO.getGoldInPlatform(), estatePO.getGoldOutPlatform(), estatePO.getBondInPlatform(), estatePO.getBondOutPlatform());
+            EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getInvestInPlatform(), estatePO.getInvestOutPlatform());
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, estateVO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,15 +82,9 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                 case "funds":
                     subEstateVO = new SubEstateVO(totalAsset, estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform());
                     break;
-                case "saving":
-                    subEstateVO = new SubEstateVO(totalAsset, estatePO.getSavingInPlatform(), estatePO.getSavingOutPlatform());
-                    break;
-                case "insurance":
-                    subEstateVO = new SubEstateVO(totalAsset, estatePO.getInsuranceInPlatform(), estatePO.getInsuranceOutPlatform());
-                    break;
                 case "investment":
-                    double investInPlatform = estatePO.getStocksInPlatform() + estatePO.getQdiiInPlatform() + estatePO.getGoldInPlatform() + estatePO.getBondInPlatform();
-                    double investOutPlatform = estatePO.getStocksOutPlatform() + estatePO.getQdiiOutPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondOutPlatform();
+                    double investInPlatform = estatePO.getInvestInPlatform();
+                    double investOutPlatform = estatePO.getInvestOutPlatform();
                     subEstateVO = new SubEstateVO(totalAsset, investInPlatform, investOutPlatform);
                 default:
                     break;
@@ -241,16 +225,20 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     }
 
     /**
-     * 获取用户累计收益
+     * 设定用户的平台外现金数额
      *
-     * @param userId
+     * @param userId, fundsOutPlatform
      * @return
      */
     @Override
-    public BasicResponse getTotalIncome(Long userId) {
+    public BasicResponse setFundsOutPlatform(Long userId, double fundsOutPlatform) {
         try {
-            double totalIncome = estateMapper.getTotalIncome(userId);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, totalIncome);
+            if (ifExistOutRecord(userId)) {
+                estateMapper.insertOutFundsRecord(userId, fundsOutPlatform);
+            } else {
+                estateMapper.updateOutFundsRecord(userId, fundsOutPlatform);
+            }
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
@@ -258,22 +246,34 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     }
 
     /**
-     * 获取用户最新收益
+     * 设定用户的平台外现金数额
      *
-     * @param userId
+     * @param userId, investOutPlatform
      * @return
      */
     @Override
-    public BasicResponse getNewlyIncome(Long userId) {
+    public BasicResponse setInvestOutPlatform(Long userId, double investOutPlatform) {
         try {
-            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
-            double current = recentInvPO.getCurrentStocks() + recentInvPO.getCurrentQdii() + recentInvPO.getCurrentGold() + recentInvPO.getCurrentBond();
-            double yesterday = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayQdii() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, current - yesterday);
+            if (ifExistOutRecord(userId)) {
+                estateMapper.insertOutInvestRecord(userId, investOutPlatform);
+            } else {
+                estateMapper.updateOutInvestRecord(userId, investOutPlatform);
+            }
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
+    }
+
+    /**
+     * 判断平台外现金&投资表中是否存在该用户的记录
+     *
+     * @param userId
+     * @reutrn
+     */
+    public boolean ifExistOutRecord(Long userId) {
+        return estateMapper.ifExistOutRecord(userId);
     }
 
     /**
@@ -302,260 +302,11 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     public double getTotalAsset(Long userId) {
         try {
             EstatePO estatePO = estateMapper.getPropertyByUser(userId);
-            return estatePO.getFundsInPlatform() + estatePO.getFundsOutPlatform() + estatePO.getSavingInPlatform() + estatePO.getSavingOutPlatform() + estatePO.getInsuranceInPlatform() + estatePO.getInsuranceOutPlatform() + estatePO.getStocksInPlatform() + estatePO.getStocksOutPlatform() + estatePO.getQdiiInPlatform() + estatePO.getQdiiOutPlatform() + estatePO.getGoldInPlatform() + estatePO.getGoldOutPlatform() + estatePO.getBondInPlatform() + estatePO.getBondOutPlatform();
+            return estatePO.getFundsInPlatform() + estatePO.getFundsOutPlatform() + estatePO.getSavingOutPlatform() + estatePO.getInsuranceOutPlatform() + estatePO.getInvestInPlatform() + estatePO.getInvestOutPlatform();
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
-    }
-
-    /**
-     * 获取平台所有用户最新的投资收益率
-     *
-     * @param
-     * @return
-     */
-    @Override
-    public BasicResponse getAveNewlyRate() {
-        try {
-            List<Long> userIdList = userServiceForBl.getUserIdList();
-            double sumNewlyRate = 0;
-            for (Long userId : userIdList) {
-                sumNewlyRate += getNewlyInvestRate(userId);
-            }
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, sumNewlyRate / userIdList.size());
-        } catch (Exception e) {
-            return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
-        }
-    }
-
-    /**
-     * 获取用户最新的投资收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getNewlyInvestRate(Long userId) {
-        try {
-            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
-            double lastDayInvAsset = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayQdii() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
-            double todayInject = orderService.getInvestBy(userId, "FORSTOCK", new Date()) + orderService.getInvestBy(userId, "DOMSTOCK", new Date()) + orderService.getInvestBy(userId, "GOLD", new Date()) + orderService.getInvestBy(userId, "BOND", new Date());
-            double investAssetBothDays = lastDayInvAsset + todayInject;
-            double newlyStocksIncome = recentInvPO.getCurrentStocks() - recentInvPO.getYesterdayStocks();
-            double newlyQdiiIncome = recentInvPO.getCurrentQdii() - recentInvPO.getYesterdayQdii();
-            double newlyGoldIncome = recentInvPO.getCurrentGold() - recentInvPO.getYesterdayGold();
-            double newlyBondIncome = recentInvPO.getCurrentBond() - recentInvPO.getYesterdayBond();
-            return (newlyStocksIncome + newlyQdiiIncome + newlyGoldIncome + newlyBondIncome) / investAssetBothDays;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取用户最新的股票收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getNewlyStocksRate(Long userId) {
-        try {
-            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
-            return (recentInvPO.getCurrentStocks() - recentInvPO.getYesterdayStocks()) / (recentInvPO.getYesterdayStocks() + orderService.getInvestBy(userId, "FORSTOCK", new Date()));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取用户最新的股指收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getNewlyQdiiRate(Long userId) {
-        try {
-            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
-            return (recentInvPO.getCurrentQdii() - recentInvPO.getYesterdayQdii()) / (recentInvPO.getYesterdayQdii() + orderService.getInvestBy(userId, "DOMSTOCK", new Date()));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取用户最新的黄金收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getNewlyGoldRate(Long userId) {
-        try {
-            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
-            return (recentInvPO.getCurrentGold() - recentInvPO.getYesterdayGold()) / (recentInvPO.getYesterdayGold() + orderService.getInvestBy(userId, "GOLD", new Date()));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取用户最新的债券收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getNewlyBondRate(Long userId) {
-        try {
-            RecentInvPO recentInvPO = estateMapper.getNewlyIncome(userId);
-            return (recentInvPO.getCurrentBond() - recentInvPO.getYesterdayBond()) / (recentInvPO.getYesterdayBond() + orderService.getInvestBy(userId, "BOND", new Date()));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取平台所有用户累计的投资收益率
-     *
-     * @param
-     * @return
-     */
-    @Override
-    public BasicResponse getAveTotalRate() {
-        try {
-            List<Long> userIdList = userServiceForBl.getUserIdList();
-            double sumTotalRate = 0;
-            for (Long userId : userIdList) {
-                sumTotalRate += getTotalInvestRate(userId);
-            }
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, sumTotalRate / userIdList.size());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
-        }
-    }
-
-    /**
-     * 获取用户累计的投资收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getTotalInvestRate(Long userId) {
-        try {
-            TotalIncomePO totalIncomePO = estateMapper.getTotalInvestRate(userId);
-            double sumMaxInvest = orderService.getMaxInvestBy(userId, "FORSTOCK") + orderService.getMaxInvestBy(userId, "DOMSTOCK") + orderService.getMaxInvestBy(userId, "GOLD") + orderService.getMaxInvestBy(userId, "BOND");
-            double totalStocksIncome = totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", null);
-            double totalQdiiIncome = totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", null);
-            double totalGoldIncome = totalIncomePO.getTotalGold() - orderService.getInvestBy(userId, "GOLD", null);
-            double totalBondIncome = totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", null);
-            return (totalStocksIncome + totalQdiiIncome + totalGoldIncome + totalBondIncome) / sumMaxInvest;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取用户累计的股票收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getTotalStocksRate(Long userId) {
-        try {
-            TotalIncomePO totalIncomePO = estateMapper.getTotalInvestRate(userId);
-            return (totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", null)) / orderService.getMaxInvestBy(userId, "FORSTOCK");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取用户累计的股指收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getTotalQdiiRate(Long userId) {
-        try {
-            TotalIncomePO totalIncomePO = estateMapper.getTotalInvestRate(userId);
-            return (totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", null)) / orderService.getMaxInvestBy(userId, "DOMSTOCK");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取用户累计的黄金收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getTotalGoldRate(Long userId) {
-        try {
-            TotalIncomePO totalIncomePO = estateMapper.getTotalInvestRate(userId);
-            return (totalIncomePO.getTotalGold() - orderService.getInvestBy(userId, "GOLD", null)) / orderService.getMaxInvestBy(userId, "GOLD");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取用户累计的债券收益率
-     *
-     * @param userId
-     * @return
-     */
-    @Override
-    public double getTotalBondRate(Long userId) {
-        try {
-            TotalIncomePO totalIncomePO = estateMapper.getTotalInvestRate(userId);
-            return (totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", null)) / orderService.getMaxInvestBy(userId, "BOND");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    /**
-     * 获取债券的days日收益率
-     *
-     * @param bondId, days
-     * @return
-     */
-    @Override
-    public double getBondProfitOfDays(Long bondId, int days) {
-        if (ifExistDaysBondLog(bondId, days)) {
-            BondIncomePO bondIncomePO = estateMapper.getBondProfitOfDays(bondId, days);
-            return bondIncomePO.getTodayNetWorth() / bondIncomePO.getBeforeDaysNetWorth() - 1;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * 判断是否存在days天的债券收益记录
-     *
-     * @param bondId, days
-     * @return
-     */
-    public boolean ifExistDaysBondLog(Long bondId, int days) {
-        return estateMapper.ifExistDaysBondLog(bondId, days);
     }
 
 }

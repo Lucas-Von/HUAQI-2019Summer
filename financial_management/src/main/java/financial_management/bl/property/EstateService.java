@@ -81,36 +81,19 @@ public interface EstateService {
     BasicResponse getMyRecAlloc(Long userId);
 
     /**
-     * 获取用户累计收益
+     * 设定用户的平台外现金数额
      *
-     * @param userId
+     * @param userId, fundsOutPlatform
      * @return
      */
-    BasicResponse getTotalIncome(Long userId);
-
-
-    /**
-     * 获取用户最新收益
-     *
-     * @param userId
-     * @return
-     */
-    BasicResponse getNewlyIncome(Long userId);
+    BasicResponse setFundsOutPlatform(Long userId, double fundsOutPlatform);
 
     /**
-     * 获取平台所有用户最新的投资收益率
+     * 设定用户的平台外投资数额
      *
-     * @param
+     * @param userId, setInvestOutPlatform
      * @return
      */
-    BasicResponse getAveNewlyRate();
-
-    /**
-     * 获取平台所有用户累计的投资收益率
-     *
-     * @param
-     * @return
-     */
-    BasicResponse getAveTotalRate();
+    BasicResponse setInvestOutPlatform(Long userId, double setInvestOutPlatform);
 
 }

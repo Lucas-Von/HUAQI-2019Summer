@@ -67,7 +67,7 @@ CREATE TABLE `bond` (
 
 LOCK TABLES `bond` WRITE;
 /*!40000 ALTER TABLE `bond` DISABLE KEYS */;
-INSERT INTO bond VALUES (1,'债券1','8888',99);
+INSERT INTO `bond` VALUES (1,'债券1','8888',99);
 /*!40000 ALTER TABLE `bond` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -337,7 +337,7 @@ CREATE TABLE `dom_stock` (
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,7 +346,7 @@ CREATE TABLE `dom_stock` (
 
 LOCK TABLES `dom_stock` WRITE;
 /*!40000 ALTER TABLE `dom_stock` DISABLE KEYS */;
-INSERT INTO dom_stock VALUES (1,'啊啊啊啊？','601991',99);
+INSERT INTO `dom_stock` VALUES (1,'啊啊啊啊？','601991',99);
 /*!40000 ALTER TABLE `dom_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,7 +399,7 @@ CREATE TABLE `for_stock` (
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -408,7 +408,7 @@ CREATE TABLE `for_stock` (
 
 LOCK TABLES `for_stock` WRITE;
 /*!40000 ALTER TABLE `for_stock` DISABLE KEYS */;
-INSERT INTO for_stock VALUES (1,'阿这','123123',12);
+INSERT INTO `for_stock` VALUES (1,'阿这','123123',12);
 /*!40000 ALTER TABLE `for_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -429,7 +429,7 @@ CREATE TABLE `fortune` (
   `qdii` double DEFAULT NULL,
   `gold` double DEFAULT NULL,
   `bond` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,6 +463,29 @@ CREATE TABLE `fund` (
 LOCK TABLES `fund` WRITE;
 /*!40000 ALTER TABLE `fund` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fund` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `funds_and_invest_out_platform`
+--
+
+DROP TABLE IF EXISTS `funds_and_invest_out_platform`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `funds_and_invest_out_platform` (
+  `user_id` bigint(255) NOT NULL,
+  `funds` double DEFAULT NULL,
+  `invest` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `funds_and_invest_out_platform`
+--
+
+LOCK TABLES `funds_and_invest_out_platform` WRITE;
+/*!40000 ALTER TABLE `funds_and_invest_out_platform` DISABLE KEYS */;
+/*!40000 ALTER TABLE `funds_and_invest_out_platform` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -865,8 +888,8 @@ CREATE TABLE `my_qdii` (
   `hold_price` float NOT NULL,
   `hold_amount` float NOT NULL,
   `hold_total` float NOT NULL,
-  `profit` float NOT NULL DEFAULT 0,
-  `profit_rate` float NOT NULL DEFAULT 0,
+  `profit` float NOT NULL DEFAULT '0',
+  `profit_rate` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -897,8 +920,8 @@ CREATE TABLE `my_stock` (
   `hold_price` float NOT NULL,
   `hold_amount` int(11) NOT NULL,
   `hold_total` float NOT NULL,
-  `profit` float NOT NULL DEFAULT 0,
-  `profit_rate` float NOT NULL DEFAULT 0,
+  `profit` float NOT NULL DEFAULT '0',
+  `profit_rate` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -961,7 +984,7 @@ CREATE TABLE `platform_bond_fund` (
   `return_rate_seven` float DEFAULT '0',
   `return_rate_thirty` float DEFAULT '0',
   `return_rate_ninety` float DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1101,6 +1124,33 @@ INSERT INTO `recommend` VALUES (1,'稳健保守型',0.5,0.5,0.25,0.25,0.25999999
 UNLOCK TABLES;
 
 --
+-- Table structure for table `stock_adjustment`
+--
+
+DROP TABLE IF EXISTS `stock_adjustment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stock_adjustment` (
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `stock_code` varchar(6) NOT NULL,
+  `stockname` varchar(50) NOT NULL,
+  `account_deployed_change` int(11) NOT NULL,
+  `m_already_deployed` float NOT NULL,
+  `price_deployed` float NOT NULL,
+  PRIMARY KEY (`date`,`stock_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_adjustment`
+--
+
+LOCK TABLES `stock_adjustment` WRITE;
+/*!40000 ALTER TABLE `stock_adjustment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stock_adjustment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `transfer_record`
 --
 
@@ -1132,17 +1182,6 @@ LOCK TABLES `transfer_record` WRITE;
 /*!40000 ALTER TABLE `transfer_record` DISABLE KEYS */;
 /*!40000 ALTER TABLE `transfer_record` ENABLE KEYS */;
 UNLOCK TABLES;
-
-DROP TABLE IF EXISTS `stock_adjustment`;
-CREATE TABLE `stock_adjustment` (
-    `date` timestamp NOT NULL,
-    `stock_code` varchar(6) NOT NULL,
-    `stockname` varchar(50) NOT NULL,
-    `account_deployed_change` int(11) NOT NULL,
-    `m_already_deployed` float NOT NULL,
-    `price_deployed` float NOT NULL,
-    PRIMARY KEY (`date`,`stock_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `user`
@@ -1221,4 +1260,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-02 23:55:42
+-- Dump completed on 2019-09-03 21:15:38

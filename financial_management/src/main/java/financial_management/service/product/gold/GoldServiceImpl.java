@@ -1,4 +1,4 @@
-package financial_management.service.product;
+package financial_management.service.product.gold;
 
 import financial_management.bl.order.OrderService;
 import financial_management.bl.product.GoldService;
@@ -29,7 +29,7 @@ import java.util.List;
  * @date 2019/8/30
  */
 @Service
-public class GoldServiceImpl implements GoldService {
+public class GoldServiceImpl implements GoldService, GoldServiceForBl {
     @Autowired
     private GoldMapper goldMapper;
 
@@ -229,6 +229,20 @@ public class GoldServiceImpl implements GoldService {
         }catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public double getTotalGoldByUser(Long userId){
+        if(goldMapper.ifExistSelfGold(userId)) {
+            List<MyGoldPO> myGoldPOList = goldMapper.selectSelfGold(userId);
+            double total = 0;
+            for(int i=0;i<myGoldPOList.size();i++){
+                total = total + myGoldPOList.get(i).getSum();
+            }
+            return total;
+        }else {
+            return 0;
         }
     }
 }

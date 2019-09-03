@@ -3,8 +3,16 @@ package financial_management.data.property;
 import financial_management.entity.property.BondIncomePO;
 import financial_management.entity.property.RecentInvPO;
 import financial_management.entity.property.TotalIncomePO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+/**
+ * @author lt
+ * @date 2019/09/03 19:45
+ */
+@Repository
+@Mapper
 public interface IncomeMapper {
 
     /**

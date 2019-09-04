@@ -1,15 +1,15 @@
 package financial_management.service.product;
 
-import financial_management.bl.product.StockService;
+import financial_management.bl.order.OrderService;
 import financial_management.data.product.BondFundMapper;
 import financial_management.entity.bond.*;
 import financial_management.entity.bond.transferPython.*;
-import financial_management.service.order.impl.OrderServiceImpl;
 import financial_management.service.product.bond.BondServiceForBl;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.ProductVO4Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -27,10 +27,9 @@ import java.util.Optional;
 @Service
 public class BondSeriveImpl implements BondServiceForBl {
 
-
-
+    @Qualifier("orderServiceImpl")
     @Autowired
-    OrderServiceImpl orderService;
+    OrderService orderService;
 
     @Autowired
     BondFundMapper mapper;
@@ -100,7 +99,7 @@ public class BondSeriveImpl implements BondServiceForBl {
         tradeRecord_Nation.setCreateTime(po.getTrans_time());
         tradeRecord_Nation.setUserID(userId);
         tradeRecord_Nation.setFee(po.getAmountchange_national());
-        tradeRecord_Nation.setType(PersonalTradeVO.Type.BOND);
+        tradeRecord_Nation.setType(OrderService.Type.BOND);
         //0是卖 1是买
         tradeRecord_Nation.setTotal(po.getSign() == 0 ? -po.getAmountchange_national() : po.getAmountchange_national());
         orderService.addPersonalTradeRecord(tradeRecord_Nation, false);
@@ -113,7 +112,7 @@ public class BondSeriveImpl implements BondServiceForBl {
         tradeRecord_Corpor.setCreateTime(po.getTrans_time());
         tradeRecord_Corpor.setUserID(userId);
         tradeRecord_Corpor.setFee(po.getAmountchange_corporate());
-        tradeRecord_Corpor.setType(PersonalTradeVO.Type.BOND);
+        tradeRecord_Corpor.setType(OrderService.Type.BOND);
         //0是卖 1是买
         tradeRecord_Corpor.setTotal(po.getSign() == 0 ? -po.getAmountchange_corporate() : po.getAmountchange_corporate());
         orderService.addPersonalTradeRecord(tradeRecord_Corpor, false);
@@ -161,7 +160,7 @@ public class BondSeriveImpl implements BondServiceForBl {
         tradeRecord_Nation.setCreateTime(po.getTrans_time());
         tradeRecord_Nation.setUserID(userId);
         tradeRecord_Nation.setFee(po.getAmountchange_national());
-        tradeRecord_Nation.setType(PersonalTradeVO.Type.BOND);
+        tradeRecord_Nation.setType(OrderService.Type.BOND);
         //0是卖 1是买
         tradeRecord_Nation.setTotal(po.getSign() == 0 ? -po.getAmountchange_national() : po.getAmountchange_national());
         orderService.addPersonalTradeRecord(tradeRecord_Nation, false);
@@ -176,7 +175,7 @@ public class BondSeriveImpl implements BondServiceForBl {
         tradeRecord_Corpor.setCreateTime(po.getTrans_time());
         tradeRecord_Corpor.setUserID(userId);
         tradeRecord_Corpor.setFee(po.getAmountchange_corporate());
-        tradeRecord_Corpor.setType(PersonalTradeVO.Type.BOND);
+        tradeRecord_Corpor.setType(OrderService.Type.BOND);
         //0是卖 1是买
         tradeRecord_Corpor.setTotal(po.getSign() == 0 ? -po.getAmountchange_corporate() : po.getAmountchange_corporate());
         orderService.addPersonalTradeRecord(tradeRecord_Corpor, false);
@@ -298,7 +297,7 @@ public class BondSeriveImpl implements BondServiceForBl {
             }
             record.setProduct(o.getCode());
             record.setTime(o.getTime());
-            orderService.addPlatfromTradeRecord(record);
+            orderService.addPlatformTradeRecord(record);
         });
         po.getTrans_record_national().stream().forEach(o -> {
             PlatformTradeVO record = new PlatformTradeVO();
@@ -313,11 +312,11 @@ public class BondSeriveImpl implements BondServiceForBl {
             record.setAmount(o.getQuantity());
             record.setProduct(o.getCode());
             record.setTime(o.getTime());
-            orderService.addPlatfromTradeRecord(record);
+            orderService.addPlatformTradeRecord(record);
         });
 
         //用户个人信息
-        List<PersonalTradeVO> list = orderService.getTodaysPersonalTradeRecord(PersonalTradeVO.Type.BOND).getData();
+        List<PersonalTradeVO> list = orderService.getTodaysPersonalTradeRecord(OrderService.Type.BOND).getData();
         Float nationalShare = nation.getFundShare();
         Float corporateShare = corporation.getFundShare();
         for (int i = 0; i < list.size(); i++) {
@@ -455,7 +454,7 @@ public class BondSeriveImpl implements BondServiceForBl {
             trade.setTime(o.getTime());
             trade.setProduct(o.getCode());
             trade.setAmount(o.getQuantity());
-            orderService.addPlatfromTradeRecord(trade);
+            orderService.addPlatformTradeRecord(trade);
         });
     }
 }
@@ -662,14 +661,14 @@ public class BondSeriveImpl implements BondServiceForBl {
 //            mapper.updateBondPrice(value,bonds.get(i).getId());
 //        }
 //    }
-    
+
     /**
      * @Author jyh
      * @Description //平台每日购买时调用
      * 函数6
      * @Date 10:30 2019/8/29
-     * @Param 
-     * @return 
+     * @Param
+     * @return
      **/
 //    public void platformTransaction(){
 //        BondFoundationPO national = mapper.selectBondFundByName(nationalDebtName);
@@ -728,8 +727,8 @@ public class BondSeriveImpl implements BondServiceForBl {
      * @Description //单位净值计算
      * 函数8
      * @Date 13:58 2019/8/29
-     * @Param 
-     * @return 
+     * @Param
+     * @return
      **/
 //    public void netWorthy(){
 //        BondFoundationPO national = mapper.selectBondFundByName(nationalDebtName);
@@ -742,14 +741,14 @@ public class BondSeriveImpl implements BondServiceForBl {
 //        mapper.updateBondFundNetWorthy(nationalPrice,nationalDebtName);
 //        mapper.updateBondFundNetWorthy(corporationPrice,corporationDebtName);
 //    }
-    
+
     /**
      * @Author jyh
      * @Description //基金规模调整
      * 函数9
      * @Date 14:36 2019/8/29
-     * @Param 
-     * @return 
+     * @Param
+     * @return
      **/
 //    public void fundScale(){
 //        //获取所有债权

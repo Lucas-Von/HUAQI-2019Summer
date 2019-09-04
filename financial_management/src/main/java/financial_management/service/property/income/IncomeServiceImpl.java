@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static financial_management.bl.order.OrderService.Type.*;
+
 /**
  * @author lt
  * @date 2019/09/03 19:49
@@ -125,13 +127,14 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
      */
     public double getSomeDayTotalInvestRate(Long userId, Date date) {
         try {
+            System.out.println(date);
             TotalIncomePO totalIncomePO = new TotalIncomePO();
             if (isToday(date, new Date())) {
                 totalIncomePO = incomeMapper.getTotalInvestRate(userId);
             } else {
                 totalIncomePO = incomeMapper.getSomeDayTotalInvestRate(userId, date);
             }
-            double sumMaxInvest = orderService.getMaxInvestBy(userId, "FORSTOCK") + orderService.getMaxInvestBy(userId, "DOMSTOCK") + orderService.getMaxInvestBy(userId, "GOLD") + orderService.getMaxInvestBy(userId, "BOND");
+            double sumMaxInvest = orderService.getMaxInvestBy(userId, FORSTOCK, date) + orderService.getMaxInvestBy(userId, DOMSTOCK, date) + orderService.getMaxInvestBy(userId, GOLD, date) + orderService.getMaxInvestBy(userId, BOND, date);
             double totalStocksIncome = totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", date);
             double totalQdiiIncome = totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", date);
             double totalGoldIncome = totalIncomePO.getTotalGold() - orderService.getInvestBy(userId, "GOLD", date);

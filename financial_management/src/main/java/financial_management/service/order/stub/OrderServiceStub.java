@@ -34,7 +34,7 @@ public class OrderServiceStub implements OrderService {
         } catch (ParseException ignored) {
 
         }
-        vo.setType(PersonalTradeVO.Type.GOLD);
+        vo.setType(OrderService.Type.GOLD);
         vo.setAmount(100);
         vo.setPrice((float) 1.1777);
         vo.setTotal((float) 117.77);
@@ -50,7 +50,7 @@ public class OrderServiceStub implements OrderService {
         } catch (ParseException ignored) {
 
         }
-        vo1.setType(PersonalTradeVO.Type.FUND);
+        vo1.setType(OrderService.Type.FUND);
         vo1.setAmount(-100);
         vo1.setPrice(1);
         vo1.setTotal(-100);
@@ -66,7 +66,7 @@ public class OrderServiceStub implements OrderService {
         } catch (ParseException ignored) {
 
         }
-        vo2.setType(PersonalTradeVO.Type.FUND);
+        vo2.setType(OrderService.Type.FUND);
         vo2.setAmount(50);
         vo2.setPrice(2);
         vo2.setTotal(100);
@@ -159,7 +159,7 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
-    public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(PersonalTradeVO.Type type) {
+    public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(Type type) {
         return null;
     }
 
@@ -174,7 +174,7 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
-    public BasicResponse<Long> addPlatfromTradeRecord(PlatformTradeVO platformTradeVO) {
+    public BasicResponse<Long> addPlatformTradeRecord(PlatformTradeVO platformTradeVO) {
         return null;
     }
 
@@ -184,13 +184,18 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
-    public Double getMaxInvestBy(Long userID, String type) {
-        return null;
+    public double getMaxInvestBy(Long userID, String type) {
+        return 0.0;
     }
 
     @Override
-    public Double getInvestBy(Long userID, String type, Date date) {
-        return null;
+    public double getInvestBy(Long userID, String type, Date date) {
+        return 0.0;
+    }
+
+    @Override
+    public double getMaxInvestBy(Long userID, Type type, Date date) {
+        return 0.0;
     }
 }
 

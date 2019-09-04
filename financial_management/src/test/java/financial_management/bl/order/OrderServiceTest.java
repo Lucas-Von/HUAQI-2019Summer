@@ -31,7 +31,7 @@ public class OrderServiceTest {
     {
         personalTradeVO = new PersonalTradeVO();
         personalTradeVO.setCreateTime(new Date());
-        personalTradeVO.setType(PersonalTradeVO.Type.DOMSTOCK);
+        personalTradeVO.setType(OrderService.Type.DOMSTOCK);
         personalTradeVO.setProduct(new ProductVO4Order(1L, "name", "123456"));
         personalTradeVO.setAmount(100);
         personalTradeVO.setPrice(1.0f);
@@ -64,7 +64,7 @@ public class OrderServiceTest {
 
     @Test
     public void testInsertPlatformTrade() {
-        BasicResponse response = orderService.addPlatfromTradeRecord(platformTradeVO);
+        BasicResponse response = orderService.addPlatformTradeRecord(platformTradeVO);
         System.out.println(response.getStatus().code);
         assertEquals(ResponseStatus.STATUS_SUCCESS,response.getStatus());
     }

@@ -19,7 +19,6 @@ import financial_management.vo.order.TransferRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BasicResponse<?> addPlatfromTradeRecord(PlatformTradeVO platformTradeVO) {
+    public BasicResponse<?> addPlatformTradeRecord(PlatformTradeVO platformTradeVO) {
         PlatformTradePO po = assemblePlatformTradePO(platformTradeVO);
         po.setID(null);
         try {
@@ -158,7 +157,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord() {
-        List<PersonalTradePO> pos = personalTradeMapper.selectByDate(new Date(), PersonalTradeVO.Type.BOND.name().toUpperCase());
+        List<PersonalTradePO> pos = personalTradeMapper.selectByDate(new Date(), OrderService.Type.BOND.name().toUpperCase());
         List<PersonalTradeVO> vos = new ArrayList<>(pos.size());
         for (PersonalTradePO po : pos) {
             vos.add(new PersonalTradeVO(po));
@@ -167,7 +166,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(PersonalTradeVO.Type type) {
+    public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(Type type) {
         List<PersonalTradePO> pos = personalTradeMapper.selectByDate(new Date(), type.name().toUpperCase());
         List<PersonalTradeVO> vos = new ArrayList<>(pos.size());
         for (PersonalTradePO po : pos) {
@@ -188,26 +187,48 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Double getMaxInvestBy(Long userID, String type) {
+    public double getMaxInvestBy(Long userID, String type) {
         //BasicResponse<MaxInvestVO> response;
-        MaxInvestPO po = maxInvestMapper.selectByUserIDAndType(userID, type);
+        MaxInvestPO po = maxInvestMapper.selectByUserIDAndType(userID, type.toUpperCase());
         if (po != null) {
-            return new BigDecimal(po.getMax()).doubleValue();
+            return po.getMax().doubleValue();
             //response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new MaxInvestVO(po));
         } else {
-            return Double.NaN;
+            return 0.0;
             //response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new MaxInvestVO(userID, type, (float) 0, null));
         }
         //return response;
     }
 
     @Override
-    public Double getInvestBy(Long userID, String type, Date date) {
+    public double getMaxInvestBy(Long userID, Type type, Date noLaterThanDate) {
+        MaxInvestPO candidate = maxInvestMapper.selectByUserIDAndType(userID, type.name());
+        if (candidate != null) {
+            if (candidate.getDate().after(noLaterThanDate)) {
+                List<PersonalTradePO> tradePOS = personalTradeMapper.selectByUserIDAndType(userID, type.name(), noLaterThanDate);
+                double max = 0, sum = 0;
+                for (PersonalTradePO personalTradePO : tradePOS) {
+                    sum += personalTradePO.getTotal().doubleValue();
+                    if (sum > max) {
+                        max = sum;
+                    }
+                }
+                return max;
+            } else {
+                return candidate.getMax().doubleValue();
+            }
+        } else {
+            return 0.0;
+        }
+    }
+
+    @Override
+    public double getInvestBy(Long userID, String type, Date date) {
         Float sum = personalTradeMapper.selectSum(userID, type, date);
         if (sum != null) {
-            return new BigDecimal(sum).doubleValue();
+            return sum.doubleValue();
         } else {
-            return Double.NaN;
+            return 0.0;
         }
         //return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeMapper.selectSum(userID, type, date));
     }

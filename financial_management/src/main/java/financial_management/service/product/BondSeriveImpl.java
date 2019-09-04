@@ -1,13 +1,10 @@
 package financial_management.service.product;
 
-import financial_management.bl.order.OrderService;
 import financial_management.data.product.BondFundMapper;
 import financial_management.entity.PlatformTradePO;
 import financial_management.entity.product.*;
 import financial_management.service.order.impl.OrderServiceImpl;
-import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
-import financial_management.vo.order.TransferRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -289,7 +286,7 @@ public class BondSeriveImpl {
         po.setProduct("///神秘玩意");
         PlatformTradeVO vo = new PlatformTradeVO(po);
 
-        orderService.addPlatfromTradeRecord(vo);
+        orderService.addPlatformTradeRecord(vo);
     }
     /**
      * @Author jyh

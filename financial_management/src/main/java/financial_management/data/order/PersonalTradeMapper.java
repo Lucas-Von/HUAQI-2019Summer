@@ -14,7 +14,7 @@ public interface PersonalTradeMapper {
     List<PersonalTradePO> selectByUserID(@Param("userID") Long userID);
 
     List<PersonalTradePO> selectByUserIDAndType
-            (@Param("userID") Long userID, @Param("type") String type, @Param("date") Date date);
+            (@Param("userID") Long userID, @Param("type") String type, @Param("date") Date noLaterThanDate);
 
     List<PersonalTradePO> selectByDate(@Param("date") Date date, @Param("type") String type);
 

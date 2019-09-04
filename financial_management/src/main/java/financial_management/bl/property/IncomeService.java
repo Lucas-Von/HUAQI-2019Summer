@@ -26,6 +26,14 @@ public interface IncomeService {
     BasicResponse getNewlyIncome(Long userId);
 
     /**
+     * 获取平台所有用户最近days天的累计投资收益率列表
+     *
+     * @param days
+     * @return
+     */
+    BasicResponse getIncomeRateList(int days);
+
+    /**
      * 获取平台所有用户最新的投资收益率
      *
      * @param

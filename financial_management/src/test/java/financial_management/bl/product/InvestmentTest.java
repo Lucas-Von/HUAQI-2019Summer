@@ -30,4 +30,5 @@ public class InvestmentTest {
     public void getStockAndQDIIByUser_normal(){
         assertEquals(999+999,stockService.getStockByUser(1),1);
     }
+
 }

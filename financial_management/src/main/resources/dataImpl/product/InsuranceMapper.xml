@@ -34,14 +34,14 @@
         <result property="price" column="price"/>
         <result property="maturity" column="maturity"/>
         <result property="beneficiary" column="beneficiary"/>
-        <result property="product" column="product"/>
+        <result property="name" column="product"/>
         <result property="compensation" column="compensation"/>
         <result property="type" column="type"/>
     </resultMap>
 
     <resultMap id="InsProduct" type="financial_management.entity.InsProductPO">
         <id property="id" column="id"/>
-        <result property="product" column="product"/>
+        <result property="name" column="product"/>
         <result property="type" column="type"/>
         <result property="price" column="price"/>
         <result property="compensation" column="compensation"/>

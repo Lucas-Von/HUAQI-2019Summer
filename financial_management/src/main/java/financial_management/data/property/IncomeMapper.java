@@ -35,14 +35,6 @@ public interface IncomeMapper {
     Double getTotalIncome(@Param("userId") Long userId);
 
     /**
-     * 获取平台所有用户最近days天的累计投资收益率
-     *
-     * @param days
-     * @return
-     */
-    List<Double> getIncomeRateList(@Param("days") int days);
-
-    /**
      * 获取特定日期用户累计的投资收益率
      *
      * @param userId

@@ -9,6 +9,7 @@ import financial_management.entity.property.TotalIncomePO;
 import financial_management.service.user.UserServiceForBl;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
+import financial_management.vo.property.IncomeRateVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             double yesterday = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayQdii() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, current - yesterday);
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
         }
     }
@@ -70,7 +71,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             double totalIncome = incomeMapper.getTotalIncome(userId);
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, totalIncome);
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
@@ -84,14 +85,15 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
     @Override
     public BasicResponse getIncomeRateList(int days) {
         try {
-            List<Double> incomeRateList = new ArrayList<>();
+            List<IncomeRateVO> incomeRateList = new ArrayList<>();
             List<Date> dateList = getDateList(getDateBefore(days), new Date());
             dateList.stream().forEach(date -> {
-                incomeRateList.add(getSomeDayAveTotalRate(date));
+                IncomeRateVO incomeRateVO = new IncomeRateVO(date, getSomeDayAveTotalRate(date));
+                incomeRateList.add(incomeRateVO);
             });
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, incomeRateList);
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             List<Double> errRateList = new ArrayList<>();
             for (int i = 0; i < days; i++) errRateList.add(0.0);
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR, errRateList);
@@ -113,8 +115,8 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             }
             return sumTotalRate / userIdList.size();
         } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
+            // e.printStackTrace();
+            return 0;
         }
     }
 
@@ -127,7 +129,6 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
      */
     public double getSomeDayTotalInvestRate(Long userId, Date date) {
         try {
-            System.out.println(date);
             TotalIncomePO totalIncomePO = new TotalIncomePO();
             if (isToday(date, new Date())) {
                 totalIncomePO = incomeMapper.getTotalInvestRate(userId);
@@ -141,7 +142,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             double totalBondIncome = totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", date);
             return (totalStocksIncome + totalQdiiIncome + totalGoldIncome + totalBondIncome) / sumMaxInvest;
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -162,6 +163,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             }
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, sumNewlyRate / userIdList.size());
         } catch (Exception e) {
+            // e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
         }
     }
@@ -185,7 +187,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             double newlyBondIncome = recentInvPO.getCurrentBond() - recentInvPO.getYesterdayBond();
             return (newlyStocksIncome + newlyQdiiIncome + newlyGoldIncome + newlyBondIncome) / investAssetBothDays;
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -202,7 +204,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             RecentInvPO recentInvPO = incomeMapper.getNewlyIncome(userId);
             return recentInvPO.getCurrentStocks() - recentInvPO.getYesterdayStocks();
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -219,7 +221,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             RecentInvPO recentInvPO = incomeMapper.getNewlyIncome(userId);
             return recentInvPO.getCurrentQdii() - recentInvPO.getYesterdayQdii();
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -236,7 +238,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             RecentInvPO recentInvPO = incomeMapper.getNewlyIncome(userId);
             return recentInvPO.getCurrentGold() - recentInvPO.getYesterdayGold();
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -253,7 +255,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             RecentInvPO recentInvPO = incomeMapper.getNewlyIncome(userId);
             return recentInvPO.getCurrentBond() - recentInvPO.getYesterdayBond();
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -274,7 +276,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             }
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, sumTotalRate / userIdList.size());
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }
@@ -296,7 +298,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             double totalBondIncome = totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", null);
             return (totalStocksIncome + totalQdiiIncome + totalGoldIncome + totalBondIncome) / sumMaxInvest;
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -313,7 +315,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             TotalIncomePO totalIncomePO = incomeMapper.getTotalInvestRate(userId);
             return totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", null);
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -330,7 +332,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             TotalIncomePO totalIncomePO = incomeMapper.getTotalInvestRate(userId);
             return totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", null);
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -347,7 +349,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             TotalIncomePO totalIncomePO = incomeMapper.getTotalInvestRate(userId);
             return totalIncomePO.getTotalGold() - orderService.getInvestBy(userId, "GOLD", null);
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -364,7 +366,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             TotalIncomePO totalIncomePO = incomeMapper.getTotalInvestRate(userId);
             return totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", null);
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return 0;
         }
     }
@@ -403,7 +405,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
      * @param days
      * @return
      */
-    public Date getDateBefore(int days) {
+    public static Date getDateBefore(int days) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1 * days);
         return cal.getTime();
@@ -419,13 +421,15 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
     public static List<Date> getDateList(Date beginDate, Date endDate) {
         List<Date> dateList = new ArrayList<>();
         dateList.add(beginDate);
-        Calendar calBegin = Calendar.getInstance();
-        calBegin.setTime(beginDate);
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(endDate);
-        while (endDate.after(calBegin.getTime())) {
-            calBegin.add(Calendar.DAY_OF_MONTH, 1);
-            dateList.add(calBegin.getTime());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(beginDate);
+        while (true) {
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+            if (endDate.after(cal.getTime())) {
+                dateList.add(cal.getTime());
+            } else {
+                break;
+            }
         }
         return dateList;
     }

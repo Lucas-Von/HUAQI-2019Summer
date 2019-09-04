@@ -21,7 +21,7 @@ public interface OrderService {
     BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord();
 
     //获取今日所有个人交易记录（按类型）
-    BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(PersonalTradeVO.Type type);
+    BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord(Type type);
 
     //获取平台交易记录
     BasicResponse<List<PlatformTradeVO>> getAllPlatformTradeRecord();
@@ -30,13 +30,32 @@ public interface OrderService {
     BasicResponse<?> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize);
 
     //新增平台交易记录
-    BasicResponse<?> addPlatfromTradeRecord(PlatformTradeVO platformTradeVO);
+    BasicResponse<?> addPlatformTradeRecord(PlatformTradeVO platformTradeVO);
 
     BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO, boolean isCustomize);
 
     //获取累计净投入峰值
-    Double getMaxInvestBy(Long userID, String type);
+    double getMaxInvestBy(Long userID, String type);
 
-    //获取当日&累计净投入，date为null则为累计
-    Double getInvestBy(Long userID, String type, Date date);
+    //获取当日&累计净投入，date为null则为累计，否则为该日期的结果
+    double getInvestBy(Long userID, String type, Date date);
+
+    /**
+     * 获取date日期之前的累计净投入峰值
+     * @param userID 用户ID
+     * @param type 类型，见下方
+     * @param noLaterThanDate 统计截止日期（包括该日期）
+     * @return date之前的累计净投入峰值
+     */
+    double getMaxInvestBy(Long userID, Type type, Date noLaterThanDate);
+
+    enum Type{
+        FUND,//基金
+        DEPOSIT,//储蓄
+        INSURANCE,//保险
+        GOLD,//黄金
+        BOND,//债券
+        DOMSTOCK,//股票
+        FORSTOCK;//股指
+    }
 }

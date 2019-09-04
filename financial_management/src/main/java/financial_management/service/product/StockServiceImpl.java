@@ -7,10 +7,6 @@ import financial_management.entity.DomStockPO;
 import financial_management.entity.ForStockPO;
 import financial_management.entity.MyQDIIPO;
 import financial_management.entity.MyStockPO;
-import financial_management.util.PyInvoke.PyFunc;
-import financial_management.util.PyInvoke.PyInvoke;
-import financial_management.util.PyInvoke.PyParam.stock.StockAdjustParam;
-import financial_management.util.PyInvoke.PyParam.stock.StockWeeklyTransferParam;
 import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
 import financial_management.util.PyInvoke.PyResponse.stock.StockAdjustment;
 import financial_management.vo.order.PersonalTradeVO;
@@ -176,7 +172,7 @@ public class StockServiceImpl implements StockService {
             productVO4Order.setName(stockPO.getName());
 
             PersonalTradeVO vo = new PersonalTradeVO();
-            vo.setType(PersonalTradeVO.Type.DOMSTOCK);
+            vo.setType(OrderService.Type.DOMSTOCK);
             vo.setUserID(userID);
             vo.setCreateTime(new Date());
             vo.setProduct(productVO4Order);
@@ -231,7 +227,7 @@ public class StockServiceImpl implements StockService {
             productVO4Order.setName(stockPO.getName());
 
             PersonalTradeVO vo = new PersonalTradeVO();
-            vo.setType(PersonalTradeVO.Type.FORSTOCK);
+            vo.setType(OrderService.Type.FORSTOCK);
             vo.setCreateTime(new Date());
             vo.setProduct(productVO4Order);
             vo.setAmount(amount);

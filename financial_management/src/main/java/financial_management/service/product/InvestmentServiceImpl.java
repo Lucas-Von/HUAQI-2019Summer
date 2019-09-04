@@ -240,23 +240,30 @@ public class InvestmentServiceImpl implements InvestmentService {
     public List<InvestmentBriefProductVO> getBriefProducts(Long userId) {
         List<InvestmentBriefProductVO> briefProductVOS = new ArrayList<>();
 
-        Double goldAmount = goldServiceForBl.getTotalGoldByUser(userId);
-        Double bondAmount = bondServiceForBl.getAmountByUser(userId);
-        Double stockAmount = stockService.getTotalStockByUser(userId);
-        Double qdAmount = stockService.getTotalQDIIByUser(userId);
+//        Double goldAmount = goldServiceForBl.getTotalGoldByUser(userId);
+//        Double bondAmount = bondServiceForBl.getAmountByUser(userId);
+//        Double stockAmount = stockService.getTotalStockByUser(userId);
+//        Double qdAmount = stockService.getTotalQDIIByUser(userId);
+//        Double sum = goldAmount+bondAmount+stockAmount+qdAmount;
+
+
+        Double goldAmount = 10000.0D;
+        Double bondAmount = 20000.0d;
+        Double stockAmount = 23000d;
+        Double qdAmount = 50000d;
         Double sum = goldAmount+bondAmount+stockAmount+qdAmount;
 
         InvestmentBriefProductVO vo = new InvestmentBriefProductVO("黄金",goldAmount,sum,incomeServiceForBl.getTotalGoldIncome(userId));
         briefProductVOS.add(vo);
 
         InvestmentBriefProductVO vo2 = new InvestmentBriefProductVO("债券",bondAmount,sum,incomeServiceForBl.getTotalGoldIncome(userId));
-        briefProductVOS.add(vo);
+        briefProductVOS.add(vo2);
 
         InvestmentBriefProductVO vo3 = new InvestmentBriefProductVO("股票",stockAmount,sum,incomeServiceForBl.getTotalGoldIncome(userId));
-        briefProductVOS.add(vo);
+        briefProductVOS.add(vo3);
 
         InvestmentBriefProductVO vo4 = new InvestmentBriefProductVO("股指",qdAmount,sum,incomeServiceForBl.getTotalGoldIncome(userId));
-        briefProductVOS.add(vo);
+        briefProductVOS.add(vo4);
         return briefProductVOS;
     }
 }

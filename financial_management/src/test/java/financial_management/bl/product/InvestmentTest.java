@@ -26,8 +26,8 @@ public class InvestmentTest {
         System.out.println(result.size());
     }
 
-    @Test
-    public void getStockAndQDIIByUser_normal(){
-        assertEquals(999+999,stockService.getStockByUser(1),1);
-    }
+//    @Test
+//    public void getStockAndQDIIByUser_normal(){
+//        assertEquals(999+999,stockService.getStockByUser(1),1);
+//    }
 }

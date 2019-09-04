@@ -97,7 +97,7 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
             personalTradeVO.setTransID(1L);
             personalTradeVO.setCreateTime(new Date());
             personalTradeVO.setCompleteTime(new Date());
-            personalTradeVO.setType(PersonalTradeVO.Type.GOLD);
+            personalTradeVO.setType(OrderService.Type.GOLD);
             personalTradeVO.setProduct(productVO4Order);
             personalTradeVO.setAmount(nowAmount);
             personalTradeVO.setPrice((float) nowPrice);
@@ -180,7 +180,7 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
             personalTradeVO.setTransID(1L);
             personalTradeVO.setCreateTime(new Date());
             personalTradeVO.setCompleteTime(new Date());
-            personalTradeVO.setType(PersonalTradeVO.Type.GOLD);
+            personalTradeVO.setType(OrderService.Type.GOLD);
             personalTradeVO.setProduct(productVO4Order);
             personalTradeVO.setAmount(-nowAmount);
             personalTradeVO.setPrice((float) nowPrice);

@@ -89,7 +89,8 @@ public interface IncomeServiceForBl {
     /**
      * 获取债券的days日收益率
      *
-     * @param bondId, days
+     * @param bondId
+     * @param days
      * @return
      */
     double getBondProfitOfDays(Long bondId, int days);

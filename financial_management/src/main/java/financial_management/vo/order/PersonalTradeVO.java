@@ -1,5 +1,6 @@
 package financial_management.vo.order;
 
+import financial_management.bl.order.OrderService;
 import financial_management.entity.PersonalTradePO;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ public class PersonalTradeVO {
     //暂时没用
     private Date completeTime;
 
-    private Type type;
+    private OrderService.Type type;
 
     private ProductVO4Order product;
 
@@ -68,11 +69,11 @@ public class PersonalTradeVO {
         this.completeTime = completeTime;
     }
 
-    public Type getType() {
+    public OrderService.Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(OrderService.Type type) {
         this.type = type;
     }
 
@@ -140,7 +141,7 @@ public class PersonalTradeVO {
         transID = po.getTransID();
         createTime = po.getCreateTime();
         completeTime = po.getCompleteTime();
-        type = Type.valueOf(po.getType().toUpperCase());
+        type = OrderService.Type.valueOf(po.getType().toUpperCase());
         amount = po.getAmount();
         price = po.getPrice();
         fee = po.getFee();
@@ -149,13 +150,4 @@ public class PersonalTradeVO {
         status = po.getStatus();
     }
 
-    public enum Type{
-        FUND,
-        DEPOSIT,
-        INSURANCE,
-        GOLD,
-        BOND,
-        DOMSTOCK,
-        FORSTOCK;
-    }
 }

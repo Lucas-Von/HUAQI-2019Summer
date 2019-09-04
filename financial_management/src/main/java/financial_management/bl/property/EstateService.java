@@ -27,7 +27,8 @@ public interface EstateService {
     /**
      * 获取用户指定资产类型信息列表
      *
-     * @param userId, assetType
+     * @param userId
+     * @param assetType
      * @return
      */
     BasicResponse getAssetInfoList(Long userId, String assetType);
@@ -83,7 +84,8 @@ public interface EstateService {
     /**
      * 设定用户的平台外现金数额
      *
-     * @param userId, fundsOutPlatform
+     * @param userId
+     * @param fundsOutPlatform
      * @return
      */
     BasicResponse setFundsOutPlatform(Long userId, double fundsOutPlatform);
@@ -91,9 +93,10 @@ public interface EstateService {
     /**
      * 设定用户的平台外投资数额
      *
-     * @param userId, setInvestOutPlatform
+     * @param userId
+     * @param investOutPlatform
      * @return
      */
-    BasicResponse setInvestOutPlatform(Long userId, double setInvestOutPlatform);
+    BasicResponse setInvestOutPlatform(Long userId, double investOutPlatform);
 
 }

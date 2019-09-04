@@ -42,6 +42,16 @@
         where ms.user_id = #{userId};
     </select>
 
+    <select id="getSomeDayTotalInvestRate" resultMap="TotalIncomePO">
+        select
+            coalesce(f.stocks, 0) as totalStocks,
+            coalesce(f.qdii, 0) as totalQdii,
+            coalesce(f.gold, 0) as totalGold,
+            coalesce(f.bond, 0) as totalBond
+        from fortune f
+        where f.user_id = #{userId} and f.record_date = #{date};
+    </select>
+
     <select id="ifExistDaysBondLog" resultType="boolean">
         select (count(fund_id) >= #{days}) from bond_rate_log where time = DATE_SUB(CURDATE(), INTERVAL #{days} DAY) and fund_id = #{bondId}
     </select>

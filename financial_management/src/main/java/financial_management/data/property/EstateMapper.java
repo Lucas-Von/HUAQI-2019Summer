@@ -76,7 +76,8 @@ public interface EstateMapper {
     /**
      * 插入用户平台外现金数额
      *
-     * @param userId, fundsOutPlatform
+     * @param userId
+     * @param fundsOutPlatform
      * @return
      */
     void insertOutFundsRecord(@Param("userId") Long userId, @Param("fundsOutPlatform") double fundsOutPlatform);
@@ -84,7 +85,8 @@ public interface EstateMapper {
     /**
      * 更新用户平台外现金数额
      *
-     * @param userId, fundsOutPlatform
+     * @param userId
+     * @param fundsOutPlatform
      * @return
      */
     void updateOutFundsRecord(@Param("userId") Long userId, @Param("fundsOutPlatform") double fundsOutPlatform);
@@ -92,7 +94,8 @@ public interface EstateMapper {
     /**
      * 插入用户平台外投资数额
      *
-     * @param userId, investOutPlatform
+     * @param userId
+     * @param investOutPlatform
      * @return
      */
     void insertOutInvestRecord(@Param("userId") Long userId, @Param("investOutPlatform") double investOutPlatform);
@@ -100,7 +103,8 @@ public interface EstateMapper {
     /**
      * 更新用户平台外现金数额
      *
-     * @param userId, investOutPlatform
+     * @param userId
+     * @param investOutPlatform
      * @return
      */
     void updateOutInvestRecord(@Param("userId") Long userId, @Param("investOutPlatform") double investOutPlatform);
@@ -115,4 +119,5 @@ public interface EstateMapper {
 
     @Scheduled(cron = "0 0 23 * * ?")
     void updateFortuneByDay();
+
 }

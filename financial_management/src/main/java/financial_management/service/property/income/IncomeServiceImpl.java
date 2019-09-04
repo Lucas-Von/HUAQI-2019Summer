@@ -132,10 +132,10 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
                 totalIncomePO = incomeMapper.getSomeDayTotalInvestRate(userId, date);
             }
             double sumMaxInvest = orderService.getMaxInvestBy(userId, "FORSTOCK") + orderService.getMaxInvestBy(userId, "DOMSTOCK") + orderService.getMaxInvestBy(userId, "GOLD") + orderService.getMaxInvestBy(userId, "BOND");
-            double totalStocksIncome = totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", null);
-            double totalQdiiIncome = totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", null);
-            double totalGoldIncome = totalIncomePO.getTotalGold() - orderService.getInvestBy(userId, "GOLD", null);
-            double totalBondIncome = totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", null);
+            double totalStocksIncome = totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", date);
+            double totalQdiiIncome = totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", date);
+            double totalGoldIncome = totalIncomePO.getTotalGold() - orderService.getInvestBy(userId, "GOLD", date);
+            double totalBondIncome = totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", date);
             return (totalStocksIncome + totalQdiiIncome + totalGoldIncome + totalBondIncome) / sumMaxInvest;
         } catch (Exception e) {
             e.printStackTrace();

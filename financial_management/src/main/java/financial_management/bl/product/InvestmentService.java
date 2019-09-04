@@ -2,6 +2,7 @@ package financial_management.bl.product;
 
 import financial_management.vo.BasicResponse;
 import financial_management.vo.product.InvestRecProductVO;
+import financial_management.vo.product.InvestmentBriefProductVO;
 import financial_management.vo.product.InvestmentVO;
 
 import java.util.List;
@@ -18,5 +19,5 @@ public interface InvestmentService {
     List<InvestRecProductVO> getAllInvProduct();
 
     BasicResponse purchase(Long userId, String code, Float amount, Double totalprice, String type);
-
+    List<InvestmentBriefProductVO> getBriefProducts(Long userId);
 }

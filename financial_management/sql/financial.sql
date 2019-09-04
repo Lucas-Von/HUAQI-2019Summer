@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS `bond`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bond` (
   `id` bigint(255) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -276,7 +276,7 @@ DROP TABLE IF EXISTS `deposit_product`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `deposit_product` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `rate` float DEFAULT NULL,
   `length` int(11) DEFAULT NULL,
@@ -302,7 +302,7 @@ DROP TABLE IF EXISTS `deposit_recommend`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `deposit_recommend` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `currency` varchar(255) DEFAULT NULL,
   `information` varchar(255) DEFAULT NULL,
   `rate` double(11,5) DEFAULT NULL,
@@ -332,7 +332,7 @@ DROP TABLE IF EXISTS `dom_stock`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dom_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -394,7 +394,7 @@ DROP TABLE IF EXISTS `for_stock`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `for_stock` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -450,7 +450,7 @@ DROP TABLE IF EXISTS `fund`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fund` (
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `rate` float DEFAULT NULL,
   `time` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -497,7 +497,7 @@ DROP TABLE IF EXISTS `gold`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gold` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -595,7 +595,7 @@ DROP TABLE IF EXISTS `ins_product`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ins_product` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `price` float DEFAULT NULL,
   `compensation` float DEFAULT NULL,
@@ -777,7 +777,7 @@ CREATE TABLE `my_depo` (
   `user_id` bigint(255) NOT NULL,
   `type` int(255) DEFAULT NULL,
   `amount` double DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
   `rate` double(255,5) DEFAULT NULL,
   `endtime` date DEFAULT NULL,
   `proportion` double DEFAULT NULL,
@@ -1193,7 +1193,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `identity_num` varchar(45) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
+  `product` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `phone_num` varchar(45) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -1260,4 +1260,61 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-03 21:15:38
+-- Dump completed on 2019-08-31 10:08:32
+-- ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('0', null, 'admin', 'admin', null, '9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc', null, 'admin', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001', '2019-08-27 15:28:19', 'https://i.loli.net/2019/08/14/mUZcISHpWrx1aPM.jpg');
+INSERT INTO `user` VALUES ('1', '320684199809070018', 'xyh', '153604998@qq.com', '18951899427', '9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc', null, 'xyhhh', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001', '2019-08-17 17:58:08', 'xxx');
+INSERT INTO `user` VALUES ('2', '320684199809070019', 'xxyh', '153604998@qq.comm', null, null, null, 'xxyhhh', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001', '2019-08-20 22:46:34', null);
+INSERT INTO `user` VALUES ('3', '320684199809070020', 'xyh', '153604998@qq.commm', null, null, null, 'xyhhhhhh', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001', '2019-08-20 22:47:10', null);
+
+DROP TABLE IF EXISTS `bond_foundation`;
+CREATE TABLE `bond_foundation`(
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `fund_name` varchar(255),
+  `fund_share` float ,
+  `fund_scale` float ,
+  `fund_unit_value` float,
+  `expect_return_rate` float ,
+  `update_time` timestamp ,
+  `debt_sum` float ,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `bond_and_fund`;
+CREATE TABLE `bond_and_fund`(
+  `fund_id` bigint(255) ,
+  `bond_id` bigint(255) ,
+  `investment_proportion` float ,
+  `amount` float
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_bond_fund`;
+CREATE TABLE `user_bond_fund`(
+  `user_id` bigint(255),
+  `fund_name` varchar(255),
+  `bond_proportion` float ,
+  `fund_share` float ,
+  `net_worth` float ,
+  `update_time` timestamp
+  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `platform_bond_fund`;
+CREATE TABLE `platform_bond_fund`(
+  `handling_fee` float ,
+  `bond_property` float ,
+  `residual_property` float,
+  `commission_rate_one` float  default 0,
+  `commission_rate_two` float  default 0,
+  `commission_rate_three` float  default 0
+)
+
+DROP TABLE IF EXISTS `bond_rate_log`;
+CREATE TABLE `bond_rate_log`(
+  `fund_id` bigint(255),
+  `net_worth` float,
+  `time` date
+)

@@ -11,7 +11,12 @@ import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +24,7 @@ import java.util.List;
  * @author lt
  * @date 2019/09/03 19:49
  */
+@Service
 public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
 
     @Autowired
@@ -64,6 +70,76 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取平台所有用户最近days天的累计投资收益率列表
+     *
+     * @param days
+     * @return
+     */
+    @Override
+    public BasicResponse getIncomeRateList(int days) {
+        try {
+            List<Double> incomeRateList = new ArrayList<>();
+            List<Date> dateList = getDateList(getDateBefore(days), new Date());
+            dateList.stream().forEach(date -> {
+                incomeRateList.add(getSomeDayAveTotalRate(date));
+            });
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, incomeRateList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            List<Double> errRateList = new ArrayList<>();
+            for (int i = 0; i < days; i++) errRateList.add(0.0);
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, errRateList);
+        }
+    }
+
+    /**
+     * 获取特定日期平台所有用户累计的投资收益率
+     *
+     * @param date
+     * @return
+     */
+    public double getSomeDayAveTotalRate(Date date) {
+        try {
+            List<Long> userIdList = userServiceForBl.getUserIdList();
+            double sumTotalRate = 0;
+            for (Long userId : userIdList) {
+                sumTotalRate += getSomeDayTotalInvestRate(userId, date);
+            }
+            return sumTotalRate / userIdList.size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 获取特定日期用户累计的投资收益率
+     *
+     * @param userId
+     * @param date
+     * @return
+     */
+    public double getSomeDayTotalInvestRate(Long userId, Date date) {
+        try {
+            TotalIncomePO totalIncomePO = new TotalIncomePO();
+            if (isToday(date, new Date())) {
+                totalIncomePO = incomeMapper.getTotalInvestRate(userId);
+            } else {
+                totalIncomePO = incomeMapper.getSomeDayTotalInvestRate(userId, date);
+            }
+            double sumMaxInvest = orderService.getMaxInvestBy(userId, "FORSTOCK") + orderService.getMaxInvestBy(userId, "DOMSTOCK") + orderService.getMaxInvestBy(userId, "GOLD") + orderService.getMaxInvestBy(userId, "BOND");
+            double totalStocksIncome = totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", date);
+            double totalQdiiIncome = totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", date);
+            double totalGoldIncome = totalIncomePO.getTotalGold() - orderService.getInvestBy(userId, "GOLD", date);
+            double totalBondIncome = totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", date);
+            return (totalStocksIncome + totalQdiiIncome + totalGoldIncome + totalBondIncome) / sumMaxInvest;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
@@ -293,7 +369,8 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
     /**
      * 获取债券的days日收益率
      *
-     * @param bondId, days
+     * @param bondId
+     * @param days
      * @return
      */
     @Override
@@ -309,11 +386,64 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
     /**
      * 判断是否存在days天的债券收益记录
      *
-     * @param bondId, days
+     * @param bondId
+     * @param days
      * @return
      */
     public boolean ifExistDaysBondLog(Long bondId, int days) {
         return incomeMapper.ifExistDaysBondLog(bondId, days);
+    }
+
+    /**
+     * 获取days天前的日期
+     *
+     * @param days
+     * @return
+     */
+    public Date getDateBefore(int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1 * days);
+        return cal.getTime();
+    }
+
+    /**
+     * 获取某段时间内的所有日期
+     *
+     * @param beginDate
+     * @param endDate
+     * @return
+     */
+    public static List<Date> getDateList(Date beginDate, Date endDate) {
+        List<Date> dateList = new ArrayList<>();
+        dateList.add(beginDate);
+        Calendar calBegin = Calendar.getInstance();
+        calBegin.setTime(beginDate);
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(endDate);
+        while (endDate.after(calBegin.getTime())) {
+            calBegin.add(Calendar.DAY_OF_MONTH, 1);
+            dateList.add(calBegin.getTime());
+        }
+        return dateList;
+    }
+
+    /**
+     * 判断两日期是否为同一天
+     *
+     * @param date1
+     * @param date2
+     * @return
+     */
+    private boolean isToday(Date date1, Date date2) throws ParseException {
+        if (date2 == null) date2 = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String todayStr = format.format(date2);
+        Date today = format.parse(todayStr);
+        if ((today.getTime() - date1.getTime()) <= 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

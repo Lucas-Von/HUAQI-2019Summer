@@ -10,7 +10,9 @@ public interface StockService {
     void weeklyForTransfer(Long userId);
 
     //获取股票和股指的总额
+
     double getTotalStockByUser(long userID);
 
     double getTotalQDIIByUser(long userID);
+
 }

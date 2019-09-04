@@ -3,13 +3,13 @@
 <mapper namespace="financial_management.data.property.ManageMapper">
 
     <select id="isAdmin" resultType="boolean">
-        select count(user_id) from user where user_id = #{adminId} and name = "admin" and email = "admin"
+        select count(user_id) from user where user_id = #{adminId} and product = "admin" and email = "admin"
     </select>
 
     <select id="getRecAllocList" resultMap="RecAllocPO">
         select
             u.user_id as userId,
-            u.name as name,
+            u.product as product,
             u.identity_num as identityNum,
             u.username as nick,
             u.email as email,
@@ -25,7 +25,7 @@
     <select id="getRecAlloc" resultMap="RecAllocPO">
         select
             u.user_id as userId,
-            u.name as name,
+            u.product as product,
             u.identity_num as identityNum,
             u.username as nick,
             u.email as email,

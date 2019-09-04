@@ -36,6 +36,11 @@ public class IncomeController {
         return incomeService.getNewlyIncome(userId);
     }
 
+    @GetMapping("/income/getIncomeRateList")
+    public BasicResponse getIncomeRateList(@RequestParam int days) {
+        return incomeService.getIncomeRateList(days);
+    }
+
     @GetMapping("/income/getAveNewlyRate")
     public BasicResponse getAveNewlyRate() {
         return incomeService.getAveNewlyRate();

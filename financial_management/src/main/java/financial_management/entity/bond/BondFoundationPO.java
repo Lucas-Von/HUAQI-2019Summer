@@ -1,4 +1,4 @@
-package financial_management.entity.product;
+package financial_management.entity.bond;
 
 import java.sql.Timestamp;
 

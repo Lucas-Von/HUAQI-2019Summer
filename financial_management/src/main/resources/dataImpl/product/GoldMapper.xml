@@ -63,7 +63,7 @@
 
     <resultMap id="GoldProduct" type="financial_management.entity.GoldPO">
         <id property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="product" column="product"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
     </resultMap>

@@ -10,7 +10,7 @@
     </select>
 
     <select id="selectFund" resultType="financial_management.entity.FundPO">
-        select name name, rate rate, `time` time from fund
+        select product product, rate rate, `time` time from fund
     </select>
 
     <update id="updateSelfFund" parameterType="financial_management.entity.MyFundPO">

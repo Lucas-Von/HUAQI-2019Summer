@@ -80,7 +80,7 @@ public class UserRealm extends AuthorizingRealm {
         //编写shiro判断逻辑，判断用户名和密码;但因为我们的密码是加密字符串且无法解码，故放弃密码验证，转为token验证
 //        UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
 //        UserPO po = new UserPO();
-//        String name = po.getName();
+//        String name = po.getProduct();
 //        String password = po.getPassword();
 //        if(!token.getUsername().equals(name)){
 //            return null;//shiro的底层会抛出UnknownAccountException

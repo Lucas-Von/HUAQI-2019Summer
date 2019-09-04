@@ -10,7 +10,7 @@
     </insert>
 
     <select id="selectProductByName" resultMap="InsProduct">
-        select * from ins_product where name = #{name}
+        select * from ins_product where product = #{product}
     </select>
 
     <select id="selectSelfInsProducts" resultMap="MyInsProducts">
@@ -19,7 +19,7 @@
           mi.price,
           mi.maturity,
           mi.beneficiary,
-          ip.name,
+          ip.product,
           ip.compensation,
           ip.type
         from my_ins mi
@@ -34,14 +34,14 @@
         <result property="price" column="price"/>
         <result property="maturity" column="maturity"/>
         <result property="beneficiary" column="beneficiary"/>
-        <result property="name" column="name"/>
+        <result property="product" column="product"/>
         <result property="compensation" column="compensation"/>
         <result property="type" column="type"/>
     </resultMap>
 
     <resultMap id="InsProduct" type="financial_management.entity.InsProductPO">
         <id property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="product" column="product"/>
         <result property="type" column="type"/>
         <result property="price" column="price"/>
         <result property="compensation" column="compensation"/>

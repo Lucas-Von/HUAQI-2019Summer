@@ -1,11 +1,13 @@
 package financial_management.data.product;
 
-import financial_management.entity.product.*;
+import financial_management.entity.bond.*;
+import financial_management.entity.bond.RateList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,9 +25,7 @@ public interface BondFundMapper {
      * @Date 15:48 2019/8/28
      * @Param [name]
      * @return java.lang.Float
-     **/
-    Float selectExpectReturnRate(String name);
-
+    */
     int updateInvestRateByName(@Param("name")String name, @Param("rate")Float rate,@Param("userId")Long userId);
 
     UserBondPO selectUserBond(@Param("userId") Long userId,@Param("name")String name);
@@ -36,11 +36,8 @@ public interface BondFundMapper {
 
     int updateSumPurchaseByName(@Param("sum")Float purchase,@Param("name")String name);
 
-    int updateRestProperty(@Param("amount") Float amount);
-
     List<BondPO> selectAllBond();
 
-    int updateBondPrice(@Param("price")Float price, @Param("id")Long id);
 
     List<BondAndFundPO> selectAllBondAndFund(Long fundId);
 
@@ -54,11 +51,7 @@ public interface BondFundMapper {
 
     int deletePurchaseRecord();
 
-    int updateUserShare(@Param("id") Long userId,@Param("name") String fundName,@Param("quantity")Float quantity);
-
     int updateTotalShare(@Param("name") String name,@Param("amount")Float amount);
-
-    int updateReturnRate(@Param("seven")Float sevenRate,@Param("thirty")Float thirty,@Param("ninety")Float ninety);
 
     int deleteBondAndFund(@Param("id")Long id);
 
@@ -67,4 +60,17 @@ public interface BondFundMapper {
     int insertBondFund(BondFoundationPO po);
 
     int insertBondPlatform(BondPlatformPO po );
+
+    int updateUserFundShare(@Param("id")Long userId,@Param("amount")Float amount,@Param("name")String name);
+
+    int insertRateLog(@Param("id")Long id,@Param("netWorth")Float netWorth,@Param("time") Date time);
+
+    BondPO selectBondByCode(String code);
+
+    int updateBondPriceByCode(@Param("code")String code,@Param("price")Float price);
+
+    int insertBond(@Param("code")String code,@Param("price")Float price);
+
+    RateList selectRateList();
+
 }

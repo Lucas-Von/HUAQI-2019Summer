@@ -69,7 +69,8 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     /**
      * 获取用户指定资产类型信息列表
      *
-     * @param userId, assetType
+     * @param userId
+     * @param assetType
      * @return
      */
     @Override
@@ -227,7 +228,8 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     /**
      * 设定用户的平台外现金数额
      *
-     * @param userId, fundsOutPlatform
+     * @param userId
+     * @param fundsOutPlatform
      * @return
      */
     @Override
@@ -248,7 +250,8 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     /**
      * 设定用户的平台外现金数额
      *
-     * @param userId, investOutPlatform
+     * @param userId
+     * @param investOutPlatform
      * @return
      */
     @Override

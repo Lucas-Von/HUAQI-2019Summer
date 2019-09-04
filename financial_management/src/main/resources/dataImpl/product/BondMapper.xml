@@ -34,9 +34,9 @@
         <result property="amount" column="amount"/>
     </resultMap>
 
-    <resultMap id="BondProduct" type="financial_management.entity.product.BondPO">
+    <resultMap id="BondProduct" type="financial_management.entity.bond.BondPO">
         <id property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="product" column="product"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
     </resultMap>

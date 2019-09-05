@@ -34,6 +34,8 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_QUESTIONNAIRE_NOT_EXIST = new ResponseStatus("6002","The user has not filled out the questionnaire.");
     public static final ResponseStatus STATUS_NEWLY_RECORD_NOT_EXIST = new ResponseStatus("6003","The database lacks the transaction record of the user in the past two days.");
     public static final ResponseStatus STATUS_MANAGE_NOT_ADMIN = new ResponseStatus("6004", "The user is not admin.");
+    public static final ResponseStatus STATUS_FUNDS_OUT_PLATFORM_NOT_EXIST = new ResponseStatus("6005", "The record of your funds out platform does not exist.");
+    public static final ResponseStatus STATUS_INVEST_OUT_PLATFORM_NOT_EXIST = new ResponseStatus("6006", "The record of your invest out platform does not exist.");
 
     public static final ResponseStatus STATUS_EMAIL_EXIST = new ResponseStatus("8001", "The email has existed");
     public static final ResponseStatus STATUS_IDENTITY_EXIST = new ResponseStatus("8002", "The identity has existed");

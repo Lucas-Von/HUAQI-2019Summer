@@ -83,6 +83,14 @@ public interface EstateMapper {
     void insertOutFundsRecord(@Param("userId") Long userId, @Param("fundsOutPlatform") double fundsOutPlatform);
 
     /**
+     * 删除用户的平台外现金数额【修改该值为0】
+     *
+     * @param userId
+     * @return
+     */
+    void delOutFundsRecord(@Param("userId") Long userId);
+
+    /**
      * 更新用户平台外现金数额
      *
      * @param userId
@@ -90,6 +98,14 @@ public interface EstateMapper {
      * @return
      */
     void updateOutFundsRecord(@Param("userId") Long userId, @Param("fundsOutPlatform") double fundsOutPlatform);
+
+    /**
+     * 查看用户平台外现金数额
+     *
+     * @param userId
+     * @return
+     */
+    double getOutFundsRecord(@Param("userId") Long userId);
 
     /**
      * 插入用户平台外投资数额
@@ -101,13 +117,29 @@ public interface EstateMapper {
     void insertOutInvestRecord(@Param("userId") Long userId, @Param("investOutPlatform") double investOutPlatform);
 
     /**
-     * 更新用户平台外现金数额
+     * 删除用户的平台外投资数额【修改该值为0】
+     *
+     * @param userId
+     * @return
+     */
+    void delOutInvestRecord(@Param("userId") Long userId);
+
+    /**
+     * 更新用户平台外投资数额
      *
      * @param userId
      * @param investOutPlatform
      * @return
      */
     void updateOutInvestRecord(@Param("userId") Long userId, @Param("investOutPlatform") double investOutPlatform);
+
+    /**
+     * 查看用户平台外投资数额
+     *
+     * @param userId
+     * @return
+     */
+    double getOutInvestRecord(@Param("userId") Long userId);
 
     /**
      * 获取资产上次更新时间

@@ -24,19 +24,19 @@ public class ManageController {
     @Autowired
     private ManageService manageService;
 
-    @GetMapping("/manage/getRecAllocList")
+    @GetMapping(value = "/manage/getRecAllocList")
     public BasicResponse getRecAllocList(HttpServletRequest request) {
         Long adminId = jwtUtil.getIdFromRequest(request);
         return manageService.getRecAllocList(adminId);
     }
 
 
-    @GetMapping("/manage/getRecAlloc")
+    @GetMapping(value = "/manage/getRecAlloc")
     public BasicResponse getRecAlloc(@RequestParam Long userId) {
         return manageService.getRecAlloc(userId);
     }
 
-    @PostMapping("/manage/editRecAlloc")
+    @PostMapping(value = "/manage/editRecAlloc")
     public BasicResponse editRecAlloc(@RequestBody RecAllocParam recAllocParam) {
         return manageService.editRecAlloc(recAllocParam);
     }

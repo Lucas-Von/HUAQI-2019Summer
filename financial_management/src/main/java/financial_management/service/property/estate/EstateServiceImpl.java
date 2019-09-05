@@ -235,7 +235,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse setFundsOutPlatform(Long userId, double fundsOutPlatform) {
         try {
-            if (ifExistOutRecord(userId)) {
+            if (!ifExistOutRecord(userId)) {
                 estateMapper.insertOutFundsRecord(userId, fundsOutPlatform);
             } else {
                 estateMapper.updateOutFundsRecord(userId, fundsOutPlatform);
@@ -248,7 +248,46 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     }
 
     /**
-     * 设定用户的平台外现金数额
+     * 删除用户的平台外现金数额【修改该值为0】
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse delFundsOutPlatform(Long userId) {
+        try {
+            if (ifExistOutRecord(userId)) {
+                estateMapper.delOutFundsRecord(userId);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_FUNDS_OUT_PLATFORM_NOT_EXIST);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 查看用户的平台外现金数额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getFundsOutPlatform(Long userId) {
+        try {
+            double fundsOutPlatform = 0;
+            if (ifExistOutRecord(userId)) fundsOutPlatform = estateMapper.getOutFundsRecord(userId);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, fundsOutPlatform);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 设定用户的平台外投资数额
      *
      * @param userId
      * @param investOutPlatform
@@ -257,12 +296,51 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse setInvestOutPlatform(Long userId, double investOutPlatform) {
         try {
-            if (ifExistOutRecord(userId)) {
+            if (!ifExistOutRecord(userId)) {
                 estateMapper.insertOutInvestRecord(userId, investOutPlatform);
             } else {
                 estateMapper.updateOutInvestRecord(userId, investOutPlatform);
             }
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 删除用户的平台外投资数额【修改该值为0】
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse delInvestOutPlatform(Long userId) {
+        try {
+            if (ifExistOutRecord(userId)) {
+                estateMapper.delOutInvestRecord(userId);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_INVEST_OUT_PLATFORM_NOT_EXIST);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 查看用户的平台外投资数额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getInvestOutPlatform(Long userId) {
+        try {
+            double investOutPlatform = 0;
+            if (ifExistOutRecord(userId)) investOutPlatform = estateMapper.getOutInvestRecord(userId);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investOutPlatform);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

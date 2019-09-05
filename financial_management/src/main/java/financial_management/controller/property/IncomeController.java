@@ -24,29 +24,29 @@ public class IncomeController {
     private IncomeService incomeService;
 
 
-    @GetMapping("/income/getTotalIncome")
+    @GetMapping(value = "/income/getTotalIncome")
     public BasicResponse getTotalIncome(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return incomeService.getTotalIncome(userId);
     }
 
-    @GetMapping("/income/getNewlyIncome")
+    @GetMapping(value = "/income/getNewlyIncome")
     public BasicResponse getNewlyIncome(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return incomeService.getNewlyIncome(userId);
     }
 
-    @GetMapping("/income/getIncomeRateList")
+    @GetMapping(value = "/income/getIncomeRateList")
     public BasicResponse getIncomeRateList(@RequestParam int days) {
         return incomeService.getIncomeRateList(days);
     }
 
-    @GetMapping("/income/getAveNewlyRate")
+    @GetMapping(value = "/income/getAveNewlyRate")
     public BasicResponse getAveNewlyRate() {
         return incomeService.getAveNewlyRate();
     }
 
-    @GetMapping("/income/getAveTotalRate")
+    @GetMapping(value = "/income/getAveTotalRate")
     public BasicResponse getAveTotalRate() {
         return incomeService.getAveTotalRate();
     }

@@ -24,23 +24,23 @@ public class QuestionnaireController {
     @Autowired
     private QuestionnaireService questionnaireService;
 
-    @GetMapping("/questionnaire/judge")
+    @GetMapping(value = "/questionnaire/judge")
     public BasicResponse hasQuestionnaire(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return questionnaireService.hasQuestionnaire(userId);
     }
 
-    @GetMapping("/questionnaire/view")
+    @GetMapping(value = "/questionnaire/view")
     public BasicResponse viewQuestionnaire() {
         return questionnaireService.viewQuestionnaire();
     }
 
-    @PostMapping("/questionnaire/add")
+    @PostMapping(value = "/questionnaire/add")
     public BasicResponse addQuestionnaire(@RequestBody QuestionnaireParam questionnaireParam) {
         return questionnaireService.addQuestionnaire(questionnaireParam);
     }
 
-    @GetMapping("/questionnaire/getInvestPrefer")
+    @GetMapping(value = "/questionnaire/getInvestPrefer")
     public BasicResponse getInvestPrefer(@RequestParam Long userId) {
         return questionnaireService.getInvestPrefer(userId);
     }

@@ -13,8 +13,8 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
-        insert into user(username,identity_num,product,email,phone_num,password,perms,status,profile_photo)
-        values(#{username},#{identityNum},#{product},#{email},#{phoneNum},#{password},#{perms},#{status},#{profilePhoto})
+        insert into user(username,identity_num,name,email,phone_num,password,perms,status,profile_photo)
+        values(#{username},#{identityNum},#{name},#{email},#{phoneNum},#{password},#{perms},#{status},#{profilePhoto})
     </insert>
 
     <select id="selectUserByEmail" resultMap="UserPO">
@@ -143,7 +143,7 @@
         <result column="user_id" property="userId"></result>
         <result column="username" property="username"></result>
         <result column="identity_num" property="identityNum"></result>
-        <result column="product" property="name"></result>
+        <result column="name" property="name"></result>
         <result column="email" property="email"></result>
         <result column="phone_num" property="phoneNum"></result>
         <result column="password" property="password"></result>

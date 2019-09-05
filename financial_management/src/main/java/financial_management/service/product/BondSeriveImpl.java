@@ -3,7 +3,7 @@ package financial_management.service.product;
 import financial_management.bl.order.OrderService;
 import financial_management.data.product.BondFundMapper;
 import financial_management.entity.bond.*;
-import financial_management.entity.bond.transferPython.*;
+import financial_management.util.PyInvoke.PyParam.bond.*;
 import financial_management.service.product.bond.BondServiceForBl;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
@@ -125,6 +125,7 @@ public class BondSeriveImpl implements BondServiceForBl {
 
     //方法二：用户调仓
     public void adjustWarehouse(Long userId, Float amount) {
+        BondPlatformPO platformPO = mapper.selectBondPlatform();
         AdjuestmentVO vo = new AdjuestmentVO();
         //用户两种基金比例
         UserBondPO national = mapper.selectUserBond(userId, nationalDebtName);
@@ -133,6 +134,7 @@ public class BondSeriveImpl implements BondServiceForBl {
         vo.setProp_corporate(corporation.getBondProportion());
         //用户投资数额变化
         vo.setAmount_change(amount);
+        vo.setFund_cash(platformPO.getResidualAssets());
         List<Float> res = mapper.selectRateList().getList();
         vo.setCommission_rate(res);
         //累计购买

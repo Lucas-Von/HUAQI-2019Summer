@@ -1,4 +1,4 @@
-package financial_management.entity.bond.transferPython;
+package financial_management.util.PyInvoke.PyParam.bond;
 
 /**
  * @Description TODO
@@ -51,6 +51,17 @@ public class BondsInfo {
     }
 
     public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public BondsInfo() {
+    }
+
+    public BondsInfo(String product, String code, Float proportion, Float amount, Integer quantity) {
+        this.product = product;
+        this.code = code;
+        this.proportion = proportion;
+        this.amount = amount;
         this.quantity = quantity;
     }
 }

@@ -1,4 +1,6 @@
-package financial_management.entity.bond.transferPython;
+package financial_management.util.PyInvoke.PyParam.bond;
+
+import financial_management.util.PyInvoke.PyParam.PyParam;
 
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  * @Date 2019/8/31 18:54
  * @Version 1.0
  **/
-public class First_PurchaseVO {
+public class First_PurchaseVO extends PyParam {
     //债券期望收益率
     Float expected_rate;
     //国债收益率
@@ -23,6 +25,16 @@ public class First_PurchaseVO {
     Float platform_accelerate_corporate;
     //为什么手续费率会是一个list????
     List<Float> commission_rate;
+
+    Float fund_cash;
+
+    public Float getFund_cash() {
+        return fund_cash;
+    }
+
+    public void setFund_cash(Float fund_cash) {
+        this.fund_cash = fund_cash;
+    }
 
     public Float getExpected_rate() {
         return expected_rate;
@@ -78,5 +90,19 @@ public class First_PurchaseVO {
 
     public void setCommission_rate(List<Float> commission_rate) {
         this.commission_rate = commission_rate;
+    }
+    public First_PurchaseVO(){
+
+    }
+
+    public First_PurchaseVO(Float expected_rate, Float yieldrate_national, Float yieldrate_corporate, Float amount_change, Float platform_accelerate_national, Float platform_accelerate_corporate, List<Float> commission_rate, Float fund_cash) {
+        this.expected_rate = expected_rate;
+        this.yieldrate_national = yieldrate_national;
+        this.yieldrate_corporate = yieldrate_corporate;
+        this.amount_change = amount_change;
+        this.platform_accelerate_national = platform_accelerate_national;
+        this.platform_accelerate_corporate = platform_accelerate_corporate;
+        this.commission_rate = commission_rate;
+        this.fund_cash = fund_cash;
     }
 }

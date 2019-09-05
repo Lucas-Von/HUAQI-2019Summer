@@ -1,4 +1,6 @@
-package financial_management.entity.bond.transferPython;
+package financial_management.util.PyInvoke.PyParam.bond;
+
+import financial_management.util.PyInvoke.PyParam.PyParam;
 
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  * @Date 2019/8/31 21:11
  * @Version 1.0
  **/
-public class IndexMaintenanceVO {
+public class IndexMaintenanceVO extends PyParam {
     String product_name;
     Float fund_cash;
     Float fund_bonds;
@@ -70,6 +72,19 @@ public class IndexMaintenanceVO {
     }
 
     public void setBonds_info_corporate(List<BondsInfo> bonds_info_corporate) {
+        this.bonds_info_corporate = bonds_info_corporate;
+    }
+
+    public IndexMaintenanceVO() {
+    }
+
+    public IndexMaintenanceVO(String product_name, Float fund_cash, Float fund_bonds, Float size_national, Float size_corporate, List<BondsInfo> bonds_info_national, List<BondsInfo> bonds_info_corporate) {
+        this.product_name = product_name;
+        this.fund_cash = fund_cash;
+        this.fund_bonds = fund_bonds;
+        this.size_national = size_national;
+        this.size_corporate = size_corporate;
+        this.bonds_info_national = bonds_info_national;
         this.bonds_info_corporate = bonds_info_corporate;
     }
 }

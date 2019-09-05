@@ -1,4 +1,6 @@
-package financial_management.entity.bond.transferPython;
+package financial_management.util.PyInvoke.PyParam.bond;
+
+import financial_management.util.PyInvoke.PyParam.PyParam;
 
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  * @Date 2019/9/2 20:50
  * @Version 1.0
  **/
-public class IndexVO {
+public class IndexVO extends PyParam {
     String product_name;
     Float fund_cash;
     Float fund_bonds;
@@ -79,6 +81,20 @@ public class IndexVO {
     }
 
     public void setNew_fund_info(List<NewFundInfo> new_fund_info) {
+        this.new_fund_info = new_fund_info;
+    }
+
+    public IndexVO() {
+    }
+
+    public IndexVO(String product_name, Float fund_cash, Float fund_bonds, List<BondsInfo> bonds_info_national, List<BondsInfo> bonds_info_corporate, Float size_national, Float size_corporate, List<NewFundInfo> new_fund_info) {
+        this.product_name = product_name;
+        this.fund_cash = fund_cash;
+        this.fund_bonds = fund_bonds;
+        this.bonds_info_national = bonds_info_national;
+        this.bonds_info_corporate = bonds_info_corporate;
+        this.size_national = size_national;
+        this.size_corporate = size_corporate;
         this.new_fund_info = new_fund_info;
     }
 }

@@ -1,39 +1,39 @@
-package financial_management.entity.bond.transferPython;
+package financial_management.util.PyInvoke.PyParam.bond;
 
 import java.util.Date;
 
 /**
  * @Description TODO
  * @Author 233loser
- * @Date 2019/8/31 20:51
+ * @Date 2019/9/1 17:00
  * @Version 1.0
  **/
-public class TransRecordNational {
+public class TransRecordCorporation {
     //用户Id
-    String id;
+    Long id;
     //姓名;
-    String name;
+    String product;
     //改变数量,不太一样
     Float amountchange;
     Integer sign;
-    //手续费 也不太遥远
-    Float commission_amount_national;
+    //手续费 也不太一样
+    Float commission_amount_corporate;
     Date trans_time;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProduct() {
+        return product;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProduct(String product) {
+        this.product = product;
     }
 
     public Float getAmountchange() {
@@ -52,12 +52,12 @@ public class TransRecordNational {
         this.sign = sign;
     }
 
-    public Float getCommission_amount_national() {
-        return commission_amount_national;
+    public Float getCommission_amount_corporate() {
+        return commission_amount_corporate;
     }
 
-    public void setCommission_amount_national(Float commission_amount_national) {
-        this.commission_amount_national = commission_amount_national;
+    public void setCommission_amount_corporate(Float commission_amount_corporate) {
+        this.commission_amount_corporate = commission_amount_corporate;
     }
 
     public Date getTrans_time() {

@@ -1,4 +1,6 @@
-package financial_management.entity.bond.transferPython;
+package financial_management.util.PyInvoke.PyParam.bond;
+
+import financial_management.util.PyInvoke.PyParam.PyParam;
 
 import java.util.List;
 
@@ -8,15 +10,22 @@ import java.util.List;
  * @Date 2019/8/31 18:47
  * @Version 1.0
  **/
-public class AdjuestmentVO {
+public class AdjuestmentVO  extends PyParam {
     Float prop_national;
     Float prop_corporate;
     Float amount_change;
     Float platform_accelerate_national;
     Float platform_accelerate_corporate;
     List<Float> commission_rate;
-    //TODO 手续费为什么是个List
+    Float fund_cash;
 
+    public Float getFund_cash() {
+        return fund_cash;
+    }
+
+    public void setFund_cash(Float fund_cash) {
+        this.fund_cash = fund_cash;
+    }
 
     public List<Float> getCommission_rate() {
         return commission_rate;
@@ -64,5 +73,18 @@ public class AdjuestmentVO {
 
     public void setPlatform_accelerate_corporate(Float platform_accelerate_corporate) {
         this.platform_accelerate_corporate = platform_accelerate_corporate;
+    }
+    public AdjuestmentVO(){
+
+    }
+
+    public AdjuestmentVO(Float prop_national, Float prop_corporate, Float amount_change, Float platform_accelerate_national, Float platform_accelerate_corporate, List<Float> commission_rate, Float fund_cash) {
+        this.prop_national = prop_national;
+        this.prop_corporate = prop_corporate;
+        this.amount_change = amount_change;
+        this.platform_accelerate_national = platform_accelerate_national;
+        this.platform_accelerate_corporate = platform_accelerate_corporate;
+        this.commission_rate = commission_rate;
+        this.fund_cash = fund_cash;
     }
 }

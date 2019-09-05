@@ -23,88 +23,112 @@ public class EstateController {
     @Autowired
     private EstateService estateService;
 
-    @GetMapping("/estate/getOverview")
+    @GetMapping(value = "/estate/getOverview")
     public BasicResponse getOverviewByUser(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getOverviewByUser(userId);
     }
 
-    @GetMapping("/estate/getProperty")
+    @GetMapping(value = "/estate/getProperty")
     public BasicResponse getPropertyByUser(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getPropertyByUser(userId);
     }
 
-    @GetMapping("/estate/getFundsInfoList")
+    @GetMapping(value = "/estate/getFundsInfoList")
     public BasicResponse getFundsInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getAssetInfoList(userId, "funds");
     }
 
-    @GetMapping("/estate/getSavingInfoList")
+    @GetMapping(value = "/estate/getSavingInfoList")
     public BasicResponse getSavingInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getAssetInfoList(userId, "saving");
     }
 
-    @GetMapping("/estate/getInsuranceInfoList")
+    @GetMapping(value = "/estate/getInsuranceInfoList")
     public BasicResponse getInsuranceInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getAssetInfoList(userId, "insurance");
     }
 
-    @GetMapping("/estate/getInvestmentInfoList")
+    @GetMapping(value = "/estate/getInvestmentInfoList")
     public BasicResponse getInvestmentInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getAssetInfoList(userId, "investment");
     }
 
-    @GetMapping("/estate/getMonthlyProList")
+    @GetMapping(value = "/estate/getMonthlyProList")
     public BasicResponse getMonthlyProList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getMonthlyProList(userId);
     }
 
-    @GetMapping("/estate/getMonthlyInvList")
+    @GetMapping(value = "/estate/getMonthlyInvList")
     public BasicResponse getMonthlyInvList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getMonthlyInvList(userId);
     }
 
-    @GetMapping("/estate/getDailyProList")
+    @GetMapping(value = "/estate/getDailyProList")
     public BasicResponse getDailyProList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getDailyProList(userId);
     }
 
-    @GetMapping("/estate/getCompleteProList")
+    @GetMapping(value = "/estate/getCompleteProList")
     public BasicResponse getCompleteProList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getCompleteProList(userId);
     }
 
-    @GetMapping("/estate/getDailyInvList")
+    @GetMapping(value = "/estate/getDailyInvList")
     public BasicResponse getDailyInvList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getDailyInvList(userId);
     }
 
-    @GetMapping("/estate/getMyRecAlloc")
+    @GetMapping(value = "/estate/getMyRecAlloc")
     public BasicResponse getMyRecAlloc(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getMyRecAlloc(userId);
     }
 
-    @GetMapping("/estate/setFundsOutPlatform")
+    @PostMapping(value = "/estate/setFundsOutPlatform")
     public BasicResponse setFundsOutPlatform(HttpServletRequest request, @RequestParam double fundsOutPlatform) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.setFundsOutPlatform(userId, fundsOutPlatform);
     }
 
-    @GetMapping("/estate/setInvestOutPlatform")
+    @PostMapping(value = "/estate/delFundsOutPlatform")
+    public BasicResponse delFundsOutPlatform(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.delFundsOutPlatform(userId);
+    }
+
+    @GetMapping(value = "/estate/getFundsOutPlatform")
+    public BasicResponse getFundsOutPlatform(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getFundsOutPlatform(userId);
+    }
+
+    @PostMapping(value = "/estate/setInvestOutPlatform")
     public BasicResponse setInvestOutPlatform(HttpServletRequest request, @RequestParam double investOutPlatform) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.setInvestOutPlatform(userId, investOutPlatform);
+    }
+
+    @PostMapping(value = "/estate/delInvestOutPlatform")
+    public BasicResponse delInvestOutPlatform(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.delInvestOutPlatform(userId);
+    }
+
+    @GetMapping(value = "/estate/getInvestOutPlatform")
+    public BasicResponse getInvestOutPlatform(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getInvestOutPlatform(userId);
     }
 
 }

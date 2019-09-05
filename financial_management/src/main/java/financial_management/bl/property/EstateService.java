@@ -91,6 +91,22 @@ public interface EstateService {
     BasicResponse setFundsOutPlatform(Long userId, double fundsOutPlatform);
 
     /**
+     * 删除用户的平台外现金数额【修改该值为0】
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse delFundsOutPlatform(Long userId);
+
+    /**
+     * 查看用户的平台外现金数额
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getFundsOutPlatform(Long userId);
+
+    /**
      * 设定用户的平台外投资数额
      *
      * @param userId
@@ -98,5 +114,21 @@ public interface EstateService {
      * @return
      */
     BasicResponse setInvestOutPlatform(Long userId, double investOutPlatform);
+
+    /**
+     * 删除用户的平台外投资数额【修改该值为0】
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse delInvestOutPlatform(Long userId);
+
+    /**
+     * 查看用户的平台外投资数额
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getInvestOutPlatform(Long userId);
 
 }

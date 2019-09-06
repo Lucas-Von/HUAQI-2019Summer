@@ -10,39 +10,9 @@ import java.util.List;
 public class QuestionnaireVO {
 
     /**
-     * 用户id
-     */
-    private Long userId;
-
-    /**
-     * 资产
-     */
-    private AssetsVO assetsList;
-
-    /**
      * 问题
      */
     private List<Question> questionList;
-
-    public QuestionnaireVO() {
-
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public AssetsVO getAssetsVO() {
-        return assetsList;
-    }
-
-    public void setAssetsVO(AssetsVO assetsList) {
-        this.assetsList = assetsList;
-    }
 
     public List<Question> getQuestionList() {
         return questionList;

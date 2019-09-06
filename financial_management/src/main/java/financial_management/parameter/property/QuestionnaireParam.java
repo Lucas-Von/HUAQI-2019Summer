@@ -10,54 +10,159 @@ public class QuestionnaireParam {
     private Long userId;
 
     /**
-     * 现金
+     * 更新问卷日期
      */
-    private double funds;
+    private Date recordDate;
 
     /**
-     * 储蓄
+     * 金融信息关注程度
      */
-    private double saving;
+    private int finInfo;
 
     /**
-     * 保险
+     * 风险和汇报组合选择
      */
-    private double insurance;
+    private int volChose;
 
     /**
-     * 股票
+     * 股票和基金个人偏好
      */
-    private double stocks;
+    private int stockPrefer;
 
     /**
-     * 股指
+     * 银行储蓄卡数
      */
-    private double qdii;
+    private int bankCard;
 
     /**
-     * 黄金
+     * 活期存款余额
      */
-    private double gold;
+    private double currentDeposit;
 
     /**
-     * 债券
+     * 定期存款总额
      */
-    private double bond;
+    private double fixedDeposit;
 
     /**
-     * 用户的回答
+     * 是否持有基金
      */
-    private String answer;
+    private int haveFund;
 
     /**
-     * 第一次填写问卷的时间
+     * 是否拥有银行理财产品
      */
-    private Date recordTime;
+    private int haveBank;
 
     /**
-     * 第一份问卷的资产总额
+     * 去年平均每月伙食费
      */
-    private double originAssets;
+    private double boardWages;
+
+    /**
+     * 伙食费中在外就餐花费
+     */
+    private double boardWageOutside;
+
+    /**
+     * 去年平均每月购买日常用品支出
+     */
+    private double monthlySupply;
+
+    /**
+     * 去年平均每月本地交通支出
+     */
+    private double monthlyTraffic;
+
+    /**
+     * 去年每月通信费支出
+     */
+    private double monthlyPhone;
+
+    /**
+     * 去年平均每月文化娱乐支出
+     */
+    private double monthlyPlay;
+
+    /**
+     * 去年购买衣物支出
+     */
+    private double lastClothes;
+
+    /**
+     * 去年旅游总支出
+     */
+    private double lastTourist;
+
+    /**
+     * 去年平均每月水/电/燃料费/物业费
+     */
+    private double monthlyTenement;
+
+    /**
+     * 总资产
+     */
+    private double asset;
+
+    /**
+     * 总收入
+     */
+    private double totalIncome;
+
+    /**
+     * 妻子出生年份
+     */
+    private int wifeInbornYear;
+
+    /**
+     * 丈夫出生年份
+     */
+    private int husInbornYear;
+
+    /**
+     * 孩子数量
+     */
+    private int childNum;
+
+    /**
+     * 老人数量
+     */
+    private int oldNum;
+
+    /**
+     * 丈夫年收入
+     */
+    private double husIncome;
+
+    /**
+     * 妻子年收入
+     */
+    private double wifeIncome;
+
+    /**
+     * 汽车价值
+     */
+    private double carValue;
+
+    /**
+     * 每年的生活消费
+     */
+    private double lifeCost;
+
+    /**
+     * 户主年龄
+     */
+    private int age;
+
+    /**
+     * 是否结婚
+     */
+    private int marriage;
+
+    /**
+     * 小孩年龄
+     */
+    private int childBornYear;
 
     public Long getUserId() {
         return userId;
@@ -67,80 +172,248 @@ public class QuestionnaireParam {
         this.userId = userId;
     }
 
-    public double getFunds() {
-        return funds;
+    public Date getRecordDate() {
+        return new Date();
     }
 
-    public void setFunds(double funds) {
-        this.funds = funds;
+    public int getFinInfo() {
+        return finInfo;
     }
 
-    public double getSaving() {
-        return saving;
+    public void setFinInfo(int finInfo) {
+        this.finInfo = finInfo;
     }
 
-    public void setSaving(double saving) {
-        this.saving = saving;
+    public int getVolChose() {
+        return volChose;
     }
 
-    public double getInsurance() {
-        return insurance;
+    public void setVolChose(int volChose) {
+        this.volChose = volChose;
     }
 
-    public void setInsurance(double insurance) {
-        this.insurance = insurance;
+    public int getStockPrefer() {
+        return stockPrefer;
     }
 
-    public double getStocks() {
-        return stocks;
+    public void setStockPrefer(int stockPrefer) {
+        this.stockPrefer = stockPrefer;
     }
 
-    public void setStocks(double stocks) {
-        this.stocks = stocks;
+    public int getBankCard() {
+        return bankCard;
     }
 
-    public double getQdii() {
-        return qdii;
+    public void setBankCard(int bankCard) {
+        this.bankCard = bankCard;
     }
 
-    public void setQdii(double qdii) {
-        this.qdii = qdii;
+    public double getCurrentDeposit() {
+        return currentDeposit;
     }
 
-    public double getGold() {
-        return gold;
+    public void setCurrentDeposit(double currentDeposit) {
+        this.currentDeposit = currentDeposit;
     }
 
-    public void setGold(double gold) {
-        this.gold = gold;
+    public double getFixedDeposit() {
+        return fixedDeposit;
     }
 
-    public double getBond() {
-        return bond;
+    public void setFixedDeposit(double fixedDeposit) {
+        this.fixedDeposit = fixedDeposit;
     }
 
-    public void setBond(double bond) {
-        this.bond = bond;
+    public int getHaveFund() {
+        return haveFund;
     }
 
-    public String getAnswer() {
-        return answer;
+    public void setHaveFund(int haveFund) {
+        this.haveFund = haveFund;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public int getHaveBank() {
+        return haveBank;
     }
 
-    public Date getRecordTime() {
-        return recordTime;
+    public void setHaveBank(int haveBank) {
+        this.haveBank = haveBank;
     }
 
-    public void setRecordTime(Date recordTime) {
-        this.recordTime = recordTime;
+    public double getBoardWages() {
+        return boardWages;
     }
 
-    public double getOriginAssets() {
-        return this.funds + this.saving + this.insurance + this.stocks + this.qdii + this.gold + this.bond;
+    public void setBoardWages(double boardWages) {
+        this.boardWages = boardWages;
+    }
+
+    public double getBoardWageOutside() {
+        return boardWageOutside;
+    }
+
+    public void setBoardWageOutside(double boardWageOutside) {
+        this.boardWageOutside = boardWageOutside;
+    }
+
+    public double getMonthlySupply() {
+        return monthlySupply;
+    }
+
+    public void setMonthlySupply(double monthlySupply) {
+        this.monthlySupply = monthlySupply;
+    }
+
+    public double getMonthlyTraffic() {
+        return monthlyTraffic;
+    }
+
+    public void setMonthlyTraffic(double monthlyTraffic) {
+        this.monthlyTraffic = monthlyTraffic;
+    }
+
+    public double getMonthlyPhone() {
+        return monthlyPhone;
+    }
+
+    public void setMonthlyPhone(double monthlyPhone) {
+        this.monthlyPhone = monthlyPhone;
+    }
+
+    public double getMonthlyPlay() {
+        return monthlyPlay;
+    }
+
+    public void setMonthlyPlay(double monthlyPlay) {
+        this.monthlyPlay = monthlyPlay;
+    }
+
+    public double getLastClothes() {
+        return lastClothes;
+    }
+
+    public void setLastClothes(double lastClothes) {
+        this.lastClothes = lastClothes;
+    }
+
+    public double getLastTourist() {
+        return lastTourist;
+    }
+
+    public void setLastTourist(double lastTourist) {
+        this.lastTourist = lastTourist;
+    }
+
+    public double getMonthlyTenement() {
+        return monthlyTenement;
+    }
+
+    public void setMonthlyTenement(double monthlyTenement) {
+        this.monthlyTenement = monthlyTenement;
+    }
+
+    public double getAsset() {
+        return asset;
+    }
+
+    public void setAsset(double asset) {
+        this.asset = asset;
+    }
+
+    public double getTotalIncome() {
+        return totalIncome;
+    }
+
+    public void setTotalIncome(double totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public int getWifeInbornYear() {
+        return wifeInbornYear;
+    }
+
+    public void setWifeInbornYear(int wifeInbornYear) {
+        this.wifeInbornYear = wifeInbornYear;
+    }
+
+    public int getHusInbornYear() {
+        return husInbornYear;
+    }
+
+    public void setHusInbornYear(int husInbornYear) {
+        this.husInbornYear = husInbornYear;
+    }
+
+    public int getChildNum() {
+        return childNum;
+    }
+
+    public void setChildNum(int childNum) {
+        this.childNum = childNum;
+    }
+
+    public int getOldNum() {
+        return oldNum;
+    }
+
+    public void setOldNum(int oldNum) {
+        this.oldNum = oldNum;
+    }
+
+    public double getHusIncome() {
+        return husIncome;
+    }
+
+    public void setHusIncome(double husIncome) {
+        this.husIncome = husIncome;
+    }
+
+    public double getWifeIncome() {
+        return wifeIncome;
+    }
+
+    public void setWifeIncome(double wifeIncome) {
+        this.wifeIncome = wifeIncome;
+    }
+
+    public double getCarValue() {
+        return carValue;
+    }
+
+    public void setCarValue(double carValue) {
+        this.carValue = carValue;
+    }
+
+    public double getLifeCost() {
+        return lifeCost;
+    }
+
+    public void setLifeCost(double lifeCost) {
+        this.lifeCost = lifeCost;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(int marriage) {
+        this.marriage = marriage;
+    }
+
+    public int getChildBornYear() {
+        return childBornYear;
+    }
+
+    public void setChildBornYear(int childBornYear) {
+        this.childBornYear = childBornYear;
     }
 
 }

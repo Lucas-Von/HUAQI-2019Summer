@@ -438,7 +438,7 @@ CREATE TABLE `fortune` (
 
 LOCK TABLES `fortune` WRITE;
 /*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
-INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,200,500,1500),(1,'2019-08-22',2600,2600,2400,2500,400,500,1500),(1,'2019-08-28',8000,2600,2400,2500,1600,500,1500),(1,'2019-08-29',2600,9600,2400,2500,3200,500,1500),(1,'2019-08-30',2600,9800,2400,2800,3200,500,1500),(1,'2019-08-31',2600,9800,2400,2800,3200,500,1500),(1,'2019-09-01',2600,9800,2400,2800,3300,500,1500),(2,'2019-09-01',2600,9800,2400,2800,3300,500,1500),(1,'2019-09-02',200,50,30,999,999,66,0),(2,'2019-09-02',0,0,0,0,0,0,0),(3,'2019-09-02',0,0,0,0,0,0,0);
+INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,200,500,1500),(1,'2019-08-22',2600,2600,2400,2500,400,500,1500),(1,'2019-08-28',8000,2600,2400,2500,1600,500,1500),(1,'2019-08-29',2600,9600,2400,2500,3200,500,1500),(1,'2019-08-30',2600,9800,2400,2800,3200,500,1500),(1,'2019-08-31',2600,9800,2400,2800,3200,500,1500),(1,'2019-09-01',2600,9800,2400,2800,3300,500,1500),(2,'2019-09-01',2600,9800,2400,2800,3300,500,1500),(1,'2019-09-02',200,50,30,999,999,66,0),(2,'2019-09-02',0,0,0,0,0,0,0),(3,'2019-09-02',0,0,0,0,0,0,0),(1,'2019-09-05',200,50,30,999,999,66,0),(2,'2019-09-05',0,0,0,0,0,0,0),(3,'2019-09-05',0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,6 +485,7 @@ CREATE TABLE `funds_and_invest_out_platform` (
 
 LOCK TABLES `funds_and_invest_out_platform` WRITE;
 /*!40000 ALTER TABLE `funds_and_invest_out_platform` DISABLE KEYS */;
+INSERT INTO `funds_and_invest_out_platform` VALUES (1,800,500);
 /*!40000 ALTER TABLE `funds_and_invest_out_platform` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1061,15 +1062,37 @@ DROP TABLE IF EXISTS `questionnaire`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionnaire` (
   `user_id` bigint(255) NOT NULL,
-  `funds` double DEFAULT NULL,
-  `saving` double DEFAULT NULL,
-  `insurance` double DEFAULT NULL,
-  `stocks` double DEFAULT NULL,
-  `gold` double DEFAULT NULL,
-  `bond` double DEFAULT NULL,
-  `answer` varchar(255) DEFAULT NULL,
-  `record_time` date NOT NULL,
-  `origin_assets` double NOT NULL,
+  `record_date` date DEFAULT NULL,
+  `fin_infor` int(11) DEFAULT NULL,
+  `vol_chose` int(11) DEFAULT NULL,
+  `stock_prefer` int(11) DEFAULT NULL,
+  `bank_card` int(11) DEFAULT NULL,
+  `current_deposit` double DEFAULT NULL,
+  `fixed_deposit` double DEFAULT NULL,
+  `have_fund` int(11) DEFAULT NULL,
+  `have_bank` int(11) DEFAULT NULL,
+  `board_wages` double DEFAULT NULL,
+  `board_wage_outside` double DEFAULT NULL,
+  `monthly_supply` double DEFAULT NULL,
+  `monthly_traffic` double DEFAULT NULL,
+  `monthly_phone` double DEFAULT NULL,
+  `monthly_play` double DEFAULT NULL,
+  `last_clothes` double DEFAULT NULL,
+  `last_tourist` double DEFAULT NULL,
+  `monthly_tenement` double DEFAULT NULL,
+  `asset` double DEFAULT NULL,
+  `total_income` double DEFAULT NULL,
+  `wife_inborn_year` int(11) DEFAULT NULL,
+  `hus_inborn_year` int(11) DEFAULT NULL,
+  `child_num` int(11) DEFAULT NULL,
+  `old_num` int(11) DEFAULT NULL,
+  `hus_income` double DEFAULT NULL,
+  `wife_income` double DEFAULT NULL,
+  `car_value` double DEFAULT NULL,
+  `life_cost` double DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `marrige` int(11) DEFAULT NULL,
+  `chile_born_year` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `questionnaire_user_id_uindex` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1081,7 +1104,6 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,250,250,250,250,250,250,'1～3个月(短期)','2019-08-22',1500),(2,500,500,500,500,500,500,'3～6个月(中期)','2019-08-23',3000),(3,250,250,250,250,250,250,'6～12个月(中长期或长期)','2019-08-24',1500),(4,500,500,500,500,500,500,'1年以上','2019-08-29',3000);
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1094,13 +1116,6 @@ DROP TABLE IF EXISTS `recommend`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recommend` (
   `user_id` bigint(255) NOT NULL,
-  `invest_analysis_tag` varchar(45) DEFAULT NULL,
-  `volatility` double DEFAULT NULL,
-  `yield` double DEFAULT NULL,
-  `funds_rate` double DEFAULT NULL,
-  `saving_rate` double DEFAULT NULL,
-  `insurance_rate` double DEFAULT NULL,
-  `investment_rate` double DEFAULT NULL,
   `stocks_rate` double DEFAULT NULL,
   `qdii_rate` double DEFAULT NULL,
   `gold_rate` double DEFAULT NULL,
@@ -1108,6 +1123,12 @@ CREATE TABLE `recommend` (
   `total_volatility` double DEFAULT NULL,
   `total_yield` double DEFAULT NULL,
   `invest_prefer` varchar(45) DEFAULT NULL,
+  `amount_cash` double DEFAULT NULL,
+  `amount_insurance` double DEFAULT NULL,
+  `amount_deposit` double DEFAULT NULL,
+  `amount_risk` double DEFAULT NULL,
+  `min_finance_fragility` double DEFAULT NULL,
+  `total_risk_level` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1119,7 +1140,6 @@ CREATE TABLE `recommend` (
 
 LOCK TABLES `recommend` WRITE;
 /*!40000 ALTER TABLE `recommend` DISABLE KEYS */;
-INSERT INTO `recommend` VALUES (1,'稳健保守型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.2,0.2,0.2,0.4,0.2,0.5,'保守型'),(2,'稳健型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.2,0.2,0.4,0.2,0.3,0.2,'稳健保守型'),(3,'稳健进取型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.2,0.4,0.2,0.2,0.2,0.4,'稳健型'),(4,'进取型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.4,0.2,0.2,0.2,0.3,0.3,'稳健进取型'),(5,'保守型',0.5,0.5,0.25,0.25,0.25999999046325684,0.23999999463558197,0.5,0.2,0.2,0.1,0.2,0.6,'进取型');
 /*!40000 ALTER TABLE `recommend` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1260,4 +1280,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-03 21:15:38
+-- Dump completed on 2019-09-06 19:18:54

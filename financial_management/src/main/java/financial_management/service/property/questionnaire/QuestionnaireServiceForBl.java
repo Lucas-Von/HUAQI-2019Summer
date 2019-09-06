@@ -14,7 +14,7 @@ public interface QuestionnaireServiceForBl {
      * @param userId
      * @return
      */
-    Date getRecordTime(Long userId);
+    Date getRecordDate(Long userId);
 
     /**
      * 获取用户第一份问卷的资产总额
@@ -22,6 +22,6 @@ public interface QuestionnaireServiceForBl {
      * @param userId
      * @return
      */
-    double getOriginAssets(Long userId);
+    double getOriginAsset(Long userId);
 
 }

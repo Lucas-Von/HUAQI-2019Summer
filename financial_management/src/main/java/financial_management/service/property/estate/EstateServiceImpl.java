@@ -40,7 +40,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getOverviewByUser(Long userId) {
         try {
-            OverviewVO overviewVO = new OverviewVO(questionnaireServiceForBl.getRecordTime(userId), getFortuneUpdateTime(userId), questionnaireServiceForBl.getOriginAssets(userId), getTotalAsset(userId));
+            OverviewVO overviewVO = new OverviewVO(questionnaireServiceForBl.getRecordDate(userId), getFortuneUpdateTime(userId), questionnaireServiceForBl.getOriginAsset(userId), getTotalAsset(userId));
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, overviewVO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,9 +57,13 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getPropertyByUser(Long userId) {
         try {
-            EstatePO estatePO = estateMapper.getPropertyByUser(userId);
-            EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getInvestInPlatform(), estatePO.getInvestOutPlatform());
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, estateVO);
+            if (ifExistOutRecord(userId)) {
+                EstatePO estatePO = estateMapper.getPropertyByUser(userId);
+                EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getInvestInPlatform(), estatePO.getInvestOutPlatform());
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, estateVO);
+            } else {
+                return new BasicResponse<>(ResponseStatus.STATUS_PROPERTY_RECORD_NOT_EXIST, new EstateVO());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

@@ -9,30 +9,22 @@ import financial_management.util.PyInvoke.PyParam.PyParam;
 public class AssetConfigParam extends PyParam {
 
     /**
-     * 波动率要求
-     */
-    private double volatility;
-
-    /**
      * 收益率要求
      */
     private double yield;
 
-    public AssetConfigParam(double volatility, double yield) {
-        this.volatility = volatility;
+    /**
+     * 投资偏好
+     */
+    private int prefer_label;
+
+    public AssetConfigParam(double yield, int prefer_label) {
         this.yield = yield;
+        this.prefer_label = prefer_label;
     }
 
     public AssetConfigParam() {
 
-    }
-
-    public double getVolatility() {
-        return volatility;
-    }
-
-    public void setVolatility(double volatility) {
-        this.volatility = volatility;
     }
 
     public double getYield() {
@@ -41,6 +33,14 @@ public class AssetConfigParam extends PyParam {
 
     public void setYield(double yield) {
         this.yield = yield;
+    }
+
+    public int getPrefer_label() {
+        return prefer_label;
+    }
+
+    public void setPrefer_label(int prefer_label) {
+        this.prefer_label = prefer_label;
     }
 
 }

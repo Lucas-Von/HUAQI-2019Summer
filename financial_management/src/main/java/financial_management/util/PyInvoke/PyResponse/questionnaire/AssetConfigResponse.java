@@ -9,126 +9,106 @@ public class AssetConfigResponse {
     /**
      * 股票部分投资权重
      */
-    private double stocks_rate;
+    private double weight_1;
 
     /**
      * 股指部分投资权重
      */
-    private double qdii_rate;
+    private double weight_2;
 
     /**
      * 黄金部分投资权重
      */
-    private double gold_rate;
+    private double weight_0;
 
     /**
      * 债券部分投资权重
      */
-    private double bond_rate;
+    private double weight_3;
 
     /**
-     * 整体波动率
+     * 投资组合整体波动率
      */
-    private double total_volatility;
+    private double vol;
 
     /**
-     * 整体收益率
+     * 投资组合整体收益率
      */
-    private double total_yield;
+    private double earnings;
 
     /**
-     * 整体风险等级
+     * 投资组合风险等级
      */
-    private String total_risk_level;
+    private int label;
 
-    public AssetConfigResponse(double stocks_rate, double qdii_rate, double gold_rate, double bond_rate, double total_volatility, double total_yield, int total_risk_level) {
-        this.stocks_rate = stocks_rate;
-        this.qdii_rate = qdii_rate;
-        this.gold_rate = gold_rate;
-        this.bond_rate = bond_rate;
-        this.total_volatility = total_volatility;
-        this.total_yield = total_yield;
-        String risk_level;
-        switch (total_risk_level) {
-            case 1:
-                risk_level = "保守型";
-                break;
-            case 2:
-                risk_level = "稳健保守型";
-                break;
-            case 3:
-                risk_level = "稳健型";
-                break;
-            case 4:
-                risk_level = "稳健进取型";
-                break;
-            case 5:
-                risk_level = "进取型";
-                break;
-            default:
-                risk_level = "未知类型";
-        }
-        this.total_risk_level = risk_level;
+    public AssetConfigResponse(double weight_1, double weight_2, double weight_0, double weight_3, double vol, double earnings, int label) {
+        this.weight_1 = weight_1;
+        this.weight_2 = weight_2;
+        this.weight_0 = weight_0;
+        this.weight_3 = weight_3;
+        this.vol = vol;
+        this.earnings = earnings;
+        this.label = label;
     }
 
     public AssetConfigResponse() {
 
     }
 
-    public double getStocks_rate() {
-        return stocks_rate;
+    public double getWeight_1() {
+        return weight_1;
     }
 
-    public void setStocks_rate(double stocks_rate) {
-        this.stocks_rate = stocks_rate;
+    public void setWeight_1(double weight_1) {
+        this.weight_1 = weight_1;
     }
 
-    public double getQdii_rate() {
-        return qdii_rate;
+    public double getWeight_2() {
+        return weight_2;
     }
 
-    public void setQdii_rate(double qdii_rate) {
-        this.qdii_rate = qdii_rate;
+    public void setWeight_2(double weight_2) {
+        this.weight_2 = weight_2;
     }
 
-    public double getGold_rate() {
-        return gold_rate;
+    public double getWeight_0() {
+        return weight_0;
     }
 
-    public void setGold_rate(double gold_rate) {
-        this.gold_rate = gold_rate;
+    public void setWeight_0(double weight_0) {
+        this.weight_0 = weight_0;
     }
 
-    public double getBond_rate() {
-        return bond_rate;
+    public double getWeight_3() {
+        return weight_3;
     }
 
-    public void setBond_rate(double bond_rate) {
-        this.bond_rate = bond_rate;
+    public void setWeight_3(double weight_3) {
+        this.weight_3 = weight_3;
     }
 
-    public double getTotal_volatility() {
-        return total_volatility;
+    public double getVol() {
+        return vol;
     }
 
-    public void setTotal_volatility(double total_volatility) {
-        this.total_volatility = total_volatility;
+    public void setVol(double vol) {
+        this.vol = vol;
     }
 
-    public double getTotal_yield() {
-        return total_yield;
+    public double getEarnings() {
+        return earnings;
     }
 
-    public void setTotal_yield(double total_yield) {
-        this.total_yield = total_yield;
+    public void setEarnings(double earnings) {
+        this.earnings = earnings;
     }
 
-    public String getTotal_risk_level() {
-        return total_risk_level;
+    public int getLabel() {
+        return label;
     }
 
-    public void setTotal_risk_level(String total_risk_level) {
-        this.total_risk_level = total_risk_level;
+    public void setLabel(int label) {
+        this.label = label;
     }
 
 }

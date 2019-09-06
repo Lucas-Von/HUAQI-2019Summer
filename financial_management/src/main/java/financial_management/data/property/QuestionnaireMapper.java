@@ -49,12 +49,29 @@ public interface QuestionnaireMapper {
     String getInvestPrefer(@Param("userId") Long userId);
 
     /**
+     * 修改期望收益率
+     *
+     * @param userId
+     * @param expectedYield
+     * @return
+     */
+    void editExpectedYield(@Param("userId") Long userId, @Param("expectedYield") double expectedYield);
+
+    /**
+     * 获取期望收益率
+     *
+     * @param userId
+     * @return
+     */
+    double getExpectedYield(@Param("userId") Long userId);
+
+    /**
      * 获取用户第一次填写问卷的时间
      *
      * @param userId
      * @return
      */
-    Date getRecordTime(@Param("userId") Long userId);
+    Date getRecordDate(@Param("userId") Long userId);
 
     /**
      * 获取用户第一份问卷的资产总额
@@ -62,7 +79,7 @@ public interface QuestionnaireMapper {
      * @param userId
      * @return
      */
-    Double getOriginAssets(@Param("userId") Long userId);
+    Double getOriginAsset(@Param("userId") Long userId);
 
     /**
      * 插入用户问卷答案的分析结果

@@ -14,39 +14,34 @@ public class QuestionnaireConfigPO {
     private Long userId;
 
     /**
-     * 用户投资分析标签
+     * 用户投资偏好
      */
-    private String invest_analysis_tag;
+    private String invest_prefer;
 
     /**
-     * 波动率要求
+     * 现金部分数额
      */
-    private double volatility;
+    private double amount_cash;
 
     /**
-     * 收益率要求
+     * 保险部分数额
      */
-    private double yield;
+    private double amount_insurance;
 
     /**
-     * 保险部分权重
+     * 储蓄部分数额
      */
-    private double insurance_rate;
+    private double amount_deposit;
 
     /**
-     * 现金部分权重
+     * 投资部分数额
      */
-    private double funds_rate;
+    private double amount_risk;
 
     /**
-     * 储蓄部分权重
+     * 最小金融脆弱性
      */
-    private double saving_rate;
-
-    /**
-     * 投资部分权重
-     */
-    private double investment_rate;
+    private double min_finance_fragility;
 
     /**
      * 股票部分投资权重
@@ -69,29 +64,27 @@ public class QuestionnaireConfigPO {
     private double bond_rate;
 
     /**
-     * 整体波动率
+     * 投资组合整体波动率
      */
     private double total_volatility;
 
     /**
-     * 整体收益率
+     * 投资组合整体收益率
      */
     private double total_yield;
 
     /**
-     * 整体风险等级
+     * 投资组合风险等级
      */
-    private String total_risk_level;
+    private int total_risk_level;
 
-    public QuestionnaireConfigPO(Long userId, String invest_analysis_tag, double volatility, double yield, double insurance_rate, double funds_rate, double saving_rate, double investment_rate, double stocks_rate, double qdii_rate, double gold_rate, double bond_rate, double total_volatility, double total_yield, String total_risk_level) {
+    public QuestionnaireConfigPO(Long userId, int prefer_label, double amount_cash, double amount_insurance, double amount_deposit, double amount_risk, double min_finance_fragility, double stocks_rate, double qdii_rate, double gold_rate, double bond_rate, double total_volatility, double total_yield, int total_risk_level) {
         this.userId = userId;
-        this.invest_analysis_tag = invest_analysis_tag;
-        this.volatility = volatility;
-        this.yield = yield;
-        this.insurance_rate = insurance_rate;
-        this.funds_rate = funds_rate;
-        this.saving_rate = saving_rate;
-        this.investment_rate = investment_rate;
+        this.amount_cash = amount_cash;
+        this.amount_insurance = amount_insurance;
+        this.amount_deposit = amount_deposit;
+        this.amount_risk = amount_risk;
+        this.min_finance_fragility = min_finance_fragility;
         this.stocks_rate = stocks_rate;
         this.qdii_rate = qdii_rate;
         this.gold_rate = gold_rate;
@@ -99,6 +92,28 @@ public class QuestionnaireConfigPO {
         this.total_volatility = total_volatility;
         this.total_yield = total_yield;
         this.total_risk_level = total_risk_level;
+
+        String analysis;
+        switch (prefer_label) {
+            case 1:
+                analysis = "保守型";
+                break;
+            case 2:
+                analysis = "稳健保守型";
+                break;
+            case 3:
+                analysis = "稳健型";
+                break;
+            case 4:
+                analysis = "稳健进取型";
+                break;
+            case 5:
+                analysis = "进取型";
+                break;
+            default:
+                analysis = "未知类型";
+        }
+        this.invest_prefer = analysis;
     }
 
     public QuestionnaireConfigPO() {
@@ -113,60 +128,72 @@ public class QuestionnaireConfigPO {
         this.userId = userId;
     }
 
-    public String getInvest_analysis_tag() {
-        return invest_analysis_tag;
+    public String getInvest_prefer() {
+        return invest_prefer;
     }
 
-    public void setInvest_analysis_tag(String invest_analysis_tag) {
-        this.invest_analysis_tag = invest_analysis_tag;
+    public void setInvest_prefer(int prefer_label) {
+        String analysis;
+        switch (prefer_label) {
+            case 1:
+                analysis = "保守型";
+                break;
+            case 2:
+                analysis = "稳健保守型";
+                break;
+            case 3:
+                analysis = "稳健型";
+                break;
+            case 4:
+                analysis = "稳健进取型";
+                break;
+            case 5:
+                analysis = "进取型";
+                break;
+            default:
+                analysis = "未知类型";
+        }
+        this.invest_prefer = analysis;
     }
 
-    public double getVolatility() {
-        return volatility;
+    public double getAmount_cash() {
+        return amount_cash;
     }
 
-    public void setVolatility(double volatility) {
-        this.volatility = volatility;
+    public void setAmount_cash(double amount_cash) {
+        this.amount_cash = amount_cash;
     }
 
-    public double getYield() {
-        return yield;
+    public double getAmount_insurance() {
+        return amount_insurance;
     }
 
-    public void setYield(double yield) {
-        this.yield = yield;
+    public void setAmount_insurance(double amount_insurance) {
+        this.amount_insurance = amount_insurance;
     }
 
-    public double getInsurance_rate() {
-        return insurance_rate;
+    public double getAmount_deposit() {
+        return amount_deposit;
     }
 
-    public void setInsurance_rate(double insurance_rate) {
-        this.insurance_rate = insurance_rate;
+    public void setAmount_deposit(double amount_deposit) {
+        this.amount_deposit = amount_deposit;
     }
 
-    public double getFunds_rate() {
-        return funds_rate;
+    public double getAmount_risk() {
+        return amount_risk;
     }
 
-    public void setFunds_rate(double funds_rate) {
-        this.funds_rate = funds_rate;
+    public void setAmount_risk(double amount_risk) {
+        this.amount_risk = amount_risk;
     }
 
-    public double getSaving_rate() {
-        return saving_rate;
+    public double getMin_finance_fragility() {
+        return min_finance_fragility;
     }
 
-    public void setSaving_rate(double saving_rate) {
-        this.saving_rate = saving_rate;
-    }
-
-    public double getInvestment_rate() {
-        return investment_rate;
-    }
-
-    public void setInvestment_rate(double investment_rate) {
-        this.investment_rate = investment_rate;
+    public void setMin_finance_fragility(double min_finance_fragility) {
+        this.min_finance_fragility = min_finance_fragility;
     }
 
     public double getStocks_rate() {
@@ -217,12 +244,11 @@ public class QuestionnaireConfigPO {
         this.total_yield = total_yield;
     }
 
-    public String getTotal_risk_level() {
+    public int getTotal_risk_level() {
         return total_risk_level;
     }
 
-    public void setTotal_risk_level(String total_risk_level) {
+    public void setTotal_risk_level(int total_risk_level) {
         this.total_risk_level = total_risk_level;
     }
-
 }

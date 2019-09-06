@@ -31,7 +31,7 @@ public interface QuestionnaireService {
      * @param questionnaireParam
      * @return
      */
-    BasicResponse addQuestionnaire(QuestionnaireParam questionnaireParam);
+    BasicResponse setQuestionnaire(QuestionnaireParam questionnaireParam);
 
     /**
      * 获取投资偏好
@@ -40,5 +40,22 @@ public interface QuestionnaireService {
      * @return
      */
     BasicResponse getInvestPrefer(Long userId);
+
+    /**
+     * 修改期望收益率
+     *
+     * @param userId
+     * @param expectedYield
+     * @return
+     */
+    BasicResponse editExpectedYield(Long userId, double expectedYield);
+
+    /**
+     * 获取期望收益率
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getExpectedYield(Long userId);
 
 }

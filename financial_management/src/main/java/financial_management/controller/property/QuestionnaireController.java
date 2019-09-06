@@ -35,14 +35,27 @@ public class QuestionnaireController {
         return questionnaireService.viewQuestionnaire();
     }
 
-    @PostMapping(value = "/questionnaire/add")
-    public BasicResponse addQuestionnaire(@RequestBody QuestionnaireParam questionnaireParam) {
-        return questionnaireService.addQuestionnaire(questionnaireParam);
+    @PostMapping(value = "/questionnaire/set")
+    public BasicResponse setQuestionnaire(@RequestBody QuestionnaireParam questionnaireParam) {
+        return questionnaireService.setQuestionnaire(questionnaireParam);
     }
 
     @GetMapping(value = "/questionnaire/getInvestPrefer")
-    public BasicResponse getInvestPrefer(@RequestParam Long userId) {
+    public BasicResponse getInvestPrefer(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
         return questionnaireService.getInvestPrefer(userId);
+    }
+
+    @GetMapping(value = "/questionnaire/editExpectedYield")
+    public BasicResponse editExpectedYield(HttpServletRequest request, @RequestParam double expectedYield) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return questionnaireService.editExpectedYield(userId, expectedYield);
+    }
+
+    @GetMapping(value = "/questionnaire/getExpectedYield")
+    public BasicResponse getExpectedYield(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return questionnaireService.getExpectedYield(userId);
     }
 
 }

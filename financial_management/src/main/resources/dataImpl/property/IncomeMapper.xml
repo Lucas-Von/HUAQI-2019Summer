@@ -61,8 +61,8 @@
             today.net_worth as todayNetWorth,
             beforeDays.net_worth as beforeDaysNetWorth
         from
-            (select net_worth form bond_rate_log where time = CURDATE() and fund_id = #{bondId}) today,
-            (select net_worth form bond_rate_log where time = DATE_SUB(CURDATE(), INTERVAL #{days} DAY) and fund_id = #{bondId}) beforeDays
+            (select net_worth from bond_rate_log where time = CURDATE() and fund_id = #{bondId}) today,
+            (select net_worth from bond_rate_log where time = DATE_SUB(CURDATE(), INTERVAL #{days} DAY) and fund_id = #{bondId}) beforeDays
     </select>
 
     <resultMap id="RecentInvPO" type="financial_management.entity.property.RecentInvPO">

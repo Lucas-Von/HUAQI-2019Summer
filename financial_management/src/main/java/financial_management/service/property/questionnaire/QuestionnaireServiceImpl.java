@@ -116,10 +116,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
                 return new BasicResponse(ResponseStatus.STATUS_TRANSACTION_WRONG);
             }
             VulnerabilityConfigResponse vulnerabilityConfigResponse = list2.get(0);
-            questionnaireConfigPO.setAmount_risk(vulnerabilityConfigResponse.getAmount_risk());
-            questionnaireConfigPO.setAmount_deposit(vulnerabilityConfigResponse.getAmount_deposit());
-            questionnaireConfigPO.setAmount_cash(vulnerabilityConfigResponse.getAmount_cash());
-            questionnaireConfigPO.setAmount_insurance(vulnerabilityConfigResponse.getAmount_insurance());
+            questionnaireConfigPO.setFunds_rate(vulnerabilityConfigResponse.getAmount_cash() / questionnaireParam.getAsset());
+            questionnaireConfigPO.setInsurance_rate(vulnerabilityConfigResponse.getAmount_insurance() / questionnaireParam.getAsset());
+            questionnaireConfigPO.setSaving_rate(vulnerabilityConfigResponse.getAmount_deposit() / questionnaireParam.getAsset());
+            questionnaireConfigPO.setInvest_rate(vulnerabilityConfigResponse.getAmount_risk() / questionnaireParam.getAsset());
             questionnaireConfigPO.setMin_finance_fragility(vulnerabilityConfigResponse.getMin_finance_fragility());
 
             PyParam pyParam3 = new AssetConfigParam(-1, mLearningConfigResponse.getPrefer_label());

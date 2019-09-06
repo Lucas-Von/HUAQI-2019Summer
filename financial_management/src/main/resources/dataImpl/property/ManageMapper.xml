@@ -3,20 +3,24 @@
 <mapper namespace="financial_management.data.property.ManageMapper">
 
     <select id="isAdmin" resultType="boolean">
-        select count(user_id) from user where user_id = #{adminId} and product = "admin" and email = "admin"
+        select count(user_id) from user where user_id = #{adminId} and name = "admin" and email = "admin"
+    </select>
+
+    <select id="ifExistRecAlloc" resultType="boolean">
+        select count(user_id) from recommend where user_id = #{userId}
     </select>
 
     <select id="getRecAllocList" resultMap="RecAllocPO">
         select
             u.user_id as userId,
-            u.product as product,
+            u.name as product,
             u.identity_num as identityNum,
             u.username as nick,
             u.email as email,
             r.funds_rate as fundsRate,
             r.saving_rate as savingRate,
             r.insurance_rate as insuranceRate,
-            r.investment_rate as investRate
+            r.invest_rate as investRate
         from user u
         inner join recommend r
         on u.user_id =  r.user_id
@@ -25,14 +29,14 @@
     <select id="getRecAlloc" resultMap="RecAllocPO">
         select
             u.user_id as userId,
-            u.product as product,
+            u.name as product,
             u.identity_num as identityNum,
             u.username as nick,
             u.email as email,
             r.funds_rate as fundsRate,
             r.saving_rate as savingRate,
             r.insurance_rate as insuranceRate,
-            r.investment_rate as investRate
+            r.invest_rate as investRate
         from user u, recommend r
         where u.user_id = #{userId} and r.user_id = #{userId};
     </select>
@@ -40,7 +44,7 @@
     <insert id="editRecAlloc" parameterType="financial_management.parameter.property.RecAllocParam"
             useGeneratedKeys="true" keyProperty="id">
         update recommend
-        set funds_rate = #{fundsRate}, saving_rate = #{savingRate}, insurance_rate = #{insuranceRate}, investment_rate = #{investRate}
+        set funds_rate = #{fundsRate}, saving_rate = #{savingRate}, insurance_rate = #{insuranceRate}, invest_rate = #{investRate}
         where user_id = #{userId}
     </insert>
 

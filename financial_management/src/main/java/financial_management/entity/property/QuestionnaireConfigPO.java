@@ -19,24 +19,24 @@ public class QuestionnaireConfigPO {
     private String invest_prefer;
 
     /**
-     * 现金部分数额
+     * 现金部分比例
      */
-    private double amount_cash;
+    private double funds_rate;
 
     /**
-     * 保险部分数额
+     * 保险部分比例
      */
-    private double amount_insurance;
+    private double insurance_rate;
 
     /**
-     * 储蓄部分数额
+     * 储蓄部分比例
      */
-    private double amount_deposit;
+    private double saving_rate;
 
     /**
-     * 投资部分数额
+     * 投资部分比例
      */
-    private double amount_risk;
+    private double invest_rate;
 
     /**
      * 最小金融脆弱性
@@ -78,12 +78,12 @@ public class QuestionnaireConfigPO {
      */
     private int total_risk_level;
 
-    public QuestionnaireConfigPO(Long userId, int prefer_label, double amount_cash, double amount_insurance, double amount_deposit, double amount_risk, double min_finance_fragility, double stocks_rate, double qdii_rate, double gold_rate, double bond_rate, double total_volatility, double total_yield, int total_risk_level) {
+    public QuestionnaireConfigPO(Long userId, int prefer_label, double funds_rate, double insurance_rate, double saving_rate, double invest_rate, double min_finance_fragility, double stocks_rate, double qdii_rate, double gold_rate, double bond_rate, double total_volatility, double total_yield, int total_risk_level) {
         this.userId = userId;
-        this.amount_cash = amount_cash;
-        this.amount_insurance = amount_insurance;
-        this.amount_deposit = amount_deposit;
-        this.amount_risk = amount_risk;
+        this.funds_rate = funds_rate;
+        this.insurance_rate = insurance_rate;
+        this.saving_rate = saving_rate;
+        this.invest_rate = invest_rate;
         this.min_finance_fragility = min_finance_fragility;
         this.stocks_rate = stocks_rate;
         this.qdii_rate = qdii_rate;
@@ -156,36 +156,36 @@ public class QuestionnaireConfigPO {
         this.invest_prefer = analysis;
     }
 
-    public double getAmount_cash() {
-        return amount_cash;
+    public double getFunds_rate() {
+        return funds_rate;
     }
 
-    public void setAmount_cash(double amount_cash) {
-        this.amount_cash = amount_cash;
+    public void setFunds_rate(double funds_rate) {
+        this.funds_rate = funds_rate;
     }
 
-    public double getAmount_insurance() {
-        return amount_insurance;
+    public double getInsurance_rate() {
+        return insurance_rate;
     }
 
-    public void setAmount_insurance(double amount_insurance) {
-        this.amount_insurance = amount_insurance;
+    public void setInsurance_rate(double insurance_rate) {
+        this.insurance_rate = insurance_rate;
     }
 
-    public double getAmount_deposit() {
-        return amount_deposit;
+    public double getSaving_rate() {
+        return saving_rate;
     }
 
-    public void setAmount_deposit(double amount_deposit) {
-        this.amount_deposit = amount_deposit;
+    public void setSaving_rate(double saving_rate) {
+        this.saving_rate = saving_rate;
     }
 
-    public double getAmount_risk() {
-        return amount_risk;
+    public double getInvest_rate() {
+        return invest_rate;
     }
 
-    public void setAmount_risk(double amount_risk) {
-        this.amount_risk = amount_risk;
+    public void setInvest_rate(double invest_rate) {
+        this.invest_rate = invest_rate;
     }
 
     public double getMin_finance_fragility() {
@@ -251,4 +251,5 @@ public class QuestionnaireConfigPO {
     public void setTotal_risk_level(int total_risk_level) {
         this.total_risk_level = total_risk_level;
     }
+
 }

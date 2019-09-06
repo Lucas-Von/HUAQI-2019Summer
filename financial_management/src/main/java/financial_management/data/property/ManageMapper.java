@@ -25,6 +25,14 @@ public interface ManageMapper {
     boolean isAdmin(@Param("adminId") Long adminId);
 
     /**
+     * 判断是否已记录用户的推荐资产配置
+     *
+     * @param userId
+     * @return
+     */
+    boolean ifExistRecAlloc(@Param("userId") Long userId);
+
+    /**
      * 获取所有用户推荐资产配置列表
      *
      * @param

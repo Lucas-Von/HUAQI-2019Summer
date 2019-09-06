@@ -164,6 +164,11 @@ public class QuestionnaireParam {
      */
     private int childBornYear;
 
+    /**
+     * 是否愿意成为会员
+     */
+    private int wantToBeVip;
+
     public Long getUserId() {
         return userId;
     }
@@ -414,6 +419,14 @@ public class QuestionnaireParam {
 
     public void setChildBornYear(int childBornYear) {
         this.childBornYear = childBornYear;
+    }
+
+    public int getWantToBeVip() {
+        return wantToBeVip;
+    }
+
+    public void setWantToBeVip(int wantToBeVip) {
+        this.wantToBeVip = wantToBeVip;
     }
 
 }

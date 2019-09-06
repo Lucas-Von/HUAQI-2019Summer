@@ -1093,6 +1093,7 @@ CREATE TABLE `questionnaire` (
   `age` int(11) DEFAULT NULL,
   `marrige` int(11) DEFAULT NULL,
   `chile_born_year` int(11) DEFAULT NULL,
+  `want_to_be_vip` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `questionnaire_user_id_uindex` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1123,10 +1124,10 @@ CREATE TABLE `recommend` (
   `total_volatility` double DEFAULT NULL,
   `total_yield` double DEFAULT NULL,
   `invest_prefer` varchar(45) DEFAULT NULL,
-  `amount_cash` double DEFAULT NULL,
-  `amount_insurance` double DEFAULT NULL,
-  `amount_deposit` double DEFAULT NULL,
-  `amount_risk` double DEFAULT NULL,
+  `funds_rate` double DEFAULT NULL,
+  `insurance_rate` double DEFAULT NULL,
+  `saving_rate` double DEFAULT NULL,
+  `invest_rate` double DEFAULT NULL,
   `min_finance_fragility` double DEFAULT NULL,
   `total_risk_level` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
@@ -1280,4 +1281,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-06 19:18:54
+-- Dump completed on 2019-09-06 22:27:41

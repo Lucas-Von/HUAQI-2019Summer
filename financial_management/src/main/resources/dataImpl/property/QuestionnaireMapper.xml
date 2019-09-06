@@ -16,7 +16,6 @@
         where user_id = #{userId}
     </insert>
 
-
     <select id="getExpectedYield" resultType="double">
         select total_yield from recommend where user_id = #{userId}
     </select>

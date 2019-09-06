@@ -34,9 +34,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Autowired
     private QuestionnaireMapper questionnaireMapper;
 
-    @Autowired
-    private EstateServiceForBl estateServiceForBl;
-
     /**
      * 判断用户是否已填写问卷
      *
@@ -44,17 +41,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
      * @return
      */
     @Override
-    public BasicResponse hasQuestionnaire(Long userId) {
+    public boolean hasQuestionnaire(Long userId) {
         try {
-            boolean hasRecorded = questionnaireMapper.hasQuest(userId);
-            if (hasRecorded) {
-                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_EXIST);
-            } else {
-                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST);
-            }
+            return questionnaireMapper.hasQuest(userId);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+            return false;
         }
     }
 
@@ -84,7 +76,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     public BasicResponse setQuestionnaire(QuestionnaireParam questionnaireParam) {
         try {
             Long userId = questionnaireParam.getUserId();
-            boolean hasRecorded = questionnaireMapper.hasQuest(userId);
+            boolean hasRecorded = hasQuestionnaire(userId);
             if (!hasRecorded) {
                 questionnaireMapper.insertQuest(questionnaireParam);
             } else {
@@ -159,8 +151,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse getInvestPrefer(Long userId) {
         try {
-            String investPrefer = questionnaireMapper.getInvestPrefer(userId);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investPrefer);
+            if (hasQuestionnaire(userId)) {
+                String investPrefer = questionnaireMapper.getInvestPrefer(userId);
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investPrefer);
+            } else {
+                return new BasicResponse<>(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST, "当前用户无推荐资产配置");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST);
@@ -177,8 +173,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse editExpectedYield(Long userId, double expectedYield) {
         try {
-            questionnaireMapper.editExpectedYield(userId, expectedYield);
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            if (hasQuestionnaire(userId)) {
+                questionnaireMapper.editExpectedYield(userId, expectedYield);
+                return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            } else {
+                return new BasicResponse(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
@@ -194,8 +194,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse getExpectedYield(Long userId) {
         try {
-            double expectedYield = questionnaireMapper.getExpectedYield(userId);
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, expectedYield);
+            if (hasQuestionnaire(userId)) {
+                double expectedYield = questionnaireMapper.getExpectedYield(userId);
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, expectedYield);
+            } else {
+                return new BasicResponse<>(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST, -1);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST);
@@ -211,7 +215,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public Date getRecordDate(Long userId) {
         try {
-            return questionnaireMapper.getRecordDate(userId);
+            if (questionnaireMapper.hasQuest(userId)) {
+                return questionnaireMapper.getRecordDate(userId);
+            } else {
+                return new Date();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new Date();
@@ -227,7 +235,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public double getOriginAsset(Long userId) {
         try {
-            return questionnaireMapper.getOriginAsset(userId);
+            if (hasQuestionnaire(userId)) {
+                return questionnaireMapper.getOriginAsset(userId);
+            } else {
+                return 0;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return 0;

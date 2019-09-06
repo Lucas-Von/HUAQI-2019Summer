@@ -37,6 +37,7 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_FUNDS_OUT_PLATFORM_NOT_EXIST = new ResponseStatus("6005", "The record of your funds out platform does not exist.");
     public static final ResponseStatus STATUS_INVEST_OUT_PLATFORM_NOT_EXIST = new ResponseStatus("6006", "The record of your invest out platform does not exist.");
     public static final ResponseStatus STATUS_PROPERTY_RECORD_NOT_EXIST = new ResponseStatus("6007", "The record of your property does not exist.");
+    public static final ResponseStatus STATUS_RECOMMEND_ALLOCATION_NOT_EXIST = new ResponseStatus("6008", "The record of your recommend allocation does not exist.");
 
     public static final ResponseStatus STATUS_EMAIL_EXIST = new ResponseStatus("8001", "The email has existed");
     public static final ResponseStatus STATUS_IDENTITY_EXIST = new ResponseStatus("8002", "The identity has existed");

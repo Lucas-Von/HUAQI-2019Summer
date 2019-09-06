@@ -85,7 +85,7 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
                 RecAllocVO recAllocVO = new RecAllocVO(recAllocPO.getUserId(), recAllocPO.getName(), recAllocPO.getIdentityNum(), recAllocPO.getNick(), recAllocPO.getEmail(), estateServiceForBl.getTotalAsset(recAllocPO.getUserId()), recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, recAllocVO);
             } else {
-                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new RecAllocVO());
+                return new BasicResponse<>(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST, new RecAllocVO());
             }
         } catch (Exception e) {
             e.printStackTrace();

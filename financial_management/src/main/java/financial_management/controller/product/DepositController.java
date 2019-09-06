@@ -51,6 +51,11 @@ public class DepositController {
         return depositService.addSelfDeposit(selfDepositParam,jwtUtil.getIdFromRequest(request));
     }
 
+    @PostMapping(value = "/product/deposit/add/list")
+    public BasicResponse addSelfDepositList(@RequestBody List<SelfDepositParam> selfDepositParams, HttpServletRequest request){
+        return depositService.addSelfDepositList(selfDepositParams,jwtUtil.getIdFromRequest(request));
+    }
+
     @PostMapping(value = "/product/deposit/update")
     public BasicResponse updateSelfDeposit(@RequestBody SelfDepositParam selfDepositParam){
         return depositService.updateSelfDeposit(selfDepositParam);

@@ -220,9 +220,13 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse getMyRecAlloc(Long userId) {
         try {
-            RecAllocPO recAllocPO = manageServiceForBl.getRecAllocPO(userId);
-            MyRecAllocVO myRecAllocVO = new MyRecAllocVO(recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, myRecAllocVO);
+            if (manageServiceForBl.ifExistRecAlloc(userId)) {
+                RecAllocPO recAllocPO = manageServiceForBl.getRecAllocPO(userId);
+                MyRecAllocVO myRecAllocVO = new MyRecAllocVO(recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, myRecAllocVO);
+            } else {
+                return new BasicResponse<>(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST, new MyRecAllocVO());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

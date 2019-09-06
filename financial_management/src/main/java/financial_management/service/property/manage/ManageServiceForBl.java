@@ -18,6 +18,14 @@ public interface ManageServiceForBl {
     boolean isAdmin(Long adminId);
 
     /**
+     * 判断是否已记录用户的推荐资产配置
+     *
+     * @param userId
+     * @return
+     */
+    boolean ifExistRecAlloc(Long userId);
+
+    /**
      * 获取用户推荐资产配置
      *
      * @param userId

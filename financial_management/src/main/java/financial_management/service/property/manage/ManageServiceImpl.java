@@ -72,6 +72,22 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
     }
 
     /**
+     * 判断是否已记录用户的推荐资产配置
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public boolean ifExistRecAlloc(Long userId) {
+        try {
+            return manageMapper.ifExistRecAlloc(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * 获取用户推荐资产配置
      *
      * @param userId
@@ -80,7 +96,7 @@ public class ManageServiceImpl implements ManageService, ManageServiceForBl {
     @Override
     public BasicResponse getRecAlloc(Long userId) {
         try {
-            if (manageMapper.ifExistRecAlloc(userId)) {
+            if (ifExistRecAlloc(userId)) {
                 RecAllocPO recAllocPO = getRecAllocPO(userId);
                 RecAllocVO recAllocVO = new RecAllocVO(recAllocPO.getUserId(), recAllocPO.getName(), recAllocPO.getIdentityNum(), recAllocPO.getNick(), recAllocPO.getEmail(), estateServiceForBl.getTotalAsset(recAllocPO.getUserId()), recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, recAllocVO);

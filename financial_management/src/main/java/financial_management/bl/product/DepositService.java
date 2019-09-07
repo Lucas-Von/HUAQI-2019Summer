@@ -33,6 +33,13 @@ public interface DepositService {
     BasicResponse addSelfDeposit(SelfDepositParam selfDepositParam, Long userId);
 
     /**
+     * 用户添加多个储蓄产品
+     * @param selfDepositParams
+     * @return
+     */
+    BasicResponse addSelfDepositList(List<SelfDepositParam> selfDepositParams, Long userId);
+
+    /**
      * 用户更新一储蓄产品
      * @param selfDepositParam
      * @return

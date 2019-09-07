@@ -70,6 +70,19 @@ public class DepositServiceImpl implements DepositService {
     }
 
     @Override
+    public BasicResponse addSelfDepositList(List<SelfDepositParam> selfDepositParams, Long userId){
+        try {
+            for(int i=0;i<selfDepositParams.size();i++){
+                addSelfDeposit(selfDepositParams.get(i),userId);
+            }
+            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    @Override
     public BasicResponse updateSelfDeposit(SelfDepositParam selfDepositParam){
         try {
             if(depositMapper.ifExistMyProduct(selfDepositParam.getId())) {

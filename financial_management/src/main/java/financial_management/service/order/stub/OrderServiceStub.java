@@ -2,6 +2,7 @@
 package financial_management.service.order.stub;
 
 import financial_management.bl.order.OrderService;
+import financial_management.entity.TransferRecordPO;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.PersonalTradeVO;
@@ -154,6 +155,16 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
+    public TransferRecordPO getTransferRecordByID(long id) {
+        return null;
+    }
+
+    @Override
+    public List<TransferRecordPO> getTransferRecordByUserID(long userID) {
+        return null;
+    }
+
+    @Override
     public BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord() {
         return null;
     }
@@ -179,7 +190,12 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
-    public BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO, boolean isCustomize) {
+    public TransferRecordPO addTransferRecord(TransferRecordPO transferRecordPO) {
+        return null;
+    }
+
+    @Override
+    public TransferRecordPO updateTransferRecord(TransferRecordPO po) {
         return null;
     }
 

@@ -1,5 +1,6 @@
 package financial_management.bl.order;
 
+import financial_management.entity.TransferRecordPO;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
@@ -17,6 +18,10 @@ public interface OrderService {
 
     BasicResponse<TransferRecordVO> getTransferRecordByRecord(Long ID);
 
+    TransferRecordPO getTransferRecordByID(long id);
+
+    List<TransferRecordPO> getTransferRecordByUserID(long userID);
+
     //获取今日所有个人交易记录（这个方法只是债券）
     BasicResponse<List<PersonalTradeVO>> getTodaysPersonalTradeRecord();
 
@@ -32,7 +37,9 @@ public interface OrderService {
     //新增平台交易记录
     BasicResponse<?> addPlatformTradeRecord(PlatformTradeVO platformTradeVO);
 
-    BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO, boolean isCustomize);
+    TransferRecordPO addTransferRecord(TransferRecordPO po);
+
+    TransferRecordPO updateTransferRecord(TransferRecordPO po);
 
     //获取累计净投入峰值
     double getMaxInvestBy(Long userID, String type);

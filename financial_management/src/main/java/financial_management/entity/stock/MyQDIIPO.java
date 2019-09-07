@@ -1,19 +1,13 @@
-package financial_management.entity;
+package financial_management.entity.stock;
 
 public class MyQDIIPO {
     private Long userId;
 
     private String code;
 
-    private Float purchasePrice;
-
-    private Float purchaseAmount;
-
-    private Float purchaseTotal;
-
     private Float holdPrice;
 
-    private Float holdAmount;
+    private Integer holdNum;
 
     private Float holdTotal;
 
@@ -37,30 +31,6 @@ public class MyQDIIPO {
         this.code = code;
     }
 
-    public Float getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(Float purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
-    public Float getPurchaseAmount() {
-        return purchaseAmount;
-    }
-
-    public void setPurchaseAmount(Float purchaseAmount) {
-        this.purchaseAmount = purchaseAmount;
-    }
-
-    public Float getPurchaseTotal() {
-        return purchaseTotal;
-    }
-
-    public void setPurchaseTotal(Float purchaseTotal) {
-        this.purchaseTotal = purchaseTotal;
-    }
-
     public Float getHoldPrice() {
         return holdPrice;
     }
@@ -69,12 +39,12 @@ public class MyQDIIPO {
         this.holdPrice = holdPrice;
     }
 
-    public Float getHoldAmount() {
-        return holdAmount;
+    public Integer getHoldNum() {
+        return holdNum;
     }
 
-    public void setHoldAmount(Float holdAmount) {
-        this.holdAmount = holdAmount;
+    public void setHoldNum(Integer holdNum) {
+        this.holdNum = holdNum;
     }
 
     public Float getHoldTotal() {

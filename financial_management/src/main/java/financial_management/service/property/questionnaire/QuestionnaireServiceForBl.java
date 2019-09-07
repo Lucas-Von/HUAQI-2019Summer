@@ -9,12 +9,12 @@ import java.util.Date;
 public interface QuestionnaireServiceForBl {
 
     /**
-     * 根据userId判断用户是否已填写问卷，若无则返回空的问卷【值皆为0】
+     * 判断用户是否已填写问卷
      *
      * @param userId
      * @return
      */
-    boolean hasQuestionnaire(Long userId);
+    boolean hasQuest(Long userId);
 
     /**
      * 获取用户第一次填写问卷的时间

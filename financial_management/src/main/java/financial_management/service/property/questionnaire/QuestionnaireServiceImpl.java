@@ -4,7 +4,6 @@ import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.property.QuestionnaireMapper;
 import financial_management.entity.property.QuestionnaireConfigPO;
 import financial_management.parameter.property.QuestionnaireParam;
-import financial_management.service.property.estate.EstateServiceForBl;
 import financial_management.util.PyInvoke.PyFunc;
 import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.PyParam;
@@ -41,7 +40,28 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
      * @return
      */
     @Override
-    public boolean hasQuestionnaire(Long userId) {
+    public BasicResponse hasQuestionnaire(Long userId) {
+        try {
+            boolean hasRecorded = questionnaireMapper.hasQuest(userId);
+            if (hasRecorded) {
+                return new BasicResponse<>(ResponseStatus.STATUS_QUESTIONNAIRE_EXIST, true);
+            } else {
+                return new BasicResponse<>(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST, false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 判断用户是否已填写问卷
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public boolean hasQuest(Long userId) {
         try {
             return questionnaireMapper.hasQuest(userId);
         } catch (Exception e) {
@@ -76,7 +96,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     public BasicResponse setQuestionnaire(QuestionnaireParam questionnaireParam) {
         try {
             Long userId = questionnaireParam.getUserId();
-            boolean hasRecorded = hasQuestionnaire(userId);
+            boolean hasRecorded = hasQuest(userId);
             if (!hasRecorded) {
                 questionnaireMapper.insertQuest(questionnaireParam);
             } else {
@@ -151,7 +171,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse getInvestPrefer(Long userId) {
         try {
-            if (hasQuestionnaire(userId)) {
+            if (hasQuest(userId)) {
                 String investPrefer = questionnaireMapper.getInvestPrefer(userId);
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, investPrefer);
             } else {
@@ -173,7 +193,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse editExpectedYield(Long userId, double expectedYield) {
         try {
-            if (hasQuestionnaire(userId)) {
+            if (hasQuest(userId)) {
                 questionnaireMapper.editExpectedYield(userId, expectedYield);
                 return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
             } else {
@@ -194,7 +214,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse getExpectedYield(Long userId) {
         try {
-            if (hasQuestionnaire(userId)) {
+            if (hasQuest(userId)) {
                 double expectedYield = questionnaireMapper.getExpectedYield(userId);
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, expectedYield);
             } else {
@@ -235,7 +255,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public double getOriginAsset(Long userId) {
         try {
-            if (hasQuestionnaire(userId)) {
+            if (hasQuest(userId)) {
                 return questionnaireMapper.getOriginAsset(userId);
             } else {
                 return 0;

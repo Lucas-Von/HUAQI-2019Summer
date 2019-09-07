@@ -10,6 +10,14 @@ import financial_management.vo.BasicResponse;
 public interface QuestionnaireService {
 
     /**
+     * 判断用户是否已填写问卷
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse hasQuestionnaire(Long userId);
+
+    /**
      * 问卷内容获取
      *
      * @param

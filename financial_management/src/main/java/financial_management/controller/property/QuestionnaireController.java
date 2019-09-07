@@ -24,6 +24,12 @@ public class QuestionnaireController {
     @Autowired
     private QuestionnaireService questionnaireService;
 
+    @GetMapping(value = "/questionnaire/judge")
+    public BasicResponse hasQuestionnaire(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return questionnaireService.hasQuestionnaire(userId);
+    }
+
     @GetMapping(value = "/questionnaire/view")
     public BasicResponse viewQuestionnaire() {
         return questionnaireService.viewQuestionnaire();

@@ -212,6 +212,22 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     }
 
     /**
+     * 判断该用户是否已完善资产信息
+     *
+     * @param userId
+     * @reutrn
+     */
+    @Override
+    public BasicResponse hasImproveInfo(Long userId) {
+        try {
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, ifExistOutRecord(userId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, false);
+        }
+    }
+
+    /**
      * 获取用户自身的推荐资产配置
      *
      * @param userId

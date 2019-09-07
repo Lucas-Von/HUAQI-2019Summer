@@ -83,6 +83,12 @@ public class EstateController {
         return estateService.getCompleteProList(userId);
     }
 
+    @GetMapping(value = "estate/hasImproveInfo")
+    public BasicResponse hasImproveInfo(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.hasImproveInfo(userId);
+    }
+
     @GetMapping(value = "/estate/getDailyInvList")
     public BasicResponse getDailyInvList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);

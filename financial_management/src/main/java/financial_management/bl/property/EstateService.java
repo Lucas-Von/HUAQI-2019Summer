@@ -74,6 +74,14 @@ public interface EstateService {
     BasicResponse getCompleteProList(Long userId);
 
     /**
+     * 判断该用户是否已完善资产信息
+     *
+     * @param userId
+     * @reutrn
+     */
+    BasicResponse hasImproveInfo(Long userId);
+
+    /**
      * 获取用户自身的推荐资产配置
      *
      * @param userId

@@ -882,11 +882,8 @@ DROP TABLE IF EXISTS `my_qdii`;
 CREATE TABLE `my_qdii` (
   `user_id` bigint(255) NOT NULL,
   `code` varchar(45) NOT NULL,
-  `purchase_price` float NOT NULL,
-  `purchase_amount` float NOT NULL,
-  `purchase_total` float NOT NULL,
   `hold_price` float NOT NULL,
-  `hold_amount` float NOT NULL,
+  `hold_num` int(11) NOT NULL,
   `hold_total` float NOT NULL,
   `profit` float NOT NULL DEFAULT '0',
   `profit_rate` float NOT NULL DEFAULT '0',
@@ -900,7 +897,7 @@ CREATE TABLE `my_qdii` (
 
 LOCK TABLES `my_qdii` WRITE;
 /*!40000 ALTER TABLE `my_qdii` DISABLE KEYS */;
-INSERT INTO `my_qdii` VALUES (1,'123123',1,1000,1000,99.9,100,999,-1,-0.001);
+INSERT INTO `my_qdii` VALUES (1,'123123',99.9,100,999,-1,-0.001);
 /*!40000 ALTER TABLE `my_qdii` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -967,6 +964,10 @@ CREATE TABLE `personal_trade` (
 
 LOCK TABLES `personal_trade` WRITE;
 /*!40000 ALTER TABLE `personal_trade` DISABLE KEYS */;
+insert into personal_trade (trans_id, create_time, complete_time, type, product_id, amount, price, fee, total, user_id,
+                            status, is_customize)
+values (null,null,null,'DOMSTOCK',1,100.0,12.3,0,1230.0,1,1,false),
+       (null,'2019-09-01 09:09:09','2019-09-01 09:09:20','GOLD',1,1,100,1,101,1,1,false);
 /*!40000 ALTER TABLE `personal_trade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1151,26 +1152,54 @@ LOCK TABLES `stock_adjustment` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `qdii_adjustment`
+--
+
+DROP TABLE IF EXISTS `qdii_adjustment`;
+CREATE TABLE `qdii_adjustment` (
+    `qdii_code` varchar(45) NOT NULL,
+    `name` varchar(45) NOT NULL,
+    `share_deployed` float NOT NULL,
+    `number_deployed` int(11) NOT NULL,
+    `m_already_deployed` float NOT NULL,
+    `price_deployed` float NOT NULL,
+    `user_id` bigint(255) NOT NULL,
+    `trans_id` bigint(255) NOT NULL,
+    primary key (`trans_id`,`qdii_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `transfer_record`
 --
 
 DROP TABLE IF EXISTS `transfer_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+# CREATE TABLE `transfer_record` (
+#   `id` bigint(255) NOT NULL,
+#   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+#   `complete_time` timestamp NULL DEFAULT NULL,
+#   `gold_total` float NOT NULL,
+#   `gold_delta` float NOT NULL,
+#   `bond_total` float NOT NULL,
+#   `bond_delta` float NOT NULL,
+#   `stock_total` float NOT NULL,
+#   `stock_delta` float NOT NULL,
+#   `user_id` bigint(255) NOT NULL,
+#   `status` int(11) NOT NULL,
+#   `is_customize` bit(1) DEFAULT b'0',
+#   PRIMARY KEY (`id`)
+# ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `transfer_record` (
-  `id` bigint(255) NOT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `complete_time` timestamp NULL DEFAULT NULL,
-  `gold_total` float NOT NULL,
-  `gold_delta` float NOT NULL,
-  `bond_total` float NOT NULL,
-  `bond_delta` float NOT NULL,
-  `stock_total` float NOT NULL,
-  `stock_delta` float NOT NULL,
-  `user_id` bigint(255) NOT NULL,
-  `status` int(11) NOT NULL,
-  `is_customize` bit(1) DEFAULT b'0',
-  PRIMARY KEY (`id`)
+    `id` bigint(255) NOT NULL AUTO_INCREMENT,
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `complete_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    `user_id` bigint(255) NOT NULL,
+    `is_checked` bit NOT NULL DEFAULT 0,
+    `is_denied` bit NOT NULL DEFAULT 0,
+    `is_customize` bit NOT NULL DEFAULT 0,
+    `status` int(11) NOT NULL DEFAULT 0,
+    primary key (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

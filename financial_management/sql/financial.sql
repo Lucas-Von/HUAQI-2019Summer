@@ -454,6 +454,8 @@ CREATE TABLE `fund` (
   `rate` float DEFAULT NULL,
   `time` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `fund` (name, rate, "time") values ("国投瑞银钱多宝货币A",0.0021,"2019-09-08")
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -623,8 +625,10 @@ DROP TABLE IF EXISTS `insurance`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `insurance` (
   `user_id` bigint(255) NOT NULL,
+  `person_role` varchar(255),
+  `kind` varchar(255),
+  `permiun` float ,
   `amount` float DEFAULT NULL,
-  `percentage` float DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -807,7 +811,8 @@ CREATE TABLE `my_fund` (
   `user_id` bigint(255) NOT NULL,
   `balance` float DEFAULT NULL,
   `update_time` date DEFAULT NULL,
-  `pay_password` varchar(255) DEFAULT NULL
+  `pay_password` varchar(255) DEFAULT NULL,
+  `accuring_amount` float
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -857,9 +862,11 @@ DROP TABLE IF EXISTS `my_ins`;
 CREATE TABLE `my_ins` (
   `user_id` bigint(255) NOT NULL,
   `beneficiary` varchar(255) DEFAULT NULL,
-  `product_id` bigint(255) DEFAULT NULL,
+  `kind` varchar(255),
   `maturity` date DEFAULT NULL,
-  `price` float DEFAULT NULL
+  `amount` float DEFAULT NULL,
+  `premiun` float DEFAULT NULL,
+  `name` varchar(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -43,7 +43,7 @@ public class PyInvoke {
         try {
             Process process = runtime.exec("pip list");
             List<Object> res = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String input = null;
             while ((input = reader.readLine()) != null){
 //                res.add(JSON.parseObject(input, clazz));

@@ -1,8 +1,6 @@
 package financial_management.controller.product;
 
 import financial_management.bl.product.DepositService;
-import financial_management.bl.product.FundService;
-import financial_management.bl.product.InsuranceService;
 import financial_management.bl.product.InvestmentService;
 import financial_management.parameter.product.DepositPurchaseParam;
 

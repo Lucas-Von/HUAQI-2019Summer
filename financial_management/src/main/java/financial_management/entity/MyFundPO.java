@@ -37,6 +37,20 @@ public class MyFundPO {
      **/
     String payPassword;
 
+    /**
+     *
+     * @return 累计收益
+     */
+    Float accuringAmount;
+
+    public Float getAccuringAmount() {
+        return accuringAmount;
+    }
+
+    public void setAccuringAmount(Float accuringAmount) {
+        this.accuringAmount = accuringAmount;
+    }
+
     public String getPayPassword() {
         return payPassword;
     }

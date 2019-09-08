@@ -38,7 +38,7 @@ public enum PyFunc {
     public String path;
 
     PyFunc(String path){
-        this.path = "D:\\学习资料\\大二下\\花旗杯\\软件组\\代码\\Total\\PyFuncs\\" + path;
+        this.path = "E:\\HQB\\金融组\\债券\\债券pydebug完全版\\" + path;
     }
 
 }

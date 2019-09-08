@@ -5,14 +5,10 @@
         <id column="id" jdbcType="BIGINT" property="ID"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime"/>
-        <result column="gold_total" jdbcType="FLOAT" property="goldTotal"/>
-        <result column="gold_delta" jdbcType="FLOAT" property="goldDelta"/>
-        <result column="bond_total" jdbcType="FLOAT" property="bondTotal"/>
-        <result column="bond_delta" jdbcType="FLOAT" property="bondDelta"/>
-        <result column="stock_total" jdbcType="FLOAT" property="stockTotal"/>
-        <result column="stock_delta" jdbcType="FLOAT" property="stockDelta"/>
         <result column="user_id" jdbcType="BIGINT" property="userID"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="is_checked" jdbcType="BIT" property="isChecked"/>
+        <result column="is_denied" jdbcType="BIT" property="isDenied"/>
         <result column="is_customize" jdbcType="BIT" property="isCustomize"/>
     </resultMap>
 
@@ -28,15 +24,18 @@
         where id = #{ID,jdbcType=BIGINT}
     </select>
 
-    <insert id="insert" parameterType="financial_management.entity.TransferRecordPO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
-        insert into transfer_record (id, create_time, complete_time, gold_total, gold_delta, bond_total, bond_delta, stock_total, stock_delta, user_id, status, is_customize)
-        values (#{ID},#{createTime},#{completeTime},#{goldTotal},#{goldDelta},#{bondTotal},#{bondDelta},#{stockTotal},#{stockDelta},#{userID},#{status},#{isCustomize})
+    <insert id="insert" parameterType="financial_management.entity.TransferRecordPO" keyColumn="id" keyProperty="ID"
+            useGeneratedKeys="true">
+        insert into transfer_record (create_time, complete_time, user_id, is_checked, is_denied, is_customize, status)
+        values (#{createTime}, #{completeTime}, #{userID}, #{isChecked}, #{isDenied}, #{isCustomized}, #{status});
     </insert>
 
     <update id="update" parameterType="financial_management.entity.TransferRecordPO">
         update transfer_record
         set complete_time = #{completeTime},
-            status = #{status}
+            is_checked    = #{isChecked},
+            is_denied     = #{isDenied},
+            status        = #{status}
         where id = #{ID};
     </update>
 </mapper>

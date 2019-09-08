@@ -16,6 +16,8 @@ import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.order.TransferRecordVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
     private ProductService4Order productService4Order;
     @Autowired
     private MaxInvestMapper maxInvestMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Override
     public BasicResponse<List<PersonalTradeVO>> getPersonalTradeRecordByUser(Long ID) {
@@ -84,6 +88,16 @@ public class OrderServiceImpl implements OrderService {
             response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new TransferRecordVO(po));
         }
         return response;
+    }
+
+    @Override
+    public TransferRecordPO getTransferRecordByID(long id) {
+        return transferRecordMapper.selectByID(id);
+    }
+
+    @Override
+    public List<TransferRecordPO> getTransferRecordByUserID(long userID) {
+        return transferRecordMapper.selectByUserID(userID);
     }
 
     @Override
@@ -139,19 +153,34 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BasicResponse<?> addTransferRecord(TransferRecordVO transferRecordVO, boolean isCustomize) {
-        TransferRecordPO po = assembleTransferRecordPO(transferRecordVO);
-        po.setID(null);
-        po.setIsCustomize(isCustomize);
+    public TransferRecordPO addTransferRecord(TransferRecordPO transferRecordPO) {
         try {
-            int insert = transferRecordMapper.insert(po);
+            int insert = transferRecordMapper.insert(transferRecordPO);
             if (insert == 1) {
-                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
+                return transferRecordPO;
             } else {
-                return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+                logger.error("Insert into transfer record error.\nRecord: " + transferRecordPO.toString());
+                return null;
             }
         } catch (Exception e) {
-            return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public TransferRecordPO updateTransferRecord(TransferRecordPO po) {
+        try {
+            int update = transferRecordMapper.update(po);
+            if (update == 1) {
+                return po;
+            } else {
+                logger.error("Update transfer record return error.\nRecord: " + po.toString());
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -267,12 +296,6 @@ public class OrderServiceImpl implements OrderService {
         po.setID(vo.getID());
         po.setCreateTime(vo.getCreateTime());
         po.setCompleteTime(vo.getCompleteTime());
-        po.setGoldTotal(vo.getGoldTotal());
-        po.setGoldDelta(vo.getGoldDelta());
-        po.setBondTotal(vo.getBondTotal());
-        po.setBondDelta(vo.getBondDelta());
-        po.setStockTotal(vo.getStockTotal());
-        po.setStockDelta(vo.getStockDelta());
         po.setUserID(vo.getUserID());
         po.setStatus(vo.getStatus());
         return po;

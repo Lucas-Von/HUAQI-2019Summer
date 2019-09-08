@@ -16,6 +16,6 @@ public class PythonInvokeTest {
 
     @Test
     public void changeDomStockTest(){
-        service.changeDomStock(1L);
+        service.changeStock(1L);
     }
 }

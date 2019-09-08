@@ -1,4 +1,4 @@
-package financial_management.entity;
+package financial_management.entity.stock;
 
 /**
  * @Description 用户持有的股票实体类

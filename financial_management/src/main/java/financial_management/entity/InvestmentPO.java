@@ -1,5 +1,7 @@
 package financial_management.entity;
 
+import financial_management.entity.stock.MyStockPO;
+
 import java.util.List;
 
 /**

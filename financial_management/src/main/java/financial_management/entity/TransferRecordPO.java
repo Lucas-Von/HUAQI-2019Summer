@@ -12,23 +12,17 @@ public class TransferRecordPO{
     //调仓完成时间
     private Date completeTime;
 
-    private Float goldTotal;
-
-    private Float goldDelta;
-
-    private Float bondTotal;
-
-    private Float bondDelta;
-
-    private Float stockTotal;
-
-    private Float stockDelta;
-
     //调仓用户ID
     private Long userID;
 
     //调仓状态
     private Integer status;
+
+    //是否已经过用户确认
+    private Boolean isChecked;
+
+    //用户是否否决调仓
+    private Boolean isDenied;
 
     //是否为用户手动调仓
     private Boolean isCustomize;
@@ -57,54 +51,6 @@ public class TransferRecordPO{
         this.completeTime = completeTime;
     }
 
-    public Float getGoldTotal() {
-        return goldTotal;
-    }
-
-    public void setGoldTotal(Float goldTotal) {
-        this.goldTotal = goldTotal;
-    }
-
-    public Float getGoldDelta() {
-        return goldDelta;
-    }
-
-    public void setGoldDelta(Float goldDelta) {
-        this.goldDelta = goldDelta;
-    }
-
-    public Float getBondTotal() {
-        return bondTotal;
-    }
-
-    public void setBondTotal(Float bondTotal) {
-        this.bondTotal = bondTotal;
-    }
-
-    public Float getBondDelta() {
-        return bondDelta;
-    }
-
-    public void setBondDelta(Float bondDelta) {
-        this.bondDelta = bondDelta;
-    }
-
-    public Float getStockTotal() {
-        return stockTotal;
-    }
-
-    public void setStockTotal(Float stockTotal) {
-        this.stockTotal = stockTotal;
-    }
-
-    public Float getStockDelta() {
-        return stockDelta;
-    }
-
-    public void setStockDelta(Float stockDelta) {
-        this.stockDelta = stockDelta;
-    }
-
     public Long getUserID() {
         return userID;
     }
@@ -121,11 +67,58 @@ public class TransferRecordPO{
         this.status = status;
     }
 
+    public Boolean getChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(Boolean checked) {
+        isChecked = checked;
+    }
+
+    public Boolean getDenied() {
+        return isDenied;
+    }
+
+    public void setDenied(Boolean denied) {
+        isDenied = denied;
+    }
+
+    public Boolean getCustomize() {
+        return isCustomize;
+    }
+
+    public void setCustomize(Boolean customize) {
+        isCustomize = customize;
+    }
+
     public Boolean getIsCustomize() {
         return isCustomize;
     }
 
     public void setIsCustomize(Boolean isCustomize) {
         this.isCustomize = isCustomize;
+    }
+
+    public TransferRecordPO() {
+    }
+
+    public TransferRecordPO(Date createTime, Long userID, Boolean isCustomize) {
+        this.createTime = createTime;
+        this.userID = userID;
+        this.isCustomize = isCustomize;
+    }
+
+    @Override
+    public String toString() {
+        return "TransferRecordPO{" +
+                "ID=" + ID +
+                ", createTime=" + createTime +
+                ", completeTime=" + completeTime +
+                ", userID=" + userID +
+                ", status=" + status +
+                ", isChecked=" + isChecked +
+                ", isDenied=" + isDenied +
+                ", isCustomize=" + isCustomize +
+                '}';
     }
 }

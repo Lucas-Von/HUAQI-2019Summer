@@ -1,12 +1,12 @@
-package financial_management.entity;
+package financial_management.entity.stock;
 
 /**
- * @Description 国外股票实体
+ * @Description 国内股票实体
  * @Author 233loser
- * @Date 2019/8/14 12:43
+ * @Date 2019/8/13 23:42
  * @Version 1.0
  **/
-public class ForStockPO {
+public class DomStockPO {
     Long id;
     /**
      * @Description //股票名

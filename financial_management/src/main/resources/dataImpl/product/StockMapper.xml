@@ -23,37 +23,48 @@
         where user_id = #{userId};
     </select>
 
-    <insert id="insertMyStock" parameterType="financial_management.entity.MyStockPO">
+    <select id="selectQDIIAdjustmentByTransID" resultMap="qdiiAdjustment">
+        select *
+        from qdii_adjustment
+        where trans_id = #{transID}
+    </select>
+
+    <insert id="insertMyStock" parameterType="financial_management.entity.stock.MyStockPO">
         insert into my_stock (user_id, code, purchase_price, purchase_amount, purchase_total, hold_price, hold_amount,
                               hold_total)
-        values (#{userId}, #{code}, #{purchasePrice}, #{purchaseAmount}, #{purchaseTotal}, #{holdPrice}, #{holdAmount},
+        values (#{userId}, #{code}, #{purchasePrice}, #{purchaseAmount}, #{purchaseTotal}, #{holdPrice}, #{holdNum},
                 #{holdTotal});
     </insert>
 
-    <insert id="insertMyQDII" parameterType="financial_management.entity.MyQDIIPO">
-        insert into my_qdii (user_id, code, purchase_price, purchase_amount, purchase_total, hold_price, hold_amount,
-                             hold_total)
-        values (#{userId}, #{code}, #{purchasePrice}, #{purchaseAmount}, #{purchaseTotal}, #{holdPrice}, #{holdAmount},
-                #{holdTotal});
+    <insert id="insertMyQDII" parameterType="financial_management.entity.stock.MyQDIIPO">
+        insert into my_qdii (user_id, code, hold_price, hold_num, hold_total)
+        values (#{userId}, #{code}, #{holdPrice}, #{holdNum}, #{holdTotal});
     </insert>
 
-    <update id="updateMyStock" parameterType="financial_management.entity.MyStockPO">
+    <insert id="insertQDIIAdjustment" parameterType="financial_management.entity.stock.QDIIAdjustmentPO">
+        insert into qdii_adjustment (qdii_code, name, share_deployed, number_deployed, m_already_deployed,
+                                     price_deployed, user_id, trans_id)
+        values (#{qdii_code}, #{name}, #{share_deployed}, #{number_deployed}, #{m_already_deployed}, #{price_deployed},
+                #{userID}, #{transID});
+    </insert>
+
+    <update id="updateMyStock" parameterType="financial_management.entity.stock.MyStockPO">
         update my_stock
         set hold_price  = #{holdPrice},
-            hold_amount = #{holdAmount},
+            hold_amount = #{holdNum},
             hold_total  = #{holdTotal},
-            profit = #{profit},
+            profit      = #{profit},
             profit_rate = #{profitRate}
         where `user_id` = #{userId,jdbcType=BIGINT}
           and `code` = #{code,jdbcType=VARCHAR};
     </update>
 
-    <update id="updateMyQDII" parameterType="financial_management.entity.MyQDIIPO">
+    <update id="updateMyQDII" parameterType="financial_management.entity.stock.MyQDIIPO">
         update my_qdii
         set hold_price  = #{holdPrice},
-            hold_amount = #{holdAmount},
+            hold_num    = #{holdNum},
             hold_total  = #{holdTotal},
-            profit = #{profit},
+            profit      = #{profit},
             profit_rate = #{profitRate}
         where `user_id` = #{userId,jdbcType=BIGINT}
           and `code` = #{code,jdbcType=VARCHAR};
@@ -83,43 +94,51 @@
         where id = #{Id}
     </select>
 
-    <resultMap id="MyStockProduct" type="financial_management.entity.MyStockPO">
+    <resultMap id="MyStockProduct" type="financial_management.entity.stock.MyStockPO">
         <result property="code" column="code"/>
         <result property="userId" column="user_id"/>
         <result property="purchasePrice" column="purchase_price"/>
         <result property="purchaseAmount" column="purchase_amount"/>
         <result property="purchaseTotal" column="purchase_total"/>
         <result property="holdPrice" column="hold_price"/>
-        <result property="holdAmount" column="hold_amount"/>
+        <result property="holdNum" column="hold_amount"/>
         <result property="holdTotal" column="hold_total"/>
         <result property="profit" column="profit"/>
         <result property="profitRate" column="profit_rate"/>
     </resultMap>
 
-    <resultMap id="qdii" type="financial_management.entity.MyQDIIPO">
+    <resultMap id="qdii" type="financial_management.entity.stock.MyQDIIPO">
         <result property="code" column="code"/>
         <result property="userId" column="user_id"/>
-        <result property="purchasePrice" column="purchase_price"/>
-        <result property="purchaseAmount" column="purchase_amount"/>
-        <result property="purchaseTotal" column="purchase_total"/>
         <result property="holdPrice" column="hold_price"/>
-        <result property="holdAmount" column="hold_amount"/>
+        <result property="holdNum" column="hold_num"/>
         <result property="holdTotal" column="hold_total"/>
         <result property="profit" column="profit"/>
         <result property="profitRate" column="profit_rate"/>
     </resultMap>
 
-    <resultMap id="DomProduct" type="financial_management.entity.DomStockPO">
+    <resultMap id="DomProduct" type="financial_management.entity.stock.DomStockPO">
         <id property="id" column="id"/>
         <result property="name" column="product"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
     </resultMap>
 
-    <resultMap id="ForProduct" type="financial_management.entity.ForStockPO">
+    <resultMap id="ForProduct" type="financial_management.entity.stock.ForStockPO">
         <id property="id" column="id"/>
         <result property="name" column="product"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
+    </resultMap>
+
+    <resultMap id="qdiiAdjustment" type="financial_management.entity.stock.QDIIAdjustmentPO">
+        <result column="qdii_code" property="qdii_code"/>
+        <result column="name" property="name"/>
+        <result column="share_deployed" property="share_deployed"/>
+        <result column="number_deployed" property="number_deployed"/>
+        <result column="m_already_deployed" property="m_already_deployed"/>
+        <result column="price_deployed" property="price_deployed"/>
+        <result column="user_id" property="userID"/>
+        <result column="trans_id" property="transID"/>
     </resultMap>
 </mapper>

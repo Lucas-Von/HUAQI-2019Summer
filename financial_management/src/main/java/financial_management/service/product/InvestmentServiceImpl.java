@@ -7,6 +7,10 @@ import financial_management.data.product.GoldMapper;
 import financial_management.data.product.StockMapper;
 import financial_management.entity.*;
 import financial_management.entity.bond.BondPO;
+import financial_management.entity.stock.DomStockPO;
+import financial_management.entity.stock.ForStockPO;
+import financial_management.entity.stock.MyQDIIPO;
+import financial_management.entity.stock.MyStockPO;
 import financial_management.service.product.bond.BondServiceForBl;
 import financial_management.service.product.gold.GoldServiceForBl;
 import financial_management.service.property.income.IncomeServiceForBl;
@@ -81,11 +85,11 @@ public class InvestmentServiceImpl implements InvestmentService {
             }
         });
 
-        List<MyQDIIPO> forStocks = stockMapper.selectSelfForStock(userId);
+        List<MyQDIIPO> forStocks = stockMapper.selectSelfQDII(userId);
         forStocks.stream().forEach(o -> {
-            ForStockPO forStock = stockMapper.selectForStockByCode(o.getCode());
+            ForStockPO forStock = stockMapper.selectQDIIByCode(o.getCode());
             if (forStock != null) {
-                InvestmentVO vo = new InvestmentVO(forStock.getName(), "海外股票", o.getCode(), forStock.getLatestPrice().doubleValue(), o.getHoldAmount(), o.getHoldTotal().doubleValue(), o.getProfit().doubleValue(), o.getProfitRate().doubleValue());
+                InvestmentVO vo = new InvestmentVO(forStock.getName(), "海外股票", o.getCode(), forStock.getLatestPrice().doubleValue(), o.getHoldNum().floatValue(), o.getHoldTotal().doubleValue(), o.getProfit().doubleValue(), o.getProfitRate().doubleValue());
                 investments.add(vo);
             }
         });
@@ -113,7 +117,7 @@ public class InvestmentServiceImpl implements InvestmentService {
             InvestRecProductVO vo = new InvestRecProductVO(o.getName(), o.getCode(), o.getLatestPrice().doubleValue());
             invests.add(vo);
         });
-        List<ForStockPO> forStocks = stockMapper.selectAllForStock();
+        List<ForStockPO> forStocks = stockMapper.selectAllQDII();
         forStocks.stream().forEach(o -> {
             InvestRecProductVO vo = new InvestRecProductVO(o.getName(), o.getCode(), o.getLatestPrice().doubleValue());
             invests.add(vo);
@@ -203,7 +207,7 @@ public class InvestmentServiceImpl implements InvestmentService {
                     return vo;
                 }
             case "forStock":
-                ForStockPO forStock = stockMapper.selectForStockById(id);
+                ForStockPO forStock = stockMapper.selectQDIIById(id);
                 if (forStock == null) {
                     return getNullProduct();
                 } else {

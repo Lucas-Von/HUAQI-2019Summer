@@ -82,8 +82,8 @@ public class DepositController {
     }
 
     @GetMapping(value = "/product/deposit/recommend/get")
-    public BasicResponse getDepositRecommend(){
-        return depositService.getDepositRecommend();
+    public BasicResponse getDepositRecommend(HttpServletRequest request){
+        return depositService.getDepositRecommend(jwtUtil.getIdFromRequest(request));
     }
 
     @GetMapping(value = "/product/deposit/recommend")

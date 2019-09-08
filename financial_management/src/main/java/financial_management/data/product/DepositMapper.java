@@ -4,6 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import financial_management.entity.DepositProductPO;
 import financial_management.entity.DepositRecommendPO;
 import financial_management.entity.MyDepoPO;
+import financial_management.entity.OverseasBondRecommendPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -94,7 +95,7 @@ public interface DepositMapper {
      * 查看所有的推荐储蓄产品
      * @return
      */
-    List<DepositRecommendPO> selectDepositRecommend();
+    List<OverseasBondRecommendPO> selectDepositRecommendByRiskRating(@Param("riskRating") Integer riskRating);
 
     /**
      * 判断一推荐储蓄是否存在

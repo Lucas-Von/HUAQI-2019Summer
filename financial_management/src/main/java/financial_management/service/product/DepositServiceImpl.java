@@ -1,10 +1,12 @@
 package financial_management.service.product;
 
 import financial_management.bl.product.DepositService;
+import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.product.DepositMapper;
 import financial_management.entity.DepositProductPO;
 import financial_management.entity.DepositRecommendPO;
 import financial_management.entity.MyDepoPO;
+import financial_management.entity.OverseasBondRecommendPO;
 import financial_management.entity.property.DepositPO;
 import financial_management.parameter.product.DepositRecommendParam;
 import financial_management.parameter.product.SelfDepositParam;
@@ -30,6 +32,9 @@ import java.util.List;
 public class DepositServiceImpl implements DepositService {
     @Autowired
     private DepositMapper depositMapper;
+
+    @Autowired
+    private QuestionnaireService questionnaireService;
 
     @Override
     public BasicResponse getSelfDeposits(Long userId) {
@@ -158,15 +163,33 @@ public class DepositServiceImpl implements DepositService {
     }
 
     @Override
-    public BasicResponse getDepositRecommend(){
+    public BasicResponse getDepositRecommend(Long userId){
         try {
-            List<DepositRecommendPO> depositRecommendPOS = depositMapper.selectDepositRecommend();
-            List<DepositRecommendVO> depositRecommendVOS = new ArrayList<>();
-            for (int i = 0; i < depositRecommendPOS.size(); i++) {
-                DepositRecommendPO depositRecommendPO = depositRecommendPOS.get(i);
-                depositRecommendVOS.add(depositRecommendPO.getDepositRecommendVO());
+            BasicResponse basicResponse = questionnaireService.getInvestPrefer(userId);
+            if(basicResponse.getStatus().getCode().equals("0000")) {
+                String investPrefer = basicResponse.getData().toString();
+                int investPreferNum = 0;
+                if(investPrefer.equals("保守型")){
+                    investPreferNum = 1;
+                }else if(investPrefer.equals("稳健保守型")){
+                    investPreferNum = 2;
+                }else if(investPrefer.equals("稳健型")){
+                    investPreferNum = 3;
+                }else if(investPrefer.equals("稳健进取型")){
+                    investPreferNum = 4;
+                }else if(investPrefer.equals("进取型")){
+                    investPreferNum = 5;
+                }
+                List<OverseasBondRecommendPO> overseasBondRecommendPOS = depositMapper.selectDepositRecommendByRiskRating(investPreferNum);
+                List<OverseasBondRecommendVO> overseasBondRecommendVOS = new ArrayList<>();
+                for (int i = 0; i < overseasBondRecommendPOS.size(); i++) {
+                    OverseasBondRecommendPO overseasBondRecommendPO = overseasBondRecommendPOS.get(i);
+                    overseasBondRecommendVOS.add(overseasBondRecommendPO.getOverseasBondRecommendVO());
+                }
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, overseasBondRecommendVOS);
+            }else {
+                return new BasicResponse(ResponseStatus.STATUS_INVESTPREFER_NOT_EXIST);
             }
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, depositRecommendVOS);
         }catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

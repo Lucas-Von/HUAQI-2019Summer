@@ -78,7 +78,7 @@ public interface DepositService {
      * 查看所有的推荐储蓄产品
      * @return
      */
-    BasicResponse getDepositRecommend();
+    BasicResponse getDepositRecommend(Long userId);
 
     /**
      * 查看所有储蓄产品（弃用）

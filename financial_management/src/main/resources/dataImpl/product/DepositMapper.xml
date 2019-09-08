@@ -58,8 +58,9 @@
         where id = #{id}
     </delete>
 
-    <select id="selectDepositRecommend" resultMap="DepositRecommendPO">
-        select * from deposit_recommend
+    <select id="selectDepositRecommendByRiskRating" resultMap="OverseasBondRecommendPO">
+        select * from overseas_bond_recommend
+        where risk_rating = #{riskRating}
     </select>
 
     <select id="ifExistDepositRecommend" resultType="boolean">
@@ -120,6 +121,24 @@
         <result column="end_time" property="endTime"/>
         <result column="start_amount" property="startAmount"/>
         <result column="risk_level" property="riskLevel"/>
+    </resultMap>
+
+    <resultMap id="OverseasBondRecommendPO" type="financial_management.entity.OverseasBondRecommendPO">
+        <result column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="rate" property="rate"/>
+        <result column="end_time" property="endTime"/>
+        <result column="redemption" property="redemption"/>
+        <result column="bond_type" property="bondType"/>
+        <result column="currency" property="currency"/>
+        <result column="mechanism" property="mechanism"/>
+        <result column="frequency" property="frequency"/>
+        <result column="rating" property="rating"/>
+        <result column="assets_type" property="assetsType"/>
+        <result column="subscription_rate" property="subscriptionRate"/>
+        <result column="early_redemption_fee" property="earlyRedemptionFee"/>
+        <result column="service_fee" property="serviceFee"/>
+        <result column="risk_rating" property="riskRating"/>
     </resultMap>
 
 </mapper>

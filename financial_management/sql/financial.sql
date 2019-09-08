@@ -628,9 +628,18 @@ CREATE TABLE `insurance` (
   `person_role` varchar(255),
   `kind` varchar(255),
   `permiun` float ,
-  `amount` float DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
+  `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"husband","寿险",100000,251);
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"wife","寿险",100000,251);
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"husband","重疾险",500000,251);
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"wife","重疾险",50000,251);
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"child_one","寿险",50000,251);
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"child_two","寿险",50000,251);
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"old_one","寿险",50000,251);
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"old_two","寿险",150000,251);
+insert into insurance (user_id, person_role, kind, permiun, amount) VALUES (1,"whole family","车险",50000,251);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -25,9 +25,12 @@ public enum PyFunc {
 //    黄金
 //      持有额调整
         GOLD_INVEST("Invest_Gold.py"),
+//    现金
+//      每日更新
+        CASH_DAILY_ADJUSTMENT("Info.py"),
 //    保险
 //      推荐
-        INSURANCE_RECOMMEND("Insurance_Recommend.py"),
+        INSURANCE_RECOMMEND("insurance_recommand.py"),
 //    机器学习
         QUESTIONNAIRE_INVEST_PREFERENCE("mLearning.py"),
 //    财务脆弱性
@@ -38,7 +41,7 @@ public enum PyFunc {
     public String path;
 
     PyFunc(String path){
-        this.path = "E:\\HQB\\金融组\\债券\\债券pydebug完全版\\" + path;
+        this.path = "E:\\HQB\\金融组\\现金\\" + path;
     }
 
 }

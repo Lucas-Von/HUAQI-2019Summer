@@ -1,9 +1,11 @@
 package financial_management.entity.insurance;
 
-public class RecommandInsuranceParam {
+import financial_management.util.PyInvoke.PyParam.PyParam;
+
+public class RecommandInsuranceParam extends PyParam {
     //在前面加abcdef的原因是为了保证按字典序传输的时候py能按需接收到参数
-    Float aWifeBirthday;
-    Float bHusbandBirthdat;
+    Integer aWifeBirthday;
+    Integer bHusbandBirthdat;
     Float cChildNumber;
     Float dElderNumber;
     Float eHusIncome;
@@ -11,19 +13,19 @@ public class RecommandInsuranceParam {
     Float gCarprice;
     Float hConsumption;
 
-    public Float getaWifeBirthday() {
+    public Integer getaWifeBirthday() {
         return aWifeBirthday;
     }
 
-    public void setaWifeBirthday(Float aWifeBirthday) {
+    public void setaWifeBirthday(Integer aWifeBirthday) {
         this.aWifeBirthday = aWifeBirthday;
     }
 
-    public Float getbHusbandBirthdat() {
+    public Integer getbHusbandBirthdat() {
         return bHusbandBirthdat;
     }
 
-    public void setbHusbandBirthdat(Float bHusbandBirthdat) {
+    public void setbHusbandBirthdat(Integer bHusbandBirthdat) {
         this.bHusbandBirthdat = bHusbandBirthdat;
     }
 
@@ -75,7 +77,7 @@ public class RecommandInsuranceParam {
         this.hConsumption = hConsumption;
     }
 
-    public RecommandInsuranceParam(Float aWifeBirthday, Float bHusbandBirthdat, Float cChildNumber, Float dElderNumber, Float eHusIncome, Float fWiftIncome, Float gCarprice, Float hConsumption) {
+    public RecommandInsuranceParam(Integer aWifeBirthday, Integer bHusbandBirthdat, Float cChildNumber, Float dElderNumber, Float eHusIncome, Float fWiftIncome, Float gCarprice, Float hConsumption) {
         this.aWifeBirthday = aWifeBirthday;
         this.bHusbandBirthdat = bHusbandBirthdat;
         this.cChildNumber = cChildNumber;

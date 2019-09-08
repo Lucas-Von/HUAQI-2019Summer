@@ -1,11 +1,13 @@
 package financial_management.service.product.insurance;
 
-import financial_management.bl.product.ProductService4Order;
+import financial_management.bl.product.InsuranceService;
 import financial_management.data.product.InsuranceMapper;
-import financial_management.entity.insurance.InsuranceRecommandPO;
-import financial_management.entity.insurance.RecommandInsuranceParam;
-import financial_management.entity.insurance.RecommandInsuranceResponse;
-import financial_management.entity.insurance.SelfInsuranceProductPO;
+import financial_management.entity.insurance.*;
+import financial_management.util.PyInvoke.PyFunc;
+import financial_management.util.PyInvoke.PyInvoke;
+import financial_management.util.PyInvoke.PyParam.PyParam;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.ProductVO4Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,19 +19,23 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class InsuranceFinServiceImpl {
+public class InsuranceFinServiceImpl  implements InsuranceService {
 
     @Autowired
     InsuranceMapper mapper;
 
     //首次推荐
-    public void Recommand(Long userId,Float aWifeBirthday, Float bHusbandBirthdat, Float cChildNumber, Float dElderNumber, Float eHusIncome, Float fWiftIncome, Float gCarprice, Float hConsumption){
+    public void Recommand(Long userId, Integer aWifeBirthday, Integer bHusbandBirthdat, Float cChildNumber, Float dElderNumber, Float eHusIncome, Float fWiftIncome, Float gCarprice, Float hConsumption){
         //首先要删除上次推荐结果
         mapper.deleteInsuranceRecommnad(userId);
         //获取本次推荐的结果
-        RecommandInsuranceParam vo = new RecommandInsuranceParam(aWifeBirthday,bHusbandBirthdat,cChildNumber,dElderNumber,eHusIncome,fWiftIncome,gCarprice,hConsumption);
-        //TODO 接商院系
-        List<RecommandInsuranceResponse> response = new ArrayList<>();
+        PyParam pyParam = new RecommandInsuranceParam(aWifeBirthday,bHusbandBirthdat,cChildNumber,dElderNumber,eHusIncome,fWiftIncome,gCarprice,hConsumption);
+        List<Object> invokeResult = PyInvoke.invoke(PyFunc.INSURANCE_RECOMMEND, pyParam, RecommandWrapperResponse.class);
+        List<RecommandWrapperResponse> list = new ArrayList<>();
+        for (Object object : invokeResult){
+            list.add((RecommandWrapperResponse) object);
+        }
+        List<RecommandInsuranceResponse> response = list.get(0).getResponseList();
         for(int i = 0;i< response.size();i++){
             InsuranceRecommandPO po = new InsuranceRecommandPO();
             po.setUserId(userId);
@@ -41,8 +47,40 @@ public class InsuranceFinServiceImpl {
         }
     }
     //查看推荐保险建议
-    public List<InsuranceRecommandPO> getRecommands(Long userId){
-        return mapper.selectInsuranceRecommand(userId);
+    public BasicResponse getRecommands(Long userId){
+        List<InsuranceRecommandPO> husband = new ArrayList<>();
+        List<InsuranceRecommandPO> wife  = new ArrayList<>();
+        List<InsuranceRecommandPO> childOne = new ArrayList<>();
+        List<InsuranceRecommandPO> childTwo = new ArrayList<>();
+        List<InsuranceRecommandPO> childThree = new ArrayList<>();
+        List<InsuranceRecommandPO> childFour = new ArrayList<>();
+        List<InsuranceRecommandPO> elderOne = new ArrayList<>();
+        List<InsuranceRecommandPO> elderTwo = new ArrayList<>();
+        List<InsuranceRecommandPO> elderThree = new ArrayList<>();
+        List<InsuranceRecommandPO> elderFour = new ArrayList<>();
+        List<InsuranceRecommandPO> wholeFamily = new ArrayList<>();
+        List<InsuranceRecommandPO>whole =  mapper.selectInsuranceRecommand(userId);
+
+        for(int i = 0; i<whole.size();i++){
+            InsuranceRecommandPO po = whole.get(i);
+            switch (po.getRole()){
+                case "husband": husband.add(po);break;
+                case "wife" : wife.add(po);break;
+                case "child_1":childOne.add(po);break;
+                case "child_2":childTwo.add(po);break;
+                case "child_3":childThree.add(po);break;
+                case "child_4":childFour.add(po);break;
+                case "old_1":elderOne.add(po);break;
+                case "old_2":elderTwo.add(po);break;
+                case "old_3":elderThree.add(po);break;
+                case "old_4":elderFour.add(po);break;
+                case "whole family": wholeFamily.add(po);break;
+            }
+        }
+
+        InsRecommandVO vo = new InsRecommandVO(husband,wife,childOne,childTwo,childThree,childFour,elderOne, elderTwo,elderThree,elderFour,wholeFamily);
+
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS,vo);
     }
     //登记已买保险
     public void registerProduct(SelfInsuranceProductPO po){
@@ -81,4 +119,5 @@ public class InsuranceFinServiceImpl {
         Float result = sum.orElse(0F);
         return result;
     }
+
 }

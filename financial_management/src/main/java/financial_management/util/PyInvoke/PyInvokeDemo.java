@@ -1,12 +1,11 @@
-
 package financial_management.util.PyInvoke;
 
-import financial_management.util.PyInvoke.PyParam.GoldConfigParam;
+import financial_management.entity.fund.InfoParam;
+import financial_management.entity.fund.InfoResponse;
+import financial_management.entity.insurance.RecommandInsuranceParam;
+import financial_management.entity.insurance.RecommandInsuranceResponse;
+import financial_management.entity.insurance.RecommandWrapperResponse;
 import financial_management.util.PyInvoke.PyParam.PyParam;
-import financial_management.util.PyInvoke.PyParam.PyParamDemo;
-import financial_management.util.PyInvoke.PyParam.bond.*;
-import financial_management.util.PyInvoke.PyResponse.GoldConfigResponse;
-import financial_management.util.PyInvoke.PyResponse.PyResponseDemo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +13,11 @@ import java.util.List;
 public class PyInvokeDemo {
     public static void main(String[] args) {
 
-        List<Float> liest = new ArrayList<>();
-        liest.add(0.03F);
-        liest.add(0.02F);
-        liest.add(0.033F);
-        PyParam pyParam = new First_PurchaseVO(0.9F, 0.09F, 0.09F, 43020F, 2000F, 2000F, liest,3333F);
+//        List<Float> liest = new ArrayList<>();
+//        liest.add(0.03F);
+//        liest.add(0.02F);
+//        liest.add(0.033F);
+//        PyParam pyParam = new First_PurchaseVO(0.9F, 0.09F, 0.09F, 43020F, 2000F, 2000F, liest,3333F);
 //        List<BondsInfo> infos = new ArrayList<>();
 //        BondsInfo info = new BondsInfo("债券1","111111",0.4F,10000F,14);
 //        infos.add(info);
@@ -41,11 +40,13 @@ public class PyInvokeDemo {
 //        fundInfo.setProportion(0.4F);
 //        new_fund_info.add(fundInfo);
 //        PyParam pyParam = new IndexVO("国债",3000F,120000F,infos,infos2,60000F,60000F,new_fund_info);
-        List<Object> invokeResult = PyInvoke.invoke(PyFunc.BOND_FIRST_PURCHASE, pyParam, AdjuestmentPO.class);
-        List<AdjuestmentPO> list = new ArrayList<>();
+        PyParam pyParam = new InfoParam(200f, 20000f);
+        List<Object> invokeResult = PyInvoke.invoke(PyFunc.CASH_DAILY_ADJUSTMENT, pyParam, InfoResponse.class);
+        List<InfoResponse> list = new ArrayList<>();
         for (Object object : invokeResult){
-            list.add((AdjuestmentPO) object);
+            list.add((InfoResponse) object);
         }
         System.out.println(list.size());
     }
 }
+

@@ -33,22 +33,22 @@ public class InsuranceController {
     @Autowired
     JwtUtil jwtUtil;
 
-    @GetMapping(value = "/product/insurance")
-    public BasicResponse MyInsurance(HttpServletRequest request){
-        List<MyInsuranceVO> vos = service.getMyInsurance(jwtUtil.getIdFromRequest(request));
-
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
-    }
+//    @GetMapping(value = "/product/insurance")
+//    public BasicResponse MyInsurance(HttpServletRequest request){
+//        List<MyInsuranceVO> vos = service.getMyInsurance(jwtUtil.getIdFromRequest(request));
+//
+//        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+//    }
 
     @GetMapping(value = "/product/insurance/recommend")
-            public BasicResponse RecommendedProduct(HttpServletRequest request){
-        List<InsRecProductVO> vos = service.getAllInsProduct();
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
+     public BasicResponse RecommendedProduct(HttpServletRequest request){
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return service.getRecommands(userId);
     }
-
-    @PostMapping(value = "/product/insurance")
-    public BasicResponse purchaseInsurance(@RequestBody InsurancePurchaseParam param, HttpServletRequest request){
-        return  service.purchase(jwtUtil.getIdFromRequest(request),param.getName(),param.getInsurant());
-
-    }
+//
+//    @PostMapping(value = "/product/insurance")
+//    public BasicResponse purchaseInsurance(@RequestBody InsurancePurchaseParam param, HttpServletRequest request){
+//        return  service.purchase(jwtUtil.getIdFromRequest(request),param.getName(),param.getInsurant());
+//
+//    }
 }

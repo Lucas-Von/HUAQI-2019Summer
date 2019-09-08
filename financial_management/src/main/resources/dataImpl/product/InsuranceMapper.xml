@@ -1,52 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="financial_management.data.product.InsuranceMapper">
-    <select id="selectAllInsProduct" resultMap="InsProduct">
-      select * from ins_product;
-    </select>
-
-    <insert id="insertMyProduct" parameterType="financial_management.entity.MyInsPO">
-        insert into my_ins (user_id, beneficiary, product_id, maturity, price) values (#{userId},#{beneficiary},#{productId},#{maturity},#{price})
+    <insert id="insertInsuranceProduct" parameterType="financial_management.entity.insurance.SelfInsuranceProductPO">
+        insert into my_ins (user_id, beneficiary, kind, maturity, amount, premiun, name) values (#{userId},#{beneficiary},#{kind},#{maturity},#{amount},#{premiun},#{name})
     </insert>
 
-    <select id="selectProductByName" resultMap="InsProduct">
-        select * from ins_product where product = #{product}
+    <delete id="deleteInsuranceProduct">
+        delete from my_ins where user_id = #{userId} and name = #{name} and maturity = #{date}
+    </delete>
+
+    <select id="selectInsuranceProductById" resultMap="Product">
+        select * from my_ins where user_id = #{userId}
     </select>
 
-    <select id="selectSelfInsProducts" resultMap="MyInsProducts">
-        select mi.user_id,
-          mi.product_id,
-          mi.price,
-          mi.maturity,
-          mi.beneficiary,
-          ip.product,
-          ip.compensation,
-          ip.type
-        from my_ins mi
-        inner join ins_product ip
-        on mi.product_id = ip.id
-        where mi.user_id = #{userId}
+    <insert id="insertInsuranceRecommand" parameterType="financial_management.entity.insurance.InsuranceRecommandPO">
+        insert into insurance (user_id, person_role, kind, amount, permiun) values (#{userId},#{role},#{kind},#{insurance_amount},#{insurance_premiun})
+    </insert>
+
+    <delete id="deleteInsuranceRecommnad">
+        delete from insurance where user_id=#{userId}
+    </delete>
+
+    <select id="selectInsuranceRecommand" resultMap="Recommand">
+        select * from insurance where user_id = #{userId}
     </select>
 
-    <resultMap id="MyInsProducts" type="financial_management.entity.MyInsPO">
-        <result property="userId" column="user_id"/>
-        <result property="productId" column="product_id"/>
-        <result property="price" column="price"/>
-        <result property="maturity" column="maturity"/>
+
+    <select id="sumAmount" resultType="java.lang.Float">
+        select sum(amount) from my_ins where user_id = #{userId}
+    </select>
+
+    <resultMap id="Product" type="financial_management.entity.insurance.SelfInsuranceProductPO">
+        <id property="userId" column="user_id"/>
+        <result property="amount" column="amount"/>
         <result property="beneficiary" column="beneficiary"/>
-        <result property="name" column="product"/>
-        <result property="compensation" column="compensation"/>
-        <result property="type" column="type"/>
+        <result property="kind" column="kind"/>
+        <result property="maturity" column="maturity"/>
+        <result property="name" column="name"/>
+        <result property="premiun" column="premiun"/>
     </resultMap>
 
-    <resultMap id="InsProduct" type="financial_management.entity.InsProductPO">
-        <id property="id" column="id"/>
-        <result property="name" column="product"/>
-        <result property="type" column="type"/>
-        <result property="price" column="price"/>
-        <result property="compensation" column="compensation"/>
-        <result property="length" column="length"/>
+    <resultMap id="Recommand" type="financial_management.entity.insurance.InsuranceRecommandPO">
+        <result property="userId" column="user_id"/>
+        <result property="insurance_amount" column="amount"/>
+        <result property="insurance_premiun" column="premiun"/>
+        <result property="kind" column="kind"/>
+        <result property="role" column="person_role"/>
     </resultMap>
-
 
 </mapper>

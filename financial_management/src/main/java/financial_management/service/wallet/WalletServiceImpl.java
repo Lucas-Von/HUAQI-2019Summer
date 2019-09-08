@@ -25,18 +25,18 @@ public class WalletServiceImpl implements WalletService {
     WalletMapper mapper;
 
     @Override
-    public void recharge(Long cost, Long userId) {
+    public void recharge(Double cost, Long userId) {
         wallet.IncreaseCapital(userId,cost);
     }
 
     @Override
-    public void payByCash(Long userId,Long cost, String password) {
+    public void payByCash(Long userId,Double cost, String password) {
         wallet.DecreaseCapital(userId,cost);
 
     }
 
     @Override
-    public void withdraw(Long userId,Long cost, String cardId) {
+    public void withdraw(Long userId,Double cost, String cardId) {
         //第三方接口
         wallet.DecreaseCapital(userId,cost);
     }

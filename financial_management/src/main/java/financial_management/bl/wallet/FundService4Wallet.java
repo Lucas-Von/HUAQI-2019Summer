@@ -8,9 +8,9 @@ package financial_management.bl.wallet;
  **/
 public interface FundService4Wallet {
 
-    public void IncreaseCapital(Long userId, Long cost);
+    public void IncreaseCapital(Long userId, Double cost);
 
-    public void DecreaseCapital(Long userId, Long cost);
+    public void DecreaseCapital(Long userId, Double cost);
 
     public Double checkBalance(Long userId);
 

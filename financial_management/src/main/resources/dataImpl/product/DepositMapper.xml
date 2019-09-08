@@ -95,7 +95,7 @@
     <resultMap id="DepositProduct" type="financial_management.entity.DepositProductPO">
         <id property="id" column="id"/>
         <result property="length" column="length"/>
-        <result property="product" column="product"/>
+        <result property="name" column="product"/>
         <result property="rate" column="rate"/>
         <result property="type" column="type"/>
     </resultMap>

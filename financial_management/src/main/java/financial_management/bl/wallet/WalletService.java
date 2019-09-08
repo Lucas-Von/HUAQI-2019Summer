@@ -16,7 +16,7 @@ public interface WalletService {
      * @Param [cost, userId]
      * @return void
      **/
-    public void recharge(Long cost,Long userId);
+    public void recharge(Double cost,Long userId);
 
     /**
      * @Author jyh
@@ -25,7 +25,7 @@ public interface WalletService {
      * @Param [cost, password]
      * @return void
      **/
-    public void payByCash(Long userId,Long cost,String password);
+    public void payByCash(Long userId,Double cost,String password);
 
     /**
      * @Author jyh
@@ -34,7 +34,7 @@ public interface WalletService {
      * @Param [cost, cardId]
      * @return void
      **/
-    public void withdraw(Long userId,Long cost,String cardId);
+    public void withdraw(Long userId,Double cost,String cardId);
 
     /**
      * @Author jyh

@@ -1,7 +1,8 @@
 package financial_management.service.product;
 
-import financial_management.bl.product.InsuranceService;
+
 import financial_management.bl.product.ProductService4Order;
+import financial_management.service.product.insurance.InsuranceFinServiceImpl;
 import financial_management.vo.order.ProductVO4Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,15 @@ public class ProductFactory implements ProductService4Order {
 
     @Autowired InvestmentServiceImpl investment;
 
-    @Autowired InsuranceServiceImpl insurance;
+    @Autowired
+    InsuranceFinServiceImpl insurance;
 
     @Override
     public ProductVO4Order getProducts(Long id, String type) {
         switch (type){
             case "fund":return fund.getProduct(null);
             case "deposit":return deposit.getProduct(id);
-            case "insurance":return insurance.getProduct(id);
+            case "insurance":return insurance.getProducts(id,type);
             default:return investment.getProduct(id,type);
         }
     }

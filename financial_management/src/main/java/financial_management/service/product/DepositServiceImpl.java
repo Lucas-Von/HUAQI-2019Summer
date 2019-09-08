@@ -9,6 +9,7 @@ import financial_management.entity.MyDepoPO;
 import financial_management.entity.OverseasBondRecommendPO;
 import financial_management.entity.property.DepositPO;
 import financial_management.parameter.product.DepositRecommendParam;
+import financial_management.parameter.product.OverseasBondRecommendParam;
 import financial_management.parameter.product.SelfDepositParam;
 import financial_management.util.DateConverterUtil;
 import financial_management.vo.BasicResponse;
@@ -124,10 +125,10 @@ public class DepositServiceImpl implements DepositService {
     }
 
     @Override
-    public BasicResponse addDepositRecommend(DepositRecommendParam depositRecommendParam){
+    public BasicResponse addDepositRecommend(OverseasBondRecommendParam overseasBondRecommendParam){
         try {
-            DepositRecommendPO depositRecommendPO = depositRecommendParam.getDepositRecommendPO();
-            depositMapper.insertDepositRecommend(depositRecommendPO);
+            OverseasBondRecommendPO overseasBondRecommendPO = overseasBondRecommendParam.getOverseasBondRecommendPO();
+            depositMapper.insertDepositRecommend(overseasBondRecommendPO);
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }catch (Exception e) {
             e.printStackTrace();

@@ -75,9 +75,9 @@ public interface DepositMapper {
 
     /**
      * 添加一个推荐储蓄产品
-     * @param depositRecommendPO
+     * @param overseasBondRecommendPO
      */
-    void insertDepositRecommend(DepositRecommendPO depositRecommendPO);
+    void insertDepositRecommend(OverseasBondRecommendPO overseasBondRecommendPO);
 
     /**
      * 更新一个推荐储蓄产品

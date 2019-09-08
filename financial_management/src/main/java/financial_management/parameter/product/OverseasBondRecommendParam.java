@@ -1,68 +1,26 @@
-package financial_management.entity;
+package financial_management.parameter.product;
 
-import financial_management.vo.product.OverseasBondRecommendVO;
+import financial_management.entity.OverseasBondRecommendPO;
 
 /**
  * @author xyh
  * @date 2019/9/8
  */
-public class OverseasBondRecommendPO {
+public class OverseasBondRecommendParam {
     private Long id;
-    /**
-     * 债券代码
-     */
     private String code;
-    /**
-     * 票息率
-     */
     private String rate;
-    /**
-     * 到期日
-     */
     private String endTime;
-    /**
-     * 最低申购赎回额
-     */
     private String redemption;
-    /**
-     * 债券类别
-     */
     private String bondType;
-    /**
-     * 投资币种
-     */
     private String currency;
-    /**
-     * 发行机构
-     */
     private String mechanism;
-    /**
-     * 配息频率
-     */
     private String frequency;
-    /**
-     * 穆迪标普评级
-     */
     private String rating;
-    /**
-     * 资产类别
-     */
     private String assetsType;
-    /**
-     * 申购费率（一次性）
-     */
     private String subscriptionRate;
-    /**
-     * 提前赎回费
-     */
     private String earlyRedemptionFee;
-    /**
-     * 服务费
-     */
     private String serviceFee;
-    /**
-     * 风险等级评级（从1到5，对应投资偏好的保守型—稳健保守型—稳健型—稳健进取型—进取型）
-     */
     private Integer riskRating;
 
     public Long getId() {
@@ -185,27 +143,42 @@ public class OverseasBondRecommendPO {
         this.riskRating = riskRating;
     }
 
-    public OverseasBondRecommendVO getOverseasBondRecommendVO(){
-        return new OverseasBondRecommendVO(id, code, rate, endTime, redemption, bondType, currency, mechanism, frequency, rating, assetsType, subscriptionRate, earlyRedemptionFee, serviceFee);
+    public OverseasBondRecommendPO getOverseasBondRecommendPO(){
+        return new OverseasBondRecommendPO(code,
+                rate,
+                endTime,
+                redemption,
+                bondType,
+                currency,
+                mechanism,
+                frequency,
+                rating,
+                assetsType,
+                subscriptionRate,
+                earlyRedemptionFee,
+                serviceFee,
+                riskRating);
     }
 
-    public OverseasBondRecommendPO() {
+    public OverseasBondRecommendParam() {
     }
 
-    public OverseasBondRecommendPO(String code,
-                                   String rate,
-                                   String endTime,
-                                   String redemption,
-                                   String bondType,
-                                   String currency,
-                                   String mechanism,
-                                   String frequency,
-                                   String rating,
-                                   String assetsType,
-                                   String subscriptionRate,
-                                   String earlyRedemptionFee,
-                                   String serviceFee,
-                                   Integer riskRating) {
+    public OverseasBondRecommendParam(Long id,
+                                      String code,
+                                      String rate,
+                                      String endTime,
+                                      String redemption,
+                                      String bondType,
+                                      String currency,
+                                      String mechanism,
+                                      String frequency,
+                                      String rating,
+                                      String assetsType,
+                                      String subscriptionRate,
+                                      String earlyRedemptionFee,
+                                      String serviceFee,
+                                      Integer riskRating) {
+        this.id = id;
         this.code = code;
         this.rate = rate;
         this.endTime = endTime;

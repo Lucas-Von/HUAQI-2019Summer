@@ -5,6 +5,7 @@ import financial_management.bl.product.InvestmentService;
 import financial_management.parameter.product.DepositPurchaseParam;
 
 import financial_management.parameter.product.DepositRecommendParam;
+import financial_management.parameter.product.OverseasBondRecommendParam;
 import financial_management.parameter.product.SelfDepositParam;
 import financial_management.util.JwtUtil;
 
@@ -12,6 +13,7 @@ import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.product.DepRecProductVO;
 import financial_management.vo.product.MyDepositVO;
+import financial_management.vo.product.OverseasBondRecommendVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -65,8 +67,8 @@ public class DepositController {
     }
 
     @PostMapping(value = "/product/deposit/recommend/add")
-    public BasicResponse addDepositRecommend(@RequestBody DepositRecommendParam depositRecommendParam){
-        return depositService.addDepositRecommend(depositRecommendParam);
+    public BasicResponse addDepositRecommend(@RequestBody OverseasBondRecommendParam overseasBondRecommendParam){
+        return depositService.addDepositRecommend(overseasBondRecommendParam);
     }
 
     @PostMapping(value = "/product/deposit/recommend/update")

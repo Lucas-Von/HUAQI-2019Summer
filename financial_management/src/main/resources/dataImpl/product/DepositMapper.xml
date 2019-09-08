@@ -44,8 +44,8 @@
     </select>
 
     <insert id="insertDepositRecommend" useGeneratedKeys="true" keyProperty="id">
-        insert into deposit_recommend (name,currency,information,rate,start_time,end_time,start_amount,risk_level)
-        values (#{name},#{currency},#{information},#{rate},#{startTime},#{endTime},#{startAmount},#{riskLevel})
+        insert into overseas_bond_recommend (code,rate,end_time,redemption,bond_type,currency,mechanism,frequency,rating,assets_type,subscription_rate,early_redemption_fee,service_fee,risk_rating)
+        values (#{code},#{rate},#{endTime},#{redemption},#{bondType},#{currency},#{mechanism},#{frequency},#{rating},#{assetsType},#{subscriptionRate},#{earlyRedemptionFee},#{serviceFee},#{riskRating})
     </insert>
 
     <update id="updateDepositRecommend">

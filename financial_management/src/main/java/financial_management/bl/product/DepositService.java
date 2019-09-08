@@ -1,7 +1,9 @@
 package financial_management.bl.product;
 
 import financial_management.entity.DepositRecommendPO;
+import financial_management.entity.OverseasBondRecommendPO;
 import financial_management.parameter.product.DepositRecommendParam;
+import financial_management.parameter.product.OverseasBondRecommendParam;
 import financial_management.parameter.product.SelfDepositParam;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.product.DepRecProductVO;
@@ -55,10 +57,10 @@ public interface DepositService {
 
     /**
      * 添加一个推荐储蓄产品
-     * @param depositRecommendParam
+     * @param overseasBondRecommendParam
      * @return
      */
-    BasicResponse addDepositRecommend(DepositRecommendParam depositRecommendParam);
+    BasicResponse addDepositRecommend(OverseasBondRecommendParam overseasBondRecommendParam);
 
     /**
      * 更新一个推荐储蓄产品

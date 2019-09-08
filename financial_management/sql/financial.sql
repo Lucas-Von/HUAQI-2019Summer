@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80012
 File Encoding         : 65001
 
-Date: 2019-09-08 19:33:21
+Date: 2019-09-08 21:22:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -674,12 +674,72 @@ CREATE TABLE `overseas_bond_recommend` (
   `service_fee` varchar(255) DEFAULT NULL,
   `risk_rating` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of overseas_bond_recommend
 -- ----------------------------
-INSERT INTO `overseas_bond_recommend` VALUES ('1', '116CN', '2.625%', '2017.11.2', '20', '国债', '美元', 'CHINA GOVT INTL BOND2', '一年2次，5月2日、11月2日付息', '- / -', '亚太（不含日本）/新兴市场债券', '$50,000以下：债券剩余期限<2年，0.75%；债券剩余期限>2年，1%；$50,000以上：0.5%', '0.50%', '0.25%', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('2', '116CN', '2.625', '2027/11/2', '20', '国债', '美元', 'CHINA GOVT INTL BOND2', '一年2次，5月2日/11月2日', 'NA/NA', '亚太(不含日本)/新\n兴市场债券', '$50,000以下：债券剩余期限<2年，0.75%；债券剩余期限>2年，1% / %50,000以上：0.5%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('3', '115CN', '2.125', '2022/11/2', '20', '国债', '美元', 'CHINA GOVT INTL BOND2', '一年2次，5月2日/11月2日', 'NA/NA', '亚太(不含日本)/新\n兴市场债券', '$50,000以下：债券剩余期限<2年，0.75%；债券剩余期限>2年，1% / %50,000以上：0.5%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('4', '118AG', '3.4', '2027/12/6\n(Callable)', '20', '高级债', '美元', 'ALIBABA GROUP HOLDING2', '一年2次，6月6日/12月6日', 'A1/A+', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('5', '117AG', '2.8', '2023/6/6\n(Callable)', '20', '高级债', '美元', 'ALIBABA GROUP HOLDING2', '一年2次，6月6日/12月6日', 'A1/A+', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('6', 'MS017', '3.95', '2027/4/23', '2', '从属债', '美元', 'MORGAN STANLEY3', '一年2次，4月23日/10月23日', 'Baa2/BBB', '美国/全球投资级债\n券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('7', '361AB', '4.1', '2027/9/6', '2', '高级债', '澳元', 'FBG FINANCE PTY LTD2', '一年2次，3月6日/9月6日', 'Baa1/A-', '亚太(不含日本)/新\n兴市场债券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '4');
+INSERT INTO `overseas_bond_recommend` VALUES ('8', '362LO', '4.25', '2027/11/22', '2', '高级债', '澳元', 'LLOYDS BANKING GROUP PLC3', '一年2次，5月22日/11月22日', 'A3/BBB+', '美国/全球投资级债\n券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('9', 'CTG01', '3M LIBOR\n+143bps', '2023/9/1\n(Callable)', '2', '高级债', '美元', 'CITIGROUP INC2', '一年4次，3月1日/6月1日/9月1日/12月1日', 'A3/BBB+', '美国/全球投资级债\n券', '$50,000以下：1.5% / $50,000以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('10', 'BOC02', '3M LIBOR\n+88bps', '2022/11/22', '20', '高级债', '美元', 'BANK OF CHINA/PARIS2', '一年4次，2月22日/5月22日/8月22日/11月22日', 'A1/A', '亚太(不含日本)/新\n兴市场债券', '$50,000以下：1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('11', '101MB', '3.9', '2026/1/15', '2', '高级债', '美元', '麦格理银行MACQUARIE BANK\nLTD', '一年2次，1月15日/7月15日', 'A2/A', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('12', '102AG', '3.6', '2024/11/28\n(Callable)', '20', '高级债', '美元', '阿里巴巴集团控股有限公司AL IBABA GROUP HOLDING', '一年2次，5月28日/11月28日', 'A1/A+', '亚太(不含日本)/新兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('13', '103HP', '4.9', '2025/10/15\n(Callable)', '2', '高级债', '美元', '惠普企业HP ENTERPRISE CO', '一年2次，4月15日/10月15日', 'Baa2/BBB', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('14', '104FD', '4.134', '2025/8/4', '20', '高级债', '美元', '福特汽车信贷有限责任公司F ORD MOTOR CREDIT CO LLC', '一年2次，2月4日/8月4日', 'Baa3/BBB', '美国/全球投资级债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('15', '105AG', '3.75', '2025/7/10\n(Callable)', '2', '高级债', '美元', '美国国际集团AMERICAN INTL\nGROUP', '一年2次，1月10日/7月10日', 'Baa1/BBB+', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('16', '107HP', '3.6', '2020/10/15\n(Callable)', '2', '高级债', '美元', '惠普企业HP ENTERPRISE CO', '一年2次，4月15日/10月15日', 'Baa2/BBB', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('17', '108JD', '3.125', '2021/4/29', '20', '高级债', '美元', '京东JD.COM INC', '一年2次，4月29日/10月29日', 'Baa2/BBB', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('18', '109HR', '4.875', '2026/11/22', '20', '高级债', '美元', '华融HUARONG FINANCE II', '一年2次，5月22日/11月22日', 'NA/BBB+', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '3');
+INSERT INTO `overseas_bond_recommend` VALUES ('19', '110CH', '4.25', '2025/4/1\n(Callable)', '2', '高级债', '美元', 'COACH INC', '一年2次，3月1日/6月1日/9月1日/12月1日', 'Baa2/BBB-', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('20', '113GS', '2.35', '2021/11/15\n(Callable)', '2', '高级债', '美元', '高盛GOLDMAN SACHS GROUP\nINC', '一年2次，3月1日/6月1日/9月1日/12月1日', 'A3/BBB+', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('21', '112EB', '2.875', '2021/8/1\n(Callable)', '2', '高级债', '美元', 'EBAY INC', '一年2次，3月1日/6月1日/9月1日/12月1日', 'Baa1/BBB+', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('22', '173LF', '5.25', '2020/5/13', '10', '高级债', '美元', '利丰有限公司LI & FUNG LTD', '一年2次，5月13日/11月13日', 'Baa3/BBB', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('23', '175MG', '6', '2020/1/14', '2', '高级债', '美元', '麦格理集团有限公司MACQUA\nRIE GROUP LTD', '一年2次，1月14日/7月14日', 'A3/BBB', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('24', '183HA', '3.625', '2020/2/7', '20', '高级债', '美元', '海南航空HAINAN AIRLINE HK', '一年2次，2月7日/8月7日', 'A1/A', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('25', '186CP', '3.95', '2022/4/19', '20', '高级债', '美元', '中石油CNPC GENERAL CAPITAL', '一年2次，4月19日/10月19日', 'A2/A', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('26', '187GS', '3.625', '2023/1/22', '2', '高级债', '美元', '高盛GOLDMAN SACHS GROUP\nINC', '一年2次，1月22日/7月22日', 'A3/BBB+', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('27', '188GE', '3.15', '2022/9/7', '2', '高级债', '美元', '通用电气GENERAL ELEC CAP\nCORP', '一年2次，3月7日/9月7日', 'Baa1/BBB+', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('28', '189DB', '3.7', '2024/5/30', '2', '高级债', '美元', '德意志银行（伦敦）DEUTSCH\nE BANK AG LONDON', '一年2次，5月30日/11月30日', 'Baa3/BBB-', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('29', '190CO', '3.95', '2022/11/15', '20', '高级债', '美元', '中国海外发展CHINA\nOVERSEAS FINANCE C', '一年2次，5月15日/11月15日', 'Baa1/BBB+', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('30', '192SO', '6', '2024/7/30', '20', '高级债', '美元', '远洋地产宝财I有限公司SINO\nOCEAN LND TRS FIN I', '一年2次，1月30日/7月30日', 'Baa3/NR', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '3');
+INSERT INTO `overseas_bond_recommend` VALUES ('31', '193CD', '4.25', '2025/4/23', '20', '高级债', '美元', '中国信达融资CHINA CINDA\nFINANCE 2015', '一年2次，4月23日/10月23日', 'Baa1/A-', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '4');
+INSERT INTO `overseas_bond_recommend` VALUES ('32', '195CD', '3.125', '2020/4/23', '20', '高级债', '美元', '中国信达融资CHINA CINDA\nFINANCE 2015', '一年2次，4月23日/10月23日', 'Baa1/A-', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '4');
+INSERT INTO `overseas_bond_recommend` VALUES ('33', '196BD', '3', '2020/6/30', '20', '高级债', '美元', '百度BAIDU INC', '一年2次，6月30日/12月30日', 'A3/NA', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('34', '197BC', '2.875', '2020/6/30', '20', '高级债', '美元', '中国银行（香港）BANK OF\nCHINA HONG KONG', '一年2次，6月30日/12月30日', 'A1/NA', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('35', '356CC', '4.25', '2021/8/12', '3', '高级债', '澳元', '可口可乐阿马提尔有限公司C\nOCA-COLA AMATIL LTD', '一年1次，43689', 'A3/BBB+', '亚太(不含日本)/新\n兴市场债券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('36', '357AP', '3.7', '2022/8/28', '2', '高级债', '澳元', '苹果公司APPLE INC', '一年2次，2月28日/8月28日', 'Aa1/AA+', '美国/全球投资级债\n券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '4');
+INSERT INTO `overseas_bond_recommend` VALUES ('37', '358IT', '4', '2022/12/1', '2', '高级债', '澳元', '英特尔公司INTEL CORP', '一年2次，6月1日/12月1日', 'A1/A+', '美国/全球投资级债\n券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('38', '359CS', '4', '2021/3/9', '2', '高级债', '澳元', '瑞士信贷银行/悉尼CREDIT\nSUISSE/SYDNEY', '一年2次，3月9日/9月9日', 'A1/A+', '美国/全球投资级债\n券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('39', '360CT', '3.75', '2023/10/27', '2', '高级债', '澳元', '花旗集团CITIGROUP INC', '一年2次，4月27日/10月27日', 'A3/BBB+', '美国/全球投资级债\n券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('40', 'BA013', '3.95', '2025/4/21', '2', '从属债', '美元', '美国银行BANK OF AMERICA\nCORP', '一年2次，4月21日/10月21日', 'Baa1/BBB+', '美国/全球投资级债\n券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('41', 'BO007', '5.55', '2020/2/11', '10', '从属债', '美元', '中国银行（香港）BANK OF\nCHINA HONG KONG', '一年2次，2月11日/8月11日', 'A3/A', '亚太(不含日本)/新\n兴市场债券', '0.02', '0.005', '0.005', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('42', 'C012U', '4.05', '2022/7/30', '2', '从属债', '美元', '花旗集团CITIGROUP INC', '一年2次，1月30日/7月30日', 'Baa2/BBB', '美国/全球投资级债\n券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('43', 'CT014', '3.875', '2025/3/26', '2', '从属债', '美元', '花旗集团CITIGROUP INC', '一年2次，3月26日/9月26日', 'Baa2/BBB', '美国/全球投资级债\n券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('44', 'CT016', '4.3', '2026/11/20', '2', '从属债', '美元', '花旗集团CITIGROUP INC', '一年2次，5月20日/11月20日', 'Baa2/BBB', '美国/全球投资级债\n券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('45', 'EA008', '6.125', '2020/7/16', '10', '从属债', '美元', '东亚银行BANK OF EAST ASIA\nLTD', '一年2次，1月16日/7月16日', 'Baa3/BBB', '亚太(不含日本)/新\n兴市场债券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('46', 'HS015', '4.25', '2024/3/14', '20', '从属债', '美元', '汇丰控股HSBC HOLDINGS PLC', '一年2次，3月14日/9月14日', 'A3/BBB+', '美国/全球投资级债\n券', '0.02', '0.005', '0.005', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('47', 'MG010', '6.625', '2021/4/7', '2', '从属债', '美元', '麦格理银行MACQUARIE BANK\nLTD', '一年2次，4月7日/10月7日', 'Baa2/BBB', '亚太(不含日本)/新\n兴市场债券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('48', 'SC011', '3.95', '2023/1/11', '20', '从属债', '美元', '渣打集团STANDARD\nCHARTERED PLC', '一年2次，1月11日/7月11日', 'Baa2/BBB-', '美国/全球投资级债\n券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('49', 'SG012', '4.25', '2025/4/14', '20', '从属债', '美元', '法国兴业银行SOCIETE\nGENERALE', '一年2次，4月14日/10月14日', 'Baa3/BBB', '美国/全球投资级债\n券', '0.02', '0.005', '0.005', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('50', '119BC', '2.375', '2020/2/14', '20', '高级债', '美元', '中国银行（香港）BANK OF\nCHINA/HONG KONG', '一年2次，2月14日/8月14日', 'A1/A', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('51', '120SC', '5.875', '2020/6/24', '10', '从属债', '美元', '渣打银行（香港）STANDARD\nCHARTERED BK HK', '一年2次，6月24日/12月24日', 'Baa1/A-', '亚太(不含日本)/新\n兴市场债券', '0.02', '0.005', '0.005', '4');
+INSERT INTO `overseas_bond_recommend` VALUES ('52', '121MB', '2.85', '2020/7/29', '2', '高级债', '美元', '麦格理银行MACQUARIE BANK\nLTD', '一年2次，1月29日/7月29日', 'A2/A', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('53', 'MQG03', '3M Libor\n+135bps', '3/27/2024\n(callable)', '2', '高级债', '美元', '麦格理集团MACQUARIE\nGROUP LTD', '一年4次，3月27日/6月27日/9月27日/12月27日', 'A3/BBB', '亚太(不含日本)/新\n兴市场债券', '$50,000以下：1.5% / $50,000以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('54', 'VOD04', '3M  Libor\n+99bps', '2024/1/16', '2', '高级债', '美元', '沃达丰集团VODAFONE\nGROUP PLC', '一年4次，4月16日/7月16日/10月16日/1月16日', 'Baa2/BBB', '美国/全球投资级债\n券', '$50,000以下：1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('55', '122VG', '4.375', '2028/5/30', '2', '高级债', '美元', '沃达丰集团VODAFONE\nGROUP PLC', '一年2次，5月30日/11月30日', 'Baa2/BBB', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('56', '123VG', '4.125', '2025/5/30', '2', '高级债', '美元', '沃达丰集团VODAFONE\nGROUP PLC', '一年2次，5月30日/11月30日', 'Baa2/BBB', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('57', '124VG', '3.75', '2024/1/16', '2', '高级债', '美元', '沃达丰集团VODAFONE\nGROUP PLC', '一年2次，1月16日/7月16日', 'Baa2/BBB', '美国/全球投资级债\n券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '5');
+INSERT INTO `overseas_bond_recommend` VALUES ('58', '125WB', '2.7', '2026/8/19', '2', '高级债', '美元', '西太平洋银行WESTPAC\nBANKING CORP', '一年2次，2月19日/8月19日', 'Aa3/AA-', '亚太(不含日本)/新\n兴市场债券', '$50,000以下，1.5% / $50,000以上，1%', '0.005', '0.0025', '4');
+INSERT INTO `overseas_bond_recommend` VALUES ('59', '126DF', '4.5', '2021/9/21', '100', '高级债', '人民\n币', '戴姆勒国际金融公司 DAIMLER\nINTL FINANCE BV', '一年1次，43729', 'A2/A', '美国/全球投资级债\n券', '0.01', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('60', '127BC', '4.65', '2021/3/5', '100', '高级债', '人民\n币', '中国银行（澳门）\nBANK OF CHINA/MACAU', '一年2次，3月5日/9月5日', 'A1/A', '亚太(不含日本)/新\n兴市场债券', '0.01', '0.005', '0.0025', '1');
+INSERT INTO `overseas_bond_recommend` VALUES ('61', '363LO', '4', '2025/3/7', '2', '高级债', '澳元', '劳埃德银行集团LLOYDS\nBANKING GROUP PLC', '一年2次，3月7日/9月7日', 'A3/BBB+', '美国/全球投资级债\n券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '2');
+INSERT INTO `overseas_bond_recommend` VALUES ('62', '364SG', '3.925', '2023/9/20', '20', '高级债 (非优先）', '澳元', '法国兴业银行\nSOCIETE GENERALE', '一年2次，3月20日/9月20日', 'Baa2/BBB+', '美国/全球投资级债券', 'A$50,000（不含）以下，1.5% / A$50,000（含）以上，1%', '0.005', '0.0025', '5');
 
 -- ----------------------------
 -- Table structure for personal_trade
@@ -933,7 +993,7 @@ CREATE TABLE `user` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `profile_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user

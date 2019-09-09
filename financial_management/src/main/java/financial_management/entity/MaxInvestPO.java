@@ -49,4 +49,15 @@ public class MaxInvestPO {
 
     public MaxInvestPO() {
     }
+
+    @Override
+    public String
+    toString() {
+        return "MaxInvestPO{" +
+                "userID=" + userID +
+                ", type='" + type + '\'' +
+                ", max=" + max +
+                ", date=" + date +
+                '}';
+    }
 }

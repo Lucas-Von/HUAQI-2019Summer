@@ -1,6 +1,6 @@
 package financial_management.util.PyInvoke.PyResponse.stock;
 
-import financial_management.util.NumberFormatter;
+import financial_management.util.ArithmeticUtil;
 
 public class QDIIAdjustment {
     private String qdii_code;
@@ -75,9 +75,9 @@ public class QDIIAdjustment {
     public String toString() {
         return qdii_code
                 + " " + name
-                + " 调整份额:" + NumberFormatter.formatFloat2String(share_deployed)
+                + " 调整份额:" + ArithmeticUtil.formatFloat2String(share_deployed)
                 + " 调整份数:" + number_deployed
-                + " 调整金额:" + NumberFormatter.formatFloat2String(m_already_deployed)
-                + " 市价:" + NumberFormatter.formatFloat2String(price_deployed);
+                + " 调整金额:" + ArithmeticUtil.formatFloat2String(m_already_deployed)
+                + " 市价:" + ArithmeticUtil.formatFloat2String(price_deployed);
     }
 }

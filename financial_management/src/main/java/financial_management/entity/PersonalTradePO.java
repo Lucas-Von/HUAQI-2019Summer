@@ -145,4 +145,23 @@ public class PersonalTradePO {
     public void setIsCustomize(Boolean isCustomize) {
         this.isCustomize = isCustomize;
     }
+
+    @Override
+    public String toString() {
+        return "PersonalTradePO{" +
+                "ID=" + ID +
+                ", transID=" + transID +
+                ", createTime=" + createTime +
+                ", completeTime=" + completeTime +
+                ", type='" + type + '\'' +
+                ", productID=" + productID +
+                ", amount=" + amount +
+                ", price=" + price +
+                ", fee=" + fee +
+                ", total=" + total +
+                ", userID=" + userID +
+                ", status=" + status +
+                ", isCustomize=" + isCustomize +
+                '}';
+    }
 }

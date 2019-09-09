@@ -8,8 +8,11 @@ import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.message.MessageVO;
 import financial_management.vo.message.NewMessageVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +22,8 @@ import java.util.List;
 public class MessageServiceImpl implements MessageService, MessageInterface {
     @Autowired
     private MessageMapper messageMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
 
     @Override
     public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID) {
@@ -89,6 +94,18 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
     }
 
     @Override
+    @Transactional//TODO detail it
+    public void readTransferMessage(long transID) throws RuntimeException {
+        MessagePO messagePO = messageMapper.selectTransMsgByTransID(transID);
+        if (messagePO != null) {
+            messageMapper.readMessageByMessageID(messagePO.getID());
+        } else {
+            logger.warn("Got an null of transfer message? That's INSANE!\nCause transID: " + transID);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
     public BasicResponse<?> removeMessageByMessageID(Long ID) {
         if (messageMapper.deleteMessage(ID) == 1) {
             return new BasicResponse<>(ResponseStatus.STATUS_MESSAGE_DELETE_SUCCESS, null);
@@ -111,7 +128,7 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
     }
 
     @Override
-    public BasicResponse<?> postMessageToUserBy(Long userID, String content, MsgType msgType) {
+    public BasicResponse<Long> postMessageToUserBy(Long userID, String content, MsgType msgType) {
         MessagePO po = new MessagePO();
         po.setTime(new Date());
         po.setUserID(userID);
@@ -124,11 +141,29 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
             if (insert == 1) {
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
             } else {
+                logger.error(
+                        "At " + Thread.currentThread().getStackTrace()[1].getMethodName() + " :insert into message error."
+                        + "\n" + po.toString()
+                );
                 return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
             }
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+        }
+    }
+
+    @Override
+    public void postTransMessage(Long userID, String content, MsgType msgType, long transID) throws Exception {
+        BasicResponse<Long> response = postMessageToUserBy(userID, content, msgType);
+        if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
+            int insert = messageMapper.insertTM(transID, response.getData());
+            if (insert != 1) {
+                logger.error(
+                        "At " + Thread.currentThread().getStackTrace()[1].getMethodName() + " :insert into transfer message error."
+                        + "\ntransID: " + transID + " , messageID: " + response.getData()
+                );
+            }
         }
     }
 }

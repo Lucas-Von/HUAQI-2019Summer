@@ -7,7 +7,10 @@ import financial_management.data.product.StockAdjustmentMapper;
 import financial_management.data.product.StockMapper;
 import financial_management.entity.TransferRecordPO;
 import financial_management.entity.stock.*;
+import financial_management.parameter.product.QDIICustomizeParam;
+import financial_management.util.ArithmeticUtil;
 import financial_management.util.PyInvoke.PyFunc;
+import financial_management.util.PyInvoke.PyParam.stock.QDII_CustomizeTrade;
 import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
 import financial_management.util.PyInvoke.PyResponse.stock.StockAdjustment;
 import financial_management.vo.BasicResponse;
@@ -61,16 +64,6 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public void firstQDII(Long userId) {
-        final PyFunc func = PyFunc.QDII_MONEY_ADJUST;
-        //float whereCanIGetTargetAmount = 0;
-        //QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount,0,0,new ArrayList<>());
-        //List<Object> result = PyInvoke.invoke(PyFunc.STOCK_MONEY_ADJUST, param, QDIIAdjustment.class);
-        List<Object> result = getStubData();
-        handlePythonResult_QDII(userId, func, result);
-    }
-
-    @Override
     public void weeklyStockTransfer(Long userId) {
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
 //        List<List<Object>> hold = new ArrayList<>(mydoms.size());
@@ -94,6 +87,16 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    public void firstQDII(Long userId) {
+        final PyFunc func = PyFunc.QDII_MONEY_ADJUST;
+        //float whereCanIGetTargetAmount = 0;
+        //QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount,0,0,new ArrayList<>());
+        //List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);
+        List<Object> result = getStubData();
+        handlePythonResult_QDII(userId, func, result);
+    }
+
+    @Override
     public void MonthlyQDIITransfer(Long userId) {
         final PyFunc func = PyFunc.QDII_ADJUST_MONTHLY;
         //TODO 对接上要改回来
@@ -110,7 +113,7 @@ public class StockServiceImpl implements StockService {
         //int hold_num = myQDIIs.stream().mapToInt(MyQDIIPO::getHoldNum).sum();
         //float sum = new Double(myQDIIs.stream().mapToDouble(MyQDIIPO::getHoldTotal).sum()).floatValue();
         //QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount, sum, 100 - hold_num, hold);
-        //List<Object> result = PyInvoke.invoke(PyFunc.STOCK_ADJUST_WEEKLY, param, QDII_UniversalParam.class);
+        //List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);
         List<Object> result = getStubData();
 
         handlePythonResult_QDII(userId, func, result);
@@ -135,18 +138,55 @@ public class StockServiceImpl implements StockService {
                     }
                     message.append("\n").append(raw.toString());
                 }
-                messageInterface.postMessageToUserBy(userId, message.toString(), MessageInterface.MsgType.TRANSFER_MSG);
+                try {
+                    messageInterface.postTransMessage(userId, message.toString(), MessageInterface.MsgType.TRANSFER_MSG, transferRecordPO.getID());
+                } catch (Exception e) {
+
+                }
             } else {
                 logger.error("At " + Thread.currentThread().getStackTrace()[1].getMethodName() + ": Add transfer records error.");
             }
-            //qdiiAdjust(adjustments, myQDIIs, userId);
         } else {
             logger.error("Invoke Python function " + func.name() + " return null result.");
         }
     }
 
     @Override
-    public BasicResponse<?> QDIITradeCheck(long transID, long userID, boolean accepted) {
+    public BasicResponse<?> QDIICustomize(QDIICustomizeParam param, long userID) {
+        final PyFunc func = PyFunc.QDII_CUSTOMIZE;
+        String code = param.getCode();
+        MyQDIIPO myQDIIPO = stockMapper.selectSelfQDIIByCode(userID, code);
+        BasicResponse<?> response;
+        if (myQDIIPO == null) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_STOCK_NOT_HOLD, null);
+        } else {
+            float money = param.getMoney();
+            float hold = myQDIIPO.getHoldTotal();
+            if (Float.compare(-money, hold) > 0) {
+                response = new BasicResponse<>(ResponseStatus.STATUS_STOCK_SELL_LEAK, myQDIIPO);
+            } else {
+                float holdShare = ArithmeticUtil.divide(hold, myQDIIPO.getHoldPrice());
+                QDII_CustomizeTrade pyparam = new QDII_CustomizeTrade(code, myQDIIPO.getHoldNum(), holdShare, money);
+                //List<Object> result = PyInvoke.invoke(func, pyparam, QDIIAdjustment.class);
+                List<Object> result = getStubData();
+                if (result != null) {
+                    List<QDIIAdjustment> adjustments = new ArrayList<>(result.size());
+                    for (Object o : result) {
+                        adjustments.add((QDIIAdjustment) o);
+                    }
+                    List<PersonalTradeVO> personalTradeVOS = qdiiAdjust(adjustments, stockMapper.selectSelfQDII(userID), userID);
+                    response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeVOS);
+                } else {
+                    logger.error("Invoke Python function " + func.name() + " return null result.");
+                    return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+                }
+            }
+        }
+        return response;
+    }
+
+    @Override
+    public BasicResponse<?> QDIITransferCheck(long transID, long userID, boolean accepted) {
         TransferRecordPO trans = orderService.getTransferRecordByID(transID);
         BasicResponse<?> response;
         if (trans == null) {
@@ -155,7 +195,7 @@ public class StockServiceImpl implements StockService {
             trans.setChecked(true);
 
             if (accepted) {
-                List<QDIIAdjustmentPO> adjustmentPOS = adjustmentMapper.selectQDIITransByTransID(transID);
+                List<QDIIAdjustmentPO> adjustmentPOS = adjustmentMapper.selectQDIIAdjustmentByTransID(transID);
                 if (adjustmentPOS.isEmpty()) {
                     logger.warn("Got an empty list of QDII adjustment? That's INSANE!\nCause transID: " + transID);
                 }
@@ -208,8 +248,8 @@ public class StockServiceImpl implements StockService {
                 if (po.getCode().equals(adjustment.getStock_code())) {
                     myStockPO = po;
 
-                    double newTotal = myStockPO.getHoldTotal() + total;
-                    double newAmount = myStockPO.getHoldAmount() + amount;
+                    float newTotal = myStockPO.getHoldTotal() + total;
+                    float newAmount = myStockPO.getHoldAmount() + amount;
                     myStockPO.setHoldAmount(myStockPO.getHoldAmount() + amount);
                     myStockPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
                     myStockPO.setHoldTotal(myStockPO.getHoldTotal() + total);
@@ -246,14 +286,16 @@ public class StockServiceImpl implements StockService {
             vo.setPrice(price);
             vo.setTotal(total);
             vo.setFee(0);
-            orderService.addPersonalTradeRecord(vo, false);
+            BasicResponse<?> response = orderService.addPersonalTradeRecord(vo, false);
         }
     }
 
-    private void qdiiAdjust(List<? extends QDIIAdjustment> adjustments, List<MyQDIIPO> myfors, Long userID) {
+    private List<PersonalTradeVO> qdiiAdjust(List<? extends QDIIAdjustment> adjustments, List<MyQDIIPO> myfors, Long userID) {
+        List<PersonalTradeVO> personalTradeVOS = new ArrayList<>(adjustments.size());
         for (QDIIAdjustment adjustment : adjustments) {
             float price = adjustment.getPrice_deployed();
-            Integer amount = adjustment.getNumber_deployed();
+            float amount = adjustment.getShare_deployed();
+            int num = adjustment.getNumber_deployed();
             float total = adjustment.getM_already_deployed();
             String code = adjustment.getQdii_code();
 
@@ -263,11 +305,15 @@ public class StockServiceImpl implements StockService {
                 if (po.getCode().equals(adjustment.getQdii_code())) {
                     myQDIIPO = po;
 
-                    double newTotal = myQDIIPO.getHoldTotal() + total;
-                    double newAmount = myQDIIPO.getHoldNum() + amount;
+                    float newTotal = po.getHoldTotal() + total;
+                    float newAmount = ArithmeticUtil.formatFloat2Float(
+                            new BigDecimal(po.getHoldTotal())
+                                    .divide(new BigDecimal(po.getHoldPrice()), RoundingMode.HALF_UP)
+                                    .floatValue()
+                    ) + amount;
                     myQDIIPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
-                    myQDIIPO.setHoldNum(myQDIIPO.getHoldNum() + amount);
-                    myQDIIPO.setHoldTotal(myQDIIPO.getHoldTotal() + total);
+                    myQDIIPO.setHoldNum(po.getHoldNum() + num);
+                    myQDIIPO.setHoldTotal(newTotal);
                     stockMapper.updateMyQDII(myQDIIPO);
                     break;
                 }
@@ -278,7 +324,7 @@ public class StockServiceImpl implements StockService {
                 myQDIIPO.setUserId(userID);
                 myQDIIPO.setCode(code);
                 myQDIIPO.setHoldPrice(price);
-                myQDIIPO.setHoldNum(amount);
+                myQDIIPO.setHoldNum(num);
                 myQDIIPO.setHoldTotal(total);
                 stockMapper.insertMyQDII(myQDIIPO);
             }
@@ -298,14 +344,18 @@ public class StockServiceImpl implements StockService {
             vo.setTotal(total);
             vo.setFee(0);
             vo.setUserID(userID);
-            orderService.addPersonalTradeRecord(vo, false);
+            BasicResponse<PersonalTradeVO> response = orderService.addPersonalTradeRecord(vo, false);
+            if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
+                personalTradeVOS.add(response.getData());
+            }
             //TODO 到时候要真正去扣钱
         }
+        return personalTradeVOS;
     }
 
-    private float computeHoldPrice(double newTotal, double newPrice) {
+    private float computeHoldPrice(float newTotal, float newAmount) {
         //舍入模式？
-        return new BigDecimal(newTotal).divide(new BigDecimal(newPrice), RoundingMode.HALF_UP).floatValue();
+        return ArithmeticUtil.divide(newTotal, newAmount);
     }
 
     private List<Object> getStubData() {

@@ -85,6 +85,11 @@ public class MessageServiceStub implements MessageService {
     }
 
     @Override
+    public void readTransferMessage(long transID) throws Exception {
+
+    }
+
+    @Override
     public BasicResponse<?> removeMessageByMessageID(Long ID) {
         return null;
     }

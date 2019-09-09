@@ -1233,6 +1233,16 @@ LOCK TABLES `transfer_record` WRITE;
 /*!40000 ALTER TABLE `transfer_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `transfer_message`;
+CREATE TABLE `transfer_message` (
+    `trans_id` bigint(255) NOT NULL,
+    `message_id` bigint(255) NOT NULL,
+    CONSTRAINT `fk_transfer` FOREIGN KEY (`trans_id`) REFERENCES `financial`.`transfer_record` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `fk_message` FOREIGN KEY (`message_id`) REFERENCES `financial`.`message` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Table structure for table `user`
 --

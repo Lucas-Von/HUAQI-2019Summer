@@ -24,6 +24,8 @@ public interface StockMapper {
 
     List<MyQDIIPO> selectSelfQDII(Long userId);
 
+    MyQDIIPO selectSelfQDIIByCode(Long userId,String code);
+
     Integer insertMyStock(MyStockPO po);
 
     Integer insertMyQDII(MyQDIIPO po);
@@ -39,8 +41,4 @@ public interface StockMapper {
     ForStockPO selectQDIIById(Long id);
 
     DomStockPO selectDomStockById(Long id);
-
-    List<QDIIAdjustmentPO> selectQDIIAdjustmentByTransID(long transID);
-
-    Integer insertQDIIAdjustment(QDIIAdjustmentPO po);
 }

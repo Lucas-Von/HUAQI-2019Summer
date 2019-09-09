@@ -19,5 +19,7 @@ public interface MessageService {
 
     BasicResponse<?> readNewMessage(Long userID, Long messageID);
 
+    void readTransferMessage(long transID) throws Exception;
+
     BasicResponse<?> removeMessageByMessageID(Long ID);
 }

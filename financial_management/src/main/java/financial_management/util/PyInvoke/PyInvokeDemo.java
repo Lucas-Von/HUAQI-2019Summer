@@ -5,8 +5,10 @@ import financial_management.util.PyInvoke.PyParam.GoldConfigParam;
 import financial_management.util.PyInvoke.PyParam.PyParam;
 import financial_management.util.PyInvoke.PyParam.PyParamDemo;
 import financial_management.util.PyInvoke.PyParam.bond.*;
+import financial_management.util.PyInvoke.PyParam.stock.QDII_UniversalParam;
 import financial_management.util.PyInvoke.PyResponse.GoldConfigResponse;
 import financial_management.util.PyInvoke.PyResponse.PyResponseDemo;
+import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +16,11 @@ import java.util.List;
 public class PyInvokeDemo {
     public static void main(String[] args) {
 
-        List<Float> liest = new ArrayList<>();
-        liest.add(0.03F);
-        liest.add(0.02F);
-        liest.add(0.033F);
-        PyParam pyParam = new First_PurchaseVO(0.9F, 0.09F, 0.09F, 43020F, 2000F, 2000F, liest,3333F);
+//        List<Float> liest = new ArrayList<>();
+//        liest.add(0.03F);
+//        liest.add(0.02F);
+//        liest.add(0.033F);
+//        PyParam pyParam = new First_PurchaseVO(0.9F, 0.09F, 0.09F, 43020F, 2000F, 2000F, liest,3333F);
 //        List<BondsInfo> infos = new ArrayList<>();
 //        BondsInfo info = new BondsInfo("债券1","111111",0.4F,10000F,14);
 //        infos.add(info);
@@ -41,10 +43,11 @@ public class PyInvokeDemo {
 //        fundInfo.setProportion(0.4F);
 //        new_fund_info.add(fundInfo);
 //        PyParam pyParam = new IndexVO("国债",3000F,120000F,infos,infos2,60000F,60000F,new_fund_info);
-        List<Object> invokeResult = PyInvoke.invoke(PyFunc.BOND_FIRST_PURCHASE, pyParam, AdjuestmentPO.class);
-        List<AdjuestmentPO> list = new ArrayList<>();
+        PyParam pyParam = new QDII_UniversalParam(1000,0,0,new ArrayList<>());
+        List<Object> invokeResult = PyInvoke.invoke(PyFunc.QDII_MONEY_ADJUST, pyParam, QDIIAdjustment.class);
+        List<QDIIAdjustment> list = new ArrayList<>();
         for (Object object : invokeResult){
-            list.add((AdjuestmentPO) object);
+            list.add((QDIIAdjustment) object);
         }
         System.out.println(list.size());
     }

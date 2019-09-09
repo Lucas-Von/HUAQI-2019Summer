@@ -1,5 +1,6 @@
 package financial_management.service.order.impl;
 
+import financial_management.bl.message.MessageService;
 import financial_management.bl.order.OrderService;
 import financial_management.bl.product.ProductService4Order;
 import financial_management.data.order.MaxInvestMapper;
@@ -19,6 +20,7 @@ import financial_management.vo.order.TransferRecordVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
     private ProductService4Order productService4Order;
     @Autowired
     private MaxInvestMapper maxInvestMapper;
+    @Autowired
+    @Qualifier("messageServiceImpl")
+    private MessageService messageService;
 
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
@@ -101,16 +106,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BasicResponse<?> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize) {
+    public BasicResponse<PersonalTradeVO> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize) {
         PersonalTradePO po = assemblePersonalTradePO(personalTradeVO);
         po.setID(null);
         po.setIsCustomize(isCustomize);
         try {
             int insert = personalTradeMapper.insert(po);
             if (insert != 1) {
+                logger.error("Insert into personal trade record error.\nRecord: " + po.toString());
                 return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
         }
 
@@ -126,14 +133,19 @@ public class OrderServiceImpl implements OrderService {
             max = new MaxInvestPO(userID, type, latestSum, new Date());
             int insert = maxInvestMapper.insert(max);
             if (insert != 1) {
+                logger.error("Insert into max invest error.\nRecord: " + max.toString());
                 return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
             }
         } else if (max.getMax() < latestSum) {
             max.setMax(latestSum);
             max.setDate(new Date());
-            maxInvestMapper.update(max);
+            int update = maxInvestMapper.update(max);
+            if (update != 1) {
+                logger.error("Update transfer record error.\nRecord: " + max.toString());
+                return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+            }
         }
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeVO);//TODO no return po
     }
 
     @Override
@@ -145,9 +157,11 @@ public class OrderServiceImpl implements OrderService {
             if (insert == 1) {
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, po.getID());
             } else {
+                logger.error("Insert into platform trade record error.\nRecord: " + po.toString());
                 return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
         }
     }
@@ -173,6 +187,9 @@ public class OrderServiceImpl implements OrderService {
         try {
             int update = transferRecordMapper.update(po);
             if (update == 1) {
+                if (po.getChecked()){
+                    messageService.readTransferMessage(po.getID());
+                }
                 return po;
             } else {
                 logger.error("Update transfer record return error.\nRecord: " + po.toString());

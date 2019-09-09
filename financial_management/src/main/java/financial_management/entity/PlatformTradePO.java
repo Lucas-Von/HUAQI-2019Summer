@@ -75,4 +75,18 @@ public class PlatformTradePO {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "PlatformTradePO{" +
+                "ID=" + ID +
+                ", time=" + time +
+                ", product='" + product + '\'' +
+                ", amount=" + amount +
+                ", price=" + price +
+                ", total=" + total +
+                ", realTotal=" + realTotal +
+                ", status=" + status +
+                '}';
+    }
 }

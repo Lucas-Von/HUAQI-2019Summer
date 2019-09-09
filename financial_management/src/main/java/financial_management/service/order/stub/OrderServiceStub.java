@@ -180,7 +180,7 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
-    public BasicResponse<Long> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize) {
+    public BasicResponse<PersonalTradeVO> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize) {
         return null;
     }
 

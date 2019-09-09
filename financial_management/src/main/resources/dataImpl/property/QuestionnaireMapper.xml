@@ -75,6 +75,13 @@
         values(#{userId}, #{invest_prefer}, #{funds_rate}, #{insurance_rate}, #{saving_rate}, #{invest_rate}, #{min_finance_fragility}, #{stocks_rate}, #{qdii_rate}, #{gold_rate}, #{bond_rate}, #{total_volatility}, #{total_yield}, #{total_risk_level})
     </insert>
 
+    <insert id="updateQuestionnaireConfig" parameterType="financial_management.entity.property.QuestionnaireConfigPO"
+            useGeneratedKeys="true" keyProperty="id">
+        update recommend
+        set user_id = #{userId}, invest_prefer = #{invest_prefer}, funds_rate = #{funds_rate}, insurance_rate = #{insurance_rate}, saving_rate = #{saving_rate}, invest_rate = #{invest_rate}, min_finance_fragility = #{min_finance_fragility}, stocks_rate = #{stocks_rate}, qdii_rate = #{qdii_rate}, gold_rate = #{gold_rate}, bond_rate = #{bond_rate}, total_volatility = #{total_volatility}, total_yield = #{total_yield}, total_risk_level = #{total_risk_level}
+        where user_id = #{userId}
+    </insert>
+
     <select id="getRecordDate" resultType="Date">
         select record_date from questionnaire where user_id = #{userId}
     </select>

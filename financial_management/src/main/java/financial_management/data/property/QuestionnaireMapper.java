@@ -158,4 +158,9 @@ public interface QuestionnaireMapper {
      */
     void insertQuestionnaireConfig(QuestionnaireConfigPO questionnaireConfigPO);
 
+    /**
+     * 更新用户问卷答案的分析结果
+     */
+    void updateQuestionnaireConfig(QuestionnaireConfigPO questionnaireConfigPO);
+
 }

@@ -113,10 +113,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     public BasicResponse setQuestionnaire(QuestionnaireParam questionnaireParam) {
         try {
             Long userId = questionnaireParam.getUserId();
-            if (!hasQuest(userId)) {
-                questionnaireMapper.insertQuest(questionnaireParam);
-            } else {
+            if (hasQuest(userId)) {
                 questionnaireMapper.updateQuest(questionnaireParam);
+            } else {
+                questionnaireMapper.insertQuest(questionnaireParam);
             }
 
             QuestionnaireConfigPO questionnaireConfigPO = new QuestionnaireConfigPO();
@@ -170,7 +170,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             questionnaireConfigPO.setTotal_yield(assetConfigResponse.getEarnings());
             questionnaireConfigPO.setTotal_risk_level(assetConfigResponse.getLabel());
 
-            questionnaireMapper.insertQuestionnaireConfig(questionnaireConfigPO);
+            if (hasRecommend(userId)) {
+                questionnaireMapper.updateQuestionnaireConfig(questionnaireConfigPO);
+            } else {
+                questionnaireMapper.insertQuestionnaireConfig(questionnaireConfigPO);
+            }
 
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {

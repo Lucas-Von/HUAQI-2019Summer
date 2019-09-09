@@ -74,6 +74,70 @@ public interface QuestionnaireMapper {
     double getExpectedYield(@Param("userId") Long userId);
 
     /**
+     * 获取用户推荐现金金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecFundsRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐储蓄金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecSavingRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐保险金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecInsuranceRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐保险金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecInvestRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐股票金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecStocksRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐股指金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecQdiiRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐黄金金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecGoldRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐债券金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecBondRate(@Param("userId") Long userId);
+
+    /**
      * 获取用户第一次填写问卷的时间
      *
      * @param userId

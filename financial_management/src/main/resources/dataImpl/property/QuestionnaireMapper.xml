@@ -24,6 +24,38 @@
         select total_yield from recommend where user_id = #{userId}
     </select>
 
+    <select id="getRecFundsRate" resultType="double">
+        select funds_rate from recommend where user_id = #{userId}
+    </select>
+
+    <select id="getRecSavingRate" resultType="double">
+        select saving_rate from recommend where user_id = #{userId}
+    </select>
+
+    <select id="getRecInsuranceRate" resultType="double">
+        select insurance_rate from recommend where user_id = #{userId}
+    </select>
+
+    <select id="getRecInvestRate" resultType="double">
+        select invest_rate from recommend where user_id = #{userId}
+    </select>
+
+    <select id="getRecStocksRate" resultType="double">
+        select stocks_rate from recommend where user_id = #{userId}
+    </select>
+
+    <select id="getRecQdiiRate" resultType="double">
+        select qdii_rate from recommend where user_id = #{userId}
+    </select>
+
+    <select id="getRecGoldRate" resultType="double">
+        select gold_rate from recommend where user_id = #{userId}
+    </select>
+
+    <select id="getRecBondRate" resultType="double">
+        select bond_rate from recommend where user_id = #{userId}
+    </select>
+
     <insert id="insertQuest" parameterType="financial_management.parameter.property.QuestionnaireParam"
             useGeneratedKeys="true" keyProperty="id">
         insert into questionnaire(user_id, record_date, fin_infor, vol_chose, stock_prefer, bank_card, current_deposit, fixed_deposit, have_fund, have_bank, board_wages, board_wage_outside, monthly_supply, monthly_traffic, monthly_phone, monthly_play, last_clothes, last_tourist, monthly_tenement, asset, total_income, wife_inborn_year, hus_inborn_year, child_num, old_num, hus_income, wife_income, car_value, life_cost, age, marrige, chile_born_year_1, chile_born_year_2, want_to_be_vip)

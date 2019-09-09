@@ -4,6 +4,7 @@ import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.property.QuestionnaireMapper;
 import financial_management.entity.property.QuestionnaireConfigPO;
 import financial_management.parameter.property.QuestionnaireParam;
+import financial_management.service.property.estate.EstateServiceForBl;
 import financial_management.util.PyInvoke.PyFunc;
 import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.PyParam;
@@ -30,6 +31,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
 
     @Autowired
     private QuestionnaireMapper questionnaireMapper;
+
+    @Autowired
+    private EstateServiceForBl estateServiceForBl;
 
     /**
      * 判断用户是否已填写问卷
@@ -147,7 +151,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             questionnaireConfigPO.setMin_finance_fragility(vulnerabilityConfigResponse.getMin_finance_fragility());
 
             PyParam pyParam3 = new AssetConfigParam(-1, mLearningConfigResponse.getPreferLabel());
-            if (hasRecommend(userId)) pyParam3 = new AssetConfigParam(questionnaireMapper.getExpectedYield(userId), mLearningConfigResponse.getPreferLabel());
+            if (hasRecommend(userId))
+                pyParam3 = new AssetConfigParam(questionnaireMapper.getExpectedYield(userId), mLearningConfigResponse.getPreferLabel());
             List<Object> invokeResult3 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_ASSET_ALLOCATION, pyParam3, AssetConfigResponse.class);
             List<AssetConfigResponse> list3 = new ArrayList<>();
             for (Object object : Objects.requireNonNull(invokeResult3)) {
@@ -235,6 +240,166 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST);
+        }
+    }
+
+    /**
+     * 获取用户推荐现金金额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getRecFunds(Long userId) {
+        try {
+            if (hasRecommend(userId)) {
+                return questionnaireMapper.getRecFundsRate(userId) * estateServiceForBl.getTotalAsset(userId);
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 获取用户推荐储蓄金额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getRecSaving(Long userId) {
+        try {
+            if (hasRecommend(userId)) {
+                return questionnaireMapper.getRecSavingRate(userId) * estateServiceForBl.getTotalAsset(userId);
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 获取用户推荐保险金额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getRecInsurance(Long userId) {
+        try {
+            if (hasRecommend(userId)) {
+                return questionnaireMapper.getRecInsuranceRate(userId) * estateServiceForBl.getTotalAsset(userId);
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 获取用户推荐投资金额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getRecInvest(Long userId) {
+        try {
+            if (hasRecommend(userId)) {
+                return questionnaireMapper.getRecInvestRate(userId) * estateServiceForBl.getTotalAsset(userId);
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 获取用户推荐股票金额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getRecStocks(Long userId) {
+        try {
+            if (hasRecommend(userId)) {
+                return questionnaireMapper.getRecStocksRate(userId) * getRecInvest(userId);
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 获取用户推荐股指金额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getRecQdii(Long userId) {
+        try {
+            if (hasRecommend(userId)) {
+                return questionnaireMapper.getRecQdiiRate(userId) * getRecInvest(userId);
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 获取用户推荐黄金金额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getRecGold(Long userId) {
+        try {
+            if (hasRecommend(userId)) {
+                return questionnaireMapper.getRecGoldRate(userId) * getRecInvest(userId);
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 获取用户推荐债券金额
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public double getRecBond(Long userId) {
+        try {
+            if (hasRecommend(userId)) {
+                return questionnaireMapper.getRecBondRate(userId) * getRecInvest(userId);
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 

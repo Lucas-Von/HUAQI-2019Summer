@@ -34,16 +34,17 @@ public enum PyFunc {
 //      推荐
         INSURANCE_RECOMMEND("insurance_recommand.py"),
 //    机器学习
-        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning.py"),
+        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning\\mLearning.py"),
 //    财务脆弱性
-        QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
+        QUESTIONNAIRE_VULNERABILITY("vulnerability\\vulnerability.py"),
 //    资产配置
-        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
+        QUESTIONNAIRE_ASSET_ALLOCATION("asset\\asset.py");
 
     public String path;
 
     PyFunc(String path){
-        this.path = "E:\\" + path;
+//        this.path = "E:\\" + path;
+        this.path = "C:\\Users\\S.W.R\\Desktop\\" + path;
     }
 
 }

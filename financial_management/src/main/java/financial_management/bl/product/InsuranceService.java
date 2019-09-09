@@ -14,10 +14,7 @@ import java.util.List;
  **/
 public interface InsuranceService {
 
-    List<MyInsuranceVO> getMyInsurance(Long userId);
+    public void Recommand(Long userId, Integer aWifeBirthday, Integer bHusbandBirthdat, Float cChildNumber, Float dElderNumber, Float eHusIncome, Float fWiftIncome, Float gCarprice, Float hConsumption);
 
-    List<InsRecProductVO> getAllInsProduct();
-
-    BasicResponse purchase(Long userId, String name, String insurant);
-
+    public BasicResponse getRecommands(Long userId);
 }

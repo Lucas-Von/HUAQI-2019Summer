@@ -1,14 +1,11 @@
-
 package financial_management.util.PyInvoke;
 
-import financial_management.util.PyInvoke.PyParam.GoldConfigParam;
+import financial_management.entity.fund.InfoParam;
+import financial_management.entity.fund.InfoResponse;
+import financial_management.entity.insurance.RecommandInsuranceParam;
+import financial_management.entity.insurance.RecommandInsuranceResponse;
+import financial_management.entity.insurance.RecommandWrapperResponse;
 import financial_management.util.PyInvoke.PyParam.PyParam;
-import financial_management.util.PyInvoke.PyParam.PyParamDemo;
-import financial_management.util.PyInvoke.PyParam.bond.*;
-import financial_management.util.PyInvoke.PyParam.stock.QDII_UniversalParam;
-import financial_management.util.PyInvoke.PyResponse.GoldConfigResponse;
-import financial_management.util.PyInvoke.PyResponse.PyResponseDemo;
-import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +40,13 @@ public class PyInvokeDemo {
 //        fundInfo.setProportion(0.4F);
 //        new_fund_info.add(fundInfo);
 //        PyParam pyParam = new IndexVO("国债",3000F,120000F,infos,infos2,60000F,60000F,new_fund_info);
-        PyParam pyParam = new QDII_UniversalParam(1000,0,0,new ArrayList<>());
-        List<Object> invokeResult = PyInvoke.invoke(PyFunc.QDII_MONEY_ADJUST, pyParam, QDIIAdjustment.class);
-        List<QDIIAdjustment> list = new ArrayList<>();
+        PyParam pyParam = new InfoParam(200f, 20000f);
+        List<Object> invokeResult = PyInvoke.invoke(PyFunc.CASH_DAILY_ADJUSTMENT, pyParam, InfoResponse.class);
+        List<InfoResponse> list = new ArrayList<>();
         for (Object object : invokeResult){
-            list.add((QDIIAdjustment) object);
+            list.add((InfoResponse) object);
         }
         System.out.println(list.size());
     }
 }
+

@@ -1,6 +1,6 @@
 package financial_management.controller.product;
 
-import financial_management.service.product.BondSeriveImpl;
+import financial_management.service.product.bond.BondServiceForBl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestBondController {
 
     @Autowired
-    BondSeriveImpl bondSerive;
+    BondServiceForBl.BondSeriveImpl bondSerive;
 
     @PostMapping("/firstPurchase")
     public ResponseEntity<?> buy(){

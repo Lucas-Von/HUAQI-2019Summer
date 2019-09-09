@@ -10,9 +10,11 @@ public enum PyFunc {
         STOCK_ADJUST_WEEKLY("Stock_Adjust_Weekly.py"),
 //    股指
 //      首次购买/持有额调整
-        QDII_MONEY_ADJUST("QDII_Money_Adjust.py"),
+        QDII_MONEY_ADJUST("QDII_First_Purchase.py"),
 //      每月调仓
         QDII_ADJUST_MONTHLY("QDII_Adjust_Monthly.py"),
+        //用户手动买卖
+        QDII_CUSTOMIZE("QDII_User_Purchase.py"),
 //    债券
 //      首次购买
         BOND_FIRST_PURCHASE("First_Purchase.py"),
@@ -24,25 +26,24 @@ public enum PyFunc {
         BOND_INDEX_MAINTENANCE("Index_Maintenance.py"),
 //    黄金
 //      持有额调整
-//        GOLD_INVEST("Invest_Gold.py"),
         GOLD_INVEST("Invest_Gold.py"),
+//    现金
+//      每日更新
+        CASH_DAILY_ADJUSTMENT("Info.py"),
 //    保险
 //      推荐
-        INSURANCE_RECOMMEND("Insurance_Recommend.py"),
+        INSURANCE_RECOMMEND("insurance_recommand.py"),
 //    机器学习
-        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning\\mLearning.py"),
+        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning.py"),
 //    财务脆弱性
-//        QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
-        QUESTIONNAIRE_VULNERABILITY("vulnerability\\vulnerability.py"),
+        QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
 //    资产配置
-//        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
-        QUESTIONNAIRE_ASSET_ALLOCATION("asset\\asset.py");
+        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
 
     public String path;
 
     PyFunc(String path){
-//        this.path = "D:\\学习资料\\大二下\\花旗杯\\软件组\\代码\\Total\\PyFuncs\\" + path;
-        this.path = "C:\\Users\\S.W.R\\Desktop\\" + path;
+        this.path = "E:\\" + path;
     }
 
 }

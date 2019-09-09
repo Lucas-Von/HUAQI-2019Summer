@@ -40,7 +40,7 @@
     <insert id="insertQuestionnaireConfig" parameterType="financial_management.entity.property.QuestionnaireConfigPO"
             useGeneratedKeys="true" keyProperty="id">
         insert into recommend(user_id, invest_prefer, funds_rate, insurance_rate, saving_rate, invest_rate, min_finance_fragility, stocks_rate, qdii_rate, gold_rate, bond_rate, total_volatility, total_yield, total_risk_level)
-        values(#{user_id}, #{invest_prefer}, #{funds_rate}, #{insurance_rate}, #{saving_rate}, #{invest_rate}, #{min_finance_fragility}, #{stocks_rate}, #{qdii_rate}, #{gold_rate}, #{bond_rate}, #{total_volatility}, #{total_yield}, #{total_risk_level})
+        values(#{userId}, #{invest_prefer}, #{funds_rate}, #{insurance_rate}, #{saving_rate}, #{invest_rate}, #{min_finance_fragility}, #{stocks_rate}, #{qdii_rate}, #{gold_rate}, #{bond_rate}, #{total_volatility}, #{total_yield}, #{total_risk_level})
     </insert>
 
     <select id="getRecordDate" resultType="Date">

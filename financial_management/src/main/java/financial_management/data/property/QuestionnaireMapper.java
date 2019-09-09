@@ -17,12 +17,20 @@ import java.util.Date;
 public interface QuestionnaireMapper {
 
     /**
-     * 根据userId判断用户是否已填写问卷，若无则返回空的问卷【值皆为0】
+     * 判断用户是否已填写问卷
      *
      * @param userId
      * @return
      */
     boolean hasQuest(@Param("userId") Long userId);
+
+    /**
+     * 判断是否已完成推荐用户推荐
+     *
+     * @param userId
+     * @return
+     */
+    boolean hasRecommend(@Param("userId") Long userId);
 
     /**
      * 插入用户填写的问卷

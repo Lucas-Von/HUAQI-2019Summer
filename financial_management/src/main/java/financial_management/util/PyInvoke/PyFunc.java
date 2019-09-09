@@ -24,21 +24,25 @@ public enum PyFunc {
         BOND_INDEX_MAINTENANCE("Index_Maintenance.py"),
 //    黄金
 //      持有额调整
+//        GOLD_INVEST("Invest_Gold.py"),
         GOLD_INVEST("Invest_Gold.py"),
 //    保险
 //      推荐
         INSURANCE_RECOMMEND("Insurance_Recommend.py"),
 //    机器学习
-        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning.py"),
+        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning\\mLearning.py"),
 //    财务脆弱性
-        QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
+//        QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
+        QUESTIONNAIRE_VULNERABILITY("vulnerability\\vulnerability.py"),
 //    资产配置
-        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
+//        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
+        QUESTIONNAIRE_ASSET_ALLOCATION("asset\\asset.py");
 
     public String path;
 
     PyFunc(String path){
-        this.path = "D:\\学习资料\\大二下\\花旗杯\\软件组\\代码\\Total\\PyFuncs\\" + path;
+//        this.path = "D:\\学习资料\\大二下\\花旗杯\\软件组\\代码\\Total\\PyFuncs\\" + path;
+        this.path = "C:\\Users\\S.W.R\\Desktop\\" + path;
     }
 
 }

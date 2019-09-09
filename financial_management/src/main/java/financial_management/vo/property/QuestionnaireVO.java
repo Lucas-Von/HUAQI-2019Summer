@@ -12,14 +12,9 @@ public class QuestionnaireVO {
     /**
      * 问题
      */
-    private List<Question> questionList;
+    private List<Question> questionList = new ArrayList<>();
 
     public List<Question> getQuestionList() {
-        return questionList;
-    }
-
-    public void setQuestionList() {
-        questionList = new ArrayList<>();
         Question question1 = new Question();
         String topic = "你计划中的投资时间是多久?";
         ArrayList<String> answerList = new ArrayList<>();
@@ -30,6 +25,8 @@ public class QuestionnaireVO {
         question1.setQuestion(topic);
         question1.setAnswers(answerList);
         questionList.add(question1);
+
+        return questionList;
     }
 
     private static class Question {

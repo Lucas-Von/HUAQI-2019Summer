@@ -1,0 +1,5 @@
+[ 2019-09-09 19:37:27,940][cascade_classifier.transform] X_groups_test.shape=[(1, 22)]
+[ 2019-09-09 19:37:27,943][cascade_classifier.transform] group_dims=[22]
+[ 2019-09-09 19:37:27,943][cascade_classifier.transform] X_test.shape=(1, 22)
+[ 2019-09-09 19:37:27,943][cascade_classifier.transform] [layer=0] look_indexs=[0], X_cur_test.shape=(1, 22)
+[ 2019-09-09 19:37:30,558][cascade_classifier.transform] [layer=1] look_indexs=[0], X_cur_test.shape=(1, 42)

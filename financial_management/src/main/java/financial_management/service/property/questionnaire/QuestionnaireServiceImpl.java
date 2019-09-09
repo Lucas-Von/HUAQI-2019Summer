@@ -19,9 +19,7 @@ import financial_management.vo.property.QuestionnaireVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author lt
@@ -71,6 +69,21 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     }
 
     /**
+     * 判断是否已完成推荐用户推荐
+     *
+     * @param userId
+     * @return
+     */
+    public boolean hasRecommend(Long userId) {
+        try {
+            return questionnaireMapper.hasRecommend(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * 查看空白问卷内容
      *
      * @param
@@ -79,7 +92,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse viewQuestionnaire() {
         try {
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new QuestionnaireVO().getQuestionList());
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new QuestionnaireVO());
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
@@ -87,7 +100,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     }
 
     /**
-     * 添加&更新问卷内容
+     * 增加&更新问卷
      *
      * @param questionnaireParam
      * @return
@@ -96,8 +109,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     public BasicResponse setQuestionnaire(QuestionnaireParam questionnaireParam) {
         try {
             Long userId = questionnaireParam.getUserId();
-            boolean hasRecorded = hasQuest(userId);
-            if (!hasRecorded) {
+            if (!hasQuest(userId)) {
                 questionnaireMapper.insertQuest(questionnaireParam);
             } else {
                 questionnaireMapper.updateQuest(questionnaireParam);
@@ -109,23 +121,23 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             PyParam pyParam1 = new MLearningConfigParam(questionnaireParam.getFinInfo(), questionnaireParam.getVolChose(), questionnaireParam.getStockPrefer(), questionnaireParam.getBankCard(), questionnaireParam.getCurrentDeposit(), questionnaireParam.getFixedDeposit(), questionnaireParam.getHaveFund(), questionnaireParam.getHaveBank(), questionnaireParam.getBoardWages(), questionnaireParam.getBoardWageOutside(), questionnaireParam.getMonthlySupply(), questionnaireParam.getMonthlyTraffic(), questionnaireParam.getMonthlyPhone(), questionnaireParam.getMonthlyPlay(), questionnaireParam.getLastClothes(), questionnaireParam.getLastTourist(), questionnaireParam.getMonthlyTenement(), questionnaireParam.getAsset(), questionnaireParam.getTotalIncome());
             List<Object> invokeResult1 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_INVEST_PREFERENCE, pyParam1, MLearningConfigResponse.class);
             List<MLearningConfigResponse> list1 = new ArrayList<>();
-            for (Object object : invokeResult1) {
+            for (Object object : Objects.requireNonNull(invokeResult1)) {
                 list1.add((MLearningConfigResponse) object);
             }
             if (list1.size() == 0) {
-                return new BasicResponse(ResponseStatus.STATUS_TRANSACTION_WRONG);
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_MLEARNING_WRONG);
             }
             MLearningConfigResponse mLearningConfigResponse = list1.get(0);
-            questionnaireConfigPO.setInvest_prefer(mLearningConfigResponse.getPrefer_label());
+            questionnaireConfigPO.setInvest_prefer(mLearningConfigResponse.getPreferLabel());
 
-            PyParam pyParam2 = new VulnerabilityConfigParam(questionnaireParam.getWifeInbornYear(), questionnaireParam.getHusInbornYear(), questionnaireParam.getChildNum(), questionnaireParam.getOldNum(), questionnaireParam.getHusIncome(), questionnaireParam.getWifeIncome(), questionnaireParam.getCarValue(), questionnaireParam.getLifeCost(), questionnaireParam.getAsset(), questionnaireParam.getAge(), questionnaireParam.getMarriage(), mLearningConfigResponse.getPrefer_label(), questionnaireParam.getChildBornYear());
+            PyParam pyParam2 = new VulnerabilityConfigParam(questionnaireParam.getWifeInbornYear(), questionnaireParam.getHusInbornYear(), questionnaireParam.getChildNum(), questionnaireParam.getOldNum(), questionnaireParam.getHusIncome(), questionnaireParam.getWifeIncome(), questionnaireParam.getCarValue(), questionnaireParam.getLifeCost(), questionnaireParam.getAsset(), questionnaireParam.getAge(), questionnaireParam.getMarriage(), mLearningConfigResponse.getPreferLabel(), Arrays.asList(questionnaireParam.getChildBornYear1(), questionnaireParam.getChildBornYear2()));
             List<Object> invokeResult2 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_VULNERABILITY, pyParam2, VulnerabilityConfigResponse.class);
             List<VulnerabilityConfigResponse> list2 = new ArrayList<>();
-            for (Object object : invokeResult2) {
+            for (Object object : Objects.requireNonNull(invokeResult2)) {
                 list2.add((VulnerabilityConfigResponse) object);
             }
             if (list2.size() == 0) {
-                return new BasicResponse(ResponseStatus.STATUS_TRANSACTION_WRONG);
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_VULNERABILITY_WRONG);
             }
             VulnerabilityConfigResponse vulnerabilityConfigResponse = list2.get(0);
             questionnaireConfigPO.setFunds_rate(vulnerabilityConfigResponse.getAmount_cash() / questionnaireParam.getAsset());
@@ -134,15 +146,15 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             questionnaireConfigPO.setInvest_rate(vulnerabilityConfigResponse.getAmount_risk() / questionnaireParam.getAsset());
             questionnaireConfigPO.setMin_finance_fragility(vulnerabilityConfigResponse.getMin_finance_fragility());
 
-            PyParam pyParam3 = new AssetConfigParam(-1, mLearningConfigResponse.getPrefer_label());
-            if (hasRecorded) pyParam3 = new AssetConfigParam(questionnaireMapper.getExpectedYield(userId), mLearningConfigResponse.getPrefer_label());
+            PyParam pyParam3 = new AssetConfigParam(-1, mLearningConfigResponse.getPreferLabel());
+            if (hasRecommend(userId)) pyParam3 = new AssetConfigParam(questionnaireMapper.getExpectedYield(userId), mLearningConfigResponse.getPreferLabel());
             List<Object> invokeResult3 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_ASSET_ALLOCATION, pyParam3, AssetConfigResponse.class);
             List<AssetConfigResponse> list3 = new ArrayList<>();
-            for (Object object : invokeResult3) {
+            for (Object object : Objects.requireNonNull(invokeResult3)) {
                 list3.add((AssetConfigResponse) object);
             }
             if (list3.size() == 0) {
-                return new BasicResponse(ResponseStatus.STATUS_TRANSACTION_WRONG);
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_ASSET_WRONG);
             }
             AssetConfigResponse assetConfigResponse = list3.get(0);
             questionnaireConfigPO.setStocks_rate(assetConfigResponse.getWeight_1());

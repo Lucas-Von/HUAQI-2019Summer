@@ -41,9 +41,9 @@ public class PyInvoke {
         System.out.println(cmd.toString());
         Runtime runtime = Runtime.getRuntime();
         try {
-            Process process = runtime.exec("pip list");
+            Process process = runtime.exec(cmd.toString());
             List<Object> res = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String input = null;
             while ((input = reader.readLine()) != null){
 //                res.add(JSON.parseObject(input, clazz));

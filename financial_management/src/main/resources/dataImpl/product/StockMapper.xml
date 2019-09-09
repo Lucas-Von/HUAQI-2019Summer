@@ -6,7 +6,7 @@
         from dom_stock
     </select>
 
-    <select id="selectAllForStock" resultMap="ForProduct">
+    <select id="selectAllQDII" resultMap="ForProduct">
         select *
         from for_stock
     </select>
@@ -17,16 +17,17 @@
         where user_id = #{userId};
     </select>
 
-    <select id="selectSelfForStock" resultMap="qdii">
+    <select id="selectSelfQDII" resultMap="qdii">
         select *
         from my_qdii
         where user_id = #{userId};
     </select>
 
-    <select id="selectQDIIAdjustmentByTransID" resultMap="qdiiAdjustment">
+    <select id="selectSelfQDIIByCode" resultMap="qdii">
         select *
-        from qdii_adjustment
-        where trans_id = #{transID}
+        from my_qdii
+        where user_id = #{userId}
+          and code = #{code}
     </select>
 
     <insert id="insertMyStock" parameterType="financial_management.entity.stock.MyStockPO">
@@ -76,13 +77,13 @@
         where code = #{code}
     </select>
 
-    <select id="selectForStockByCode" resultMap="ForProduct">
+    <select id="selectQDIIByCode" resultMap="ForProduct">
         select *
         from for_stock
         where code = #{code}
     </select>
 
-    <select id="selectForStockById" resultMap="ForProduct">
+    <select id="selectQDIIById" resultMap="ForProduct">
         select *
         from for_stock
         where id = #{Id}
@@ -129,16 +130,5 @@
         <result property="name" column="product"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
-    </resultMap>
-
-    <resultMap id="qdiiAdjustment" type="financial_management.entity.stock.QDIIAdjustmentPO">
-        <result column="qdii_code" property="qdii_code"/>
-        <result column="name" property="name"/>
-        <result column="share_deployed" property="share_deployed"/>
-        <result column="number_deployed" property="number_deployed"/>
-        <result column="m_already_deployed" property="m_already_deployed"/>
-        <result column="price_deployed" property="price_deployed"/>
-        <result column="user_id" property="userID"/>
-        <result column="trans_id" property="transID"/>
     </resultMap>
 </mapper>

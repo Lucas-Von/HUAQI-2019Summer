@@ -6,7 +6,9 @@ public interface MessageInterface {
     @Deprecated
     BasicResponse<?> postMessageToUserBy(Long userID, String content);
 
-    BasicResponse<?> postMessageToUserBy(Long userID, String content, MsgType msgType);
+    BasicResponse<Long> postMessageToUserBy(Long userID, String content, MsgType msgType);
+
+    void postTransMessage(Long userID, String content, MsgType msgType, long transID) throws Exception;
 
     enum MsgType{
         TRANSFER_MSG(1),//调仓消息

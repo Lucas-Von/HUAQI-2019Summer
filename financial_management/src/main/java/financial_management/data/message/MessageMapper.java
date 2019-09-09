@@ -30,4 +30,8 @@ public interface MessageMapper {
     Integer readMessageByMessageID(@Param("ID") Long ID);
 
     Integer deleteMessage(@Param("ID") Long ID);
+
+    MessagePO selectTransMsgByTransID(@Param("transID") Long transID);
+
+    int insertTM(@Param("transID") long transID, @Param("messageID") long messageID);
 }

@@ -82,4 +82,17 @@ public class MessagePO {
     public void setIsDelete(Boolean isDelete) {
         this.isDelete = isDelete;
     }
+
+    @Override
+    public String toString() {
+        return "MessagePO{" +
+                "ID=" + ID +
+                ", time=" + time +
+                ", userID=" + userID +
+                ", type=" + type +
+                ", content='" + content + '\'' +
+                ", isRead=" + isRead +
+                ", isDelete=" + isDelete +
+                '}';
+    }
 }

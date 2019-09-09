@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface StockAdjustmentMapper {
-    List<QDIIAdjustmentPO> selectQDIITransByTransID(long transID);
+    List<QDIIAdjustmentPO> selectQDIIAdjustmentByTransID(long transID);
 
     int insertQDII(QDIIAdjustmentPO po);
 }

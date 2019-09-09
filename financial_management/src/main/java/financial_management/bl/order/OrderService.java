@@ -32,7 +32,7 @@ public interface OrderService {
     BasicResponse<List<PlatformTradeVO>> getAllPlatformTradeRecord();
 
     //新增个人交易记录
-    BasicResponse<?> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize);
+    BasicResponse<PersonalTradeVO> addPersonalTradeRecord(PersonalTradeVO personalTradeVO, boolean isCustomize);
 
     //新增平台交易记录
     BasicResponse<?> addPlatformTradeRecord(PlatformTradeVO platformTradeVO);

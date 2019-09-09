@@ -47,7 +47,7 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
                 MyGoldPO myGoldPO = myGoldPOS.get(0);
                 account_already_deployed += myGoldPO.getAmount();
                 diff_already_deployed += myGoldPO.getDiff();
-                money_expected_deployed += myGoldPO.getSum();
+                money_expected_deployed =  money_expected_deployed + myGoldPO.getSum() +  myGoldPO.getDiff();
             }
             PyParam pyParam = new GoldConfigParam(account_already_deployed, diff_already_deployed, money_expected_deployed);
             List<Object> invokeResult = PyInvoke.invoke(PyFunc.GOLD_INVEST, pyParam, GoldConfigResponse.class);

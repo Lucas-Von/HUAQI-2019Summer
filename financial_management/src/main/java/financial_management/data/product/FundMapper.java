@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 /**
  * @Description TODO
  * @Author 233loser
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface FundMapper {
 
     MyFundPO selectSelfFund(Long userId);
+
+    List<MyFundPO> selectAllFunds();
 
     FundPO selectFund();
 

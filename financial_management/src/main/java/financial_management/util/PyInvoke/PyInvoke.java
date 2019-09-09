@@ -46,13 +46,14 @@ public class PyInvoke {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String input = null;
             while ((input = reader.readLine()) != null){
-//                res.add(JSON.parseObject(input, clazz));
                 System.out.println(input);
+                res.add(JSON.parseObject(input, clazz));
             }
             return res;
         } catch (IOException e) {
             return null;
         }
     }
+
 
 }

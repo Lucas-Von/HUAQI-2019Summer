@@ -29,6 +29,9 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_TRANSACTION_WRONG = new ResponseStatus("5005","买卖黄金时python函数出错");
     public static final ResponseStatus STATUS_GOLD_NOT_CONFIG = new ResponseStatus("5006","用户未配置过黄金");
     public static final ResponseStatus STATUS_GOLD_NOT_ENOUGH = new ResponseStatus("5007","剩余黄金不够取出需要的金额");
+    public static final ResponseStatus STATUS_STOCK_NOT_HOLD = new ResponseStatus("5008","未持有该股票/股指产品");
+    public static final ResponseStatus STATUS_STOCK_SELL_LEAK = new ResponseStatus("5009","股票/股指持有额不足卖出金额");
+    public static final ResponseStatus STATUS_INVESTPREFER_NOT_EXIST = new ResponseStatus("5010","用户暂无投资偏好");
 
     public static final ResponseStatus STATUS_QUESTIONNAIRE_EXIST = new ResponseStatus("6001","The user has filled out the questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_NOT_EXIST = new ResponseStatus("6002","The user has not filled out the questionnaire.");

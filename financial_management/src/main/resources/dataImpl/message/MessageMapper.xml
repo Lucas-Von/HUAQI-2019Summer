@@ -92,4 +92,15 @@
         set is_delete = 1
         where id = #{ID}
     </update>
+
+    <select id="selectTransMsgByTransID" resultMap="original">
+        select *
+        from message
+        where id = (select message_id from transfer_message where trans_id = #{transID})
+    </select>
+
+    <insert id="insertTM">
+        insert into transfer_message (trans_id, message_id)
+        values (#{transID},#{messageID})
+    </insert>
 </mapper>

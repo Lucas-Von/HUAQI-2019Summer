@@ -54,6 +54,7 @@ public class OrderServiceImpl implements OrderService {
             ProductVO4Order vo4Order = productService4Order.getProducts(po.getProductID(), po.getType());
             if (vo4Order.getName() != null) {
                 vo.setProduct(productService4Order.getProducts(po.getProductID(), po.getType()));
+                vos.add(vo);
             } else {
                 return new BasicResponse<>(ResponseStatus.STATUS_RECORD_ERROR, null);
             }

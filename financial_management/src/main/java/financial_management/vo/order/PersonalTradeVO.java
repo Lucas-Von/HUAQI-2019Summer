@@ -45,11 +45,11 @@ public class PersonalTradeVO {
         this.ID = ID;
     }
 
-    public long getTransID() {
+    public Long getTransID() {
         return transID;
     }
 
-    public void setTransID(long transID) {
+    public void setTransID(Long transID) {
         this.transID = transID;
     }
 
@@ -125,11 +125,11 @@ public class PersonalTradeVO {
         this.userID = userID;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

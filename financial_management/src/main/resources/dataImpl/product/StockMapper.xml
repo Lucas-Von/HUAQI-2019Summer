@@ -120,14 +120,14 @@
 
     <resultMap id="DomProduct" type="financial_management.entity.stock.DomStockPO">
         <id property="id" column="id"/>
-        <result property="name" column="product"/>
+        <result property="name" column="name"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
     </resultMap>
 
     <resultMap id="ForProduct" type="financial_management.entity.stock.ForStockPO">
         <id property="id" column="id"/>
-        <result property="name" column="product"/>
+        <result property="name" column="name"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
     </resultMap>

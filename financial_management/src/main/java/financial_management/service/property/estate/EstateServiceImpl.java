@@ -67,7 +67,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                 EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getInvestInPlatform(), estatePO.getInvestOutPlatform());
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, estateVO);
             } else {
-                return new BasicResponse<>(ResponseStatus.STATUS_PROPERTY_RECORD_NOT_EXIST, new EstateVO());
+                return new BasicResponse<>(ResponseStatus.STATUS_PROPERTY_RECORD_NOT_EXIST, new EstateVO(-1, -1, -1, -1, -1, -1));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -291,7 +291,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                 MyRecAllocVO myRecAllocVO = new MyRecAllocVO(recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, myRecAllocVO);
             } else {
-                return new BasicResponse<>(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST, new MyRecAllocVO());
+                return new BasicResponse<>(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST, new MyRecAllocVO(-1, -1, -1, -1));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,10 +309,10 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse setFundsOutPlatform(Long userId, double fundsOutPlatform) {
         try {
-            if (!ifExistOutRecord(userId)) {
-                estateMapper.insertOutFundsRecord(userId, fundsOutPlatform);
-            } else {
+            if (ifExistOutRecord(userId)) {
                 estateMapper.updateOutFundsRecord(userId, fundsOutPlatform);
+            } else {
+                estateMapper.insertOutFundsRecord(userId, fundsOutPlatform);
             }
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {

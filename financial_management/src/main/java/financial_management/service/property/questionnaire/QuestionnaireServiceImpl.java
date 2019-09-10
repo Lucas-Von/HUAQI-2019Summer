@@ -44,12 +44,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse hasQuestionnaire(Long userId) {
         try {
-            boolean hasRecorded = questionnaireMapper.hasQuest(userId);
-            if (hasRecorded) {
-                return new BasicResponse<>(ResponseStatus.STATUS_QUESTIONNAIRE_EXIST, true);
-            } else {
-                return new BasicResponse<>(ResponseStatus.STATUS_QUESTIONNAIRE_NOT_EXIST, false);
-            }
+            return new BasicResponse<>(ResponseStatus.STATUS_QUESTIONNAIRE_EXIST, hasQuest(userId));
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

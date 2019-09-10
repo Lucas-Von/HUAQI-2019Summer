@@ -10,7 +10,7 @@ public class PersonalTradeVO {
     private Long ID;
 
     //调仓记录ID（已废弃）
-    private long transID;
+    private Long transID;
 
     //交易时间填在这个属性里面
     private Date createTime;
@@ -35,7 +35,7 @@ public class PersonalTradeVO {
     private long userID;
 
     //暂时没用，随便填或不填
-    private int status;
+    private Integer status;
 
     public Long getID() {
         return ID;
@@ -45,11 +45,11 @@ public class PersonalTradeVO {
         this.ID = ID;
     }
 
-    public long getTransID() {
+    public Long getTransID() {
         return transID;
     }
 
-    public void setTransID(long transID) {
+    public void setTransID(Long transID) {
         this.transID = transID;
     }
 
@@ -125,11 +125,11 @@ public class PersonalTradeVO {
         this.userID = userID;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

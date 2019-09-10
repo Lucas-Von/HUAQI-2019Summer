@@ -35,6 +35,12 @@ public class EstateController {
         return estateService.getPropertyByUser(userId);
     }
 
+    @GetMapping(value = "/estate/getFortuneUpdateTime")
+    public BasicResponse getFortuneUpdateTime(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getFortuneUpdateTimeByUser(userId);
+    }
+
     @GetMapping(value = "/estate/getFundsInfoList")
     public BasicResponse getFundsInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
@@ -57,6 +63,12 @@ public class EstateController {
     public BasicResponse getInvestmentInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getAssetInfoList(userId, "investment");
+    }
+
+    @GetMapping(value = "/estate/getSubInvPosition")
+    public BasicResponse getSubInvPosition(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getSubInvPosition(userId);
     }
 
     @GetMapping(value = "/estate/getMonthlyProList")

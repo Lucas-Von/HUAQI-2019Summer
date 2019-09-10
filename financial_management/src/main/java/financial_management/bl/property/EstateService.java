@@ -25,6 +25,14 @@ public interface EstateService {
     BasicResponse getPropertyByUser(Long userId);
 
     /**
+     * 获取资产上次更新时间
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getFortuneUpdateTimeByUser(Long userId);
+
+    /**
      * 获取用户指定资产类型信息列表
      *
      * @param userId
@@ -32,6 +40,14 @@ public interface EstateService {
      * @return
      */
     BasicResponse getAssetInfoList(Long userId, String assetType);
+
+    /**
+     * 获取用户的各项投资持仓情况
+     *
+     * @param userId
+     * @return
+     */
+    BasicResponse getSubInvPosition(Long userId);
 
     /**
      * 获取用户自注册起所有月份的资产列表

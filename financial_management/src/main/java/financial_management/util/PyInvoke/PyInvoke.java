@@ -47,7 +47,11 @@ public class PyInvoke {
             String input = null;
             while ((input = reader.readLine()) != null){
                 System.out.println(input);
-                res.add(JSON.parseObject(input, clazz));
+                if (input.startsWith("[")){
+                    res = JSON.parseArray(input, clazz);
+                } else {
+                    res.add(JSON.parseObject(input, clazz));
+                }
             }
             return res;
         } catch (IOException e) {

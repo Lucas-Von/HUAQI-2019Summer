@@ -28,7 +28,7 @@ public class OrderServiceStub implements OrderService {
     {
         vo = new PersonalTradeVO();
         vo.setID(1L);
-        vo.setTransID(1);
+        vo.setTransID(1L);
         try {
             vo.setCreateTime(sdf.parse("2019-08-09 09:09:09"));
             vo.setCompleteTime(sdf.parse("2019-08-09 09:09:19"));
@@ -44,7 +44,7 @@ public class OrderServiceStub implements OrderService {
 
         vo1 = new PersonalTradeVO();
         vo1.setID(2L);
-        vo1.setTransID(2);
+        vo1.setTransID(2L);
         try {
             vo1.setCreateTime(sdf.parse("2019-08-19 09:09:09"));
             vo1.setCompleteTime(sdf.parse("2019-08-19 09:09:19"));
@@ -60,7 +60,7 @@ public class OrderServiceStub implements OrderService {
 
         vo2 = new PersonalTradeVO();
         vo2.setID(3L);
-        vo2.setTransID(2);
+        vo2.setTransID(2L);
         try {
             vo.setCreateTime(sdf.parse("2019-08-09 09:09:20"));
             vo.setCompleteTime(sdf.parse("2019-08-09 09:09:30"));

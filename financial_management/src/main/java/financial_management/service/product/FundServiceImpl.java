@@ -133,7 +133,7 @@ public class FundServiceImpl implements FundService4Wallet, FundService, Product
         vo.setFee(0F);
         vo.setPrice(0F);
         vo.setCompleteTime(new Date());
-        vo.setTransID(0);
+        vo.setTransID(0L);
         ProductVO4Order order = new ProductVO4Order();
         order.setpID(-233L);
         order.setName("null");

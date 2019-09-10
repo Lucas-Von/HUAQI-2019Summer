@@ -10,7 +10,7 @@ public enum PyFunc {
         STOCK_ADJUST_WEEKLY("Stock_Adjust_Weekly.py"),
 //    股指
 //      首次购买/持有额调整
-        QDII_MONEY_ADJUST("QDII_First_Purchase.py"),
+        QDII_FIRST_PURCHASE("QDII_First_Purchase.py"),
 //      每月调仓
         QDII_ADJUST_MONTHLY("QDII_Adjust_Monthly.py"),
         //用户手动买卖
@@ -43,7 +43,7 @@ public enum PyFunc {
     public String path;
 
     PyFunc(String path){
-        this.path = "E:\\" + path;
+        this.path = "d:\\programe\\Web\\" + path;
     }
 
 }

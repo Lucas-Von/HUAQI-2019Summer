@@ -3,6 +3,7 @@ package financial_management.service.property.estate;
 import financial_management.bl.property.EstateService;
 import financial_management.data.property.EstateMapper;
 import financial_management.entity.property.*;
+import financial_management.service.property.income.IncomeServiceForBl;
 import financial_management.service.property.manage.ManageServiceForBl;
 import financial_management.service.property.questionnaire.QuestionnaireServiceForBl;
 import financial_management.vo.BasicResponse;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
 
     @Autowired
     private EstateMapper estateMapper;
+
+    @Autowired
+    private IncomeServiceForBl incomeServiceForBl;
 
     @Autowired
     private ManageServiceForBl manageServiceForBl;
@@ -71,6 +76,25 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     }
 
     /**
+     * 获取资产上次更新时间
+     *
+     * @param userId
+     * @return
+     */
+    public BasicResponse getFortuneUpdateTimeByUser(Long userId) {
+        try {
+            if (ifExistFortuneRecord(userId)) {
+                return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, getFortuneUpdateTime(userId));
+            } else {
+                return new BasicResponse<>(ResponseStatus.STATUS_FORTUNE_RECORD_NOT_EXIST, new Date());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
      * 获取用户指定资产类型信息列表
      *
      * @param userId
@@ -87,14 +111,40 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                 case "funds":
                     subEstateVO = new SubEstateVO(totalAsset, estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform());
                     break;
+                case "saving":
+                    subEstateVO = new SubEstateVO(totalAsset, -1, estatePO.getSavingOutPlatform());
+                    break;
+                case "insurance":
+                    subEstateVO = new SubEstateVO(totalAsset, -1, estatePO.getInsuranceOutPlatform());
+                    break;
                 case "investment":
-                    double investInPlatform = estatePO.getInvestInPlatform();
-                    double investOutPlatform = estatePO.getInvestOutPlatform();
-                    subEstateVO = new SubEstateVO(totalAsset, investInPlatform, investOutPlatform);
+                    subEstateVO = new SubEstateVO(totalAsset, estatePO.getInvestInPlatform(), estatePO.getInvestOutPlatform());
                 default:
                     break;
             }
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subEstateVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BasicResponse(ResponseStatus.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 获取用户的各项投资持仓情况
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public BasicResponse getSubInvPosition(Long userId) {
+        try {
+            SubInvestPO subInvestPO = estateMapper.getSubInvInfo(userId);
+            SubInvestVO stocksPosition = new SubInvestVO("stocks", subInvestPO.getStocks(), subInvestPO.getInvest(), incomeServiceForBl.getTotalStocksIncome(userId));
+            SubInvestVO qdiiPosition = new SubInvestVO("qdii", subInvestPO.getQdii(), subInvestPO.getInvest(), incomeServiceForBl.getTotalQdiiIncome(userId));
+            SubInvestVO goldPosition = new SubInvestVO("gold", subInvestPO.getGold(), subInvestPO.getInvest(), incomeServiceForBl.getTotalGoldIncome(userId));
+            SubInvestVO bondPosition = new SubInvestVO("bond", subInvestPO.getBond(), subInvestPO.getInvest(), incomeServiceForBl.getTotalBondIncome(userId));
+            List<SubInvestVO> subInvestVOList = Arrays.asList(stocksPosition, qdiiPosition, goldPosition, bondPosition);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subInvestVOList);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
@@ -378,7 +428,27 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
      * @reutrn
      */
     public boolean ifExistOutRecord(Long userId) {
-        return estateMapper.ifExistOutRecord(userId);
+        try {
+            return estateMapper.ifExistOutRecord(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 判断资产变更表中是否存在该用户的记录
+     *
+     * @param userId
+     * @reutrn
+     */
+    public boolean ifExistFortuneRecord(Long userId) {
+        try {
+            return estateMapper.ifExistFortuneRecord(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

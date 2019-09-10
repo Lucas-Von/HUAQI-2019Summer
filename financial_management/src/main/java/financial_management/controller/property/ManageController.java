@@ -30,7 +30,6 @@ public class ManageController {
         return manageService.getRecAllocList(adminId);
     }
 
-
     @GetMapping(value = "/manage/getRecAlloc")
     public BasicResponse getRecAlloc(@RequestParam Long userId) {
         return manageService.getRecAlloc(userId);

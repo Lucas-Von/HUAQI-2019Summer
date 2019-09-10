@@ -26,6 +26,14 @@ public interface EstateMapper {
     EstatePO getPropertyByUser(@Param("userId") Long userId);
 
     /**
+     * 获取用户的各项投资持仓情况
+     *
+     * @param userId
+     * @return
+     */
+    SubInvestPO getSubInvInfo(@Param("userId") Long userId);
+
+    /**
      * 获取用户自注册起所有月份的资产列表
      *
      * @param userId
@@ -72,6 +80,14 @@ public interface EstateMapper {
      * @reutrn
      */
     boolean ifExistOutRecord(@Param("userId") Long userId);
+
+    /**
+     * 判断资产变更表中是否存在该用户的记录
+     *
+     * @param userId
+     * @reutrn
+     */
+    boolean ifExistFortuneRecord(@Param("userId") Long userId);
 
     /**
      * 插入用户平台外现金数额

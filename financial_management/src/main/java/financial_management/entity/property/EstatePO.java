@@ -117,4 +117,5 @@ public class EstatePO {
     public void setInvestOutPlatform(double investOutPlatform) {
         this.investOutPlatform = investOutPlatform;
     }
+
 }

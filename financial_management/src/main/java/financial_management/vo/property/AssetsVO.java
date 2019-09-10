@@ -5,6 +5,7 @@ package financial_management.vo.property;
  * @date 2019/08/18 19:01
  */
 public class AssetsVO {
+
     /**
      * 现金
      */

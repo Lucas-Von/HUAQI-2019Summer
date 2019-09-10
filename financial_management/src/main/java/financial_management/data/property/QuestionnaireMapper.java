@@ -17,12 +17,20 @@ import java.util.Date;
 public interface QuestionnaireMapper {
 
     /**
-     * 根据userId判断用户是否已填写问卷，若无则返回空的问卷【值皆为0】
+     * 判断用户是否已填写问卷
      *
      * @param userId
      * @return
      */
     boolean hasQuest(@Param("userId") Long userId);
+
+    /**
+     * 判断是否已完成推荐用户推荐
+     *
+     * @param userId
+     * @return
+     */
+    boolean hasRecommend(@Param("userId") Long userId);
 
     /**
      * 插入用户填写的问卷
@@ -64,6 +72,70 @@ public interface QuestionnaireMapper {
      * @return
      */
     double getExpectedYield(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐现金金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecFundsRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐储蓄金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecSavingRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐保险金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecInsuranceRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐保险金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecInvestRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐股票金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecStocksRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐股指金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecQdiiRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐黄金金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecGoldRate(@Param("userId") Long userId);
+
+    /**
+     * 获取用户推荐债券金额
+     *
+     * @param userId
+     * @return
+     */
+    double getRecBondRate(@Param("userId") Long userId);
 
     /**
      * 获取用户第一次填写问卷的时间

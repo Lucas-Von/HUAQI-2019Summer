@@ -26,7 +26,7 @@ public interface QuestionnaireService {
     BasicResponse viewQuestionnaire();
 
     /**
-     * 保存&更新问卷内容
+     * 增加&更新问卷
      *
      * @param questionnaireParam
      * @return

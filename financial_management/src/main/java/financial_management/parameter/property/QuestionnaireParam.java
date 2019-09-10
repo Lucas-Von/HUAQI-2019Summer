@@ -160,9 +160,14 @@ public class QuestionnaireParam {
     private int marriage;
 
     /**
-     * 小孩年龄
+     * 小孩1年龄
      */
-    private int childBornYear;
+    private int childBornYear1;
+
+    /**
+     * 小孩2年龄
+     */
+    private int childBornYear2;
 
     /**
      * 是否愿意成为会员
@@ -413,12 +418,20 @@ public class QuestionnaireParam {
         this.marriage = marriage;
     }
 
-    public int getChildBornYear() {
-        return childBornYear;
+    public int getChildBornYear1() {
+        return childBornYear1;
     }
 
-    public void setChildBornYear(int childBornYear) {
-        this.childBornYear = childBornYear;
+    public void setChildBornYear1(int childBornYear1) {
+        this.childBornYear1 = childBornYear1;
+    }
+
+    public int getChildBornYear2() {
+        return childBornYear2;
+    }
+
+    public void setChildBornYear2(int childBornYear2) {
+        this.childBornYear2 = childBornYear2;
     }
 
     public int getWantToBeVip() {

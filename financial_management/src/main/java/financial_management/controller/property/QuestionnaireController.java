@@ -46,7 +46,7 @@ public class QuestionnaireController {
         return questionnaireService.getInvestPrefer(userId);
     }
 
-    @GetMapping(value = "/questionnaire/editExpectedYield")
+    @PostMapping(value = "/questionnaire/editExpectedYield")
     public BasicResponse editExpectedYield(HttpServletRequest request, @RequestParam double expectedYield) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return questionnaireService.editExpectedYield(userId, expectedYield);

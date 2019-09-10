@@ -9,22 +9,22 @@ public class MLearningConfigResponse {
     /**
      * 用户投资分析标签
      */
-    private int prefer_label;
+    private int preferLabel;
 
-    public MLearningConfigResponse(int prefer_label) {
-        this.prefer_label = prefer_label;
+    public MLearningConfigResponse(int preferLabel) {
+        this.preferLabel = preferLabel;
     }
 
     public MLearningConfigResponse() {
 
     }
 
-    public int getPrefer_label() {
-        return prefer_label;
+    public int getPreferLabel() {
+        return preferLabel;
     }
 
-    public void setPrefer_label(int prefer_label) {
-        this.prefer_label = prefer_label;
+    public void setPreferLabel(int preferLabel) {
+        this.preferLabel = preferLabel;
     }
 
 }

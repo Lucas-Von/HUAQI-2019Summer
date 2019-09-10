@@ -23,7 +23,6 @@ public class IncomeController {
     @Autowired
     private IncomeService incomeService;
 
-
     @GetMapping(value = "/income/getTotalIncome")
     public BasicResponse getTotalIncome(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);

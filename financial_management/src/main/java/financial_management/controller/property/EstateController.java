@@ -35,6 +35,12 @@ public class EstateController {
         return estateService.getPropertyByUser(userId);
     }
 
+    @GetMapping(value = "/estate/getFortuneUpdateTime")
+    public BasicResponse getFortuneUpdateTime(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getFortuneUpdateTimeByUser(userId);
+    }
+
     @GetMapping(value = "/estate/getFundsInfoList")
     public BasicResponse getFundsInfoList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
@@ -59,6 +65,12 @@ public class EstateController {
         return estateService.getAssetInfoList(userId, "investment");
     }
 
+    @GetMapping(value = "/estate/getSubInvPosition")
+    public BasicResponse getSubInvPosition(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getSubInvPosition(userId);
+    }
+
     @GetMapping(value = "/estate/getMonthlyProList")
     public BasicResponse getMonthlyProList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
@@ -77,22 +89,22 @@ public class EstateController {
         return estateService.getDailyProList(userId);
     }
 
+    @GetMapping(value = "/estate/getDailyInvList")
+    public BasicResponse getDailyInvList(HttpServletRequest request) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return estateService.getDailyInvList(userId);
+    }
+
     @GetMapping(value = "/estate/getCompleteProList")
     public BasicResponse getCompleteProList(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.getCompleteProList(userId);
     }
 
-    @GetMapping(value = "estate/hasImproveInfo")
+    @GetMapping(value = "/estate/hasImproveInfo")
     public BasicResponse hasImproveInfo(HttpServletRequest request) {
         Long userId = jwtUtil.getIdFromRequest(request);
         return estateService.hasImproveInfo(userId);
-    }
-
-    @GetMapping(value = "/estate/getDailyInvList")
-    public BasicResponse getDailyInvList(HttpServletRequest request) {
-        Long userId = jwtUtil.getIdFromRequest(request);
-        return estateService.getDailyInvList(userId);
     }
 
     @GetMapping(value = "/estate/getMyRecAlloc")

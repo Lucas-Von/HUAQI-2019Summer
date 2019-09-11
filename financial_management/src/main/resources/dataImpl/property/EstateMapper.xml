@@ -7,7 +7,7 @@
             coalesce(sum(mf.balance), 0) as fundsInPlatform,
             coalesce(sum(faiop.funds), 0) as fundsOutPlatform,
             coalesce(sum(md.amount), 0) as savingOutPlatform,
-            coalesce(sum(i.amount), 0) as insuranceOutPlatform,
+            coalesce(sum(mi.amount), 0) as insuranceOutPlatform,
             coalesce(sum(ms.hold_total), 0) as stocksInPlatform,
             coalesce(sum(mq.hold_total), 0) as qdiiInPlatform,
             coalesce(sum(mg.sum), 0) as goldInPlatform,
@@ -16,7 +16,7 @@
         from funds_and_invest_out_platform faiop
             left join my_fund mf on mf.user_id = faiop.user_id
             left join my_depo md on md.user_id = faiop.user_id
-            left join insurance i on i.user_id = faiop.user_id
+            left join my_ins mi on mi.user_id = faiop.user_id
             left join my_stock ms on ms.user_id = faiop.user_id
             left join my_qdii mq on mq.user_id = faiop.user_id
             left join my_gold mg on mg.user_id = faiop.user_id
@@ -128,7 +128,7 @@
             CURDATE(),
             coalesce(sum(mf.balance), 0),
             coalesce(sum(md.amount), 0),
-            coalesce(sum(i.amount), 0),
+            coalesce(sum(mi.amount), 0),
             coalesce(sum(ms.hold_total), 0),
             coalesce(sum(mg.sum), 0),
             coalesce(sum(ubf.fund_share * ubf.net_worth), 0),
@@ -136,7 +136,7 @@
         from user u
             left join my_fund mf on mf.user_id = u.user_id
             left join my_depo md on md.user_id = u.user_id
-            left join insurance i on i.user_id = u.user_id
+            left join my_ins mi on mi.user_id = u.user_id
             left join my_stock ms on ms.user_id = u.user_id
             left join my_gold mg on mg.user_id = u.user_id
             left join user_bond_fund ubf on ubf.user_id = u.user_id

@@ -26,11 +26,17 @@ public class SubInvestVO {
      */
     private double totalIncome;
 
-    public SubInvestVO(String subInvItem, double money, double invest, double totalIncome) {
+    /**
+     * 累计盈亏
+     */
+    private double newlyIncome;
+
+    public SubInvestVO(String subInvItem, double money, double invest, double totalIncome, double newlyIncome) {
         this.subInvItem = subInvItem;
         this.money = money;
         this.rate = money / invest;
         this.totalIncome = totalIncome;
+        this.newlyIncome = newlyIncome;
     }
 
     public SubInvestVO() {
@@ -51,6 +57,10 @@ public class SubInvestVO {
 
     public double getTotalIncome() {
         return totalIncome;
+    }
+
+    public double getNewlyIncome() {
+        return newlyIncome;
     }
 
 }

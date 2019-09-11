@@ -43,7 +43,7 @@ public enum PyFunc {
     public String path;
 
     PyFunc(String path){
-        this.path = "E:\\" + path;
+        this.path = "C:\\Users\\NJ\\Desktop\\py文件\\" + path;
     }
 
 }

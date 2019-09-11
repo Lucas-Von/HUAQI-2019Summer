@@ -1,7 +1,6 @@
 package financial_management.service.property.manage;
 
 import financial_management.entity.property.RecAllocPO;
-import financial_management.vo.BasicResponse;
 
 /**
  * @author lt

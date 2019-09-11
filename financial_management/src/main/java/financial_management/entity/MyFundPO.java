@@ -43,6 +43,16 @@ public class MyFundPO {
      */
     Float accuringAmount;
 
+    Float lastRevenue;
+
+    public Float getLastRevenue() {
+        return lastRevenue;
+    }
+
+    public void setLastRevenue(Float lastRevenue) {
+        this.lastRevenue = lastRevenue;
+    }
+
     public Float getAccuringAmount() {
         return accuringAmount;
     }

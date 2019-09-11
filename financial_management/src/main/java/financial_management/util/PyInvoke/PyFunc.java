@@ -10,7 +10,7 @@ public enum PyFunc {
         STOCK_ADJUST_WEEKLY("Stock_Adjust_Weekly.py"),
 //    股指
 //      首次购买/持有额调整
-        QDII_FIRST_PURCHASE("QDII_First_Purchase.py"),
+        QDII_MONEY_ADJUST("QDII_First_Purchase.py"),
 //      每月调仓
         QDII_ADJUST_MONTHLY("QDII_Adjust_Monthly.py"),
         //用户手动买卖
@@ -34,17 +34,16 @@ public enum PyFunc {
 //      推荐
         INSURANCE_RECOMMEND("insurance_recommand.py"),
 //    机器学习
-        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning\\mLearning.py"),
+        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning.py"),
 //    财务脆弱性
-        QUESTIONNAIRE_VULNERABILITY("vulnerability\\vulnerability.py"),
+        QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
 //    资产配置
-        QUESTIONNAIRE_ASSET_ALLOCATION("asset\\asset.py");
+        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
 
     public String path;
 
     PyFunc(String path){
-//        this.path = "E:\\" + path;
-        this.path = "C:\\Users\\S.W.R\\Desktop\\" + path;
+        this.path = "E:\\" + path;
     }
 
 }

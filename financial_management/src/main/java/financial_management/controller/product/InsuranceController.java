@@ -46,7 +46,7 @@ public class InsuranceController {
     }
 
     @PostMapping(value = "/product/insurance")
-    public BasicResponse purchaseProduct(@RequestBody MyInsuranceVO param,HttpServletRequest request){
+    public BasicResponse purchaseProduct(@RequestBody List<MyInsuranceVO> param,HttpServletRequest request){
         return service.registerProduct(param,jwtUtil.getIdFromRequest(request));
     }
 

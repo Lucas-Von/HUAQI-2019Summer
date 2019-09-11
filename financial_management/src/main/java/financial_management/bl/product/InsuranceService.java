@@ -26,7 +26,7 @@ public interface InsuranceService {
     public BasicResponse deleteProduct(Long userId,Long productId);
 
     //
-    public BasicResponse registerProduct(MyInsuranceVO vo ,Long userId);
+    public BasicResponse registerProduct(List<MyInsuranceVO> vo ,Long userId);
 
     public BasicResponse update(MyInsuranceVO vo,Long userId);
 }

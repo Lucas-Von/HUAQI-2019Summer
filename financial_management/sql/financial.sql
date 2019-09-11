@@ -592,6 +592,15 @@ UNLOCK TABLES;
 -- Table structure for table `ins_product`
 --
 
+-- ----------------------------
+-- Records of insurance
+-- ----------------------------
+
+
+-- ----------------------------
+-- Table structure for ins_product
+-- ----------------------------
+
 DROP TABLE IF EXISTS `ins_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -605,6 +614,7 @@ CREATE TABLE `ins_product` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `ins_product`
@@ -641,6 +651,15 @@ INSERT INTO `insurance` VALUES (1,'husband','寿险',100000,251),(1,'wife','寿�
 /*!40000 ALTER TABLE `insurance` ENABLE KEYS */;
 UNLOCK TABLES;
 
+INSERT INTO `insurance` VALUES ('1', 'husband', '寿险', '100000', '251');
+INSERT INTO `insurance` VALUES ('1', 'wife', '寿险', '100000', '251');
+INSERT INTO `insurance` VALUES ('1', 'husband', '重疾险', '500000', '251');
+INSERT INTO `insurance` VALUES ('1', 'wife', '重疾险', '50000', '251');
+INSERT INTO `insurance` VALUES ('1', 'child_1', '寿险', '50000', '251');
+INSERT INTO `insurance` VALUES ('1', 'child_2', '寿险', '50000', '251');
+INSERT INTO `insurance` VALUES ('1', 'old_1', '寿险', '50000', '251');
+INSERT INTO `insurance` VALUES ('1', 'old_2', '寿险', '150000', '251');
+INSERT INTO `insurance` VALUES ('1', 'whole family', '车险', '50000', '251');
 --
 -- Table structure for table `investment`
 --
@@ -754,7 +773,7 @@ CREATE TABLE `my_bond` (
   `purchase_price` float DEFAULT NULL,
   `profit` float DEFAULT NULL,
   `profit_rate` float DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
+  `purchase_quantity` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -859,6 +878,7 @@ DROP TABLE IF EXISTS `my_ins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_ins` (
+  `id` bigint(255)NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
   `beneficiary` varchar(255) DEFAULT NULL,
   `kind` varchar(255) DEFAULT NULL,
@@ -866,7 +886,9 @@ CREATE TABLE `my_ins` (
   `amount` float DEFAULT NULL,
   `premiun` float DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL
+  primary key (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into my_ins (user_id, beneficiary, kind, maturity, amount, premiun, name) VALUES (1,"孩子1","意外险","2019-09-20",2000,300,"幼儿意外险");
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

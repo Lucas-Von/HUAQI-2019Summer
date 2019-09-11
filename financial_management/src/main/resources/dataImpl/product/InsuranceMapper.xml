@@ -25,13 +25,22 @@
         select * from insurance where user_id = #{userId}
     </select>
 
+    <delete id="deleteInsuranceProductById">
+        delete from my_ins where user_id = #{userId} and id = #{productId}
+    </delete>
+
 
     <select id="sumAmount" resultType="java.lang.Float">
         select sum(amount) from my_ins where user_id = #{userId}
     </select>
 
+    <update id="updateInsuranceProduct" parameterType="financial_management.entity.insurance.SelfInsuranceProductPO">
+        update my_ins set user_id = #{userId}, beneficiary = #{beneficiary}, kind = #{kind} , maturity = #{maturity}, amount = #{amount}, premiun = #{premiun}, name = #{name} where id = #{id}
+    </update>
+
     <resultMap id="Product" type="financial_management.entity.insurance.SelfInsuranceProductPO">
-        <id property="userId" column="user_id"/>
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
         <result property="amount" column="amount"/>
         <result property="beneficiary" column="beneficiary"/>
         <result property="kind" column="kind"/>

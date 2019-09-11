@@ -67,7 +67,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                 EstateVO estateVO = new EstateVO(estatePO.getFundsInPlatform(), estatePO.getFundsOutPlatform(), estatePO.getSavingOutPlatform(), estatePO.getInsuranceOutPlatform(), estatePO.getInvestInPlatform(), estatePO.getInvestOutPlatform());
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, estateVO);
             } else {
-                return new BasicResponse<>(ResponseStatus.STATUS_PROPERTY_RECORD_NOT_EXIST, new EstateVO());
+                return new BasicResponse<>(ResponseStatus.STATUS_PROPERTY_RECORD_NOT_EXIST, new EstateVO(-1, -1, -1, -1, -1, -1));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,10 +139,10 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     public BasicResponse getSubInvPosition(Long userId) {
         try {
             SubInvestPO subInvestPO = estateMapper.getSubInvInfo(userId);
-            SubInvestVO stocksPosition = new SubInvestVO("stocks", subInvestPO.getStocks(), subInvestPO.getInvest(), incomeServiceForBl.getTotalStocksIncome(userId));
-            SubInvestVO qdiiPosition = new SubInvestVO("qdii", subInvestPO.getQdii(), subInvestPO.getInvest(), incomeServiceForBl.getTotalQdiiIncome(userId));
-            SubInvestVO goldPosition = new SubInvestVO("gold", subInvestPO.getGold(), subInvestPO.getInvest(), incomeServiceForBl.getTotalGoldIncome(userId));
-            SubInvestVO bondPosition = new SubInvestVO("bond", subInvestPO.getBond(), subInvestPO.getInvest(), incomeServiceForBl.getTotalBondIncome(userId));
+            SubInvestVO stocksPosition = new SubInvestVO("stocks", subInvestPO.getStocks(), subInvestPO.getInvest(), incomeServiceForBl.getTotalStocksIncome(userId), incomeServiceForBl.getNewlyStocksIncome(userId));
+            SubInvestVO qdiiPosition = new SubInvestVO("qdii", subInvestPO.getQdii(), subInvestPO.getInvest(), incomeServiceForBl.getTotalQdiiIncome(userId), incomeServiceForBl.getNewlyQdiiIncome(userId));
+            SubInvestVO goldPosition = new SubInvestVO("gold", subInvestPO.getGold(), subInvestPO.getInvest(), incomeServiceForBl.getTotalGoldIncome(userId), incomeServiceForBl.getNewlyGoldIncome(userId));
+            SubInvestVO bondPosition = new SubInvestVO("bond", subInvestPO.getBond(), subInvestPO.getInvest(), incomeServiceForBl.getTotalBondIncome(userId), incomeServiceForBl.getNewlyBondIncome(userId));
             List<SubInvestVO> subInvestVOList = Arrays.asList(stocksPosition, qdiiPosition, goldPosition, bondPosition);
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subInvestVOList);
         } catch (Exception e) {
@@ -291,7 +291,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
                 MyRecAllocVO myRecAllocVO = new MyRecAllocVO(recAllocPO.getFundsRate(), recAllocPO.getSavingRate(), recAllocPO.getInsuranceRate(), recAllocPO.getInvestRate());
                 return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, myRecAllocVO);
             } else {
-                return new BasicResponse<>(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST, new MyRecAllocVO());
+                return new BasicResponse<>(ResponseStatus.STATUS_RECOMMEND_ALLOCATION_NOT_EXIST, new MyRecAllocVO(-1, -1, -1, -1));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,10 +309,10 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     @Override
     public BasicResponse setFundsOutPlatform(Long userId, double fundsOutPlatform) {
         try {
-            if (!ifExistOutRecord(userId)) {
-                estateMapper.insertOutFundsRecord(userId, fundsOutPlatform);
-            } else {
+            if (ifExistOutRecord(userId)) {
                 estateMapper.updateOutFundsRecord(userId, fundsOutPlatform);
+            } else {
+                estateMapper.insertOutFundsRecord(userId, fundsOutPlatform);
             }
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {

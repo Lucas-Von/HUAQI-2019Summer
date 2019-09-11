@@ -12,12 +12,21 @@ import java.util.Date;
  **/
 public class MyInsuranceVO {
 
+    Long id;
     String name;
     String insurant;
     String type;
     Double amount;
     Double insured;
     Date endtime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -65,26 +74,5 @@ public class MyInsuranceVO {
 
     public void setEndtime(Date endtime) {
         this.endtime = endtime;
-    }
-
-    public MyInsuranceVO(String name, String insurant, String type, Double amount, Double insured, Date endtime) {
-        this.name = name;
-        this.insurant = insurant;
-        this.type = type;
-        this.amount = amount;
-        this.insured = insured;
-        this.endtime = endtime;
-    }
-
-    public MyInsuranceVO (MyInsPO po){
-        this.amount = po.getPrice().doubleValue();
-        this.endtime = po.getMaturity();
-        this.insured = po.getCompensation().doubleValue();
-        this.insurant = po.getBeneficiary();
-        this.name = po.getName();
-        this.type = po.getType();
-    }
-
-    public MyInsuranceVO() {
     }
 }

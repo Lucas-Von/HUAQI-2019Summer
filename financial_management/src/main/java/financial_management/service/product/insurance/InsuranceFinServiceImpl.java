@@ -9,6 +9,7 @@ import financial_management.util.PyInvoke.PyParam.PyParam;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.ProductVO4Order;
+import financial_management.vo.product.MyInsuranceVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,17 @@ public class InsuranceFinServiceImpl  implements InsuranceService {
 
     @Autowired
     InsuranceMapper mapper;
+
+    @Override
+    public BasicResponse getSelfProducts(Long userId) {
+        return new BasicResponse(ResponseStatus.STATUS_SUCCESS,getRegisted(userId));
+    }
+
+    @Override
+    public BasicResponse deleteProduct(Long userId, Long productId) {
+        mapper.deleteInsuranceProductById(userId,productId);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+    }
 
     //首次推荐
     public void Recommand(Long userId, Integer aWifeBirthday, Integer bHusbandBirthdat, Float cChildNumber, Float dElderNumber, Float eHusIncome, Float fWiftIncome, Float gCarprice, Float hConsumption){
@@ -83,16 +95,30 @@ public class InsuranceFinServiceImpl  implements InsuranceService {
         return new BasicResponse(ResponseStatus.STATUS_SUCCESS,vo);
     }
     //登记已买保险
-    public void registerProduct(SelfInsuranceProductPO po){
-        mapper.insertInsuranceProduct(po);
+    public BasicResponse registerProduct(List<MyInsuranceVO> products,Long userId){
+        for (int i =0 ;i<products.size();i++) {
+            MyInsuranceVO vo = products.get(i);
+            SelfInsuranceProductPO po = new SelfInsuranceProductPO(userId, vo.getInsurant(), vo.getType(), vo.getEndtime(), vo.getAmount().floatValue(), vo.getInsured().floatValue(), vo.getName());
+            mapper.insertInsuranceProduct(po);
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 
-    //查看已登记的保险，待检验
+
+    @Override
+    public BasicResponse update(MyInsuranceVO vo, Long userId) {
+        SelfInsuranceProductPO po = new SelfInsuranceProductPO(userId,vo.getInsurant(),vo.getType(),vo.getEndtime(),vo.getAmount().floatValue(),vo.getInsured().floatValue(),vo.getName());
+        po.setId(vo.getId());
+        mapper.updateInsuranceProduct(po);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+    }
+
+    //
     public List<SelfInsuranceProductPO> getRegisted(Long userId){
         List<SelfInsuranceProductPO> selfProducts= mapper.selectInsuranceProductById(userId);
         //lambda表达式过滤
         List<SelfInsuranceProductPO> result = selfProducts.stream().filter(product->
-            product.getMaturity().after(new Date())).collect(Collectors.toList());
+                product.getMaturity().after(new Date())).collect(Collectors.toList());
 
         List<SelfInsuranceProductPO> toDel = selfProducts.stream().filter(product->
                 product.getMaturity().before(new Date())).collect(Collectors.toList());

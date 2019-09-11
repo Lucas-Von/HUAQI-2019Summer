@@ -3,6 +3,7 @@ package financial_management.entity.insurance;
 import java.util.Date;
 
 public class SelfInsuranceProductPO {
+    Long id;
     //用户id
     Long userId;
     //受保人
@@ -17,6 +18,14 @@ public class SelfInsuranceProductPO {
     Float premiun;
     //保险名称
     String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getUserId() {
         return userId;

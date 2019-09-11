@@ -54,7 +54,7 @@ public class FundVO {
     }
     public FundVO(MyFundPO po, FundPO fund) {
         this.amount =  po.getBalance().doubleValue();
-        this.rate = fund.getRate().doubleValue();
+        this.rate = fund.getSevenAnnualized().doubleValue();
         this.name = fund.getName();
         this.updateTime = fund.getTime();
     }

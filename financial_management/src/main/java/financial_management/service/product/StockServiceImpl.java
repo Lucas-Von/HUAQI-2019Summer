@@ -88,7 +88,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public void firstQDII(Long userId) {
-        final PyFunc func = PyFunc.QDII_FIRST_PURCHASE;
+        final PyFunc func = PyFunc.QDII_MONEY_ADJUST;
         //float whereCanIGetTargetAmount = 0;
         //QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount,0,0,new ArrayList<>());
         //List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);

@@ -20,8 +20,14 @@ public class OrderController {
     private JwtUtil jwtUtil;
 
     @GetMapping("trade")
-    public BasicResponse getTradeRecordsByUserID(HttpServletRequest request) {
-        return orderService.getPersonalTradeRecordByUser(jwtUtil.getIdFromRequest(request));
+    public BasicResponse getTradeRecordsByUserID(HttpServletRequest request, @RequestParam(required = false) Long userID) {
+        //TODO 权限判断，现在先这样丑陋的做
+        long reqUserID = jwtUtil.getIdFromRequest(request);
+        if (reqUserID == 0){
+            return orderService.getPersonalTradeRecordByRecord(userID);
+        } else {
+            return orderService.getPersonalTradeRecordByUser(reqUserID);
+        }
     }
 
     @GetMapping("trade/{ID}")

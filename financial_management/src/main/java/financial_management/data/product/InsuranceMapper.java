@@ -38,4 +38,8 @@ public interface InsuranceMapper {
 
     Float sumAmount(Long userId);
 
+    int deleteInsuranceProductById(@Param("userId") Long userId,@Param("productId")Long id);
+
+    int updateInsuranceProduct(SelfInsuranceProductPO po);
+
 }

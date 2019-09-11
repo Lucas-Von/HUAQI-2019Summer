@@ -445,10 +445,10 @@ INSERT INTO `insurance` VALUES ('1', 'husband', '寿险', '100000', '251');
 INSERT INTO `insurance` VALUES ('1', 'wife', '寿险', '100000', '251');
 INSERT INTO `insurance` VALUES ('1', 'husband', '重疾险', '500000', '251');
 INSERT INTO `insurance` VALUES ('1', 'wife', '重疾险', '50000', '251');
-INSERT INTO `insurance` VALUES ('1', 'child_one', '寿险', '50000', '251');
-INSERT INTO `insurance` VALUES ('1', 'child_two', '寿险', '50000', '251');
-INSERT INTO `insurance` VALUES ('1', 'old_one', '寿险', '50000', '251');
-INSERT INTO `insurance` VALUES ('1', 'old_two', '寿险', '150000', '251');
+INSERT INTO `insurance` VALUES ('1', 'child_1', '寿险', '50000', '251');
+INSERT INTO `insurance` VALUES ('1', 'child_2', '寿险', '50000', '251');
+INSERT INTO `insurance` VALUES ('1', 'old_1', '寿险', '50000', '251');
+INSERT INTO `insurance` VALUES ('1', 'old_2', '寿险', '150000', '251');
 INSERT INTO `insurance` VALUES ('1', 'whole family', '车险', '50000', '251');
 
 -- ----------------------------

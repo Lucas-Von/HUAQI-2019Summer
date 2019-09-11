@@ -95,9 +95,12 @@ public class InsuranceFinServiceImpl  implements InsuranceService {
         return new BasicResponse(ResponseStatus.STATUS_SUCCESS,vo);
     }
     //登记已买保险
-    public BasicResponse registerProduct(MyInsuranceVO vo,Long userId){
-        SelfInsuranceProductPO po = new SelfInsuranceProductPO(userId,vo.getInsurant(),vo.getType(),vo.getEndtime(),vo.getAmount().floatValue(),vo.getInsured().floatValue(),vo.getName());
-        mapper.insertInsuranceProduct(po);
+    public BasicResponse registerProduct(List<MyInsuranceVO> products,Long userId){
+        for (int i =0 ;i<products.size();i++) {
+            MyInsuranceVO vo = products.get(i);
+            SelfInsuranceProductPO po = new SelfInsuranceProductPO(userId, vo.getInsurant(), vo.getType(), vo.getEndtime(), vo.getAmount().floatValue(), vo.getInsured().floatValue(), vo.getName());
+            mapper.insertInsuranceProduct(po);
+        }
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 

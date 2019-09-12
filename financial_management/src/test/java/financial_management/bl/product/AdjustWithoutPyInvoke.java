@@ -15,6 +15,6 @@ public class AdjustWithoutPyInvoke {
 
     @Test
     public void changeDomStock_normal(){
-        service.changeStock(1L);
+        service.stockEstablish(1L);
     }
 }

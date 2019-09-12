@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="financial_management.data.product.StockAdjustmentMapper">
+    <resultMap id="stock" type="financial_management.entity.stock.StockAdjustmentPO">
+        <result property="order_time" column="order_time"/>
+        <result property="code" column="code"/>
+        <result property="state_message" column="stage_message"/>
+        <result property="order_amount" column="order_amount"/>
+        <result property="complete_amount" column="complete_amount"/>
+        <result property="fee" column="fee"/>
+        <result property="total" column="total"/>
+        <result property="price" column="price"/>
+        <result property="userID" column="user_id"/>
+        <result property="transID" column="trans_id"/>
+    </resultMap>
+
     <resultMap id="qdii" type="financial_management.entity.stock.QDIIAdjustmentPO">
         <result property="qdii_code" column="qdii_code"/>
         <result property="name" column="name"/>
@@ -18,10 +31,23 @@
         where trans_id = #{transID}
     </select>
 
+    <select id="selectStockAdjustmentByTransID" resultMap="stock">
+        select *
+        from stock_adjustment
+        where trans_id = #{transID}
+    </select>
+
     <insert id="insertQDII" parameterType="financial_management.entity.stock.QDIIAdjustmentPO">
         insert into qdii_adjustment (qdii_code, name, share_deployed, number_deployed, m_already_deployed,
                                      price_deployed, user_id, trans_id)
         values (#{qdii_code}, #{name}, #{share_deployed}, #{number_deployed}, #{m_already_deployed}, #{price_deployed},
                 #{userID}, #{transID})
+    </insert>
+
+    <insert id="insertStock" parameterType="financial_management.entity.stock.StockAdjustmentPO">
+        insert into stock_adjustment (order_time, code, state_message, order_amount, complete_amount, fee, total, price,
+                                      trans_id, user_id)
+        values (#{order_time}, #{code}, #{state_message}, #{order_amount}, #{complete_amount}, #{fee}, #{total},
+                #{price}, #{transID}, #{userID});
     </insert>
 </mapper>

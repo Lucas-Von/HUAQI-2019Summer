@@ -410,107 +410,113 @@ class BondServiceImpl implements BondServiceForBl, BondService {
     }
 
     //    //方法五：指数维护
-    public void exponent(String fundName) {
+    public BasicResponse exponent(String fundName) {
 
-        BondFoundationPO fund4Nation = mapper.selectBondFundByName(nationalDebtName);
-        BondFoundationPO fund4Corpor = mapper.selectBondFundByName(corporationDebtName);
-        List<BondAndFundPO> bonds4National = mapper.selectAllBondAndFund(fund4Nation.getId());
-        List<BondAndFundPO> bonds4Corporate = mapper.selectAllBondAndFund(fund4Corpor.getId());
+        try {
+            BondFoundationPO fund4Nation = mapper.selectBondFundByName(nationalDebtName);
+            BondFoundationPO fund4Corpor = mapper.selectBondFundByName(corporationDebtName);
+            List<BondAndFundPO> bonds4National = mapper.selectAllBondAndFund(fund4Nation.getId());
+            List<BondAndFundPO> bonds4Corporate = mapper.selectAllBondAndFund(fund4Corpor.getId());
 
-        //初始化老的债券信息;
-        List<BondsInfo> bondsInfoNation = new ArrayList<>();
-        List<BondsInfo> bondsInfoCorporation = new ArrayList<>();
-        bonds4National.stream().forEach(o -> {
-            BondsInfo info = new BondsInfo();
-            info.setAmount(o.getAmount());
-            info.setCode(o.getBondCode());
-            info.setProduct(nationalDebtName);
-            info.setProportion(o.getInvestProportion());
-            info.setQuantity(o.getQuantity().intValue());
-            bondsInfoNation.add(info);
-        });
-
-        bonds4Corporate.stream().forEach(o -> {
-            BondsInfo info = new BondsInfo();
-            info.setAmount(o.getAmount());
-            info.setCode(o.getBondCode());
-            info.setProduct(corporationDebtName);
-            info.setProportion(o.getInvestProportion());
-            info.setQuantity(o.getQuantity().intValue());
-            bondsInfoCorporation.add(info);
-        });
-
-
-        BondPlatformPO platform = mapper.selectBondPlatform();
-        //初始化新的债券组合
-        List<BondObj> objList = resetFund();
-        List<NewFundInfo> newFundInfo = new ArrayList<>();
-        int sign =0;
-        String finName;
-        if (fundName.equals("national")) {
-            mapper.deleteBondAndFund(fund4Nation.getId());
-            finName = nationalDebtName;
-            objList.stream().forEach(o->{
-                if (o.getProduct().equals("国债")||o.getProduct().equals(nationalDebtName)){
-                    NewFundInfo info = new NewFundInfo();
-                    info.setCode(o.getCode());
-                    info.setProduct(nationalDebtName);
-                    info.setProportion(o.getRate());
-                    newFundInfo.add(info);
-                }
+            //初始化老的债券信息;
+            List<BondsInfo> bondsInfoNation = new ArrayList<>();
+            List<BondsInfo> bondsInfoCorporation = new ArrayList<>();
+            bonds4National.stream().forEach(o -> {
+                BondsInfo info = new BondsInfo();
+                info.setAmount(o.getAmount());
+                info.setCode(o.getBondCode());
+                info.setProduct(nationalDebtName);
+                info.setProportion(o.getInvestProportion());
+                info.setQuantity(o.getQuantity().intValue());
+                bondsInfoNation.add(info);
             });
-        } else {
-            sign = 1;
-            mapper.deleteBondAndFund(fund4Corpor.getId());
-            finName = corporationDebtName;
-            objList.stream().forEach(o->{
-                if (o.getProduct().equals("企业债")||o.getProduct().equals(corporationDebtName)){
-                    NewFundInfo info = new NewFundInfo();
-                    info.setCode(o.getCode());
-                    info.setProduct(corporationDebtName);
-                    info.setProportion(o.getRate());
-                    newFundInfo.add(info);
-                }
+
+            bonds4Corporate.stream().forEach(o -> {
+                BondsInfo info = new BondsInfo();
+                info.setAmount(o.getAmount());
+                info.setCode(o.getBondCode());
+                info.setProduct(corporationDebtName);
+                info.setProportion(o.getInvestProportion());
+                info.setQuantity(o.getQuantity().intValue());
+                bondsInfoCorporation.add(info);
             });
-        }
 
 
-        PyParam pyParam = new IndexVO(finName,platform.getResidualAssets(),platform.getBondAssets(),bondsInfoNation,bondsInfoCorporation,fund4Nation.getFundScale(),fund4Corpor.getFundScale(),newFundInfo);
-        List<Object> invokeResult = PyInvoke.invoke(PyFunc.BOND_INDEX_MAINTENANCE, pyParam,IndexPO.class);
-        List<IndexPO> list = new ArrayList<>();
-        for (Object object : invokeResult){
-            list.add((IndexPO) object);
-        }
-        System.out.println(list.size());
-
-        IndexPO po = list.get(0);
-
-        List<BondsInfo> infos = po.getNew_fund_info();
-        long fundId = sign==0?fund4Nation.getId():fund4Corpor.getId();
-        for(int i = 0;i<infos.size();i++){
-            BondsInfo o = infos.get(i);
-            long id = getBondId(o.getCode());
-            if (id == -1) {
-                mapper.insertBond(o.getCode(), o.getAmount() / o.getQuantity());
-                id = getBondId(o.getCode());
+            BondPlatformPO platform = mapper.selectBondPlatform();
+            //初始化新的债券组合
+            List<BondObj> objList = resetFund();
+            List<NewFundInfo> newFundInfo = new ArrayList<>();
+            int sign = 0;
+            String finName;
+            if (fundName.equals("national")) {
+                mapper.deleteBondAndFund(fund4Nation.getId());
+                finName = nationalDebtName;
+                objList.stream().forEach(o -> {
+                    if (o.getProduct().equals("国债") || o.getProduct().equals(nationalDebtName)) {
+                        NewFundInfo info = new NewFundInfo();
+                        info.setCode(o.getCode());
+                        info.setProduct(nationalDebtName);
+                        info.setProportion(o.getRate());
+                        newFundInfo.add(info);
+                    }
+                });
+            } else {
+                sign = 1;
+                mapper.deleteBondAndFund(fund4Corpor.getId());
+                finName = corporationDebtName;
+                objList.stream().forEach(o -> {
+                    if (o.getProduct().equals("企业债") || o.getProduct().equals(corporationDebtName)) {
+                        NewFundInfo info = new NewFundInfo();
+                        info.setCode(o.getCode());
+                        info.setProduct(corporationDebtName);
+                        info.setProportion(o.getRate());
+                        newFundInfo.add(info);
+                    }
+                });
             }
 
-            mapper.insertBondAndFund(fundId, id, o.getProportion(), o.getQuantity().floatValue());
-        };
-        //更新债券资产和剩余现金
-        mapper.updateBondPlatform(po.getFund_cash(), po.getFund_bonds());
-        //更新交易记录
-        for(int i = 0 ;i<po.getTrans_record().size();i++){
-            TransPO o = po.getTrans_record().get(i);
-            PlatformTradeVO trade = new PlatformTradeVO();
-            trade.setTotal(o.getPurchase_amount());
-            trade.setRealTotal(o.getPurchase_amount());
-            trade.setTime(o.getTime());
-            trade.setProduct(((IndexVO) pyParam).getProduct_name()+","+o.getCode());
-            trade.setAmount(o.getPurchase_quantity());
-            trade.setStatus(-1);
-            trade.setPrice(-1F);
-            orderService.addPlatformTradeRecord(trade);
+
+            PyParam pyParam = new IndexVO(finName, platform.getResidualAssets(), platform.getBondAssets(), bondsInfoNation, bondsInfoCorporation, fund4Nation.getFundScale(), fund4Corpor.getFundScale(), newFundInfo);
+            List<Object> invokeResult = PyInvoke.invoke(PyFunc.BOND_INDEX_MAINTENANCE, pyParam, IndexPO.class);
+            List<IndexPO> list = new ArrayList<>();
+            for (Object object : invokeResult) {
+                list.add((IndexPO) object);
+            }
+            System.out.println(list.size());
+
+            IndexPO po = list.get(0);
+
+            List<BondsInfo> infos = po.getNew_fund_info();
+            long fundId = sign == 0 ? fund4Nation.getId() : fund4Corpor.getId();
+            for (int i = 0; i < infos.size(); i++) {
+                BondsInfo o = infos.get(i);
+                long id = getBondId(o.getCode());
+                if (id == -1) {
+                    mapper.insertBond(o.getCode(), o.getAmount() / o.getQuantity());
+                    id = getBondId(o.getCode());
+                }
+
+                mapper.insertBondAndFund(fundId, id, o.getProportion(), o.getQuantity().floatValue());
+            }
+            ;
+            //更新债券资产和剩余现金
+            mapper.updateBondPlatform(po.getFund_cash(), po.getFund_bonds());
+            //更新交易记录
+            for (int i = 0; i < po.getTrans_record().size(); i++) {
+                TransPO o = po.getTrans_record().get(i);
+                PlatformTradeVO trade = new PlatformTradeVO();
+                trade.setTotal(o.getPurchase_amount());
+                trade.setRealTotal(o.getPurchase_amount());
+                trade.setTime(o.getTime());
+                trade.setProduct(((IndexVO) pyParam).getProduct_name() + "," + o.getCode());
+                trade.setAmount(o.getPurchase_quantity());
+                trade.setStatus(-1);
+                trade.setPrice(-1F);
+                orderService.addPlatformTradeRecord(trade);
+            }
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        }catch (Exception e){
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR,null);
         }
     }
 

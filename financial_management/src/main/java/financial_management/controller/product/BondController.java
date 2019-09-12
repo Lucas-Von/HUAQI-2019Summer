@@ -73,4 +73,9 @@ public class BondController {
     public BasicResponse getFundInfo(@PathVariable String fundName){
         return service.getFundInfo(fundName);
     }
+
+    @GetMapping(value = "exponent/{fundName}")
+    public BasicResponse expo(@PathVariable String fundName){
+        return service.exponent(fundName);
+    }
 }

@@ -5,17 +5,12 @@
         select * from my_fund where user_id = #{userId}
     </select>
 
-    <select id="selectFund" resultType="financial_management.entity.FundPO">
-        select `name` name , rate rate, `time` time from fund limit 1
+    <select id="selectFund" resultMap="Fund">
+        select * from fund limit 1
     </select>
 
-    <select id="selectAllFunds" resultType="financial_management.entity.MyFundPO">
-        select user_id userId,
-         balance balance,
-         update_time updateTime,
-         pay_password payPassword,
-         accuring_amount accuringAmount
-         from my_fund
+    <select id="selectAllFunds" resultMap="MyFund">
+        select * from my_fund
     </select>
 
     <update id="updateSelfFund" parameterType="financial_management.entity.MyFundPO">
@@ -27,8 +22,16 @@
     </update>
 
     <insert id="insertNewFund">
-        insert into my_fund (user_id, balance,accuring_amount) values (#{userId},#{balance},0)
+        insert into my_fund (user_id, balance,accuring_amount,last_revenue) values (#{userId},#{balance},0,0)
     </insert>
+
+    <update id="updateAccuringAndBalance">
+        update my_fund set balance=#{balance} ,accuring_amount = #{amount}, last_revenue = #{last} where user_id = #{userId}
+    </update>
+
+    <update id="updateFund" parameterType="financial_management.entity.FundPO">
+        update fund set seven_annualized = #{sevenAnnualized},fourteen_annualized = #{fourteenAnnualized},twentyeight_annualized= #{twentyeightAnnualize0d},thirty_yield_rate = #{thirtyYieldRate},ninty_yield_rate = #{nintyYieldRate},since_yield_rate = #{sinceYieldRate}
+    </update>
 
     <resultMap id="MyFund" type="financial_management.entity.MyFundPO">
         <result property="userId" column="user_id"/>
@@ -36,6 +39,18 @@
         <result property="accuringAmount" column="accuring_amount"/>
         <result property="payPassword" column="pay_password"/>
         <result property="updateTime" column="update_time"/>
+        <result property="lastRevenue" column="last_revenue"/>
+    </resultMap>
+
+    <resultMap id="Fund" type="financial_management.entity.FundPO">
+        <result column="name" property="name"/>
+        <result column="time" property="time"/>
+        <result column="seven_annualized" property="sevenAnnualized"/>
+        <result column="fourteen_annualized" property="fourteenAnnualized"/>
+        <result column="twentyeight_annualized" property="twentyeightAnnualized"/>
+        <result column="thirty_yield_rate" property="thirtyYieldRate"/>
+        <result column="ninty_yield_rate" property="nintyYieldRate"/>
+        <result column="since_yield_rate" property="sinceYieldRate"/>
     </resultMap>
 
 </mapper>

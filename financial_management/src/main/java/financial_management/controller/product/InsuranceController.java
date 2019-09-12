@@ -1,7 +1,7 @@
 package financial_management.controller.product;
 
 import financial_management.bl.product.InsuranceService;
-import financial_management.parameter.product.InsurancePurchaseParam;
+import financial_management.parameter.product.InsuranceDeleteParam;
 import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
@@ -25,6 +25,7 @@ import java.util.List;
  **/
 @CrossOrigin
 @RestController
+@RequestMapping
 public class InsuranceController {
 
     @Autowired
@@ -33,21 +34,38 @@ public class InsuranceController {
     @Autowired
     JwtUtil jwtUtil;
 
-//    @GetMapping(value = "/product/insurance")
-//    public BasicResponse MyInsurance(HttpServletRequest request){
-//        List<MyInsuranceVO> vos = service.getMyInsurance(jwtUtil.getIdFromRequest(request));
-//
-//        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vos);
-//    }
+    @GetMapping(value = "/product/insurance")
+    public BasicResponse MyInsurance(HttpServletRequest request){
+        return service.getSelfProducts(jwtUtil.getIdFromRequest(request));
+    }
 
     @GetMapping(value = "/product/insurance/recommend")
-     public BasicResponse RecommendedProduct(HttpServletRequest request){
-        Long userId = jwtUtil.getIdFromRequest(request);
-        return service.getRecommands(userId);
+    public BasicResponse RecommendedProduct(HttpServletRequest request){
+//        Long userId = jwtUtil.getIdFromRequest(request);
+        return service.getRecommands(jwtUtil.getIdFromRequest(request));
     }
+
+    @PostMapping(value = "/product/insurance")
+    public BasicResponse purchaseProduct(@RequestBody List<MyInsuranceVO> param,HttpServletRequest request){
+        return service.registerProduct(param,jwtUtil.getIdFromRequest(request));
+    }
+
+    @PutMapping(value = "/product/insurance")
+    public BasicResponse updateProduct(HttpServletRequest request,@RequestBody MyInsuranceVO param){
+        return service.update(param,jwtUtil.getIdFromRequest(request));
+    }
+
+    @DeleteMapping(value = "/product/insurance")
+    public BasicResponse deleteProduct(HttpServletRequest request, @RequestBody InsuranceDeleteParam param){
+
+        return  service.deleteProduct(jwtUtil.getIdFromRequest(request),param.getProductId());
+
+
+    }
+
 //
 //    @PostMapping(value = "/product/insurance")
-//    public BasicResponse purchaseInsurance(@RequestBody InsurancePurchaseParam param, HttpServletRequest request){
+//    public BasicResponse purchaseInsurance(@RequestBody InsuranceDeleteParam param, HttpServletRequest request){
 //        return  service.purchase(jwtUtil.getIdFromRequest(request),param.getName(),param.getInsurant());
 //
 //    }

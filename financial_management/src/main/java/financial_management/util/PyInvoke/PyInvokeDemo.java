@@ -8,12 +8,23 @@ import financial_management.entity.insurance.RecommandWrapperResponse;
 import financial_management.util.PyInvoke.PyParam.PyParam;
 import financial_management.util.PyInvoke.PyParam.questionnaire.AssetConfigParam;
 import financial_management.util.PyInvoke.PyResponse.questionnaire.AssetConfigResponse;
+import financial_management.util.PyInvoke.PyParam.PyParamDemo;
+import financial_management.util.PyInvoke.PyParam.bond.*;
+import financial_management.util.PyInvoke.PyParam.stock.QDII_UniversalParam;
+import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PyInvokeDemo {
     public static void main(String[] args) {
+/**
+        List<Float> liest = new ArrayList<>();
+        liest.add(0.03F);
+        liest.add(0.02F);
+        liest.add(0.033F);
+//        PyParam pyParam = new AdjuestmentVO(0.75F,0.25F,20000F,3000f,4000f,liest,1000F);
+//        PyParam pyParam = new First_PurchaseVO(0.03F, 0.033F, 0.02F, 43020F, 2000F, 2000F, liest,3333F);
 
 //        List<Float> liest = new ArrayList<>();
 //        liest.add(0.03F);
@@ -47,8 +58,10 @@ public class PyInvokeDemo {
         List<AssetConfigResponse> list = new ArrayList<>();
         for (Object object : invokeResult){
             list.add((AssetConfigResponse) object);
+            list.add((QDIIAdjustment) object);
         }
         System.out.println(list.size());
+ */
     }
 }
 

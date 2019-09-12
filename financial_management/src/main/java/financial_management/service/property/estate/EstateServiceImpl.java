@@ -139,10 +139,10 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
     public BasicResponse getSubInvPosition(Long userId) {
         try {
             SubInvestPO subInvestPO = estateMapper.getSubInvInfo(userId);
-            SubInvestVO stocksPosition = new SubInvestVO("stocks", subInvestPO.getStocks(), subInvestPO.getInvest(), incomeServiceForBl.getTotalStocksIncome(userId));
-            SubInvestVO qdiiPosition = new SubInvestVO("qdii", subInvestPO.getQdii(), subInvestPO.getInvest(), incomeServiceForBl.getTotalQdiiIncome(userId));
-            SubInvestVO goldPosition = new SubInvestVO("gold", subInvestPO.getGold(), subInvestPO.getInvest(), incomeServiceForBl.getTotalGoldIncome(userId));
-            SubInvestVO bondPosition = new SubInvestVO("bond", subInvestPO.getBond(), subInvestPO.getInvest(), incomeServiceForBl.getTotalBondIncome(userId));
+            SubInvestVO stocksPosition = new SubInvestVO("stocks", subInvestPO.getStocks(), subInvestPO.getInvest(), incomeServiceForBl.getTotalStocksIncome(userId), incomeServiceForBl.getNewlyStocksIncome(userId));
+            SubInvestVO qdiiPosition = new SubInvestVO("qdii", subInvestPO.getQdii(), subInvestPO.getInvest(), incomeServiceForBl.getTotalQdiiIncome(userId), incomeServiceForBl.getNewlyQdiiIncome(userId));
+            SubInvestVO goldPosition = new SubInvestVO("gold", subInvestPO.getGold(), subInvestPO.getInvest(), incomeServiceForBl.getTotalGoldIncome(userId), incomeServiceForBl.getNewlyGoldIncome(userId));
+            SubInvestVO bondPosition = new SubInvestVO("bond", subInvestPO.getBond(), subInvestPO.getInvest(), incomeServiceForBl.getTotalBondIncome(userId), incomeServiceForBl.getNewlyBondIncome(userId));
             List<SubInvestVO> subInvestVOList = Arrays.asList(stocksPosition, qdiiPosition, goldPosition, bondPosition);
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, subInvestVOList);
         } catch (Exception e) {

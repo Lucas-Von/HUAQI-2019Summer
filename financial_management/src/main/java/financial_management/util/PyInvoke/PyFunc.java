@@ -34,13 +34,13 @@ public enum PyFunc {
     CASH_DAILY_ADJUSTMENT("Info.py"),
     //    保险
 //      推荐
-    INSURANCE_RECOMMEND("insurance_recommand.py"),
-    //    机器学习
-    QUESTIONNAIRE_INVEST_PREFERENCE("mLearning\\mLearning.py"),
-    //    财务脆弱性
-    QUESTIONNAIRE_VULNERABILITY("vulnerability\\vulnerability.py"),
-    //    资产配置
-    QUESTIONNAIRE_ASSET_ALLOCATION("asset\\asset.py");
+        INSURANCE_RECOMMEND("insurance_recommand.py"),
+//    机器学习
+        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning.py"),
+//    财务脆弱性
+        QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
+//    资产配置
+        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
 
     public String path;
 

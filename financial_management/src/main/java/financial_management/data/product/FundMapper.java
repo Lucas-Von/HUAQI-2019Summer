@@ -30,4 +30,8 @@ public interface FundMapper {
     int updateSelfPassword(@Param("userId")Long userId,@Param("payPassword")String passowrd);
 
     int insertNewFund(@Param("userId") Long userId,@Param("balance") Float balance);
+
+    int updateAccuringAndBalance(@Param("balance")Float balance,@Param("amount")Float accuringAmount,@Param("userId") Long userId,@Param("last")Float amount);
+
+    int updateFund(FundPO po);
 }

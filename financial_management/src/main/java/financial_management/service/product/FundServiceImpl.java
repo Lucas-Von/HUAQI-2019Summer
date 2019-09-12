@@ -5,19 +5,24 @@ import financial_management.bl.product.FundService;
 import financial_management.bl.product.ProductService4User;
 import financial_management.bl.wallet.FundService4Wallet;
 import financial_management.data.product.FundMapper;
-import financial_management.entity.DepositProductPO;
 import financial_management.entity.FundPO;
 import financial_management.entity.MyFundPO;
+import financial_management.entity.fund.InfoParam;
+import financial_management.entity.fund.InfoRatesResponse;
+import financial_management.entity.fund.InfoResponse;
 import financial_management.service.order.impl.OrderServiceImpl;
 import financial_management.util.DateConverterUtil;
+import financial_management.util.PyInvoke.PyFunc;
+import financial_management.util.PyInvoke.PyInvoke;
+import financial_management.util.PyInvoke.PyParam.PyParam;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.FundBasicVO;
 import financial_management.vo.product.FundVO;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -120,7 +125,34 @@ public class FundServiceImpl implements FundService4Wallet, FundService, Product
 
     public void dailyUpdate(){
         List<MyFundPO> funds = mapper.selectAllFunds();
-        //TODO 连商院
+        FundPO fundPlat = mapper.selectFund();
+
+        for(int i = 0;i<funds.size();i++){
+            Optional<Float> balance = Optional.ofNullable(funds.get(i).getBalance());
+            Float trueBalance = balance.orElse(0F);
+            Optional<Float> earn = Optional.ofNullable(funds.get(i).getAccuringAmount());
+            Float earnAmount = balance.orElse(0F);
+            PyParam param = new InfoParam(earnAmount,trueBalance);
+
+            List<Object> invokeResult = PyInvoke.invoke(PyFunc.CASH_DAILY_ADJUSTMENT, param, InfoResponse.class);
+            List<InfoResponse> list = new ArrayList<>();
+            for (Object object : invokeResult){
+                list.add((InfoResponse) object);
+            }
+            InfoResponse response = list.get(0);
+            //更新用户数据
+            mapper.updateAccuringAndBalance(response.getBalance(),response.getAccumulated_earning(),funds.get(i).getUserId(),response.getLast_revenue());
+            InfoRatesResponse rates = new InfoRatesResponse(response.getInfo_display());
+            fundPlat.setSevenAnnualized(rates.getSeven_days_annualized_return());
+            fundPlat.setFourteenAnnualized(rates.getFourteen_days_annualized_return());
+            fundPlat.setTwentyeightAnnualized(rates.getTwentyseven_days_annualized_return());
+            fundPlat.setThirtyYieldRate(rates.getThirty_days_yield_rate());
+            fundPlat.setNintyYieldRate(rates.getNinety_days_yield_rate());
+            fundPlat.setSinceYieldRate(rates.getYield_rate_since_establishment());
+            mapper.updateFund(fundPlat);
+        }
+
+
     }
 
     public void addRecord(Long userId,Double cost){

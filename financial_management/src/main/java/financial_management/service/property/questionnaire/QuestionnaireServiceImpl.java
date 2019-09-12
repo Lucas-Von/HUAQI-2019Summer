@@ -165,7 +165,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             questionnaireConfigPO.setTotal_yield(assetConfigResponse.getEarnings());
             questionnaireConfigPO.setTotal_risk_level(assetConfigResponse.getLabel());
 
-            questionnaireMapper.insertQuestionnaireConfig(questionnaireConfigPO);
+            if (hasRecommend(userId)) {
+                questionnaireMapper.updateQuestionnaireConfig(questionnaireConfigPO);
+            } else {
+                questionnaireMapper.insertQuestionnaireConfig(questionnaireConfigPO);
+            }
 
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         } catch (Exception e) {

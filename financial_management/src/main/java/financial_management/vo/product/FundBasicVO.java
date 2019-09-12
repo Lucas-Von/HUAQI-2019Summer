@@ -33,6 +33,6 @@ public class FundBasicVO {
     }
     public FundBasicVO(FundPO po) {
         this.name = po.getName();
-        this.rate = po.getRate().doubleValue();
+        this.rate = po.getSevenAnnualized().doubleValue();
     }
 }

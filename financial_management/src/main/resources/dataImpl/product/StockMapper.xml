@@ -102,7 +102,7 @@
         <result property="purchaseAmount" column="purchase_amount"/>
         <result property="purchaseTotal" column="purchase_total"/>
         <result property="holdPrice" column="hold_price"/>
-        <result property="holdNum" column="hold_amount"/>
+        <result property="holdAmount" column="hold_amount"/>
         <result property="holdTotal" column="hold_total"/>
         <result property="profit" column="profit"/>
         <result property="profitRate" column="profit_rate"/>

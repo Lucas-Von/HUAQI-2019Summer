@@ -51,7 +51,7 @@
     </update>
 
     <select id="selectBondPlatform" resultType="financial_management.entity.bond.BondPlatformPO">
-        select handling_fee handlingFee,
+        select
         bond_property bondAssets,
         residual_property residualAssets
         from platform_bond_fund limit 1
@@ -66,7 +66,7 @@
     </update>
 
     <update id="updateTotalShare">
-        update bond_foundation set fund_share = #{amount} where fund_name = #{product}
+        update bond_foundation set fund_share = #{amount} where fund_name = #{name}
     </update>
 
     <delete id="deleteBondAndFund">
@@ -74,7 +74,7 @@
     </delete>
 
     <insert id="insertBondAndFund">
-        insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) values (#{fundId},#{bondId},#{investment},#{amount})
+        insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) values (#{fundId},#{bondId},#{invest},#{amount})
     </insert>
 
     <insert id="insertBondFund" parameterType="financial_management.entity.bond.BondFoundationPO">
@@ -82,7 +82,7 @@
     </insert>
 
     <insert id="insertBondPlatform" parameterType="financial_management.entity.bond.BondPlatformPO">
-        insert into platform_bond_fund (handling_fee, bond_property, residual_property) values (#{handlingFee},#{bondAssets},#{residualAssets})
+        insert into platform_bond_fund (bond_property, residual_property) values (#{bondAssets},#{residualAssets})
     </insert>
 
     <update id="updateUserFundShare">
@@ -92,6 +92,15 @@
     <insert id="insertRateLog">
         insert  into bond_rate_log (fund_id, net_worth, "time") values (#{id},#{netWorth},#{time})
     </insert>
+
+    <select id="getRateLogs" resultType="financial_management.entity.bond.NetWorthPO">
+        select
+          fund_id fundId,
+          fund_name fundName,
+          net_worth netWorth,
+          `time` time
+        from bond_rate_log where fund_id=#{id};
+    </select>
 
     <update id="updateBondPriceByCode">
         update bond set latest_price = #{price} where code = #{code}

@@ -25,6 +25,7 @@ public class BondServiceImplTest {
 
     @Test
     public void dailyPurchase() {
+        service.dailyPurchase();
     }
 
     @Test
@@ -35,4 +36,7 @@ public class BondServiceImplTest {
     public void exponent() {
         service.exponent("national");
     }
+
+    @Test
+    public void info(){service.getFundInfo("national");}
 }

@@ -21,7 +21,7 @@ public enum PyFunc {
 //      调整持有额
         BOND_ADJUSTMENT("Adjustment.py"),
 //      每天购买
-        BOND_DAILY_PURCHASE("Daily_Purchase2.py"),
+        BOND_DAILY_PURCHASE("Daily_Purchase.py"),
 //      指数维护
         BOND_INDEX_MAINTENANCE("Index_Maintenance.py"),
 //    黄金
@@ -43,7 +43,7 @@ public enum PyFunc {
     public String path;
 
     PyFunc(String path){
-        this.path = "C:\\Users\\NJ\\Desktop\\py文件\\" + path;
+        this.path = "D:\\学习资料\\大二下\\花旗杯\\py\\" + path;
     }
 
 }

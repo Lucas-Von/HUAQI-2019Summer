@@ -1,60 +1,104 @@
 package financial_management.util.PyInvoke.PyResponse.stock;
 
 public class StockAdjustment {
-    private String stock_code;
-    private String stockname;
-    private Integer account_deployed_change;
-    private Float m_already_deployed;
-    private Float price_deployed;
+    private Float order_time;
+    private String code;
+    private String state_message;
+    private Integer order_amount;
+    private Integer complete_amount;
+    private Float fee;
+    private Float total;
+    private Float price;
 
-    public String getStock_code() {
-        return stock_code;
+    public String getCode() {
+        return code;
     }
 
-    public void setStock_code(String stock_code) {
-        this.stock_code = stock_code;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getStockname() {
-        return stockname;
+    public Integer getComplete_amount() {
+        return complete_amount;
     }
 
-    public void setStockname(String stockname) {
-        this.stockname = stockname;
+    public void setComplete_amount(Integer complete_amount) {
+        this.complete_amount = complete_amount;
     }
 
-    public Integer getAccount_deployed_change() {
-        return account_deployed_change;
+    public Float getTotal() {
+        return total;
     }
 
-    public void setAccount_deployed_change(Integer account_deployed_change) {
-        this.account_deployed_change = account_deployed_change;
+    public void setTotal(Float total) {
+        this.total = total;
     }
 
-    public Float getM_already_deployed() {
-        return m_already_deployed;
+    public Float getPrice() {
+        return price;
     }
 
-    public void setM_already_deployed(Float m_already_deployed) {
-        this.m_already_deployed = m_already_deployed;
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
-    public Float getPrice_deployed() {
-        return price_deployed;
+    public Float getOrder_time() {
+        return order_time;
     }
 
-    public void setPrice_deployed(Float price_deployed) {
-        this.price_deployed = price_deployed;
+    public void setOrder_time(Float order_time) {
+        this.order_time = order_time;
     }
 
-    public StockAdjustment(String stock_code, String stockname, Integer account_deployed_change, Float m_already_deployed, Float price_deployed) {
-        this.stock_code = stock_code;
-        this.stockname = stockname;
-        this.account_deployed_change = account_deployed_change;
-        this.m_already_deployed = m_already_deployed;
-        this.price_deployed = price_deployed;
+    public String getState_message() {
+        return state_message;
+    }
+
+    public void setState_message(String state_message) {
+        this.state_message = state_message;
+    }
+
+    public Integer getOrder_amount() {
+        return order_amount;
+    }
+
+    public void setOrder_amount(Integer order_amount) {
+        this.order_amount = order_amount;
+    }
+
+    public Float getFee() {
+        return fee;
+    }
+
+    public void setFee(Float fee) {
+        this.fee = fee;
     }
 
     public StockAdjustment() {
+    }
+
+    public StockAdjustment(Float order_time, String code, String state_message, Integer order_amount, Integer complete_amount, Float fee, Float total, Float price) {
+        this.order_time = order_time;
+        this.code = code;
+        this.state_message = state_message;
+        this.order_amount = order_amount;
+        this.complete_amount = complete_amount;
+        this.fee = fee;
+        this.total = total;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "StockAdjustment{" +
+                "order_time=" + order_time +
+                ", code='" + code + '\'' +
+                ", state_message='" + state_message + '\'' +
+                ", order_amount=" + order_amount +
+                ", complete_amount=" + complete_amount +
+                ", fee=" + fee +
+                ", total=" + total +
+                ", price=" + price +
+                '}';
     }
 }

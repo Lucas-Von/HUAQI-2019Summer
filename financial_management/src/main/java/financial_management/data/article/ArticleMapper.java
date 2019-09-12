@@ -3,6 +3,7 @@ package financial_management.data.article;
 import financial_management.entity.ArticlePO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @date 2019/8/17
  */
 @Mapper
+@Repository
 public interface ArticleMapper {
     /**
      * 插入一篇文章

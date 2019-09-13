@@ -42,7 +42,7 @@ CREATE TABLE `article` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bond`;
 CREATE TABLE `bond` (
-  `id` bigint(255) NOT NULL,
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
   `latest_price` float DEFAULT NULL,
@@ -52,7 +52,14 @@ CREATE TABLE `bond` (
 -- ----------------------------
 -- Records of bond
 -- ----------------------------
-INSERT INTO `bond` VALUES ('1', '债券1', '8888', '99');
+INSERT INTO `bond` (name, code, latest_price) VALUES ('债券1', '019613', '500');
+INSERT INTO `bond` (name, code, latest_price) VALUES ('债券2', '9802', '500');
+INSERT INTO `bond` (name, code, latest_price) VALUES ('债券3', '019320', '500');
+INSERT INTO `bond` (name, code, latest_price) VALUES ('债券4', '019587', '500');
+INSERT INTO `bond` (name, code, latest_price) VALUES ('债券5', '101801146', '500');
+INSERT INTO `bond` (name, code, latest_price) VALUES ('债券6', '1880025', '500');
+INSERT INTO `bond` (name, code, latest_price) VALUES ('债券7', '101751041', '500');
+INSERT INTO `bond` (name, code, latest_price) VALUES ('债券8', '101800345', '500');
 
 -- ----------------------------
 -- Table structure for bond_and_fund
@@ -64,7 +71,14 @@ CREATE TABLE `bond_and_fund` (
   `investment_proportion` float DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) VALUES (1,1,0.25,100);
+insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) VALUES (1,2,0.25,100);
+insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) VALUES (1,3,0.25,100);
+insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) VALUES (1,4,0.25,100);
+insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) VALUES (2,5,0.25,50);
+insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) VALUES (2,6,0.25,50);
+insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) VALUES (2,7,0.25,50);
+insert into bond_and_fund (fund_id, bond_id, investment_proportion, amount) VALUES (2,8,0.25,50);
 -- ----------------------------
 -- Records of bond_and_fund
 -- ----------------------------
@@ -88,8 +102,8 @@ CREATE TABLE `bond_foundation` (
 -- ----------------------------
 -- Records of bond_foundation
 -- ----------------------------
-INSERT INTO `bond_foundation` VALUES ('1', '国债', '1000', '200000', '200', '0.2', '2019-09-01 16:55:49', '1000');
-INSERT INTO `bond_foundation` VALUES ('2', '企业债', '1000', '100000', '100', '0.2', '2019-09-01 16:55:49', '1000');
+INSERT INTO `bond_foundation` VALUES ('1', 'national', '1000', '200000', '200', '0.2', '2019-09-01 16:55:49', '1000');
+INSERT INTO `bond_foundation` VALUES ('2', 'corporate', '1000', '100000', '100', '0.2', '2019-09-01 16:55:49', '1000');
 
 -- ----------------------------
 -- Table structure for bond_rate_log
@@ -101,6 +115,12 @@ CREATE TABLE `bond_rate_log` (
   `net_worth` double DEFAULT NULL,
   `time` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (1, 'national', 30, '2019-09-10');
+INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (1, 'national', 35 '2019-09-11');
+INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (1, 'national', 40, '2019-09-12');
+INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (2, 'corporate', 30, '2019-09-10');
+INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (2, 'corporate', 35 '2019-09-11');
+INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (2, 'corporate', 40, '2019-09-12');
 
 -- ----------------------------
 -- Records of bond_rate_log
@@ -548,7 +568,7 @@ CREATE TABLE `my_bond` (
   `purchase_price` float DEFAULT NULL,
   `profit` float DEFAULT NULL,
   `profit_rate` float DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
+  `purchase_quantity` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -792,18 +812,20 @@ INSERT INTO `personal_trade` VALUES ('2', null, '2019-09-01 17:09:09', '2019-09-
 -- ----------------------------
 DROP TABLE IF EXISTS `platform_bond_fund`;
 CREATE TABLE `platform_bond_fund` (
-  `handling_fee` float DEFAULT NULL,
   `bond_property` float DEFAULT NULL,
   `residual_property` float DEFAULT NULL,
   `return_rate_seven` float DEFAULT '0',
   `return_rate_thirty` float DEFAULT '0',
-  `return_rate_ninety` float DEFAULT '0'
+  `return_rate_ninety` float DEFAULT '0',
+  `commission_rate_one` float DEFAULT '0',
+  `commission_rate_two` float default '0',
+  `commission_rate_three` float default '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of platform_bond_fund
 -- ----------------------------
-INSERT INTO `platform_bond_fund` VALUES ('0.1', '300000', '10000', '0', '0', '0');
+INSERT INTO `platform_bond_fund`(bond_property,residual_property) VALUES ( '300000', '10000');
 
 -- ----------------------------
 -- Table structure for platform_trade

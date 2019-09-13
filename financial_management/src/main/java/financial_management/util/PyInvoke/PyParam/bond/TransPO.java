@@ -11,7 +11,7 @@ import java.util.Date;
 public class TransPO {
     String code;
     Float purchase_amount;
-    Integer quantity;
+    Integer purchase_quantity;
     Integer sign;
     Date time;
 
@@ -31,12 +31,12 @@ public class TransPO {
         this.purchase_amount = purchase_amount;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getPurchase_quantity() {
+        return purchase_quantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setPurchase_quantity(Integer purchase_quantity) {
+        this.purchase_quantity = purchase_quantity;
     }
 
     public Integer getSign() {

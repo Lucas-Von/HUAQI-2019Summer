@@ -19,14 +19,15 @@ public enum PyFunc {
     QDII_CUSTOMIZE("QDII_User_Purchase.py"),
     //    债券
 //      首次购买
-    BOND_FIRST_PURCHASE("First_Purchase.py"),
-    //      调整持有额
-    BOND_ADJUSTMENT("Adjustment.py"),
-    //      每天购买
-    BOND_DAILY_PURCHASE("Daily_Purchase2.py"),
-    //      指数维护
-    BOND_INDEX_MAINTENANCE("Index_Maintenance.py"),
-    //    黄金
+
+        BOND_FIRST_PURCHASE("First_Purchase.py"),
+//      调整持有额
+        BOND_ADJUSTMENT("Adjustment.py"),
+//      每天购买
+        BOND_DAILY_PURCHASE("Daily_Purchase.py"),
+//      指数维护
+        BOND_INDEX_MAINTENANCE("Index_Maintenance.py"),
+//    黄金
 //      持有额调整
     GOLD_INVEST("Invest_Gold.py"),
     //    现金
@@ -44,6 +45,7 @@ public enum PyFunc {
 
     public String path;
 
+
     /**
      * 为了满足所有人的调试需求及服务器的运行需要，把path的自定义放在了application.yml的python.dir里
      * 在各自的application.yml中自定义即可
@@ -53,6 +55,7 @@ public enum PyFunc {
     PyFunc(String path) {
 //        this.path = "C:\\Users\\S.W.R\\Desktop\\" + path;
         this.path = path;
+
     }
 
 }

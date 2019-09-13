@@ -12,6 +12,7 @@ File Encoding         : 65001
 
 Date: 2019-09-08 21:22:03
 */
+USE financial;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -313,7 +314,7 @@ CREATE TABLE `for_stock` (
 -- ----------------------------
 -- Records of for_stock
 -- ----------------------------
-INSERT INTO `for_stock` VALUES ('1', '阿这', '123123', '12');
+INSERT INTO `for_stock` VALUES ('1', '阿这', '123123', '12'),(2,'啊这','123321',23);
 
 -- ----------------------------
 -- Table structure for fund

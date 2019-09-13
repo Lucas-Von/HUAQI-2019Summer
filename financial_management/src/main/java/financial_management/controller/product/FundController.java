@@ -45,5 +45,9 @@ public class FundController {
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
     }
 
+    @GetMapping(value = "/cashTraceInfo")
+    public BasicResponse getTraceInfo(){
+        return fundService.getMoreTraceInfo();
+    }
 
 }

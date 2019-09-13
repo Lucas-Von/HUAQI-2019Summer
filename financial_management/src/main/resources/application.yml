@@ -29,3 +29,7 @@ mybatis:
 
 server:
   port: 3180
+
+# python调用配置 #
+python:
+  dir: ""

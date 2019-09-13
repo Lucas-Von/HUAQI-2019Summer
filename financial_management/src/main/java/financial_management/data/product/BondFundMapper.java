@@ -65,6 +65,8 @@ public interface BondFundMapper {
 
     int insertRateLog(@Param("id")Long id,@Param("netWorth")Float netWorth,@Param("time") Date time);
 
+    List<NetWorthPO> getRateLogs(Long id);
+
     BondPO selectBondByCode(String code);
 
     int updateBondPriceByCode(@Param("code")String code,@Param("price")Float price);

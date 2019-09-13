@@ -7,22 +7,22 @@ package financial_management.util.PyInvoke.PyParam.bond;
  * @Version 1.0
  **/
 public class NewBond {
-    String fund_code;
-    Float fund_price;
+    String code;
+    Float price;
 
-    public String getFund_code() {
-        return fund_code;
+    public String getCode() {
+        return code;
     }
 
-    public void setFund_code(String fund_code) {
-        this.fund_code = fund_code;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public Float getFund_price() {
-        return fund_price;
+    public Float getPrice() {
+        return price;
     }
 
-    public void setFund_price(Float fund_price) {
-        this.fund_price = fund_price;
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

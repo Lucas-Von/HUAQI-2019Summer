@@ -8,23 +8,29 @@ import financial_management.data.product.StockMapper;
 import financial_management.entity.TransferRecordPO;
 import financial_management.entity.stock.*;
 import financial_management.parameter.product.QDIICustomizeParam;
+import financial_management.service.property.questionnaire.QuestionnaireServiceForBl;
 import financial_management.util.ArithmeticUtil;
 import financial_management.util.PyInvoke.PyFunc;
+import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.stock.QDII_CustomizeTrade;
+import financial_management.util.PyInvoke.PyParam.stock.QDII_UniversalParam;
 import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
 import financial_management.util.PyInvoke.PyResponse.stock.StockAdjustment;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.ProductVO4Order;
+import financial_management.vo.product.StockAdjustmentVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,114 +46,186 @@ public class StockServiceImpl implements StockService {
     private StockAdjustmentMapper adjustmentMapper;
     @Autowired
     private MessageInterface messageInterface;
+    @Autowired
+    private QuestionnaireServiceForBl questionnaireService;
 
     private static Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
     @Override
-    public void changeStock(Long userId) {
-        List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
-//        float sum = 0;
-//        for (MyStockPO po : mydoms) {
-//            sum += po.getHoldTotal();
-//        }
-//        float whereCanIGetTargetAmount = 0;
-//        StockAdjustParam param = new StockAdjustParam(whereCanIGetTargetAmount, sum);
-//        List<Object> result = PyInvoke.invoke(PyFunc.STOCK_MONEY_ADJUST, param, StockAdjustment.class);
+    public void stockEstablish(Long userId) {
+        final PyFunc func = PyFunc.STOCK;
+        double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
+//        StockParam param = new StockParam(sdf.format(new Date()));
+//        List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
         List<Object> result = getStubData();
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
-                adjustments.add((StockAdjustment) object);
+                StockAdjustment adjustment = proportionalReadjust(whereCanIGetTargetAmount, (StockAdjustment) object);
+                if (adjustment.getComplete_amount() > 0) {
+                    adjustments.add(adjustment);
+                }
             }
-            domAdjust(adjustments, mydoms, userId);
+//            domAdjust(adjustments, new ArrayList<>(), userId);
+            handlePythonResult(userId, adjustments);
+        } else {
+            logger.error("Invoke Python function " + func.name() + " return null result.");
         }
     }
 
     @Override
     public void weeklyStockTransfer(Long userId) {
+        final PyFunc func = PyFunc.STOCK;
+        double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
-//        List<List<Object>> hold = new ArrayList<>(mydoms.size());
-//        for (MyStockPO po : mydoms) {
-//            List<Object> stockInfo = new ArrayList<>(2);
-//            stockInfo.add(po.getCode());
-//            stockInfo.add(po.getHoldNum());
-//            hold.add(stockInfo);
-//        }
-//        float whereCanIGetTargetAmount = 0;
-        //StockWeeklyTransferParam param = new StockWeeklyTransferParam(whereCanIGetTargetAmount, hold);
-        //List<Object> result = PyInvoke.invoke(PyFunc.STOCK_ADJUST_WEEKLY, param, StockAdjustment.class);
+        //StockParam param = new StockParam(sdf.format(new Date()));
+        //List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
         List<Object> result = getStubData();
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
-                adjustments.add((StockAdjustment) object);
+                StockAdjustment adjustment = proportionalReadjust(whereCanIGetTargetAmount, (StockAdjustment) object);
+                if (adjustment.getComplete_amount() > 0) {
+                    adjustments.add(adjustment);
+                } else {
+                    for (MyStockPO myStockPO : mydoms) {
+                        if (myStockPO.getCode().equals(adjustment.getCode())) {
+                            if (myStockPO.getHoldAmount() <= -adjustment.getComplete_amount()) {
+                                float completeAmount = myStockPO.getHoldAmount();
+                                float turnover = completeAmount * adjustment.getPrice();
+                                float fee = Math.abs(ArithmeticUtil.formatFloat2Float(turnover * 0.001f));
+
+                                adjustment.setFee(fee);
+                                adjustment.setTotal(turnover + fee);
+                            }
+
+                            adjustments.add(adjustment);
+                        }
+                    }
+                }
             }
-            domAdjust(adjustments, mydoms, userId);
+            handlePythonResult(userId, adjustments);
+        } else {
+            logger.error("Invoke Python function " + func.name() + " return null result.");
         }
+    }
+
+    private static StockAdjustment proportionalReadjust(double moneyUserHave, StockAdjustment originalAdjustment) {
+        final double ratio = moneyUserHave / 10000000;
+        int orderAmount = originalAdjustment.getOrder_amount();
+        int completeAmount = originalAdjustment.getComplete_amount();
+        float price = originalAdjustment.getPrice();
+
+        orderAmount = (int) Math.floor(orderAmount * ratio);
+        completeAmount = (int) Math.floor(completeAmount * ratio);
+        float turnover = completeAmount * price;
+        float fee = Math.abs(ArithmeticUtil.formatFloat2Float(turnover * 0.001f));
+
+        originalAdjustment.setTotal(turnover + fee);
+        originalAdjustment.setOrder_amount(orderAmount);
+        originalAdjustment.setComplete_amount(completeAmount);
+        originalAdjustment.setFee(fee);
+        return originalAdjustment;
     }
 
     @Override
     public void firstQDII(Long userId) {
-        final PyFunc func = PyFunc.QDII_MONEY_ADJUST;
-        //float whereCanIGetTargetAmount = 0;
-        //QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount,0,0,new ArrayList<>());
-        //List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);
-        List<Object> result = getStubData();
-        handlePythonResult_QDII(userId, func, result);
+        final PyFunc func = PyFunc.QDII_FIRST_PURCHASE;
+        float whereCanIGetTargetAmount = 0;
+        QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount, 0, 0, new ArrayList<>());
+        List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);
+//        List<Object> result = getStubData();
+        if (result != null) {
+            handlePythonResult_QDII(userId, func, result);
+        } else {
+            logger.error("Invoke Python function " + func.name() + " return null result.");
+        }
     }
 
     @Override
     public void MonthlyQDIITransfer(Long userId) {
         final PyFunc func = PyFunc.QDII_ADJUST_MONTHLY;
         //TODO 对接上要改回来
-        //List<MyQDIIPO> myQDIIs = stockMapper.selectSelfQDII(userId);
-        //List<List<Object>> hold = new ArrayList<>(myQDIIs.size());
-        //for (MyQDIIPO po : myQDIIs) {
-        //List<Object> stockInfo = new ArrayList<>(2);
-        //stockInfo.add(po.getCode());
-        //stockInfo.add(po.getHoldNum());
-        //hold.add(stockInfo);
-        //}
+        List<MyQDIIPO> myQDIIs = stockMapper.selectSelfQDII(userId);
+        List<List<Object>> hold = new ArrayList<>(myQDIIs.size());
+        for (MyQDIIPO po : myQDIIs) {
+            List<Object> stockInfo = new ArrayList<>(2);
+            stockInfo.add(po.getCode());
+            stockInfo.add(po.getHoldNum());
+            hold.add(stockInfo);
+        }
 
-        //float whereCanIGetTargetAmount = 6324;
-        //int hold_num = myQDIIs.stream().mapToInt(MyQDIIPO::getHoldNum).sum();
-        //float sum = new Double(myQDIIs.stream().mapToDouble(MyQDIIPO::getHoldTotal).sum()).floatValue();
-        //QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount, sum, 100 - hold_num, hold);
-        //List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);
-        List<Object> result = getStubData();
+        float whereCanIGetTargetAmount = new Double(questionnaireService.getRecQdii(userId)).floatValue();
+        int hold_num = myQDIIs.stream().mapToInt(MyQDIIPO::getHoldNum).sum();
+        float sum = new Double(myQDIIs.stream().mapToDouble(MyQDIIPO::getHoldTotal).sum()).floatValue();
+        QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount, sum, 100 - hold_num, hold);
+        List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);
+//        List<Object> result = getStubData();
 
-        handlePythonResult_QDII(userId, func, result);
-    }
-
-    private void handlePythonResult_QDII(Long userId, PyFunc func, List<Object> result) {
         if (result != null) {
-            //List<QDIIAdjustment> adjustments = new ArrayList<>(result.size());
-            Date createTime = new Date();
-            TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userId, false));
-            if (transferRecordPO != null) {
-                StringBuilder message = new StringBuilder("尊敬的用户，您有股指调仓计划需要确认，请在24小时之内选择是否需要进行这次调仓:");
-                for (Object object : result) {
-                    //adjustments.add((QDIIAdjustment) object);
-                    QDIIAdjustment raw = (QDIIAdjustment) object;
-                    QDIIAdjustmentPO adjustment = new QDIIAdjustmentPO(raw);
-                    adjustment.setTransID(transferRecordPO.getID());
-                    adjustment.setUserID(userId);
-                    if (adjustmentMapper.insertQDII(adjustment) != 1) {
-                        logger.error("Insert into QDII adjustments error.\nRecord: " + adjustment.toString());
-                        return;
-                    }
-                    message.append("\n").append(raw.toString());
-                }
-                try {
-                    messageInterface.postTransMessage(userId, message.toString(), MessageInterface.MsgType.TRANSFER_MSG, transferRecordPO.getID());
-                } catch (Exception e) {
-
-                }
-            } else {
-                logger.error("At " + Thread.currentThread().getStackTrace()[1].getMethodName() + ": Add transfer records error.");
-            }
+            handlePythonResult_QDII(userId, func, result);
         } else {
             logger.error("Invoke Python function " + func.name() + " return null result.");
+        }
+    }
+
+    @Transactional
+    void handlePythonResult(long userID, List<StockAdjustment> result) {
+        Date createTime = new Date();
+        TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userID, false));
+        if (transferRecordPO != null) {
+            StringBuilder message = new StringBuilder("尊敬的用户，您有新的股票调仓计划需要确认，请在24小时之内选择是否需要进行这次调仓:");
+            for (StockAdjustment raw : result) {
+                StockAdjustmentPO adjustmentPO = new StockAdjustmentPO(raw);
+                adjustmentPO.setTransID(transferRecordPO.getID());
+                adjustmentPO.setUserID(userID);
+                if (adjustmentMapper.insertStock(adjustmentPO) != 1) {
+                    logger.error("Insert into stock adjustments error.\nRecord: " + adjustmentPO.toString());
+                    return;
+                }
+                message.append("\n").append(new StockAdjustmentVO(raw).toString());
+            }
+            try {
+                messageInterface.postTransMessage(userID, message.toString(), transferRecordPO.getID());
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        } else {
+            logger.error("At " + Thread.currentThread().getStackTrace()[1].getMethodName() + ": Add transfer records error.");
+            throw new RuntimeException();
+        }
+    }
+
+    @Transactional
+    void handlePythonResult_QDII(Long userId, PyFunc func, List<Object> result) {
+        Date createTime = new Date();
+        TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userId, false));
+        if (transferRecordPO != null) {
+            StringBuilder message = new StringBuilder("尊敬的用户，您有新的股指调仓计划需要确认，请在24小时之内选择是否需要进行这次调仓:");
+            for (Object object : result) {
+                //adjustments.add((QDIIAdjustment) object);
+                QDIIAdjustment raw = (QDIIAdjustment) object;
+                QDIIAdjustmentPO adjustment = new QDIIAdjustmentPO(raw);
+                adjustment.setTransID(transferRecordPO.getID());
+                adjustment.setUserID(userId);
+                if (adjustmentMapper.insertQDII(adjustment) != 1) {
+                    logger.error("Insert into QDII adjustments error.\nRecord: " + adjustment.toString());
+                    return;
+                }
+                message.append("\n").append(raw.toString());
+            }
+            try {
+                messageInterface.postTransMessage(userId, message.toString(), transferRecordPO.getID());
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        } else {
+            logger.error("At " + Thread.currentThread().getStackTrace()[1].getMethodName() + ": Add transfer records error.");
+            throw new RuntimeException();
         }
     }
 
@@ -167,8 +245,8 @@ public class StockServiceImpl implements StockService {
             } else {
                 float holdShare = ArithmeticUtil.divide(hold, myQDIIPO.getHoldPrice());
                 QDII_CustomizeTrade pyparam = new QDII_CustomizeTrade(code, myQDIIPO.getHoldNum(), holdShare, money);
-                //List<Object> result = PyInvoke.invoke(func, pyparam, QDIIAdjustment.class);
-                List<Object> result = getStubData();
+                List<Object> result = PyInvoke.invoke(func, pyparam, QDIIAdjustment.class);
+//                List<Object> result = getStubData();
                 if (result != null) {
                     List<QDIIAdjustment> adjustments = new ArrayList<>(result.size());
                     for (Object o : result) {
@@ -191,6 +269,8 @@ public class StockServiceImpl implements StockService {
         BasicResponse<?> response;
         if (trans == null) {
             response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
+        } else if (!trans.getUserID().equals(userID)) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, null);
         } else {
             trans.setChecked(true);
 
@@ -201,6 +281,37 @@ public class StockServiceImpl implements StockService {
                 }
                 List<MyQDIIPO> myQDIIs = stockMapper.selectSelfQDII(userID);
                 qdiiAdjust(adjustmentPOS, myQDIIs, userID);
+                trans.setCompleteTime(new Date());
+            }
+            trans.setStatus(accepted ? 1 : 2);
+            trans.setDenied(!accepted);
+            if (orderService.updateTransferRecord(trans) != null) {
+                response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+            } else {
+                response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_ERROR, null);
+            }
+        }
+        return response;
+    }
+
+    public BasicResponse<?> StockTransCheck(long transID, long userID, boolean accepted) {
+        TransferRecordPO trans = orderService.getTransferRecordByID(transID);
+        BasicResponse<?> response;
+        if (trans == null) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
+        } else if (!trans.getUserID().equals(userID)) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, null);
+        } else {
+            trans.setChecked(true);
+
+            if (accepted) {
+                List<StockAdjustmentPO> adjustmentPOS = adjustmentMapper.selectStockAdjustmentByTransID(transID);
+                if (adjustmentPOS.isEmpty()) {
+                    logger.warn("Got an empty list of stock adjustment? That's INSANE!\nCause transID: " + transID);
+                }
+
+                List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
+                domAdjust(adjustmentPOS, myStockPOS, userID);
                 trans.setCompleteTime(new Date());
             }
             trans.setStatus(accepted ? 1 : 2);
@@ -235,17 +346,17 @@ public class StockServiceImpl implements StockService {
         return total;
     }
 
-    private void domAdjust(List<StockAdjustment> adjustments, List<MyStockPO> mydoms, Long userID) {
+    private void domAdjust(List<? extends StockAdjustment> adjustments, List<MyStockPO> mydoms, Long userID) {
         for (StockAdjustment adjustment : adjustments) {
-            float price = adjustment.getPrice_deployed();
-            int amount = adjustment.getAccount_deployed_change();
-            float total = adjustment.getM_already_deployed();
-            String code = adjustment.getStock_code();
+            float price = adjustment.getPrice();
+            int amount = adjustment.getComplete_amount();
+            float total = adjustment.getTotal();
+            String code = adjustment.getCode();
 
             MyStockPO myStockPO = null;
 
             for (MyStockPO po : mydoms) {
-                if (po.getCode().equals(adjustment.getStock_code())) {
+                if (po.getCode().equals(adjustment.getCode())) {
                     myStockPO = po;
 
                     float newTotal = myStockPO.getHoldTotal() + total;
@@ -262,12 +373,9 @@ public class StockServiceImpl implements StockService {
                 myStockPO = new MyStockPO();
                 myStockPO.setUserId(userID);
                 myStockPO.setCode(code);
-                myStockPO.setPurchasePrice(price);
-                myStockPO.setPurchaseAmount(amount);
-                myStockPO.setPurchaseTotal(total);
                 myStockPO.setHoldPrice(price);
                 myStockPO.setHoldAmount(amount);
-                myStockPO.setHoldTotal(total);
+                myStockPO.setHoldTotal(total - adjustment.getFee());
                 stockMapper.insertMyStock(myStockPO);
             }
 
@@ -360,8 +468,8 @@ public class StockServiceImpl implements StockService {
 
     private List<Object> getStubData() {
         List<Object> result = new ArrayList<>(2);
-        result.add(new StockAdjustment("123456", "随便", 1000, 1000.0f, 1.0f));
-        result.add(new StockAdjustment("654321", "可以", -1000, -1000.0f, 1.0f));
+        result.add(new StockAdjustment(1566144000.0f, "600339.XSHG", "全部成交", 920800, 920800, 3314.88f, 3318194.88f, 3.6f));
+        result.add(new StockAdjustment(1566144000.0f, "002625.XSHE", "全部成交", 400100, 400100, 3432.858f, 3436290.858f, 8.58f));
         return result;
     }
 }

@@ -80,7 +80,7 @@ public class InvestmentServiceImpl implements InvestmentService {
         domStocks.stream().forEach(o -> {
             DomStockPO domStock = stockMapper.selectDomStockByCode(o.getCode());
             if (domStock != null) {
-                InvestmentVO vo = new InvestmentVO(domStock.getName(), "国内股票", o.getCode(), domStock.getLatestPrice().doubleValue(), o.getHoldAmount(), o.getHoldTotal().doubleValue(), o.getProfit().doubleValue(), o.getProfitRate().doubleValue());
+                InvestmentVO vo = new InvestmentVO(domStock.getName(), "国内股票", o.getCode(), domStock.getLatestPrice().doubleValue(), (float)o.getHoldAmount(), o.getHoldTotal().doubleValue(), o.getProfit().doubleValue(), o.getProfitRate().doubleValue());
                 investments.add(vo);
             }
         });
@@ -144,7 +144,6 @@ public class InvestmentServiceImpl implements InvestmentService {
 //                    //因为刚买，没有利润
 //                    po.setProfit(0.0F);
 //                    po.setProfitRate(0.0F);
-//                    po.setPurchasePrice(totalprice.floatValue());
 //                    po.setQuantity(amount);
 //                    goldMapper.insertMyGold(po);
                     break;
@@ -169,8 +168,7 @@ public class InvestmentServiceImpl implements InvestmentService {
                     //因为刚买，没有利润
                     myStockPO.setProfit(0.0F);
                     myStockPO.setProfitRate(0.0F);
-                    myStockPO.setPurchasePrice(totalprice.floatValue());
-                    myStockPO.setHoldAmount(amount);
+                    myStockPO.setHoldAmount(Math.round(amount));
                     stockMapper.insertMyStock(myStockPO);
                     break;
             }

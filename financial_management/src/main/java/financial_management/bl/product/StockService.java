@@ -4,7 +4,7 @@ import financial_management.parameter.product.QDIICustomizeParam;
 import financial_management.vo.BasicResponse;
 
 public interface StockService {
-    void changeStock(Long userId);
+    void stockEstablish(Long userId);
 
     void weeklyStockTransfer(Long userId);
 

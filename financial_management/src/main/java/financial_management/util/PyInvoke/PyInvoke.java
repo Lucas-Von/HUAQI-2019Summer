@@ -1,7 +1,9 @@
 package financial_management.util.PyInvoke;
 
 import com.alibaba.fastjson.JSON;
+import financial_management.configuration.PyInvokeProperties;
 import financial_management.util.PyInvoke.PyParam.PyParam;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PyInvoke {
+
+    @Autowired
+    private static PyInvokeProperties pyInvokeProperties;
 
     private static final String invokeCmd = "python";
 
@@ -25,7 +30,9 @@ public class PyInvoke {
         String path = func.path;
         StringBuffer cmd = new StringBuffer();
         cmd.append(invokeCmd + " ");
-        cmd.append(path + " ");
+
+        //文件路径的最终形成在这里
+        cmd.append(pyInvokeProperties.getDir() + path + " ");
         String rawString = JSON.toJSONString(param);
 //        处理双引号转义
         StringBuffer stringBuffer = new StringBuffer();

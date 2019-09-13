@@ -11,7 +11,7 @@
 	<groupId>citigroup</groupId>
 	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<product>financial_management</product>
+    <name>financial_management</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -97,6 +97,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Configurations -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency>
 
 		<dependency>

@@ -75,9 +75,9 @@ public class QDIIAdjustment {
     public String toString() {
         return qdii_code
                 + " " + name
-                + " 调整份额:" + ArithmeticUtil.formatFloat2String(share_deployed)
-                + " 调整份数:" + number_deployed
-                + " 调整金额:" + ArithmeticUtil.formatFloat2String(m_already_deployed)
-                + " 市价:" + ArithmeticUtil.formatFloat2String(price_deployed);
+                + " 调整份额：" + ArithmeticUtil.formatFloat2String(share_deployed)
+                + " 调整份数：" + number_deployed
+                + " 调整金额：" + ArithmeticUtil.formatFloat2String(m_already_deployed)
+                + " 市价：" + ArithmeticUtil.formatFloat2String(price_deployed);
     }
 }

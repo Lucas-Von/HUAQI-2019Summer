@@ -31,22 +31,15 @@
     </select>
 
     <insert id="insertMyStock" parameterType="financial_management.entity.stock.MyStockPO">
-        insert into my_stock (user_id, code, purchase_price, purchase_amount, purchase_total, hold_price, hold_amount,
+        insert into my_stock (user_id, code, hold_price, hold_amount,
                               hold_total)
-        values (#{userId}, #{code}, #{purchasePrice}, #{purchaseAmount}, #{purchaseTotal}, #{holdPrice}, #{holdNum},
+        values (#{userId}, #{code}, #{holdPrice}, #{holdNum},
                 #{holdTotal});
     </insert>
 
     <insert id="insertMyQDII" parameterType="financial_management.entity.stock.MyQDIIPO">
         insert into my_qdii (user_id, code, hold_price, hold_num, hold_total)
         values (#{userId}, #{code}, #{holdPrice}, #{holdNum}, #{holdTotal});
-    </insert>
-
-    <insert id="insertQDIIAdjustment" parameterType="financial_management.entity.stock.QDIIAdjustmentPO">
-        insert into qdii_adjustment (qdii_code, name, share_deployed, number_deployed, m_already_deployed,
-                                     price_deployed, user_id, trans_id)
-        values (#{qdii_code}, #{name}, #{share_deployed}, #{number_deployed}, #{m_already_deployed}, #{price_deployed},
-                #{userID}, #{transID});
     </insert>
 
     <update id="updateMyStock" parameterType="financial_management.entity.stock.MyStockPO">
@@ -98,11 +91,8 @@
     <resultMap id="MyStockProduct" type="financial_management.entity.stock.MyStockPO">
         <result property="code" column="code"/>
         <result property="userId" column="user_id"/>
-        <result property="purchasePrice" column="purchase_price"/>
-        <result property="purchaseAmount" column="purchase_amount"/>
-        <result property="purchaseTotal" column="purchase_total"/>
         <result property="holdPrice" column="hold_price"/>
-        <result property="holdNum" column="hold_amount"/>
+        <result property="holdAmount" column="hold_amount"/>
         <result property="holdTotal" column="hold_total"/>
         <result property="profit" column="profit"/>
         <result property="profitRate" column="profit_rate"/>

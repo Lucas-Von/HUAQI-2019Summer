@@ -18,15 +18,6 @@ public class MyStockPO {
     String code;
 
     /**
-     * @Description //购买价格
-     **/
-    Float purchasePrice;
-
-    Integer purchaseAmount;
-
-    Float purchaseTotal;
-
-    /**
      * @Description 单位持有成本价
      */
     Float holdPrice;
@@ -34,7 +25,7 @@ public class MyStockPO {
     /**
      * @Description //持有数量
      **/
-    Float holdAmount;
+    Integer holdAmount;
 
     /**
      * @Description //持有额
@@ -61,19 +52,11 @@ public class MyStockPO {
         this.code = code;
     }
 
-    public Float getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(Float purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
-    public Float getHoldAmount() {
+    public Integer getHoldAmount() {
         return holdAmount;
     }
 
-    public void setHoldAmount(float holdAmount) {
+    public void setHoldAmount(Integer holdAmount) {
         this.holdAmount = holdAmount;
     }
 
@@ -83,22 +66,6 @@ public class MyStockPO {
 
     public void setHoldTotal(Float holdTotal) {
         this.holdTotal = holdTotal;
-    }
-
-    public Integer getPurchaseAmount() {
-        return purchaseAmount;
-    }
-
-    public void setPurchaseAmount(Integer purchaseAmount) {
-        this.purchaseAmount = purchaseAmount;
-    }
-
-    public Float getPurchaseTotal() {
-        return purchaseTotal;
-    }
-
-    public void setPurchaseTotal(Float purchaseTotal) {
-        this.purchaseTotal = purchaseTotal;
     }
 
     public Float getHoldPrice() {

@@ -25,23 +25,23 @@ public class InitializationRunner implements ApplicationRunner {
 
     @Override
     public void run (
-    ApplicationArguments args) {
-        if(mapper.selectBondFundByName("国债")==null){
+            ApplicationArguments args) {
+        if(mapper.selectBondFundByName("national")==null){
             BondFoundationPO po = new BondFoundationPO();
             po.setDebtSum(1000.0F);
             po.setExpectReturnRate(0.2F);
-            po.setFundName("国债");
+            po.setFundName("national");
             po.setFundScale(200000F);
             po.setFundShare(1000F);
             po.setFundUnitValue(200F);
             po.setUpdateTime(new Timestamp(new Date().getTime()));
             mapper.insertBondFund(po);
         }
-        if(mapper.selectBondFundByName("企业债")==null){
+        if(mapper.selectBondFundByName("corporate")==null){
             BondFoundationPO po = new BondFoundationPO();
             po.setDebtSum(1000.0F);
             po.setExpectReturnRate(0.2F);
-            po.setFundName("企业债");
+            po.setFundName("corporate");
             po.setFundScale(100000F);
             po.setFundShare(1000F);
             po.setFundUnitValue(100F);
@@ -51,7 +51,6 @@ public class InitializationRunner implements ApplicationRunner {
         if(mapper.selectBondPlatform()==null){
             BondPlatformPO platform = new BondPlatformPO();
             platform.setBondAssets(300000F);
-            platform.setHandlingFee(0.1F);
             platform.setResidualAssets(10000F);
             mapper.insertBondPlatform(platform);
         }

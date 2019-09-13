@@ -15,6 +15,8 @@ import financial_management.util.DateConverterUtil;
 import financial_management.util.PyInvoke.PyFunc;
 import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.PyParam;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.FundBasicVO;
@@ -101,6 +103,12 @@ public class FundServiceImpl implements FundService4Wallet, FundService, Product
     public boolean generateFund(Long userId) {
         mapper.insertNewFund(userId,0.0F);
         return true;
+    }
+
+    @Override
+    public BasicResponse getMoreTraceInfo() {
+        FundPO po = mapper.selectFund();
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,po);
     }
 
     public ProductVO4Order getProduct(Long id){

@@ -8,7 +8,7 @@ public interface MessageInterface {
 
     BasicResponse<Long> postMessageToUserBy(Long userID, String content, MsgType msgType);
 
-    void postTransMessage(Long userID, String content, MsgType msgType, long transID) throws Exception;
+    void postTransMessage(Long userID, String content, long transID) throws RuntimeException;
 
     enum MsgType{
         TRANSFER_MSG(1),//调仓消息

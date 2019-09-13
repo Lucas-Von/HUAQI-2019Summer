@@ -154,8 +154,8 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
     }
 
     @Override
-    public void postTransMessage(Long userID, String content, MsgType msgType, long transID) throws Exception {
-        BasicResponse<Long> response = postMessageToUserBy(userID, content, msgType);
+    public void postTransMessage(Long userID, String content, long transID) throws RuntimeException {
+        BasicResponse<Long> response = postMessageToUserBy(userID, content, MsgType.TRANSFER_MSG);
         if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
             int insert = messageMapper.insertTM(transID, response.getData());
             if (insert != 1) {
@@ -163,6 +163,7 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
                         "At " + Thread.currentThread().getStackTrace()[1].getMethodName() + " :insert into transfer message error."
                         + "\ntransID: " + transID + " , messageID: " + response.getData()
                 );
+                throw new RuntimeException("插入调仓消息记录失败");
             }
         }
     }

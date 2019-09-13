@@ -1,5 +1,6 @@
 package financial_management.bl.product;
 
+import financial_management.vo.BasicResponse;
 import financial_management.vo.product.FundBasicVO;
 import financial_management.vo.product.FundVO;
 
@@ -13,4 +14,6 @@ public interface FundService {
     public FundVO getFund(Long userId);
 
     public FundBasicVO getBasicFund();
+
+    public BasicResponse getMoreTraceInfo();
 }

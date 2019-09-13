@@ -1,5 +1,6 @@
 package financial_management.service.message.impl;
 
+import financial_management.bl.message.ITransferMessage;
 import financial_management.bl.message.MessageInterface;
 import financial_management.bl.message.MessageService;
 import financial_management.data.message.MessageMapper;
@@ -8,6 +9,7 @@ import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.message.MessageVO;
 import financial_management.vo.message.NewMessageVO;
+import financial_management.vo.message.TransMessageVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +24,40 @@ import java.util.List;
 public class MessageServiceImpl implements MessageService, MessageInterface {
     @Autowired
     private MessageMapper messageMapper;
+    @Autowired
+    private ITransferMessage iTransferMessage;
 
     private static final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
 
     @Override
-    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID) {
+    public BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID) {
         List<MessagePO> messages = messageMapper.selectByUserID(ID);
         return getListBasicResponseOnSuccess(messages);
     }
 
     @Override
-    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type) {
+    public BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID, int type) {
         List<MessagePO> messages = messageMapper.selectByUserIDandType(ID, type);
         return getListBasicResponseOnSuccess(messages);
     }
 
     @Override
-    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type, int page) {
+    public BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID, int type, int page) {
         List<MessagePO> messages = messageMapper.selectByUserIDandTypeAndPage(ID, type, page);
         return getListBasicResponseOnSuccess(messages);
     }
 
-    private static BasicResponse<List<MessageVO>> getListBasicResponseOnSuccess(List<MessagePO> messages) {
-        BasicResponse<List<MessageVO>> response;
+    private BasicResponse<List<? extends MessageVO>> getListBasicResponseOnSuccess(List<MessagePO> messages) {
+        BasicResponse<List<? extends MessageVO>> response;
         List<MessageVO> vos = new ArrayList<>(messages.size());
         for (MessagePO messagePO : messages) {
-            vos.add(new MessageVO(messagePO));
+            if (messagePO.getType() == 1) {
+                TransMessageVO transMessageVO = new TransMessageVO(messagePO);
+                transMessageVO = iTransferMessage.getTransMessageInfoByID(transMessageVO);
+                vos.add(transMessageVO);
+            } else {
+                vos.add(new MessageVO(messagePO));
+            }
         }
         response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
         return response;
@@ -143,7 +153,7 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
             } else {
                 logger.error(
                         "At " + Thread.currentThread().getStackTrace()[1].getMethodName() + " :insert into message error."
-                        + "\n" + po.toString()
+                                + "\n" + po.toString()
                 );
                 return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
             }
@@ -161,7 +171,7 @@ public class MessageServiceImpl implements MessageService, MessageInterface {
             if (insert != 1) {
                 logger.error(
                         "At " + Thread.currentThread().getStackTrace()[1].getMethodName() + " :insert into transfer message error."
-                        + "\ntransID: " + transID + " , messageID: " + response.getData()
+                                + "\ntransID: " + transID + " , messageID: " + response.getData()
                 );
                 throw new RuntimeException("插入调仓消息记录失败");
             }

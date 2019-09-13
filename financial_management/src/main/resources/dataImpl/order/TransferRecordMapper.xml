@@ -24,6 +24,18 @@
         where id = #{ID,jdbcType=BIGINT}
     </select>
 
+    <select id="selectByMessageID" resultMap="original">
+        select *
+        from transfer_record
+        where id = (select trans_id from transfer_message where message_id = #{messageID})
+    </select>
+
+    <select id="hasTransferRecord" resultType="java.lang.Integer">
+        select count(trans_id)
+        from transfer_message
+        where message_id = #{messageID};
+    </select>
+
     <insert id="insert" parameterType="financial_management.entity.TransferRecordPO" keyColumn="id" keyProperty="ID"
             useGeneratedKeys="true">
         insert into transfer_record (create_time, complete_time, user_id, is_checked, is_denied, is_customize, status)

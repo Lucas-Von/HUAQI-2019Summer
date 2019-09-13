@@ -17,7 +17,12 @@ public class StockController {
     private JwtUtil jwtUtil;
 
     @PostMapping("qdii/trans/{transID}")
-    public BasicResponse checkTransfer(@PathVariable long transID, @RequestParam boolean accepted, HttpServletRequest request) {
+    public BasicResponse checkQDIITransfer(@PathVariable long transID, @RequestParam boolean accepted, HttpServletRequest request) {
         return stockService.QDIITransferCheck(transID,jwtUtil.getIdFromRequest(request),accepted);
+    }
+
+    @PostMapping("stock/trans/{transID}")
+    public BasicResponse checkStockTransfer(@PathVariable long transID, @RequestParam boolean accepted, HttpServletRequest request) {
+        return stockService.StockTransCheck(transID,jwtUtil.getIdFromRequest(request),accepted);
     }
 }

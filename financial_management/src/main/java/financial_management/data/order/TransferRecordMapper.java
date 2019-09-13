@@ -14,6 +14,10 @@ public interface TransferRecordMapper {
 
     TransferRecordPO selectByID(@Param("ID") Long ID);
 
+    TransferRecordPO selectByMessageID(@Param("messageID") long messageID);
+
+    int hasTransferRecord(@Param("messageID") long messageID);
+
     Integer insert(TransferRecordPO transferRecordPO);
 
     Integer update(TransferRecordPO transferRecordPO);

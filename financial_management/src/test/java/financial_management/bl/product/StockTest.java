@@ -16,14 +16,14 @@ public class StockTest {
     private StockService stockService;
 
     @Before
-    private void setUp(){
+    public void setUp(){
 
     }
 
     @Test
     @Transactional
-    public void stockEstablish_normal(){
+    public void QDIIEstablish_normal(){
         long userID = 1L;
-        stockService.stockEstablish(userID);
+        stockService.firstQDII(userID);
     }
 }

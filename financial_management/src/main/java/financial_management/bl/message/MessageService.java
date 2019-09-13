@@ -7,11 +7,11 @@ import financial_management.vo.message.NewMessageVO;
 import java.util.List;
 
 public interface MessageService {
-    BasicResponse<List<MessageVO>> getMessagesByUser(Long ID);
+    BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID);
 
-    BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type);
+    BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID, int type);
 
-    BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type, int page);
+    BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID, int type, int page);
 
     BasicResponse<List<NewMessageVO>> getNewMessageByUser(Long ID);
 

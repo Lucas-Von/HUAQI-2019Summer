@@ -139,6 +139,36 @@ CREATE TABLE `bond_rate_log` (
   `net_worth` double DEFAULT NULL,
   `time` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",100,"2019-09-01");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",130,"2019-09-02");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-03");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-04");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",120,"2019-09-05");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",130,"2019-09-06");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-07");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-08");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",160,"2019-09-09");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",150,"2019-09-10");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",170,"2019-09-11");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",190,"2019-09-12");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-13");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",180,"2019-09-14");
+
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",100,"2019-09-01");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",130,"2019-09-02");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-03");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-04");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",120,"2019-09-05");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",130,"2019-09-06");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-07");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-08");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",160,"2019-09-09");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",150,"2019-09-10");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",170,"2019-09-11");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",190,"2019-09-12");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-13");
+insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",180,"2019-09-14");
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +177,7 @@ CREATE TABLE `bond_rate_log` (
 
 LOCK TABLES `bond_rate_log` WRITE;
 /*!40000 ALTER TABLE `bond_rate_log` DISABLE KEYS */;
-INSERT INTO `bond_rate_log` VALUES (1,'national',30,'2019-09-10'),(1,'national',35,'2019-09-11'),(1,'national',40,'2019-09-12'),(2,'corporate',30,'2019-09-10'),(2,'corporate',35,'2019-09-11'),(2,'corporate',40,'2019-09-12');
+
 /*!40000 ALTER TABLE `bond_rate_log` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -45,7 +45,8 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_QUESTIONNAIRE_MLEARNING_WRONG = new ResponseStatus("6009","MLearning.py went wrong when analyzing questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_VULNERABILITY_WRONG = new ResponseStatus("6010","Vulnerability.py went wrong when analyzing questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_ASSET_WRONG = new ResponseStatus("6011","Asset.py went wrong when analyzing questionnaire.");
-    public static final ResponseStatus STATUS_FORTUNE_RECORD_NOT_EXIST = new ResponseStatus("6012", "The record of your fortune changes does not exist.");
+    public static final ResponseStatus STATUS_QUESTIONNAIRE_VIP_WRONG = new ResponseStatus("6012","My_score card.py went wrong when analyzing questionnaire.");
+    public static final ResponseStatus STATUS_FORTUNE_RECORD_NOT_EXIST = new ResponseStatus("6013", "The record of your fortune changes does not exist.");
 
     public static final ResponseStatus STATUS_EMAIL_EXIST = new ResponseStatus("8001", "The email has existed");
     public static final ResponseStatus STATUS_IDENTITY_EXIST = new ResponseStatus("8002", "The identity has existed");

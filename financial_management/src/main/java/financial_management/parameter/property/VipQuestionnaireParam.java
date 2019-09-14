@@ -11,11 +11,6 @@ import java.util.Date;
 public class VipQuestionnaireParam {
 
     /**
-     * 用户id
-     */
-    private Long userId;
-
-    /**
      * 更新问卷日期
      */
     private Date recordDate;
@@ -174,14 +169,6 @@ public class VipQuestionnaireParam {
      * 会员等级
      */
     private int vipLevel;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public Date getRecordDate() {
         return new Date();

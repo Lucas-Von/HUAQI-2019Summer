@@ -11,9 +11,11 @@ import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.PyParam;
 import financial_management.util.PyInvoke.PyParam.questionnaire.AssetConfigParam;
 import financial_management.util.PyInvoke.PyParam.questionnaire.MLearningConfigParam;
+import financial_management.util.PyInvoke.PyParam.questionnaire.VipConfigParam;
 import financial_management.util.PyInvoke.PyParam.questionnaire.VulnerabilityConfigParam;
 import financial_management.util.PyInvoke.PyResponse.questionnaire.AssetConfigResponse;
 import financial_management.util.PyInvoke.PyResponse.questionnaire.MLearningConfigResponse;
+import financial_management.util.PyInvoke.PyResponse.questionnaire.VipConfigResponse;
 import financial_management.util.PyInvoke.PyResponse.questionnaire.VulnerabilityConfigResponse;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
@@ -103,13 +105,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     /**
      * 增加&更新VIP用户的问卷
      *
+     * @param userId
      * @param vipQuestionnaireParam
      * @return
      */
     @Override
-    public BasicResponse setVipQuestionnaire(VipQuestionnaireParam vipQuestionnaireParam) {
+    public BasicResponse setVipQuestionnaire(Long userId, VipQuestionnaireParam vipQuestionnaireParam) {
         try {
-            Long userId = vipQuestionnaireParam.getUserId();
             if (hasQuest(userId)) {
                 questionnaireMapper.updateVipQuest(vipQuestionnaireParam);
             } else {
@@ -118,6 +120,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
 
             QuestionnaireConfigPO questionnaireConfigPO = new QuestionnaireConfigPO();
             questionnaireConfigPO.setUserId(userId);
+            questionnaireConfigPO.setVip_level(vipQuestionnaireParam.getVipLevel());
 
             PyParam pyParam1 = new MLearningConfigParam(vipQuestionnaireParam.getFinInfo(), vipQuestionnaireParam.getVolChose(), vipQuestionnaireParam.getStockPrefer(), vipQuestionnaireParam.getBankCard(), vipQuestionnaireParam.getCurrentDeposit(), vipQuestionnaireParam.getFixedDeposit(), vipQuestionnaireParam.getHaveFund(), vipQuestionnaireParam.getHaveBank(), vipQuestionnaireParam.getBoardWages(), vipQuestionnaireParam.getBoardWageOutside(), vipQuestionnaireParam.getMonthlySupply(), vipQuestionnaireParam.getMonthlyTraffic(), vipQuestionnaireParam.getMonthlyPhone(), vipQuestionnaireParam.getMonthlyPlay(), vipQuestionnaireParam.getLastClothes(), vipQuestionnaireParam.getLastTourist(), vipQuestionnaireParam.getMonthlyTenement(), vipQuestionnaireParam.getAsset(), vipQuestionnaireParam.getTotalIncome());
             List<Object> invokeResult1 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_INVEST_PREFERENCE, pyParam1, MLearningConfigResponse.class);
@@ -184,13 +187,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     /**
      * 增加&更新非VIP用户的问卷
      *
+     * @param userId
      * @param nVipQuestionnaireParam
      * @return
      */
     @Override
-    public BasicResponse setNVipQuestionnaire(NVipQuestionnaireParam nVipQuestionnaireParam) {
+    public BasicResponse setNVipQuestionnaire(Long userId, NVipQuestionnaireParam nVipQuestionnaireParam) {
         try {
-            Long userId = nVipQuestionnaireParam.getUserId();
             if (hasQuest(userId)) {
                 questionnaireMapper.updateNVipQuest(nVipQuestionnaireParam);
             } else {
@@ -248,6 +251,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             questionnaireConfigPO.setTotal_volatility(assetConfigResponse.getVol());
             questionnaireConfigPO.setTotal_yield(assetConfigResponse.getEarnings());
             questionnaireConfigPO.setTotal_risk_level(assetConfigResponse.getLabel());
+
+            PyParam pyParam4 = new VipConfigParam(nVipQuestionnaireParam.getUnpaidArrears(), nVipQuestionnaireParam.getPreviousArrearsDue(), nVipQuestionnaireParam.getLineOfCredit(), nVipQuestionnaireParam.getCashAdvance(), nVipQuestionnaireParam.getLastPayment(), nVipQuestionnaireParam.getMinimumDuePayment(), nVipQuestionnaireParam.getFixedDeposit());
+            List<Object> invokeResult4 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_VIP_LEVEL, pyParam4, VipConfigResponse.class);
+            List<VipConfigResponse> list4 = new ArrayList<>();
+            for (Object object : Objects.requireNonNull(invokeResult4)) {
+                list4.add((VipConfigResponse) object);
+            }
+            if (list4.size() == 0) {
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_VIP_WRONG);
+            }
+            VipConfigResponse vipConfigResponse = list4.get(0);
+            questionnaireConfigPO.setVip_level(vipConfigResponse.getVip_level());
 
             if (hasRecommend(userId)) {
                 questionnaireMapper.updateQuestionnaireConfig(questionnaireConfigPO);

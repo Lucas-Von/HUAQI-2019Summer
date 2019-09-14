@@ -1,6 +1,6 @@
 package financial_management.parameter.product;
 
-public class QDIICustomizeParam {
+public class StockCustomizeParam {
     private String code;
     private float money;
 

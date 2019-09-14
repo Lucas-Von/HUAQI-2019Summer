@@ -1,6 +1,6 @@
 package financial_management.bl.product;
 
-import financial_management.parameter.product.QDIICustomizeParam;
+import financial_management.parameter.product.StockCustomizeParam;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.product.MyStockVO;
 
@@ -29,7 +29,9 @@ public interface StockService {
      */
     void MonthlyQDIITransfer(Long userId);
 
-    BasicResponse<?> QDIICustomize(QDIICustomizeParam param, long userID);
+    BasicResponse<?> StockCustomize(StockCustomizeParam param, long userID);
+
+    BasicResponse<?> QDIICustomize(StockCustomizeParam param, long userID);
 
     BasicResponse<?> QDIITransferCheck(long transID, long userID, boolean accepted);
 

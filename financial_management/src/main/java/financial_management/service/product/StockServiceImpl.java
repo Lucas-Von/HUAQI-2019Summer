@@ -7,7 +7,7 @@ import financial_management.data.product.StockAdjustmentMapper;
 import financial_management.data.product.StockMapper;
 import financial_management.entity.TransferRecordPO;
 import financial_management.entity.stock.*;
-import financial_management.parameter.product.QDIICustomizeParam;
+import financial_management.parameter.product.StockCustomizeParam;
 import financial_management.service.property.questionnaire.QuestionnaireServiceForBl;
 import financial_management.util.ArithmeticUtil;
 import financial_management.util.PyInvoke.PyFunc;
@@ -49,12 +49,12 @@ public class StockServiceImpl implements StockService {
     private QuestionnaireServiceForBl questionnaireService;
 
     private static Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
-
+    private static final double STOCK_BASE = 10000000;
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public BasicResponse<Map<String, List<MyStockVO>>> getHoldStock(long userID) {
-        BasicResponse<Map<String,List<MyStockVO>>> response;
+        BasicResponse<Map<String, List<MyStockVO>>> response;
         List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
         List<MyStockVO> myStockVOS = new ArrayList<>(myStockPOS.size());
         myStockPOS.forEach(myStockPO -> {
@@ -71,10 +71,10 @@ public class StockServiceImpl implements StockService {
             myQDIIVOS.add(myStockVO);
         });
 
-        Map<String,List<MyStockVO>> hold = new HashMap<>();
-        hold.put(OrderService.Type.DOMSTOCK.name(),myStockVOS);
-        hold.put(OrderService.Type.FORSTOCK.name(),myQDIIVOS);
-        response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,hold);
+        Map<String, List<MyStockVO>> hold = new HashMap<>();
+        hold.put(OrderService.Type.DOMSTOCK.name(), myStockVOS);
+        hold.put(OrderService.Type.FORSTOCK.name(), myQDIIVOS);
+        response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, hold);
         return response;
     }
 
@@ -88,7 +88,7 @@ public class StockServiceImpl implements StockService {
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
-                StockAdjustment adjustment = proportionalReadjust(whereCanIGetTargetAmount, (StockAdjustment) object);
+                StockAdjustment adjustment = proportionalReadjust(whereCanIGetTargetAmount, STOCK_BASE, (StockAdjustment) object);
                 if (adjustment.getComplete_amount() > 0) {
                     adjustments.add(adjustment);
                 }
@@ -111,7 +111,7 @@ public class StockServiceImpl implements StockService {
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
-                StockAdjustment adjustment = proportionalReadjust(whereCanIGetTargetAmount, (StockAdjustment) object);
+                StockAdjustment adjustment = proportionalReadjust(whereCanIGetTargetAmount, STOCK_BASE, (StockAdjustment) object);
                 if (adjustment.getComplete_amount() > 0) {
                     adjustments.add(adjustment);
                 } else {
@@ -137,8 +137,8 @@ public class StockServiceImpl implements StockService {
         }
     }
 
-    private static StockAdjustment proportionalReadjust(double moneyUserHave, StockAdjustment originalAdjustment) {
-        final double ratio = moneyUserHave / 10000000;
+    private static StockAdjustment proportionalReadjust(double moneyUserHave, double base, StockAdjustment originalAdjustment) {
+        final double ratio = moneyUserHave / base;
         int orderAmount = originalAdjustment.getOrder_amount();
         int completeAmount = originalAdjustment.getComplete_amount();
         float price = originalAdjustment.getPrice();
@@ -254,7 +254,41 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public BasicResponse<?> QDIICustomize(QDIICustomizeParam param, long userID) {
+    public BasicResponse<?> StockCustomize(StockCustomizeParam param, long userID) {
+        BasicResponse<?> response;
+        List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
+        float money = param.getMoney();
+        double holdTotal = myStockPOS.stream().mapToDouble(MyStockPO::getHoldTotal).sum();
+        List<StockAdjustment> adjustments = new ArrayList<>(myStockPOS.size());
+        float orderTime = new Date().getTime();
+        for (MyStockPO myStockPO : myStockPOS) {
+            DomStockPO stockPO = stockMapper.selectDomStockByCode(myStockPO.getCode());
+            StockAdjustment adjustment = new StockAdjustment();
+            adjustment.setOrder_time(orderTime);
+            adjustment.setCode(myStockPO.getCode());
+            adjustment.setState_message("");
+            int amount = money > 0 ? myStockPO.getHoldAmount() : 0 - myStockPO.getHoldAmount();
+            adjustment.setOrder_amount(amount);
+            adjustment.setComplete_amount(amount);
+            adjustment.setPrice(stockPO.getLatestPrice());
+            float turnover = amount * adjustment.getPrice();
+            float fee = Math.abs(turnover * 0.001f);
+            adjustment.setFee(fee);
+            adjustment.setTotal(turnover + fee);
+            proportionalReadjust(Math.abs(money), holdTotal, adjustment);
+            adjustments.add(adjustment);
+        }
+        List<PersonalTradeVO> personalTradeVOS = domAdjust(adjustments,myStockPOS,userID);
+        if (personalTradeVOS.size()>0){
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,personalTradeVOS);
+        } else {
+            response = new BasicResponse<>(ResponseStatus.SERVER_ERROR,null);
+        }
+        return response;
+    }
+
+    @Override
+    public BasicResponse<?> QDIICustomize(StockCustomizeParam param, long userID) {
         final PyFunc func = PyFunc.QDII_CUSTOMIZE;
         String code = param.getCode();
         MyQDIIPO myQDIIPO = stockMapper.selectSelfQDIIByCode(userID, code);
@@ -371,7 +405,8 @@ public class StockServiceImpl implements StockService {
         return total;
     }
 
-    private void domAdjust(List<? extends StockAdjustment> adjustments, List<MyStockPO> mydoms, Long userID) {
+    private List<PersonalTradeVO> domAdjust(List<? extends StockAdjustment> adjustments, List<MyStockPO> mydoms, Long userID) {
+        List<PersonalTradeVO> personalTradeVOS = new ArrayList<>(adjustments.size());
         for (StockAdjustment adjustment : adjustments) {
             float price = adjustment.getPrice();
             int amount = adjustment.getComplete_amount();
@@ -419,8 +454,13 @@ public class StockServiceImpl implements StockService {
             vo.setPrice(price);
             vo.setTotal(total);
             vo.setFee(0);
-            BasicResponse<?> response = orderService.addPersonalTradeRecord(vo, false);
+            BasicResponse<PersonalTradeVO> response = orderService.addPersonalTradeRecord(vo, false);
+            if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
+                personalTradeVOS.add(response.getData());
+            }
+            //TODO 到时候要真正去扣钱
         }
+        return personalTradeVOS;
     }
 
     private List<PersonalTradeVO> qdiiAdjust(List<? extends QDIIAdjustment> adjustments, List<MyQDIIPO> myfors, Long userID) {

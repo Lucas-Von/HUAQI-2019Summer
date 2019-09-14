@@ -682,6 +682,7 @@ class BondServiceImpl implements BondServiceForBl, BondService {
         nation.setQuantity(userNational.getFundShare());
         nation.setReturnRate(userNational.getNetWorth()*userNational.getFundShare()-userNational.getInject().doubleValue());
         nation.setTotalAmount(userNational.getNetWorth()*userNational.getFundShare());
+        nation.setProportion(userNational.getBondProportion());
         vo.add(nation);
 
         UserBondVO corporation = new UserBondVO();
@@ -690,6 +691,7 @@ class BondServiceImpl implements BondServiceForBl, BondService {
         corporation.setQuantity(userCorporate.getFundShare());
         corporation.setReturnRate(userCorporate.getNetWorth()*userCorporate.getFundShare()-userCorporate.getInject().doubleValue());
         corporation.setTotalAmount(userCorporate.getNetWorth()*userCorporate.getFundShare());
+        corporation.setProportion(userCorporate.getBondProportion());
         vo.add(corporation);
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
     }

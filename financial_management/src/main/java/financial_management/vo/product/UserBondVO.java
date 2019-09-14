@@ -12,8 +12,15 @@ public class UserBondVO {
     Float quantity;
     Float totalAmount;
     Double returnRate;
+    Float proportion;
 
+    public Float getProportion() {
+        return proportion;
+    }
 
+    public void setProportion(Float proportion) {
+        this.proportion = proportion;
+    }
 
     public String getFundName() {
         return fundName;

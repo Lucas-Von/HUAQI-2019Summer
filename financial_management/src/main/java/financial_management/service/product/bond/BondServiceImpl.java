@@ -723,17 +723,17 @@ class BondServiceImpl implements BondServiceForBl, BondService {
         List<ReturnRateVO> sevenNetWorth = new ArrayList<>();
         List<ReturnRateVO> monthNetWorth = new ArrayList<>();
         List<ReturnRateVO> threeNetWorth = new ArrayList<>();
-        for(int i = 0;i<7;i++) {
+        for(int i = 1;i<=7;i++) {
             double value = incomeServiceForBl.getBondProfitOfDays(po.getId(),i);
             ReturnRateVO vo = new ReturnRateVO(DateConverterUtil.moveForwardByDay(new Date(),-i),value);
             sevenNetWorth.add(vo);
         }
-        for(int i = 0;i<30;i++) {
+        for(int i = 1;i<=30;i++) {
             double value = incomeServiceForBl.getBondProfitOfDays(po.getId(),i);
             ReturnRateVO vo = new ReturnRateVO(DateConverterUtil.moveForwardByDay(new Date(),-i),value);
             monthNetWorth.add(vo);
         }
-        for(int i = 0;i<90;i++) {
+        for(int i = 1;i<=90;i++) {
             double value = incomeServiceForBl.getBondProfitOfDays(po.getId(),i);
             ReturnRateVO vo = new ReturnRateVO(DateConverterUtil.moveForwardByDay(new Date(),-i),value);
             threeNetWorth.add(vo);
@@ -741,27 +741,9 @@ class BondServiceImpl implements BondServiceForBl, BondService {
 
         List<Double> returnRate = new ArrayList<>();
         List<Float> commissionRate = mapper.selectRateList().getList();
-        if(incomeServiceForBl.getBondProfitOfDays(po.getId(),7)!=-1.0) {
-            Double seven = (po.getFundUnitValue() - incomeServiceForBl.getBondProfitOfDays(po.getId(), 7))/incomeServiceForBl.getBondProfitOfDays(po.getId(),7);
-            returnRate.add(seven);
-        }
-        else {
-            returnRate.add(1.0);
-        }
-        if(incomeServiceForBl.getBondProfitOfDays(po.getId(),30)!=-1.0) {
-            Double thirty = (po.getFundUnitValue() - incomeServiceForBl.getBondProfitOfDays(po.getId(), 30))/incomeServiceForBl.getBondProfitOfDays(po.getId(),30);
-            returnRate.add(thirty);
-        }
-        else {
-            returnRate.add(1.0);
-        }
-        if(incomeServiceForBl.getBondProfitOfDays(po.getId(),90)!=-1.0) {
-            Double ninty = (po.getFundUnitValue() - incomeServiceForBl.getBondProfitOfDays(po.getId(), 90))/incomeServiceForBl.getBondProfitOfDays(po.getId(),90);
-            returnRate.add(ninty);
-        }
-        else {
-            returnRate.add(1.0);
-        }
+        returnRate.add(incomeServiceForBl.getBondProfitOfDays(po.getId(),7));
+        returnRate.add(incomeServiceForBl.getBondProfitOfDays(po.getId(),30));
+        returnRate.add(incomeServiceForBl.getBondProfitOfDays(po.getId(),90));
         bondFundInfoVO vo = new bondFundInfoVO(sevenNetWorth,monthNetWorth,threeNetWorth,returnRate,new Date(),"Fin-mily家庭资产配置平台",1200000F,"开放购买/开放赎回",commissionRate,infos);
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
     }

@@ -1,7 +1,8 @@
 package financial_management.controller.property;
 
 import financial_management.bl.property.QuestionnaireService;
-import financial_management.parameter.property.QuestionnaireParam;
+import financial_management.parameter.property.NVipQuestionnaireParam;
+import financial_management.parameter.property.VipQuestionnaireParam;
 import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,14 @@ public class QuestionnaireController {
         return questionnaireService.viewQuestionnaire();
     }
 
-    @PostMapping(value = "/questionnaire/set")
-    public BasicResponse setQuestionnaire(@RequestBody QuestionnaireParam questionnaireParam) {
-        return questionnaireService.setQuestionnaire(questionnaireParam);
+    @PostMapping(value = "/questionnaire/set/vip")
+    public BasicResponse setVipQuestionnaire(@RequestBody VipQuestionnaireParam vipQuestionnaireParam) {
+        return questionnaireService.setVipQuestionnaire(vipQuestionnaireParam);
+    }
+
+    @PostMapping(value = "/questionnaire/set/unVip")
+    public BasicResponse setNVipQuestionnaire(@RequestBody NVipQuestionnaireParam nVipQuestionnaireParam) {
+        return questionnaireService.setNVipQuestionnaire(nVipQuestionnaireParam);
     }
 
     @GetMapping(value = "/questionnaire/getInvestPrefer")

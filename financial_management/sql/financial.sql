@@ -889,10 +889,13 @@ CREATE TABLE `qdii_adjustment` (
 INSERT INTO qdii_adjustment VALUES ('123123','阿这',-0.1,-1,-1.2,12,1,1),
                                    ('123321','啊这',1,10,23,23,1,2);
 
--- ----------------------------
--- Table structure for questionnaire
--- ----------------------------
+--
+-- Table structure for table `questionnaire`
+--
+
 DROP TABLE IF EXISTS `questionnaire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionnaire` (
   `user_id` bigint(255) NOT NULL,
   `record_date` date DEFAULT NULL,
@@ -925,17 +928,28 @@ CREATE TABLE `questionnaire` (
   `life_cost` double DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   `marrige` int(11) DEFAULT NULL,
-  `chile_born_year` int(11) DEFAULT NULL,
-  `want_to_be_vip` int(11) DEFAULT NULL,
+  `chile_born_year` varchar(45) DEFAULT NULL,
+  `vip_level` int(11) DEFAULT NULL,
+  `unpaid_arrears` double DEFAULT NULL,
+  `previous_arrears_due` double DEFAULT NULL,
+  `line_of_credit` double DEFAULT NULL,
+  `cash_advance` double DEFAULT NULL,
+  `last_payment` double DEFAULT NULL,
+  `minimum_due_payment` double DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `questionnaire_user_id_uindex` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of questionnaire
--- ----------------------------
-INSERT INTO `questionnaire` VALUES ('1', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+--
+-- Dumping data for table `questionnaire`
+--
 
+LOCK TABLES `questionnaire` WRITE;
+/*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
+INSERT INTO `questionnaire` VALUES (1,'2019-09-14',1,1,2,5,230,2300,1,2,3500,3000,300,200,20,50,300,200,100,200000,100000,1973,1966,4,0,25000,25000,50000,50000,55,1,'2000',2,50,50,50,30,20,50);
+/*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
+UNLOCK TABLES;
 -- ----------------------------
 -- Table structure for recommend
 -- ----------------------------
@@ -963,26 +977,6 @@ CREATE TABLE `recommend` (
 -- Records of recommend
 -- ----------------------------
 INSERT INTO `recommend` VALUES ('1', null, null, null, null, null, null, '保守型', null, null, null, null, null, null);
-
--- ----------------------------
--- Table structure for rec_alloc
--- ----------------------------
-DROP TABLE IF EXISTS `rec_alloc`;
-CREATE TABLE `rec_alloc` (
-  `user_id` bigint(255) NOT NULL,
-  `funds_rate` float DEFAULT NULL,
-  `saving_rate` float DEFAULT NULL,
-  `insurance_rate` float DEFAULT NULL,
-  `invest_rate` float DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `recommend_allocation_user_id_uindex` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of rec_alloc
--- ----------------------------
-INSERT INTO `rec_alloc` VALUES ('1', '0.5', '0.02', '0.08', '0.4');
-INSERT INTO `rec_alloc` VALUES ('2', '0.8', '0.02', '0.08', '0.1');
 
 -- ----------------------------
 -- Table structure for stock_adjustment

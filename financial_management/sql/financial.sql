@@ -554,7 +554,7 @@ CREATE TABLE `message` (
 -- ----------------------------
 -- Records of message
 -- ----------------------------
-INSERT INTO `message` VALUES ('1', '2019-08-26 23:27:58', '1', '1', '尊敬的用户，您的账户有新的调仓操作，请确认', '\0', '\0');
+
 INSERT INTO `message` VALUES ('2', '2019-08-27 23:27:58', '1', '3', '尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区', '\0', '\0');
 INSERT INTO `message` VALUES ('3', '2019-08-27 23:56:53', '2', '3', '文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！', '\0', '\0');
 INSERT INTO `message` VALUES (10,CURRENT_TIMESTAMP,1,1,'调仓消息 qdii 123123',0,0),
@@ -1081,8 +1081,8 @@ CREATE TABLE `user_bond_fund` (
   `inject` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert into `user_bond_fund` (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time, inject) values (1,"national",0.75,34,50,"2019-03-10",100);
-insert into `user_bond_fund` (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time, inject) values (1,"corporate",0.75,34,50,"2019-03-10",100);
+insert into `user_bond_fund` (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time, inject) values (1,'national',0.75,34,50,'2019-03-10',100);
+insert into `user_bond_fund` (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time, inject) values (1,'corporate',0.75,34,50,'2019-03-10',100);
 
 -- ----------------------------
 -- Records of user_bond_fund

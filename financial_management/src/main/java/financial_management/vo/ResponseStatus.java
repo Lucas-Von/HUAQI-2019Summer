@@ -21,6 +21,7 @@ public final class ResponseStatus {
 
     public static final ResponseStatus STATUS_RECORD_NOT_EXIST = new ResponseStatus("4001","记录不存在");
     public static final ResponseStatus STATUS_RECORD_ERROR = new ResponseStatus("4002","记录状态异常");
+    public static final ResponseStatus STATUS_TRANSFER_CHECKED = new ResponseStatus("4003","该次调仓已经经过确认");
 
     public static final ResponseStatus STATUS_PAYPASSWORD_WRONG = new ResponseStatus("5001","支付密码错误");
     public static final ResponseStatus STATUS_DEPOSITPRODUCT_UNFINED = new ResponseStatus("5002","储蓄产品已被下架或不存在");

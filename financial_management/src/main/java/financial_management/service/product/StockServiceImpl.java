@@ -104,7 +104,7 @@ public class StockServiceImpl implements StockService {
         final PyFunc func = PyFunc.STOCK;
         double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
-        StockParam param = new StockParam(sdf.format(new Date()), false);
+        StockParam param = new StockParam(sdf.format(adjustmentMapper.selectLastStockTransferDate()), false);//TODO
         List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
 //        List<Object> result = getStubData();
         if (result != null) {
@@ -116,7 +116,7 @@ public class StockServiceImpl implements StockService {
                 } else {
                     for (MyStockPO myStockPO : mydoms) {
                         if (myStockPO.getCode().equals(adjustment.getCode())) {
-                            if (myStockPO.getHoldAmount() <= -adjustment.getComplete_amount()) {
+                            if (myStockPO.getHoldAmount() <= 0 - adjustment.getComplete_amount()) {
                                 float completeAmount = myStockPO.getHoldAmount();
                                 float turnover = completeAmount * adjustment.getPrice();
                                 float fee = Math.abs(ArithmeticUtil.formatFloat2Float(turnover * 0.001f));
@@ -124,7 +124,6 @@ public class StockServiceImpl implements StockService {
                                 adjustment.setFee(fee);
                                 adjustment.setTotal(turnover + fee);
                             }
-
                             adjustments.add(adjustment);
                         }
                     }
@@ -263,9 +262,11 @@ public class StockServiceImpl implements StockService {
         for (MyStockPO myStockPO : myStockPOS) {
             DomStockPO stockPO = stockMapper.selectDomStockByCode(myStockPO.getCode());
             StockAdjustment adjustment = new StockAdjustment();
+
             adjustment.setOrder_time(orderTime);
             adjustment.setCode(myStockPO.getCode());
             adjustment.setState_message("");
+
             int amount = money > 0 ? myStockPO.getHoldAmount() : 0 - myStockPO.getHoldAmount();
             adjustment.setOrder_amount(amount);
             adjustment.setComplete_amount(amount);
@@ -274,6 +275,7 @@ public class StockServiceImpl implements StockService {
             float fee = Math.abs(turnover * 0.001f);
             adjustment.setFee(fee);
             adjustment.setTotal(turnover + fee);
+
             proportionalReadjust(Math.abs(money), holdTotal, adjustment);
             adjustments.add(adjustment);
         }
@@ -325,9 +327,11 @@ public class StockServiceImpl implements StockService {
         TransferRecordPO trans = orderService.getTransferRecordByID(transID);
         BasicResponse<?> response;
         if (trans == null) {
-            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
+            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, "调仓记录不存在：ID=" + transID);
         } else if (!trans.getUserID().equals(userID)) {
-            response = new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, null);
+            response = new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, "非本用户调仓记录");
+        } else if (trans.getChecked()) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_TRANSFER_CHECKED, "ID=" + transID);
         } else if (trans.getQDII()) {
             response = QDIITransferCheck(transID, userID, accepted);
         } else {

@@ -11,11 +11,6 @@ import java.util.Date;
 public class NVipQuestionnaireParam {
 
     /**
-     * 更新问卷日期
-     */
-    private Date recordDate;
-
-    /**
      * 金融信息关注程度
      */
     private int finInfo;
@@ -194,10 +189,6 @@ public class NVipQuestionnaireParam {
      * 最低到期付款额
      */
     private double minimumDuePayment;
-
-    public Date getRecordDate() {
-        return new Date();
-    }
 
     public int getFinInfo() {
         return finInfo;

@@ -17,10 +17,17 @@ public class BondServiceImplTest {
 
     @Test
     public void firstPurchase() {
+        service.firstPurchase(1L,0.2,20000F);
     }
 
     @Test
     public void adjustWarehouse() {
+        service.adjustWarehouse(1L,10000F);
+    }
+
+    @Test
+    public void adjustWarehouse2() {
+        service.adjustWarehouse(1L,-10000F);
     }
 
     @Test
@@ -30,6 +37,7 @@ public class BondServiceImplTest {
 
     @Test
     public void dailyUpdate() {
+        service.dailyUpdate();
     }
 
     @Test

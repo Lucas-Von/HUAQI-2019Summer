@@ -4,6 +4,7 @@ import financial_management.bl.order.OrderService;
 import financial_management.data.product.BondFundMapper;
 import financial_management.entity.bond.*;
 import financial_management.util.PyInvoke.PyParam.bond.*;
+import financial_management.vo.BasicResponse;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.ProductVO4Order;
@@ -26,5 +27,5 @@ import java.util.Optional;
 public interface BondServiceForBl {
     Double getAmountByUser(Long userId);
 
-
+    public boolean firstPurchase(Long userId, Double expectRate, Float amount);
 }

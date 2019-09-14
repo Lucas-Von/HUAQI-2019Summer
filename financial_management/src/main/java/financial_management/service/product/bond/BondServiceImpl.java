@@ -5,6 +5,10 @@ import financial_management.bl.product.BondService;
 import financial_management.data.product.BondFundMapper;
 import financial_management.entity.bond.*;
 import financial_management.entity.insurance.BondObj;
+import financial_management.parameter.bond.ReturnRateVO;
+import financial_management.parameter.bond.bondFundInfoVO;
+import financial_management.service.property.income.IncomeServiceForBl;
+import financial_management.util.DateConverterUtil;
 import financial_management.util.PyInvoke.PyFunc;
 import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.PyParam;
@@ -15,6 +19,7 @@ import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.ProductVO4Order;
 import financial_management.vo.product.BondFundInfoVO;
+import financial_management.vo.product.UserBondVO;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -22,6 +27,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -39,11 +45,16 @@ import java.util.Optional;
  **/
 @Service
 class BondServiceImpl implements BondServiceForBl, BondService {
-    String filePath = "C:\\Users\\lenovo\\Desktop\\花旗杯\\债券pydebug完全版\\";
+
+    @Value("${exponent.update}")
+    String filePath ;
 
     @Qualifier("orderServiceImpl")
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    IncomeServiceForBl incomeServiceForBl;
 
     @Autowired
     BondFundMapper mapper;
@@ -54,41 +65,49 @@ class BondServiceImpl implements BondServiceForBl, BondService {
 
     @Override
     public Double getAmountByUser(Long userId) {
-        UserBondPO national = mapper.selectUserBond(userId,nationalDebtName);
-        UserBondPO corpor = mapper.selectUserBond(userId,corporationDebtName);
+        UserBondPO national = mapper.selectUserBond(userId, nationalDebtName);
+        UserBondPO corpor = mapper.selectUserBond(userId, corporationDebtName);
 
         BondFoundationPO nationalFund = mapper.selectBondFundByName(nationalDebtName);
         BondFoundationPO corporateFund = mapper.selectBondFundByName(corporationDebtName);
 
-        return (nationalFund.getFundUnitValue().doubleValue()*national.getFundShare().doubleValue()+corporateFund.getFundUnitValue().doubleValue()*corpor.getFundShare().doubleValue());
+        return (nationalFund.getFundUnitValue().doubleValue() * national.getFundShare().doubleValue() + corporateFund.getFundUnitValue().doubleValue() * corpor.getFundShare().doubleValue());
     }
 
     //方法一：用户首次购买
-    public void firstPurchase(Long userId, Double expectRate, Float amount) {
-        BondFoundationPO national = mapper.selectBondFundByName(nationalDebtName);
+    public boolean firstPurchase(Long userId, Double expectRate, Float amount) {
+
+        try {
+            BondFoundationPO national = mapper.selectBondFundByName(nationalDebtName);
+
         BondFoundationPO corporate = mapper.selectBondFundByName(corporationDebtName);
-        //  TODO vo里有点小问题
-        First_PurchaseVO vo = new First_PurchaseVO();
-        vo.setExpected_rate(expectRate.floatValue());
-        vo.setAmount_change(amount);
+
         //国债累计购买
         Optional<Float> nationalPurchase = Optional.ofNullable(national.getDebtSum());
         Float natSum = nationalPurchase.orElse(0.0F);
-        vo.setPlatform_accelerate_national(natSum);
         //企业债累计购买
         Optional<Float> corPurchase = Optional.ofNullable(corporate.getDebtSum());
         Float corporSum = corPurchase.orElse(0.0F);
-        vo.setPlatform_accelerate_corporate(corporSum);
 
         //收益率如何更新?每日更新
-        vo.setYieldrate_national(national.getExpectReturnRate());
-        vo.setYieldrate_corporate(corporate.getExpectReturnRate());
+
         List<Float> res = mapper.selectRateList().getList();
-        vo.setCommission_rate(res);
+        BondPlatformPO platform = mapper.selectBondPlatform();
 
-        //TODO 接函数
 
-        First_PurchasePO po = new First_PurchasePO();
+        PyParam pyParam = new First_PurchaseVO(expectRate.floatValue(), national.getExpectReturnRate(), corporate.getExpectReturnRate(), amount, national.getDebtSum(), corporate.getDebtSum(), res, platform.getResidualAssets());
+        if (corporate.getExpectReturnRate().equals(national.getExpectReturnRate())) {
+            pyParam = new First_PurchaseVO(expectRate.floatValue(), national.getExpectReturnRate() + 0.001f, corporate.getExpectReturnRate() - 0.001f, amount, national.getDebtSum(), corporate.getDebtSum(), res, platform.getResidualAssets());
+        }
+
+
+        List<Object> invokeResult = PyInvoke.invoke(PyFunc.BOND_FIRST_PURCHASE, pyParam, First_PurchasePO.class);
+        List<First_PurchasePO> list = new ArrayList<>();
+        for (Object object : invokeResult) {
+            list.add((First_PurchasePO) object);
+        }
+        System.out.println(list.size());
+        First_PurchasePO po = list.get(0);
         //更新国债、企业债投资比例
         if (mapper.selectUserBond(userId, nationalDebtName) == null || mapper.selectUserBond(userId, corporationDebtName) == null) {
             mapper.insertvestRateByName(nationalDebtName, po.getProp_national(), userId, new Timestamp(po.getTrans_time().getTime()));
@@ -108,13 +127,18 @@ class BondServiceImpl implements BondServiceForBl, BondService {
         //组成国债交易记录
         PersonalTradeVO tradeRecord_Nation = new PersonalTradeVO();
         ProductVO4Order productNational = new ProductVO4Order();
+        productNational.setpID(-1l);
+        productNational.setCode("");
+        tradeRecord_Nation.setTotal(po.getAmountchange_national());
         productNational.setName(nationalDebtName);
         tradeRecord_Nation.setProduct(productNational);
         tradeRecord_Nation.setCreateTime(po.getTrans_time());
         tradeRecord_Nation.setUserID(userId);
-        tradeRecord_Nation.setFee(po.getAmountchange_national());
+        tradeRecord_Nation.setFee(po.getCommission_amount_national());
         tradeRecord_Nation.setType(OrderService.Type.BOND);
         //0是卖 1是买
+        tradeRecord_Nation.setAmount(po.getAmountchange_national());
+        tradeRecord_Nation.setStatus(-1);
         tradeRecord_Nation.setTotal(po.getSign() == 0 ? -po.getAmountchange_national() : po.getAmountchange_national());
         orderService.addPersonalTradeRecord(tradeRecord_Nation, false);
 
@@ -122,11 +146,16 @@ class BondServiceImpl implements BondServiceForBl, BondService {
         PersonalTradeVO tradeRecord_Corpor = new PersonalTradeVO();
         ProductVO4Order productVO4Order = new ProductVO4Order();
         productVO4Order.setName(corporationDebtName);
+        productVO4Order.setpID(-1l);
+        productVO4Order.setCode("");
+        tradeRecord_Corpor.setTotal(po.getAmountchange_corporate());
+        tradeRecord_Corpor.setAmount(po.getAmountchange_corporate());
         tradeRecord_Corpor.setProduct(productVO4Order);
         tradeRecord_Corpor.setCreateTime(po.getTrans_time());
         tradeRecord_Corpor.setUserID(userId);
-        tradeRecord_Corpor.setFee(po.getAmountchange_corporate());
+        tradeRecord_Corpor.setFee(po.getCommission_amount_corporate());
         tradeRecord_Corpor.setType(OrderService.Type.BOND);
+        tradeRecord_Corpor.setStatus(-1);
         //0是卖 1是买
         tradeRecord_Corpor.setTotal(po.getSign() == 0 ? -po.getAmountchange_corporate() : po.getAmountchange_corporate());
         orderService.addPersonalTradeRecord(tradeRecord_Corpor, false);
@@ -134,75 +163,106 @@ class BondServiceImpl implements BondServiceForBl, BondService {
         //更新用户持有的份额
         mapper.updateUserFundShare(userId, po.getAmountchange_national(), nationalDebtName);
         mapper.updateUserFundShare(userId, po.getAmountchange_corporate(), corporationDebtName);
-    }
+        mapper.updateUserInject(userId, po.getAmountchange_national().floatValue(), nationalDebtName);
+        mapper.updateUserInject(userId, po.getAmountchange_corporate().floatValue(), nationalDebtName);
+        return true;
+    }catch (Exception e){
+            return false;
+        }
 
+}
 
     //方法二：用户调仓
-    public void adjustWarehouse(Long userId, Float amount) {
-        BondPlatformPO platformPO = mapper.selectBondPlatform();
-        AdjuestmentVO vo = new AdjuestmentVO();
-        //用户两种基金比例
-        UserBondPO national = mapper.selectUserBond(userId, nationalDebtName);
-        vo.setProp_national(national.getBondProportion());
-        UserBondPO corporation = mapper.selectUserBond(userId, corporationDebtName);
-        vo.setProp_corporate(corporation.getBondProportion());
-        //用户投资数额变化
-        vo.setAmount_change(amount);
-        vo.setFund_cash(platformPO.getResidualAssets());
-        List<Float> res = mapper.selectRateList().getList();
-        vo.setCommission_rate(res);
-        //累计购买
-        BondFoundationPO nationalDebt = mapper.selectBondFundByName(nationalDebtName);
-        BondFoundationPO corporationDebt = mapper.selectBondFundByName(corporationDebtName);
-        vo.setPlatform_accelerate_corporate(corporationDebt.getDebtSum());
-        vo.setPlatform_accelerate_national(nationalDebt.getDebtSum());
+    public BasicResponse adjustWarehouse(Long userId, Float amount) {
+        try {
+            BondPlatformPO platformPO = mapper.selectBondPlatform();
+            AdjuestmentVO vo = new AdjuestmentVO();
+            //用户两种基金比例
+            UserBondPO national = mapper.selectUserBond(userId, nationalDebtName);
+            vo.setProp_national(national.getBondProportion());
+            UserBondPO corporation = mapper.selectUserBond(userId, corporationDebtName);
+            vo.setProp_corporate(corporation.getBondProportion());
+            //用户投资数额变化
+            vo.setAmount_change(amount);
+            vo.setFund_cash(platformPO.getResidualAssets());
+            List<Float> res = mapper.selectRateList().getList();
+            vo.setCommission_rate(res);
+            //累计购买
+            BondFoundationPO nationalDebt = mapper.selectBondFundByName(nationalDebtName);
+            BondFoundationPO corporationDebt = mapper.selectBondFundByName(corporationDebtName);
+            vo.setPlatform_accelerate_corporate(corporationDebt.getDebtSum());
+            vo.setPlatform_accelerate_national(nationalDebt.getDebtSum());
 
-        //TODO 接Adjustment
-        AdjuestmentPO po = new AdjuestmentPO();
-        //调整总份额
-        Optional<Float> sumNation = Optional.ofNullable(nationalDebt.getDebtSum());
-        Optional<Float> sumCorpor = Optional.ofNullable(corporationDebt.getDebtSum());
-        Float nationPurchase = sumNation.orElse(0.0F);
-        Float corporPurchase = sumCorpor.orElse(0.0F);
-        mapper.updateSumPurchaseByName(nationPurchase + po.getPlatform_accelerate_national(), nationalDebtName);
-        mapper.updateSumPurchaseByName(corporPurchase + po.getAmountchange_corporate(), corporationDebtName);
+            PyParam pyParam = new AdjuestmentVO(national.getBondProportion().floatValue(), corporation.getBondProportion().floatValue(), amount, nationalDebt.getDebtSum(), corporationDebt.getDebtSum(), res, platformPO.getResidualAssets());
+            List<Object> invokeResult = PyInvoke.invoke(PyFunc.BOND_ADJUSTMENT, pyParam, AdjuestmentPO.class);
+            List<AdjuestmentPO> list = new ArrayList<>();
+            for (Object object : invokeResult) {
+                list.add((AdjuestmentPO) object);
+            }
+            System.out.println(list.size());
+            AdjuestmentPO po = list.get(0);
+            //调整总份额
+            Optional<Float> sumNation = Optional.ofNullable(nationalDebt.getDebtSum());
+            Optional<Float> sumCorpor = Optional.ofNullable(corporationDebt.getDebtSum());
+            Float nationPurchase = sumNation.orElse(0.0F);
+            Float corporPurchase = sumCorpor.orElse(0.0F);
 
-        //组成国债交易记录
-        PersonalTradeVO tradeRecord_Nation = new PersonalTradeVO();
-        //设置基金名
-        ProductVO4Order productNational = new ProductVO4Order();
-        productNational.setName(nationalDebtName);
-        tradeRecord_Nation.setProduct(productNational);
-        tradeRecord_Nation.setCreateTime(po.getTrans_time());
-        tradeRecord_Nation.setUserID(userId);
-        tradeRecord_Nation.setFee(po.getAmountchange_national());
-        tradeRecord_Nation.setType(OrderService.Type.BOND);
-        //0是卖 1是买
-        tradeRecord_Nation.setTotal(po.getSign() == 0 ? -po.getAmountchange_national() : po.getAmountchange_national());
-        orderService.addPersonalTradeRecord(tradeRecord_Nation, false);
 
-        //组成企业债购买记录
-        PersonalTradeVO tradeRecord_Corpor = new PersonalTradeVO();
-        //我只要设置基金名字 我不管是什么
-        ProductVO4Order productVO4Order = new ProductVO4Order();
-        productVO4Order.setName(corporationDebtName);
-        tradeRecord_Corpor.setProduct(productVO4Order);
+            //组成国债交易记录
+            PersonalTradeVO tradeRecord_Nation = new PersonalTradeVO();
+            //设置基金名
+            ProductVO4Order productNational = new ProductVO4Order();
+            productNational.setpID(-1l);
+            productNational.setCode("");
+            productNational.setName(nationalDebtName);
+            tradeRecord_Nation.setProduct(productNational);
+            tradeRecord_Nation.setCreateTime(po.getTrans_time());
+            tradeRecord_Nation.setUserID(userId);
+            tradeRecord_Nation.setFee(po.getCommission_amount_national());
+            tradeRecord_Nation.setType(OrderService.Type.BOND);
+            tradeRecord_Nation.setStatus(-1);
+            //0是卖 1是买
+            tradeRecord_Nation.setTotal(po.getAmountchange_national());
+            tradeRecord_Nation.setAmount(po.getAmountchange_national());
+            orderService.addPersonalTradeRecord(tradeRecord_Nation, false);
 
-        tradeRecord_Corpor.setCreateTime(po.getTrans_time());
-        tradeRecord_Corpor.setUserID(userId);
-        tradeRecord_Corpor.setFee(po.getAmountchange_corporate());
-        tradeRecord_Corpor.setType(OrderService.Type.BOND);
-        //0是卖 1是买
-        tradeRecord_Corpor.setTotal(po.getSign() == 0 ? -po.getAmountchange_corporate() : po.getAmountchange_corporate());
-        orderService.addPersonalTradeRecord(tradeRecord_Corpor, false);
+            //组成企业债购买记录
+            PersonalTradeVO tradeRecord_Corpor = new PersonalTradeVO();
+            //我只要设置基金名字 我不管是什么
+            ProductVO4Order productVO4Order = new ProductVO4Order();
+            productVO4Order.setName(corporationDebtName);
+            productVO4Order.setCode("");
+            productVO4Order.setpID(-1L);
+            tradeRecord_Corpor.setProduct(productVO4Order);
 
-        //更新用户持有的份额
-        Float nationShare = mapper.selectUserBond(userId, nationalDebtName).getFundShare();
-        Float corporShare = mapper.selectUserBond(userId, corporationDebtName).getFundShare();
-        nationShare += po.getSign() == 0 ? -po.getAmountchange_national() : po.getAmountchange_national();
-        corporShare += po.getSign() == 0 ? -po.getAmountchange_corporate() : po.getAmountchange_corporate();
-        mapper.updateUserFundShare(userId, nationShare, nationalDebtName);
-        mapper.updateUserFundShare(userId, corporShare, corporationDebtName);
+            tradeRecord_Corpor.setCreateTime(po.getTrans_time());
+            tradeRecord_Corpor.setUserID(userId);
+            tradeRecord_Corpor.setFee(po.getCommission_amount_corporate());
+            tradeRecord_Corpor.setType(OrderService.Type.BOND);
+            //0是卖 1是买
+            tradeRecord_Corpor.setStatus(-1);
+            tradeRecord_Corpor.setTotal(po.getAmountchange_corporate());
+            tradeRecord_Corpor.setAmount(po.getAmountchange_corporate());
+            orderService.addPersonalTradeRecord(tradeRecord_Corpor, false);
+
+            //更新用户持有的份额
+            Float nationShare = mapper.selectUserBond(userId, nationalDebtName).getFundShare();
+            Float corporShare = mapper.selectUserBond(userId, corporationDebtName).getFundShare();
+            nationShare += nationalDebt.getDebtSum() - po.getPlatform_accelerate_national();
+            corporShare += corporationDebt.getDebtSum() - po.getAmountchange_corporate();
+            mapper.updateUserFundShare(userId, nationShare, nationalDebtName);
+            mapper.updateUserFundShare(userId, corporShare, corporationDebtName);
+
+            mapper.updateSumPurchaseByName(po.getPlatform_accelerate_national(), nationalDebtName);
+            mapper.updateSumPurchaseByName(po.getPlatform_accelerate_corporate(), corporationDebtName);
+
+            mapper.updateUserInject(userId, national.getInject() + po.getAmountchange_national().floatValue(), nationalDebtName);
+            mapper.updateUserInject(userId, corporation.getInject() + po.getAmountchange_corporate().floatValue(), corporationDebtName);
+
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        } catch (Exception e){
+            return new BasicResponse<>(ResponseStatus.SERVER_ERROR,null);
+        }
     }
 
     //方法三：平台每日购买
@@ -400,13 +460,28 @@ class BondServiceImpl implements BondServiceForBl, BondService {
         mapper.updateFundScale(sumCorporate, corporationDebtName);
 
         //更新单位净值
-        mapper.updateBondFundNetWorthy(sumNational / national.getFundShare(), nationalDebtName);
+
         //更新单位净值
-        mapper.updateBondFundNetWorthy(sumCorporate / corporate.getFundShare(), corporationDebtName);
+
 
         //更新收益率，方便的出7/30/90
-        mapper.insertRateLog(national.getId(), sumNational / national.getFundShare(), new Date());
-        mapper.insertRateLog(corporate.getId(), sumCorporate / corporate.getFundShare(), new Date());
+        if(national.getFundShare()!=0){
+            mapper.updateBondFundNetWorthy(sumNational / national.getFundShare(), nationalDebtName);
+            mapper.insertRateLog(national.getId(), sumNational / national.getFundShare(), new Date());
+        }
+        else {
+            mapper.updateBondFundNetWorthy(sumNational , nationalDebtName);
+            mapper.insertRateLog(national.getId(), sumNational , new Date());
+        }
+        if(corporate.getFundShare()!=0) {
+            mapper.updateBondFundNetWorthy(sumCorporate / corporate.getFundShare(), corporationDebtName);
+            mapper.insertRateLog(corporate.getId(), sumCorporate / corporate.getFundShare(), new Date());
+        }
+        else {
+            mapper.updateBondFundNetWorthy(sumCorporate , corporationDebtName);
+            mapper.insertRateLog(corporate.getId(), sumCorporate , new Date());
+        }
+        mapper.updateTime(new Date());
     }
 
     //    //方法五：指数维护
@@ -513,9 +588,12 @@ class BondServiceImpl implements BondServiceForBl, BondService {
                 trade.setStatus(-1);
                 trade.setPrice(-1F);
                 orderService.addPlatformTradeRecord(trade);
+                dailyUpdate();
+                mapper.updateTime(new Date());
             }
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
-        }catch (Exception e){
+        }
+        catch (Exception e){
             return new BasicResponse<>(ResponseStatus.SERVER_ERROR,null);
         }
     }
@@ -537,6 +615,7 @@ class BondServiceImpl implements BondServiceForBl, BondService {
 
 
         BondFundInfoVO vo = new BondFundInfoVO();
+        vo.setTime(foundation.getUpdateTime());
         if(name.equals(nationalDebtName)){
             vo.setExponent("中证国债");
         }
@@ -590,5 +669,99 @@ class BondServiceImpl implements BondServiceForBl, BondService {
             }
         }
         return -1;
+    }
+
+    @Override
+    public BasicResponse userInfo(Long info){
+        UserBondPO userNational=  mapper.selectUserBond(info,nationalDebtName);
+        UserBondPO userCorporate = mapper.selectUserBond(info,corporationDebtName);
+        List<UserBondVO> vo = new ArrayList<>();
+        UserBondVO nation = new UserBondVO();
+        nation.setFundName(nationalDebtName);
+        nation.setPrice(userNational.getNetWorth());
+        nation.setQuantity(userNational.getFundShare());
+        nation.setReturnRate(userNational.getNetWorth()*userNational.getFundShare()-userNational.getInject().doubleValue());
+        nation.setTotalAmount(userNational.getNetWorth()*userNational.getFundShare());
+        nation.setProportion(userNational.getBondProportion());
+        vo.add(nation);
+
+        UserBondVO corporation = new UserBondVO();
+        corporation.setFundName(corporationDebtName);
+        corporation.setPrice(userCorporate.getNetWorth());
+        corporation.setQuantity(userCorporate.getFundShare());
+        corporation.setReturnRate(userCorporate.getNetWorth()*userCorporate.getFundShare()-userCorporate.getInject().doubleValue());
+        corporation.setTotalAmount(userCorporate.getNetWorth()*userCorporate.getFundShare());
+        corporation.setProportion(userCorporate.getBondProportion());
+        vo.add(corporation);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
+    }
+
+
+    @Override
+    public BasicResponse getInfo(String name) {
+
+        List<BondsInfo> infos = new ArrayList<>();
+
+        BondFoundationPO po = mapper.selectBondFundByName(name);
+        List<BondAndFundPO> bonds = mapper.selectAllBondAndFund(po.getId());
+        for(int i = 0;i<bonds.size();i++){
+            BondAndFundPO bond =bonds.get(i);
+            BondsInfo info = new BondsInfo();
+            info.setCode(bond.getBondCode());
+            try{
+                info.setProduct(bond.getBondName());;
+            }
+            catch (Exception E){
+                info.setProduct("\\\\");
+            }
+            info.setAmount(bond.getAmount());
+            info.setProportion(bond.getInvestProportion());
+            info.setQuantity(bond.getQuantity().intValue());
+        }
+
+        List<ReturnRateVO> sevenNetWorth = new ArrayList<>();
+        List<ReturnRateVO> monthNetWorth = new ArrayList<>();
+        List<ReturnRateVO> threeNetWorth = new ArrayList<>();
+        for(int i = 0;i<7;i++) {
+            double value = incomeServiceForBl.getBondProfitOfDays(po.getId(),i);
+            ReturnRateVO vo = new ReturnRateVO(DateConverterUtil.moveForwardByDay(new Date(),-i),value);
+            sevenNetWorth.add(vo);
+        }
+        for(int i = 0;i<30;i++) {
+            double value = incomeServiceForBl.getBondProfitOfDays(po.getId(),i);
+            ReturnRateVO vo = new ReturnRateVO(DateConverterUtil.moveForwardByDay(new Date(),-i),value);
+            monthNetWorth.add(vo);
+        }
+        for(int i = 0;i<90;i++) {
+            double value = incomeServiceForBl.getBondProfitOfDays(po.getId(),i);
+            ReturnRateVO vo = new ReturnRateVO(DateConverterUtil.moveForwardByDay(new Date(),-i),value);
+            threeNetWorth.add(vo);
+        }
+
+        List<Double> returnRate = new ArrayList<>();
+        List<Float> commissionRate = mapper.selectRateList().getList();
+        if(incomeServiceForBl.getBondProfitOfDays(po.getId(),7)!=-1.0) {
+            Double seven = (po.getFundUnitValue() - incomeServiceForBl.getBondProfitOfDays(po.getId(), 7))/incomeServiceForBl.getBondProfitOfDays(po.getId(),7);
+            returnRate.add(seven);
+        }
+        else {
+            returnRate.add(1.0);
+        }
+        if(incomeServiceForBl.getBondProfitOfDays(po.getId(),30)!=-1.0) {
+            Double thirty = (po.getFundUnitValue() - incomeServiceForBl.getBondProfitOfDays(po.getId(), 30))/incomeServiceForBl.getBondProfitOfDays(po.getId(),30);
+            returnRate.add(thirty);
+        }
+        else {
+            returnRate.add(1.0);
+        }
+        if(incomeServiceForBl.getBondProfitOfDays(po.getId(),90)!=-1.0) {
+            Double ninty = (po.getFundUnitValue() - incomeServiceForBl.getBondProfitOfDays(po.getId(), 90))/incomeServiceForBl.getBondProfitOfDays(po.getId(),90);
+            returnRate.add(ninty);
+        }
+        else {
+            returnRate.add(1.0);
+        }
+        bondFundInfoVO vo = new bondFundInfoVO(sevenNetWorth,monthNetWorth,threeNetWorth,returnRate,new Date(),"Fin-mily家庭资产配置平台",1200000F,"开放购买/开放赎回",commissionRate,infos);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
     }
 }

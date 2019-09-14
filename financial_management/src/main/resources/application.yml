@@ -2,7 +2,7 @@ spring:
   datasource:
      url: jdbc:mysql://localhost:3306/financial?serverTimezone=CTT&characterEncoding=UTF-8
      username: root
-     password: root
+     password: Nutter_438
      driver-class-name: com.mysql.cj.jdbc.Driver
      max-active: 200
      max-idle: 20
@@ -33,3 +33,6 @@ server:
 # python调用配置 #
 python:
   dir: "~/.jenkins/workspace/HUAQI_2019_backend/financial_management/target/classes/"
+
+exponent:
+  update: "D://学习资料/大二下/花旗杯/py/"

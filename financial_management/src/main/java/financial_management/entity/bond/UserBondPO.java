@@ -16,6 +16,15 @@ public class UserBondPO {
     Float fundShare;
     Float netWorth;
     Timestamp updateTime;
+    Float inject;
+
+    public Float getInject() {
+        return inject;
+    }
+
+    public void setInject(Float inject) {
+        this.inject = inject;
+    }
 
     public Long getUserId() {
         return userId;

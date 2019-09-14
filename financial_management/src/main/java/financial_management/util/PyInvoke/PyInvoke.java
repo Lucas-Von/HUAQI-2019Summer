@@ -39,7 +39,8 @@ public class PyInvoke {
         cmd.append(invokeCmd + " ");
 
         //文件路径的最终形成在这里
-        cmd.append(pyInvokeProperties.getDir() + path + " ");
+//        cmd.append(pyInvokeProperties.getDir() + path + " ");
+        cmd.append(path + " ");
         String rawString = JSON.toJSONString(param);
 //        处理双引号转义
         StringBuffer stringBuffer = new StringBuffer();

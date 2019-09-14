@@ -16,4 +16,8 @@ public interface FundService {
     public FundBasicVO getBasicFund();
 
     public BasicResponse getMoreTraceInfo();
+
+    public void DecreaseCapital(Long userId, Double cost);
+
+    public void IncreaseCapital(Long userId, Double cost);
 }

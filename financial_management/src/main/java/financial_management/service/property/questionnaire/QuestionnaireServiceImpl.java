@@ -20,6 +20,8 @@ import financial_management.util.PyInvoke.PyResponse.questionnaire.VipConfigResp
 import financial_management.util.PyInvoke.PyResponse.questionnaire.VulnerabilityConfigResponse;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
+import financial_management.vo.property.QuestResVO;
+import financial_management.vo.property.QuestResWithInvRateVO;
 import financial_management.vo.property.QuestionnaireVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -179,7 +181,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
                 questionnaireMapper.insertQuestionnaireConfig(questionnaireConfigPO);
             }
 
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            QuestResVO questResVO = new QuestResVO(vipQuestionnaireParam.getVipLevel(), questionnaireConfigPO.getInvest_prefer(), questionnaireConfigPO.getTotal_yield(), new QuestResWithInvRateVO(questionnaireConfigPO.getStocks_rate(), questionnaireConfigPO.getQdii_rate(), questionnaireConfigPO.getGold_rate(), questionnaireConfigPO.getBond_rate()));
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, questResVO);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
@@ -273,7 +276,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
                 questionnaireMapper.insertQuestionnaireConfig(questionnaireConfigPO);
             }
 
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+//            QuestionnaireConfigPO questionnaireConfigPO = new QuestionnaireConfigPO(1L, 2, 1, 0.25, 0.25, 0.25, 0.25, 0.2, 0.25, 0.25, 0.25, 0.25, 0.2, 0.11, 2);
+            QuestResVO questResVO = new QuestResVO(questionnaireConfigPO.getVip_level(), questionnaireConfigPO.getInvest_prefer(), questionnaireConfigPO.getTotal_yield(), new QuestResWithInvRateVO(questionnaireConfigPO.getStocks_rate(), questionnaireConfigPO.getQdii_rate(), questionnaireConfigPO.getGold_rate(), questionnaireConfigPO.getBond_rate()));
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, questResVO);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

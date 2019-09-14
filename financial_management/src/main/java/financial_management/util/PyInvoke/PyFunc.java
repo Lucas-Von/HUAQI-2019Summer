@@ -41,7 +41,7 @@ public enum PyFunc {
 //    财务脆弱性
         QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
 //    资产配置
-        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
+        QUESTIONNAIRE_ASSET_ALLOCATION("asset.py"),
 //    VIP等级计算
         QUESTIONNAIRE_VIP_LEVEL("my_score card.py");
 

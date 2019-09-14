@@ -1,10 +1,12 @@
 package financial_management.util.PyInvoke.PyParam.questionnaire;
 
+import financial_management.util.PyInvoke.PyParam.PyParam;
+
 /**
  * @author lt
  * @date 2019/09/14 15:26
  */
-public class VipConfigParam {
+public class VipConfigParam extends PyParam {
 
     /**
      * 未付欠款

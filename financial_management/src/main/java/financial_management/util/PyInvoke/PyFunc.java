@@ -42,6 +42,8 @@ public enum PyFunc {
         QUESTIONNAIRE_VULNERABILITY("vulnerability.py"),
 //    资产配置
         QUESTIONNAIRE_ASSET_ALLOCATION("asset.py");
+//    VIP等级计算
+        QUESTIONNAIRE_VIP_LEVEL("my_score card.py");
 
     public String path;
 
@@ -53,9 +55,7 @@ public enum PyFunc {
      * @param path 文件名
      */
     PyFunc(String path) {
-//        this.path = "C:\\Users\\S.W.R\\Desktop\\" + path;
         this.path = path;
-
     }
 
 }

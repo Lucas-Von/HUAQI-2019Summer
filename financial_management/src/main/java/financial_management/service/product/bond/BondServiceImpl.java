@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -44,7 +45,9 @@ import java.util.Optional;
  **/
 @Service
 class BondServiceImpl implements BondServiceForBl, BondService {
-    String filePath = "D:\\学习资料\\大二下\\花旗杯\\py\\";
+
+    @Value("${exponent.update}")
+    String filePath ;
 
     @Qualifier("orderServiceImpl")
     @Autowired

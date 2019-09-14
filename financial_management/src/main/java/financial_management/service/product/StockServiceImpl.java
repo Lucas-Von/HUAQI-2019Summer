@@ -20,6 +20,7 @@ import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.ProductVO4Order;
+import financial_management.vo.product.MyStockVO;
 import financial_management.vo.product.StockAdjustmentVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class StockServiceImpl implements StockService {
@@ -52,6 +51,32 @@ public class StockServiceImpl implements StockService {
     private static Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Override
+    public BasicResponse<Map<String, List<MyStockVO>>> getHoldStock(long userID) {
+        BasicResponse<Map<String,List<MyStockVO>>> response;
+        List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
+        List<MyStockVO> myStockVOS = new ArrayList<>(myStockPOS.size());
+        myStockPOS.forEach(myStockPO -> {
+            MyStockVO myStockVO = new MyStockVO(myStockPO);
+            myStockVO.setName("前端等一下");
+            myStockVOS.add(myStockVO);
+        });
+
+        List<MyQDIIPO> myQDIIPOS = stockMapper.selectSelfQDII(userID);
+        List<MyStockVO> myQDIIVOS = new ArrayList<>(myQDIIPOS.size());
+        myQDIIPOS.forEach(myQDIIPO -> {
+            MyStockVO myStockVO = new MyStockVO(myQDIIPO);
+            myStockVO.setName("前端等一下");
+            myQDIIVOS.add(myStockVO);
+        });
+
+        Map<String,List<MyStockVO>> hold = new HashMap<>();
+        hold.put(OrderService.Type.DOMSTOCK.name(),myStockVOS);
+        hold.put(OrderService.Type.FORSTOCK.name(),myQDIIVOS);
+        response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,hold);
+        return response;
+    }
 
     @Override
     public void stockEstablish(Long userId) {

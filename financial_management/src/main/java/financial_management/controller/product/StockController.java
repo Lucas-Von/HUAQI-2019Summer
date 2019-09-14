@@ -25,4 +25,9 @@ public class StockController {
     public BasicResponse checkStockTransfer(@PathVariable long transID, @RequestParam boolean accepted, HttpServletRequest request) {
         return stockService.StockTransCheck(transID,jwtUtil.getIdFromRequest(request),accepted);
     }
+
+    @GetMapping("stock/hold")
+    public BasicResponse getHoldStock(HttpServletRequest request){
+        return stockService.getHoldStock(jwtUtil.getIdFromRequest(request));
+    }
 }

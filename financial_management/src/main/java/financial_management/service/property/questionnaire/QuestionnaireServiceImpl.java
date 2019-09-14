@@ -3,6 +3,7 @@ package financial_management.service.property.questionnaire;
 import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.property.QuestionnaireMapper;
 import financial_management.entity.property.QuestionnaireConfigPO;
+import financial_management.entity.property.QuestionnaireSetPO;
 import financial_management.parameter.property.NVipQuestionnaireParam;
 import financial_management.parameter.property.VipQuestionnaireParam;
 import financial_management.service.property.estate.EstateServiceForBl;
@@ -112,10 +113,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse setVipQuestionnaire(Long userId, VipQuestionnaireParam vipQuestionnaireParam) {
         try {
+            QuestionnaireSetPO questionnaireSetPO = new QuestionnaireSetPO(userId, new Date(), vipQuestionnaireParam.getFinInfo(), vipQuestionnaireParam.getVolChose(), vipQuestionnaireParam.getStockPrefer(), vipQuestionnaireParam.getBankCard(), vipQuestionnaireParam.getCurrentDeposit(), vipQuestionnaireParam.getFixedDeposit(), vipQuestionnaireParam.getHaveFund(), vipQuestionnaireParam.getHaveBank(), vipQuestionnaireParam.getBoardWages(), vipQuestionnaireParam.getBoardWageOutside(), vipQuestionnaireParam.getMonthlySupply(), vipQuestionnaireParam.getMonthlyTraffic(), vipQuestionnaireParam.getMonthlyPhone(), vipQuestionnaireParam.getMonthlyPlay(), vipQuestionnaireParam.getLastClothes(), vipQuestionnaireParam.getLastTourist(), vipQuestionnaireParam.getMonthlyTenement(), vipQuestionnaireParam.getAsset(), vipQuestionnaireParam.getTotalIncome(), vipQuestionnaireParam.getWifeInbornYear(), vipQuestionnaireParam.getHusInbornYear(), vipQuestionnaireParam.getChildNum(), vipQuestionnaireParam.getOldNum(), vipQuestionnaireParam.getHusIncome(), vipQuestionnaireParam.getWifeIncome(), vipQuestionnaireParam.getCarValue(), vipQuestionnaireParam.getLifeCost(), vipQuestionnaireParam.getAge(), vipQuestionnaireParam.getMarriage(), vipQuestionnaireParam.getChildBornYear(), vipQuestionnaireParam.getVipLevel(), 0, 0, 0, 0, 0, 0);
             if (hasQuest(userId)) {
-                questionnaireMapper.updateVipQuest(vipQuestionnaireParam);
+                questionnaireMapper.updateVipQuest(questionnaireSetPO);
             } else {
-                questionnaireMapper.insertVipQuest(vipQuestionnaireParam);
+                questionnaireMapper.insertVipQuest(questionnaireSetPO);
             }
 
             QuestionnaireConfigPO questionnaireConfigPO = new QuestionnaireConfigPO();
@@ -194,10 +196,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     @Override
     public BasicResponse setNVipQuestionnaire(Long userId, NVipQuestionnaireParam nVipQuestionnaireParam) {
         try {
+            QuestionnaireSetPO questionnaireSetPO = new QuestionnaireSetPO(userId, new Date(), nVipQuestionnaireParam.getFinInfo(), nVipQuestionnaireParam.getVolChose(), nVipQuestionnaireParam.getStockPrefer(), nVipQuestionnaireParam.getBankCard(), nVipQuestionnaireParam.getCurrentDeposit(), nVipQuestionnaireParam.getFixedDeposit(), nVipQuestionnaireParam.getHaveFund(), nVipQuestionnaireParam.getHaveBank(), nVipQuestionnaireParam.getBoardWages(), nVipQuestionnaireParam.getBoardWageOutside(), nVipQuestionnaireParam.getMonthlySupply(), nVipQuestionnaireParam.getMonthlyTraffic(), nVipQuestionnaireParam.getMonthlyPhone(), nVipQuestionnaireParam.getMonthlyPlay(), nVipQuestionnaireParam.getLastClothes(), nVipQuestionnaireParam.getLastTourist(), nVipQuestionnaireParam.getMonthlyTenement(), nVipQuestionnaireParam.getAsset(), nVipQuestionnaireParam.getTotalIncome(), nVipQuestionnaireParam.getWifeInbornYear(), nVipQuestionnaireParam.getHusInbornYear(), nVipQuestionnaireParam.getChildNum(), nVipQuestionnaireParam.getOldNum(), nVipQuestionnaireParam.getHusIncome(), nVipQuestionnaireParam.getWifeIncome(), nVipQuestionnaireParam.getCarValue(), nVipQuestionnaireParam.getLifeCost(), nVipQuestionnaireParam.getAge(), nVipQuestionnaireParam.getMarriage(), nVipQuestionnaireParam.getChildBornYear(), 0, nVipQuestionnaireParam.getUnpaidArrears(), nVipQuestionnaireParam.getPreviousArrearsDue(), nVipQuestionnaireParam.getLineOfCredit(), nVipQuestionnaireParam.getCashAdvance(), nVipQuestionnaireParam.getLastPayment(), nVipQuestionnaireParam.getMinimumDuePayment());
             if (hasQuest(userId)) {
-                questionnaireMapper.updateNVipQuest(nVipQuestionnaireParam);
+                questionnaireMapper.updateNVipQuest(questionnaireSetPO);
             } else {
-                questionnaireMapper.insertNVipQuest(nVipQuestionnaireParam);
+                questionnaireMapper.insertNVipQuest(questionnaireSetPO);
             }
 
             QuestionnaireConfigPO questionnaireConfigPO = new QuestionnaireConfigPO();

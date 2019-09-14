@@ -1,6 +1,7 @@
 package financial_management.data.property;
 
 import financial_management.entity.property.QuestionnaireConfigPO;
+import financial_management.entity.property.QuestionnaireSetPO;
 import financial_management.parameter.property.NVipQuestionnaireParam;
 import financial_management.parameter.property.VipQuestionnaireParam;
 import org.apache.ibatis.annotations.Mapper;
@@ -36,34 +37,34 @@ public interface QuestionnaireMapper {
     /**
      * 插入VIP用户填写的问卷
      *
-     * @param vipQuestionnaireParam
+     * @param questionnaireSetPO
      * @return
      */
-    void insertVipQuest(VipQuestionnaireParam vipQuestionnaireParam);
+    void insertVipQuest(QuestionnaireSetPO questionnaireSetPO);
 
     /**
      * 更新VIP用户填写的问卷
      *
-     * @param vipQuestionnaireParam
+     * @param questionnaireSetPO
      * @return
      */
-    void updateVipQuest(VipQuestionnaireParam vipQuestionnaireParam);
+    void updateVipQuest(QuestionnaireSetPO questionnaireSetPO);
 
     /**
      * 插入非VIP用户填写的问卷
      *
-     * @param nVipQuestionnaireParam
+     * @param questionnaireSetPO
      * @return
      */
-    void insertNVipQuest(NVipQuestionnaireParam nVipQuestionnaireParam);
+    void insertNVipQuest(QuestionnaireSetPO questionnaireSetPO);
 
     /**
      * 更新非VIP用户填写的问卷
      *
-     * @param nVipQuestionnaireParam
+     * @param questionnaireSetPO
      * @return
      */
-    void updateNVipQuest(NVipQuestionnaireParam nVipQuestionnaireParam);
+    void updateNVipQuest(QuestionnaireSetPO questionnaireSetPO);
 
     /**
      * 获取投资偏好

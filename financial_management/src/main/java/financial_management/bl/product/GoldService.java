@@ -34,4 +34,9 @@ public interface GoldService {
      * @return
      */
     BasicResponse getNowConfig(Long userId);
+
+    /**
+     * 更新黄金收益
+     */
+    void updateProfit();
 }

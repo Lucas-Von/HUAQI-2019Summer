@@ -1229,7 +1229,7 @@ CREATE TABLE `recommend` (
 
 LOCK TABLES `recommend` WRITE;
 /*!40000 ALTER TABLE `recommend` DISABLE KEYS */;
-INSERT INTO `recommend` VALUES (1,NULL,0.1,NULL,NULL,NULL,NULL,'保守型',NULL,NULL,NULL,0.3,NULL,NULL,NULL);
+INSERT INTO `recommend` VALUES (1,0.2,0.1,NULL,NULL,NULL,NULL,'保守型',NULL,NULL,NULL,0.3,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `recommend` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1241,7 +1241,7 @@ DROP TABLE IF EXISTS `stock_adjustment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stock_adjustment` (
-  `order_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `order_time` float NOT NULL,
   `code` varchar(15) NOT NULL,
   `state_message` varchar(20) NOT NULL,
   `order_amount` int(11) NOT NULL,

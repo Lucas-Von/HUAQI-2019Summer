@@ -60,27 +60,32 @@ class Uqer(object):
         realOrders = []
         fromDate = time.mktime(time.strptime(fromDate, "%Y-%m-%d"))
 
+        orderss = []
+
         for order in orders:
+            if len(list(order['order'])) != 0:
+                orderss.append(order)
+
+        for order in orderss:
             orderDate = time.mktime(time.strptime(order['date'], "%Y%m%d"))
             if (orderDate < fromDate) ^ isBefore:
                 continue
             else:
                 li = list(order['order'])
-                if len(li) != 0:
-                    for unit in li:
-                        direction = int(unit['direction'])
-                        retunit = {
-                            'order_time': time.mktime(time.strptime(unit['order_time'], "%Y-%m-%d")),
-                            'code': unit['symbol'],
-                            'state_message': unit['state_message'],
-                            'order_amount': direction * unit['order_amount'],
-                            'complete_amount': direction * unit['filled_amount'],
-                            'fee': direction * unit['commission'],
-                            'price': unit['transact_price'],
-                            'total': direction * unit['turnover_value'] + unit['commission']
-                        }
-                        # print(retunit)
-                        realOrders.append(retunit)
+                for unit in li:
+                    direction = int(unit['direction'])
+                    retunit = {
+                        'order_time': time.mktime(time.strptime(unit['order_time'], "%Y-%m-%d")),
+                        'code': unit['symbol'],
+                        'state_message': unit['state_message'],
+                        'order_amount': direction * unit['order_amount'],
+                        'complete_amount': direction * unit['filled_amount'],
+                        'fee': direction * unit['commission'],
+                        'price': unit['transact_price'],
+                        'total': direction * unit['turnover_value'] + unit['commission']
+                    }
+                    # print(retunit)
+                    realOrders.append(retunit)
         print(realOrders)
 
 

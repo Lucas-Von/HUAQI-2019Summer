@@ -23,6 +23,12 @@ public class StockTest {
     }
 
     @Test
+    public void StockEstablish(){
+        long userID = 1L;
+        stockService.stockEstablish(userID);
+    }
+
+    @Test
     @Transactional
     public void QDIIEstablish_normal(){
         long userID = 1L;

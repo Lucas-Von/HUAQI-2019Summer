@@ -81,17 +81,25 @@ public class StockServiceImpl implements StockService {
     public void stockEstablish(Long userId) {
         final PyFunc func = PyFunc.STOCK;
         double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
-        StockParam param = new StockParam(sdf.format(new Date()), true);
+        String date = sdf.format(new Date());
+        StockParam param = new StockParam(date, true);
         List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
 //        List<Object> result = getStubData();
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
+            Float latest = 0.0f;
             for (Object object : result) {
                 StockAdjustment adjustment = proportionalReadjust(whereCanIGetTargetAmount, STOCK_BASE, (StockAdjustment) object);
                 if (adjustment.getComplete_amount() > 0) {
                     adjustments.add(adjustment);
+                    if (adjustment.getOrder_time() > latest) {
+                        latest = adjustment.getOrder_time();
+                    }
                 }
             }
+
+            Float finalLatest = latest;
+            adjustments.removeIf(adjustment -> adjustment.getOrder_time().compareTo(finalLatest) < 0);
 //            domAdjust(adjustments, new ArrayList<>(), userId);
             handlePythonResult(userId, adjustments);
         } else {
@@ -208,7 +216,9 @@ public class StockServiceImpl implements StockService {
                     logger.error("Insert into stock adjustments error.\nRecord: " + adjustmentPO.toString());
                     return;
                 }
-                message.append("\n").append(new StockAdjustmentVO(raw).toString());
+                StockAdjustmentVO stockAdjustmentVO = new StockAdjustmentVO(raw);
+                stockAdjustmentVO.setName(stockMapper.selectDomStockByCode(raw.getCode()).getName());
+                message.append("\n").append(stockAdjustmentVO.toString());
             }
             try {
                 messageInterface.postTransMessage(userID, message.toString(), transferRecordPO.getID());

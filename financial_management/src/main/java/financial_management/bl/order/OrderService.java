@@ -41,6 +41,8 @@ public interface OrderService {
 
     TransferRecordPO updateTransferRecord(TransferRecordPO po);
 
+    BasicResponse completePersonalTrade(long ID, long userID);
+
     //获取累计净投入峰值
     double getMaxInvestBy(Long userID, String type);
 

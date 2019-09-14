@@ -200,6 +200,11 @@ public class OrderServiceStub implements OrderService {
     }
 
     @Override
+    public BasicResponse completePersonalTrade(long ID, long userID) {
+        return null;
+    }
+
+    @Override
     public double getMaxInvestBy(Long userID, String type) {
         return 0.0;
     }

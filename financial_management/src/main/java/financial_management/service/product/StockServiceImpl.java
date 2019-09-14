@@ -290,7 +290,7 @@ public class StockServiceImpl implements StockService {
             adjustments.add(adjustment);
         }
         List<PersonalTradeVO> personalTradeVOS = domAdjust(adjustments, myStockPOS, userID);
-        if (personalTradeVOS.size() > 0) {
+        if (personalTradeVOS != null && personalTradeVOS.size() > 0) {
             response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeVOS);
         } else {
             response = new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
@@ -472,12 +472,14 @@ public class StockServiceImpl implements StockService {
             vo.setPrice(price);
             vo.setTotal(total);
             vo.setFee(0);
-            vo.setStatus(1);
-            //TODO 到时候要真正去扣钱
-            vo.setCompleteTime(new Date());
+            vo.setStatus(0);
             BasicResponse<PersonalTradeVO> response = orderService.addPersonalTradeRecord(vo, false);
-            if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
+            assert response.getStatus() == ResponseStatus.STATUS_SUCCESS;
+
+            if (orderService.completePersonalTrade(response.getData().getID(), userID).getStatus() == ResponseStatus.STATUS_SUCCESS) {
                 personalTradeVOS.add(response.getData());
+            } else {
+                return null;
             }
         }
         return personalTradeVOS;
@@ -535,10 +537,13 @@ public class StockServiceImpl implements StockService {
             vo.setUserID(userID);
             vo.setStatus(1);
             //TODO 到时候要真正去扣钱
-            vo.setCompleteTime(new Date());
             BasicResponse<PersonalTradeVO> response = orderService.addPersonalTradeRecord(vo, false);
-            if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
+            assert response.getStatus() == ResponseStatus.STATUS_SUCCESS;
+
+            if (orderService.completePersonalTrade(response.getData().getID(), userID).getStatus() == ResponseStatus.STATUS_SUCCESS) {
                 personalTradeVOS.add(response.getData());
+            } else {
+                return null;
             }
         }
         return personalTradeVOS;

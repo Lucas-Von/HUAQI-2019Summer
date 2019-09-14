@@ -22,6 +22,7 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_RECORD_NOT_EXIST = new ResponseStatus("4001","记录不存在");
     public static final ResponseStatus STATUS_RECORD_ERROR = new ResponseStatus("4002","记录状态异常");
     public static final ResponseStatus STATUS_TRANSFER_CHECKED = new ResponseStatus("4003","该次调仓已经经过确认");
+    public static final ResponseStatus STATUS_TRADE_CANT_PAY = new ResponseStatus("4004", "该笔交易已无法进行支付");
 
     public static final ResponseStatus STATUS_PAYPASSWORD_WRONG = new ResponseStatus("5001","支付密码错误");
     public static final ResponseStatus STATUS_DEPOSITPRODUCT_UNFINED = new ResponseStatus("5002","储蓄产品已被下架或不存在");
@@ -33,6 +34,7 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_STOCK_NOT_HOLD = new ResponseStatus("5008","未持有该股票/股指产品");
     public static final ResponseStatus STATUS_STOCK_SELL_LEAK = new ResponseStatus("5009","股票/股指持有额不足卖出金额");
     public static final ResponseStatus STATUS_INVESTPREFER_NOT_EXIST = new ResponseStatus("5010","用户暂无投资偏好");
+    public static final ResponseStatus STATUS_BALANCE_LEAK = new ResponseStatus("5011","账户余额不足");
 
     public static final ResponseStatus STATUS_QUESTIONNAIRE_EXIST = new ResponseStatus("6001","The user has filled out the questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_NOT_EXIST = new ResponseStatus("6002","The user has not filled out the questionnaire.");

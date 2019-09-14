@@ -3,6 +3,7 @@ package financial_management.service.order.impl;
 import financial_management.bl.message.ITransferMessage;
 import financial_management.bl.message.MessageService;
 import financial_management.bl.order.OrderService;
+import financial_management.bl.product.FundService;
 import financial_management.bl.product.ProductService4Order;
 import financial_management.data.order.MaxInvestMapper;
 import financial_management.data.order.PersonalTradeMapper;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +46,8 @@ public class OrderServiceImpl implements OrderService, ITransferMessage {
     @Autowired
     @Qualifier("messageServiceImpl")
     private MessageService messageService;
+    @Autowired
+    private FundService fundService;
 
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
@@ -234,6 +238,41 @@ public class OrderServiceImpl implements OrderService, ITransferMessage {
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }
 
+    @Override
+    public BasicResponse completePersonalTrade(long ID, long userID) {
+        PersonalTradePO personalTradePO = personalTradeMapper.selectByID(ID);
+        BasicResponse<?> response;
+        if (personalTradePO == null) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, "ID=" + ID);
+        } else if (!personalTradePO.getUserID().equals(userID)) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, "无法支付非本人的订单");
+        } else if (personalTradePO.getStatus() != 0) {
+            String reason;
+            switch (personalTradePO.getStatus()) {
+                case 1:
+                    reason = "该笔交易已经完成支付";
+                case 2:
+                    reason = "该笔交易已被取消";
+                default:
+                    reason = "未知原因" + personalTradePO.getStatus();
+            }
+            response = new BasicResponse<>(ResponseStatus.STATUS_TRADE_CANT_PAY, reason);
+        } else {
+            float balance = fundService.getFund(userID).getAmount().floatValue();
+            float toPay = personalTradePO.getTotal();
+            if (balance < toPay) {
+                response = new BasicResponse<>(ResponseStatus.STATUS_BALANCE_LEAK, "余额 ￥" + balance + " 不足以支付交易金额 ￥" + toPay);
+            } else {
+                fundService.DecreaseCapital(userID, new BigDecimal(toPay).doubleValue());
+                personalTradePO.setCompleteTime(new Date());
+                personalTradePO.setStatus(1);
+                int update = personalTradeMapper.update(personalTradePO);
+                assert update == 1;
+                response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, new PersonalTradeVO(personalTradePO));
+            }
+        }
+        return response;
+    }
 
     @Override
     public double getMaxInvestBy(Long userID, String type) {

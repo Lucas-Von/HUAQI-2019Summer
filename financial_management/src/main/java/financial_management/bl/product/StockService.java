@@ -33,6 +33,8 @@ public interface StockService {
 
     BasicResponse<?> QDIICustomize(StockCustomizeParam param, long userID);
 
+    BasicResponse<?> transferCheck(long transID, long userID, boolean accepted);
+
     BasicResponse<?> QDIITransferCheck(long transID, long userID, boolean accepted);
 
     BasicResponse<?> StockTransCheck(long transID, long userID, boolean accepted);

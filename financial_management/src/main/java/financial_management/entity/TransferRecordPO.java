@@ -18,6 +18,8 @@ public class TransferRecordPO{
     //调仓状态
     private Integer status;
 
+    private Boolean isQDII;
+
     //是否已经过用户确认
     private Boolean isChecked;
 
@@ -99,13 +101,22 @@ public class TransferRecordPO{
         this.isCustomize = isCustomize;
     }
 
+    public Boolean getQDII() {
+        return isQDII;
+    }
+
+    public void setQDII(Boolean QDII) {
+        isQDII = QDII;
+    }
+
     public TransferRecordPO() {
     }
 
-    public TransferRecordPO(Date createTime, Long userID, Boolean isCustomize) {
+    public TransferRecordPO(Date createTime, Long userID, Boolean isCustomize, boolean isQDII) {
         this.createTime = createTime;
         this.userID = userID;
         this.isCustomize = isCustomize;
+        this.isQDII = isQDII;
     }
 
     @Override
@@ -116,6 +127,7 @@ public class TransferRecordPO{
                 ", completeTime=" + completeTime +
                 ", userID=" + userID +
                 ", status=" + status +
+                ", isQDII=" + isQDII +
                 ", isChecked=" + isChecked +
                 ", isDenied=" + isDenied +
                 ", isCustomize=" + isCustomize +

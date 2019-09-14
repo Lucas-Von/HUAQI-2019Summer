@@ -58,7 +58,7 @@ public class StockServiceImpl implements StockService {
         List<MyStockVO> myStockVOS = new ArrayList<>(myStockPOS.size());
         myStockPOS.forEach(myStockPO -> {
             MyStockVO myStockVO = new MyStockVO(myStockPO);
-            myStockVO.setName("前端等一下");
+            myStockVO.setName(stockMapper.selectDomStockByCode(myStockPO.getCode()).getName());
             myStockVOS.add(myStockVO);
         });
 
@@ -66,7 +66,7 @@ public class StockServiceImpl implements StockService {
         List<MyStockVO> myQDIIVOS = new ArrayList<>(myQDIIPOS.size());
         myQDIIPOS.forEach(myQDIIPO -> {
             MyStockVO myStockVO = new MyStockVO(myQDIIPO);
-            myStockVO.setName("前端等一下");
+            myStockVO.setName(stockMapper.selectQDIIByCode(myQDIIPO.getCode()).getName());
             myQDIIVOS.add(myStockVO);
         });
 
@@ -81,7 +81,7 @@ public class StockServiceImpl implements StockService {
     public void stockEstablish(Long userId) {
         final PyFunc func = PyFunc.STOCK;
         double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
-        StockParam param = new StockParam(sdf.format(new Date()));
+        StockParam param = new StockParam(sdf.format(new Date()), true);
         List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
 //        List<Object> result = getStubData();
         if (result != null) {
@@ -104,7 +104,7 @@ public class StockServiceImpl implements StockService {
         final PyFunc func = PyFunc.STOCK;
         double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
-        StockParam param = new StockParam(sdf.format(new Date()));
+        StockParam param = new StockParam(sdf.format(adjustmentMapper.selectLastStockTransferDate()), false);//TODO
         List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
 //        List<Object> result = getStubData();
         if (result != null) {
@@ -116,7 +116,7 @@ public class StockServiceImpl implements StockService {
                 } else {
                     for (MyStockPO myStockPO : mydoms) {
                         if (myStockPO.getCode().equals(adjustment.getCode())) {
-                            if (myStockPO.getHoldAmount() <= -adjustment.getComplete_amount()) {
+                            if (myStockPO.getHoldAmount() <= 0 - adjustment.getComplete_amount()) {
                                 float completeAmount = myStockPO.getHoldAmount();
                                 float turnover = completeAmount * adjustment.getPrice();
                                 float fee = Math.abs(ArithmeticUtil.formatFloat2Float(turnover * 0.001f));
@@ -124,7 +124,6 @@ public class StockServiceImpl implements StockService {
                                 adjustment.setFee(fee);
                                 adjustment.setTotal(turnover + fee);
                             }
-
                             adjustments.add(adjustment);
                         }
                     }
@@ -198,7 +197,7 @@ public class StockServiceImpl implements StockService {
     @Transactional
     void handlePythonResult(long userID, List<StockAdjustment> result) {
         Date createTime = new Date();
-        TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userID, false));
+        TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userID, false, false));
         if (transferRecordPO != null) {
             StringBuilder message = new StringBuilder("尊敬的用户，您有新的股票调仓计划需要确认，请在24小时之内选择是否需要进行这次调仓:");
             for (StockAdjustment raw : result) {
@@ -226,7 +225,7 @@ public class StockServiceImpl implements StockService {
     @Transactional
     void handlePythonResult_QDII(Long userId, List<Object> result) {
         Date createTime = new Date();
-        TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userId, false));
+        TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userId, false, true));
         if (transferRecordPO != null) {
             StringBuilder message = new StringBuilder("尊敬的用户，您有新的股指调仓计划需要确认，请在24小时之内选择是否需要进行这次调仓:");
             for (Object object : result) {
@@ -263,9 +262,11 @@ public class StockServiceImpl implements StockService {
         for (MyStockPO myStockPO : myStockPOS) {
             DomStockPO stockPO = stockMapper.selectDomStockByCode(myStockPO.getCode());
             StockAdjustment adjustment = new StockAdjustment();
+
             adjustment.setOrder_time(orderTime);
             adjustment.setCode(myStockPO.getCode());
             adjustment.setState_message("");
+
             int amount = money > 0 ? myStockPO.getHoldAmount() : 0 - myStockPO.getHoldAmount();
             adjustment.setOrder_amount(amount);
             adjustment.setComplete_amount(amount);
@@ -274,6 +275,7 @@ public class StockServiceImpl implements StockService {
             float fee = Math.abs(turnover * 0.001f);
             adjustment.setFee(fee);
             adjustment.setTotal(turnover + fee);
+
             proportionalReadjust(Math.abs(money), holdTotal, adjustment);
             adjustments.add(adjustment);
         }
@@ -321,32 +323,44 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public BasicResponse<?> QDIITransferCheck(long transID, long userID, boolean accepted) {
+    public BasicResponse<?> transferCheck(long transID, long userID, boolean accepted) {
         TransferRecordPO trans = orderService.getTransferRecordByID(transID);
         BasicResponse<?> response;
         if (trans == null) {
-            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
+            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, "调仓记录不存在：ID=" + transID);
         } else if (!trans.getUserID().equals(userID)) {
-            response = new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, null);
+            response = new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, "非本用户调仓记录");
+        } else if (trans.getChecked()) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_TRANSFER_CHECKED, "ID=" + transID);
+        } else if (trans.getQDII()) {
+            response = QDIITransferCheck(transID, userID, accepted);
         } else {
-            trans.setChecked(true);
+            response = StockTransCheck(transID, userID, accepted);
+        }
+        return response;
+    }
 
-            if (accepted) {
-                List<QDIIAdjustmentPO> adjustmentPOS = adjustmentMapper.selectQDIIAdjustmentByTransID(transID);
-                if (adjustmentPOS.isEmpty()) {
-                    logger.warn("Got an empty list of QDII adjustment? That's INSANE!\nCause transID: " + transID);
-                }
-                List<MyQDIIPO> myQDIIs = stockMapper.selectSelfQDII(userID);
-                qdiiAdjust(adjustmentPOS, myQDIIs, userID);
-                trans.setCompleteTime(new Date());
+    @Override
+    public BasicResponse<?> QDIITransferCheck(long transID, long userID, boolean accepted) {
+        TransferRecordPO trans = orderService.getTransferRecordByID(transID);
+        BasicResponse<?> response;
+
+        trans.setChecked(true);
+        if (accepted) {
+            List<QDIIAdjustmentPO> adjustmentPOS = adjustmentMapper.selectQDIIAdjustmentByTransID(transID);
+            if (adjustmentPOS.isEmpty()) {
+                logger.warn("Got an empty list of QDII adjustment? That's INSANE!\nCause transID: " + transID);
             }
-            trans.setStatus(accepted ? 1 : 2);
-            trans.setDenied(!accepted);
-            if (orderService.updateTransferRecord(trans) != null) {
-                response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
-            } else {
-                response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_ERROR, null);
-            }
+            List<MyQDIIPO> myQDIIs = stockMapper.selectSelfQDII(userID);
+            qdiiAdjust(adjustmentPOS, myQDIIs, userID);
+            trans.setCompleteTime(new Date());
+        }
+        trans.setStatus(accepted ? 1 : 2);
+        trans.setDenied(!accepted);
+        if (orderService.updateTransferRecord(trans) != null) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+        } else {
+            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_ERROR, null);
         }
         return response;
     }
@@ -355,31 +369,26 @@ public class StockServiceImpl implements StockService {
     public BasicResponse<?> StockTransCheck(long transID, long userID, boolean accepted) {
         TransferRecordPO trans = orderService.getTransferRecordByID(transID);
         BasicResponse<?> response;
-        if (trans == null) {
-            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_NOT_EXIST, null);
-        } else if (!trans.getUserID().equals(userID)) {
-            response = new BasicResponse<>(ResponseStatus.STATUS_NOT_AUTHORIZED, null);
-        } else {
-            trans.setChecked(true);
 
-            if (accepted) {
-                List<StockAdjustmentPO> adjustmentPOS = adjustmentMapper.selectStockAdjustmentByTransID(transID);
-                if (adjustmentPOS.isEmpty()) {
-                    logger.warn("Got an empty list of stock adjustment? That's INSANE!\nCause transID: " + transID);
-                }
+        trans.setChecked(true);
+        if (accepted) {
+            List<StockAdjustmentPO> adjustmentPOS = adjustmentMapper.selectStockAdjustmentByTransID(transID);
+            if (adjustmentPOS.isEmpty()) {
+                logger.warn("Got an empty list of stock adjustment? That's INSANE!\nCause transID: " + transID);
+            }
 
-                List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
-                domAdjust(adjustmentPOS, myStockPOS, userID);
-                trans.setCompleteTime(new Date());
-            }
-            trans.setStatus(accepted ? 1 : 2);
-            trans.setDenied(!accepted);
-            if (orderService.updateTransferRecord(trans) != null) {
-                response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
-            } else {
-                response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_ERROR, null);
-            }
+            List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
+            domAdjust(adjustmentPOS, myStockPOS, userID);
+            trans.setCompleteTime(new Date());
         }
+        trans.setStatus(accepted ? 1 : 2);
+        trans.setDenied(!accepted);
+        if (orderService.updateTransferRecord(trans) != null) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
+        } else {
+            response = new BasicResponse<>(ResponseStatus.STATUS_RECORD_ERROR, null);
+        }
+
         return response;
     }
 
@@ -453,11 +462,13 @@ public class StockServiceImpl implements StockService {
             vo.setPrice(price);
             vo.setTotal(total);
             vo.setFee(0);
+            vo.setStatus(1);
+            //TODO 到时候要真正去扣钱
+            vo.setCompleteTime(new Date());
             BasicResponse<PersonalTradeVO> response = orderService.addPersonalTradeRecord(vo, false);
             if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
                 personalTradeVOS.add(response.getData());
             }
-            //TODO 到时候要真正去扣钱
         }
         return personalTradeVOS;
     }
@@ -512,11 +523,13 @@ public class StockServiceImpl implements StockService {
             vo.setTotal(total);
             vo.setFee(0);
             vo.setUserID(userID);
+            vo.setStatus(1);
+            //TODO 到时候要真正去扣钱
+            vo.setCompleteTime(new Date());
             BasicResponse<PersonalTradeVO> response = orderService.addPersonalTradeRecord(vo, false);
             if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
                 personalTradeVOS.add(response.getData());
             }
-            //TODO 到时候要真正去扣钱
         }
         return personalTradeVOS;
     }

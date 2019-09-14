@@ -36,6 +36,13 @@
         from stock_adjustment
         where trans_id = #{transID}
     </select>
+    
+    <select id="selectLastStockTransferDate" resultType="java.util.Date">
+        select s.order_time
+        from stock_adjustment s
+        order by s.order_time desc
+        limit 1;
+    </select>
 
     <insert id="insertQDII" parameterType="financial_management.entity.stock.QDIIAdjustmentPO">
         insert into qdii_adjustment (qdii_code, name, share_deployed, number_deployed, m_already_deployed,

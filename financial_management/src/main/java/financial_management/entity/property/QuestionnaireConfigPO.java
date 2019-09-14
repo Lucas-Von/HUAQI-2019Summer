@@ -14,6 +14,11 @@ public class QuestionnaireConfigPO {
     private Long userId;
 
     /**
+     * 会员等级
+     */
+    private int vip_level;
+
+    /**
      * 用户投资偏好
      */
     private String invest_prefer;
@@ -78,8 +83,9 @@ public class QuestionnaireConfigPO {
      */
     private int total_risk_level;
 
-    public QuestionnaireConfigPO(Long userId, int prefer_label, double funds_rate, double insurance_rate, double saving_rate, double invest_rate, double min_finance_fragility, double stocks_rate, double qdii_rate, double gold_rate, double bond_rate, double total_volatility, double total_yield, int total_risk_level) {
+    public QuestionnaireConfigPO(Long userId, int vip_level, int prefer_label, double funds_rate, double insurance_rate, double saving_rate, double invest_rate, double min_finance_fragility, double stocks_rate, double qdii_rate, double gold_rate, double bond_rate, double total_volatility, double total_yield, int total_risk_level) {
         this.userId = userId;
+        this.vip_level = vip_level;
         this.funds_rate = funds_rate;
         this.insurance_rate = insurance_rate;
         this.saving_rate = saving_rate;
@@ -126,6 +132,14 @@ public class QuestionnaireConfigPO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public int getVip_level() {
+        return vip_level;
+    }
+
+    public void setVip_level(int vip_level) {
+        this.vip_level = vip_level;
     }
 
     public String getInvest_prefer() {

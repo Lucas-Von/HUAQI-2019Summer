@@ -21,6 +21,7 @@ public final class ResponseStatus {
 
     public static final ResponseStatus STATUS_RECORD_NOT_EXIST = new ResponseStatus("4001","记录不存在");
     public static final ResponseStatus STATUS_RECORD_ERROR = new ResponseStatus("4002","记录状态异常");
+    public static final ResponseStatus STATUS_TRANSFER_CHECKED = new ResponseStatus("4003","该次调仓已经经过确认");
 
     public static final ResponseStatus STATUS_PAYPASSWORD_WRONG = new ResponseStatus("5001","支付密码错误");
     public static final ResponseStatus STATUS_DEPOSITPRODUCT_UNFINED = new ResponseStatus("5002","储蓄产品已被下架或不存在");
@@ -44,7 +45,8 @@ public final class ResponseStatus {
     public static final ResponseStatus STATUS_QUESTIONNAIRE_MLEARNING_WRONG = new ResponseStatus("6009","MLearning.py went wrong when analyzing questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_VULNERABILITY_WRONG = new ResponseStatus("6010","Vulnerability.py went wrong when analyzing questionnaire.");
     public static final ResponseStatus STATUS_QUESTIONNAIRE_ASSET_WRONG = new ResponseStatus("6011","Asset.py went wrong when analyzing questionnaire.");
-    public static final ResponseStatus STATUS_FORTUNE_RECORD_NOT_EXIST = new ResponseStatus("6012", "The record of your fortune changes does not exist.");
+    public static final ResponseStatus STATUS_QUESTIONNAIRE_VIP_WRONG = new ResponseStatus("6012","My_score card.py went wrong when analyzing questionnaire.");
+    public static final ResponseStatus STATUS_FORTUNE_RECORD_NOT_EXIST = new ResponseStatus("6013", "The record of your fortune changes does not exist.");
 
     public static final ResponseStatus STATUS_EMAIL_EXIST = new ResponseStatus("8001", "The email has existed");
     public static final ResponseStatus STATUS_IDENTITY_EXIST = new ResponseStatus("8002", "The identity has existed");

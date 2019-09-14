@@ -1,14 +1,24 @@
-package financial_management.parameter.property;
+package financial_management.entity.property;
 
 import java.util.Date;
 
 /**
  * @author lt
- * @version 2.0
- * @description VIP用户的问卷信息
- * @date 2019/09/14 14:19
+ * @version 1.0
+ * @description 增加&更新用户问卷信息的数据集
+ * @date 2019/09/14 20:22
  */
-public class VipQuestionnaireParam {
+public class QuestionnaireSetPO {
+
+    /**
+     * 用户id
+     */
+    private Long userId;
+
+    /**
+     * 更新问卷日期
+     */
+    private Date recordDate;
 
     /**
      * 金融信息关注程度
@@ -161,9 +171,101 @@ public class VipQuestionnaireParam {
     private String childBornYear;
 
     /**
-     * 会员等级
+     * VIP等级
      */
     private int vipLevel;
+
+    /**
+     * 未付欠款
+     */
+    private double unpaidArrears;
+
+    /**
+     * 上期应还欠款
+     */
+    private double previousArrearsDue;
+
+    /**
+     * 信用额度
+     */
+    private double lineOfCredit;
+
+    /**
+     * 预提现金额度
+     */
+    private double cashAdvance;
+
+    /**
+     * 上次付款额
+     */
+    private double lastPayment;
+
+    /**
+     * 最低到期付款额
+     */
+    private double minimumDuePayment;
+
+    public QuestionnaireSetPO(Long userId, Date recordDate, int finInfo, int volChose, int stockPrefer, int bankCard, double currentDeposit, double fixedDeposit, int haveFund, int haveBank, double boardWages, double boardWageOutside, double monthlySupply, double monthlyTraffic, double monthlyPhone, double monthlyPlay, double lastClothes, double lastTourist, double monthlyTenement, double asset, double totalIncome, int wifeInbornYear, int husInbornYear, int childNum, int oldNum, double husIncome, double wifeIncome, double carValue, double lifeCost, int age, int marriage, String childBornYear, int vipLevel, double unpaidArrears, double previousArrearsDue, double lineOfCredit, double cashAdvance, double lastPayment, double minimumDuePayment) {
+        this.userId = userId;
+        this.recordDate = recordDate;
+        this.finInfo = finInfo;
+        this.volChose = volChose;
+        this.stockPrefer = stockPrefer;
+        this.bankCard = bankCard;
+        this.currentDeposit = currentDeposit;
+        this.fixedDeposit = fixedDeposit;
+        this.haveFund = haveFund;
+        this.haveBank = haveBank;
+        this.boardWages = boardWages;
+        this.boardWageOutside = boardWageOutside;
+        this.monthlySupply = monthlySupply;
+        this.monthlyTraffic = monthlyTraffic;
+        this.monthlyPhone = monthlyPhone;
+        this.monthlyPlay = monthlyPlay;
+        this.lastClothes = lastClothes;
+        this.lastTourist = lastTourist;
+        this.monthlyTenement = monthlyTenement;
+        this.asset = asset;
+        this.totalIncome = totalIncome;
+        this.wifeInbornYear = wifeInbornYear;
+        this.husInbornYear = husInbornYear;
+        this.childNum = childNum;
+        this.oldNum = oldNum;
+        this.husIncome = husIncome;
+        this.wifeIncome = wifeIncome;
+        this.carValue = carValue;
+        this.lifeCost = lifeCost;
+        this.age = age;
+        this.marriage = marriage;
+        this.childBornYear = childBornYear;
+        this.vipLevel = vipLevel;
+        this.unpaidArrears = unpaidArrears;
+        this.previousArrearsDue = previousArrearsDue;
+        this.lineOfCredit = lineOfCredit;
+        this.cashAdvance = cashAdvance;
+        this.lastPayment = lastPayment;
+        this.minimumDuePayment = minimumDuePayment;
+    }
+
+    public QuestionnaireSetPO() {
+
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Date getRecordDate() {
+        return recordDate;
+    }
+
+    public void setRecordDate(Date recordDate) {
+        this.recordDate = recordDate;
+    }
 
     public int getFinInfo() {
         return finInfo;
@@ -411,6 +513,54 @@ public class VipQuestionnaireParam {
 
     public void setVipLevel(int vipLevel) {
         this.vipLevel = vipLevel;
+    }
+
+    public double getUnpaidArrears() {
+        return unpaidArrears;
+    }
+
+    public void setUnpaidArrears(double unpaidArrears) {
+        this.unpaidArrears = unpaidArrears;
+    }
+
+    public double getPreviousArrearsDue() {
+        return previousArrearsDue;
+    }
+
+    public void setPreviousArrearsDue(double previousArrearsDue) {
+        this.previousArrearsDue = previousArrearsDue;
+    }
+
+    public double getLineOfCredit() {
+        return lineOfCredit;
+    }
+
+    public void setLineOfCredit(double lineOfCredit) {
+        this.lineOfCredit = lineOfCredit;
+    }
+
+    public double getCashAdvance() {
+        return cashAdvance;
+    }
+
+    public void setCashAdvance(double cashAdvance) {
+        this.cashAdvance = cashAdvance;
+    }
+
+    public double getLastPayment() {
+        return lastPayment;
+    }
+
+    public void setLastPayment(double lastPayment) {
+        this.lastPayment = lastPayment;
+    }
+
+    public double getMinimumDuePayment() {
+        return minimumDuePayment;
+    }
+
+    public void setMinimumDuePayment(double minimumDuePayment) {
+        this.minimumDuePayment = minimumDuePayment;
     }
 
 }

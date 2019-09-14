@@ -3,6 +3,7 @@ package financial_management.service.property.questionnaire;
 import financial_management.bl.property.QuestionnaireService;
 import financial_management.data.property.QuestionnaireMapper;
 import financial_management.entity.property.QuestionnaireConfigPO;
+import financial_management.entity.property.QuestionnaireSetPO;
 import financial_management.parameter.property.NVipQuestionnaireParam;
 import financial_management.parameter.property.VipQuestionnaireParam;
 import financial_management.service.property.estate.EstateServiceForBl;
@@ -11,12 +12,16 @@ import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.PyParam;
 import financial_management.util.PyInvoke.PyParam.questionnaire.AssetConfigParam;
 import financial_management.util.PyInvoke.PyParam.questionnaire.MLearningConfigParam;
+import financial_management.util.PyInvoke.PyParam.questionnaire.VipConfigParam;
 import financial_management.util.PyInvoke.PyParam.questionnaire.VulnerabilityConfigParam;
 import financial_management.util.PyInvoke.PyResponse.questionnaire.AssetConfigResponse;
 import financial_management.util.PyInvoke.PyResponse.questionnaire.MLearningConfigResponse;
+import financial_management.util.PyInvoke.PyResponse.questionnaire.VipConfigResponse;
 import financial_management.util.PyInvoke.PyResponse.questionnaire.VulnerabilityConfigResponse;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
+import financial_management.vo.property.QuestResVO;
+import financial_management.vo.property.QuestResWithInvRateVO;
 import financial_management.vo.property.QuestionnaireVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,21 +108,23 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     /**
      * 增加&更新VIP用户的问卷
      *
+     * @param userId
      * @param vipQuestionnaireParam
      * @return
      */
     @Override
-    public BasicResponse setVipQuestionnaire(VipQuestionnaireParam vipQuestionnaireParam) {
+    public BasicResponse setVipQuestionnaire(Long userId, VipQuestionnaireParam vipQuestionnaireParam) {
         try {
-            Long userId = vipQuestionnaireParam.getUserId();
+            QuestionnaireSetPO questionnaireSetPO = new QuestionnaireSetPO(userId, new Date(), vipQuestionnaireParam.getFinInfo(), vipQuestionnaireParam.getVolChose(), vipQuestionnaireParam.getStockPrefer(), vipQuestionnaireParam.getBankCard(), vipQuestionnaireParam.getCurrentDeposit(), vipQuestionnaireParam.getFixedDeposit(), vipQuestionnaireParam.getHaveFund(), vipQuestionnaireParam.getHaveBank(), vipQuestionnaireParam.getBoardWages(), vipQuestionnaireParam.getBoardWageOutside(), vipQuestionnaireParam.getMonthlySupply(), vipQuestionnaireParam.getMonthlyTraffic(), vipQuestionnaireParam.getMonthlyPhone(), vipQuestionnaireParam.getMonthlyPlay(), vipQuestionnaireParam.getLastClothes(), vipQuestionnaireParam.getLastTourist(), vipQuestionnaireParam.getMonthlyTenement(), vipQuestionnaireParam.getAsset(), vipQuestionnaireParam.getTotalIncome(), vipQuestionnaireParam.getWifeInbornYear(), vipQuestionnaireParam.getHusInbornYear(), vipQuestionnaireParam.getChildNum(), vipQuestionnaireParam.getOldNum(), vipQuestionnaireParam.getHusIncome(), vipQuestionnaireParam.getWifeIncome(), vipQuestionnaireParam.getCarValue(), vipQuestionnaireParam.getLifeCost(), vipQuestionnaireParam.getAge(), vipQuestionnaireParam.getMarriage(), vipQuestionnaireParam.getChildBornYear(), vipQuestionnaireParam.getVipLevel(), 0, 0, 0, 0, 0, 0);
             if (hasQuest(userId)) {
-                questionnaireMapper.updateVipQuest(vipQuestionnaireParam);
+                questionnaireMapper.updateVipQuest(questionnaireSetPO);
             } else {
-                questionnaireMapper.insertVipQuest(vipQuestionnaireParam);
+                questionnaireMapper.insertVipQuest(questionnaireSetPO);
             }
 
             QuestionnaireConfigPO questionnaireConfigPO = new QuestionnaireConfigPO();
             questionnaireConfigPO.setUserId(userId);
+            questionnaireConfigPO.setVip_level(vipQuestionnaireParam.getVipLevel());
 
             PyParam pyParam1 = new MLearningConfigParam(vipQuestionnaireParam.getFinInfo(), vipQuestionnaireParam.getVolChose(), vipQuestionnaireParam.getStockPrefer(), vipQuestionnaireParam.getBankCard(), vipQuestionnaireParam.getCurrentDeposit(), vipQuestionnaireParam.getFixedDeposit(), vipQuestionnaireParam.getHaveFund(), vipQuestionnaireParam.getHaveBank(), vipQuestionnaireParam.getBoardWages(), vipQuestionnaireParam.getBoardWageOutside(), vipQuestionnaireParam.getMonthlySupply(), vipQuestionnaireParam.getMonthlyTraffic(), vipQuestionnaireParam.getMonthlyPhone(), vipQuestionnaireParam.getMonthlyPlay(), vipQuestionnaireParam.getLastClothes(), vipQuestionnaireParam.getLastTourist(), vipQuestionnaireParam.getMonthlyTenement(), vipQuestionnaireParam.getAsset(), vipQuestionnaireParam.getTotalIncome());
             List<Object> invokeResult1 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_INVEST_PREFERENCE, pyParam1, MLearningConfigResponse.class);
@@ -174,7 +181,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
                 questionnaireMapper.insertQuestionnaireConfig(questionnaireConfigPO);
             }
 
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+            QuestResVO questResVO = new QuestResVO(vipQuestionnaireParam.getVipLevel(), questionnaireConfigPO.getInvest_prefer(), questionnaireConfigPO.getTotal_yield(), new QuestResWithInvRateVO(questionnaireConfigPO.getStocks_rate(), questionnaireConfigPO.getQdii_rate(), questionnaireConfigPO.getGold_rate(), questionnaireConfigPO.getBond_rate()));
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, questResVO);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
@@ -184,17 +192,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
     /**
      * 增加&更新非VIP用户的问卷
      *
+     * @param userId
      * @param nVipQuestionnaireParam
      * @return
      */
     @Override
-    public BasicResponse setNVipQuestionnaire(NVipQuestionnaireParam nVipQuestionnaireParam) {
+    public BasicResponse setNVipQuestionnaire(Long userId, NVipQuestionnaireParam nVipQuestionnaireParam) {
         try {
-            Long userId = nVipQuestionnaireParam.getUserId();
+            QuestionnaireSetPO questionnaireSetPO = new QuestionnaireSetPO(userId, new Date(), nVipQuestionnaireParam.getFinInfo(), nVipQuestionnaireParam.getVolChose(), nVipQuestionnaireParam.getStockPrefer(), nVipQuestionnaireParam.getBankCard(), nVipQuestionnaireParam.getCurrentDeposit(), nVipQuestionnaireParam.getFixedDeposit(), nVipQuestionnaireParam.getHaveFund(), nVipQuestionnaireParam.getHaveBank(), nVipQuestionnaireParam.getBoardWages(), nVipQuestionnaireParam.getBoardWageOutside(), nVipQuestionnaireParam.getMonthlySupply(), nVipQuestionnaireParam.getMonthlyTraffic(), nVipQuestionnaireParam.getMonthlyPhone(), nVipQuestionnaireParam.getMonthlyPlay(), nVipQuestionnaireParam.getLastClothes(), nVipQuestionnaireParam.getLastTourist(), nVipQuestionnaireParam.getMonthlyTenement(), nVipQuestionnaireParam.getAsset(), nVipQuestionnaireParam.getTotalIncome(), nVipQuestionnaireParam.getWifeInbornYear(), nVipQuestionnaireParam.getHusInbornYear(), nVipQuestionnaireParam.getChildNum(), nVipQuestionnaireParam.getOldNum(), nVipQuestionnaireParam.getHusIncome(), nVipQuestionnaireParam.getWifeIncome(), nVipQuestionnaireParam.getCarValue(), nVipQuestionnaireParam.getLifeCost(), nVipQuestionnaireParam.getAge(), nVipQuestionnaireParam.getMarriage(), nVipQuestionnaireParam.getChildBornYear(), 0, nVipQuestionnaireParam.getUnpaidArrears(), nVipQuestionnaireParam.getPreviousArrearsDue(), nVipQuestionnaireParam.getLineOfCredit(), nVipQuestionnaireParam.getCashAdvance(), nVipQuestionnaireParam.getLastPayment(), nVipQuestionnaireParam.getMinimumDuePayment());
             if (hasQuest(userId)) {
-                questionnaireMapper.updateNVipQuest(nVipQuestionnaireParam);
+                questionnaireMapper.updateNVipQuest(questionnaireSetPO);
             } else {
-                questionnaireMapper.insertNVipQuest(nVipQuestionnaireParam);
+                questionnaireMapper.insertNVipQuest(questionnaireSetPO);
             }
 
             QuestionnaireConfigPO questionnaireConfigPO = new QuestionnaireConfigPO();
@@ -249,13 +258,27 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             questionnaireConfigPO.setTotal_yield(assetConfigResponse.getEarnings());
             questionnaireConfigPO.setTotal_risk_level(assetConfigResponse.getLabel());
 
+            PyParam pyParam4 = new VipConfigParam(nVipQuestionnaireParam.getUnpaidArrears(), nVipQuestionnaireParam.getPreviousArrearsDue(), nVipQuestionnaireParam.getLineOfCredit(), nVipQuestionnaireParam.getCashAdvance(), nVipQuestionnaireParam.getLastPayment(), nVipQuestionnaireParam.getMinimumDuePayment(), nVipQuestionnaireParam.getFixedDeposit());
+            List<Object> invokeResult4 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_VIP_LEVEL, pyParam4, VipConfigResponse.class);
+            List<VipConfigResponse> list4 = new ArrayList<>();
+            for (Object object : Objects.requireNonNull(invokeResult4)) {
+                list4.add((VipConfigResponse) object);
+            }
+            if (list4.size() == 0) {
+                return new BasicResponse(ResponseStatus.STATUS_QUESTIONNAIRE_VIP_WRONG);
+            }
+            VipConfigResponse vipConfigResponse = list4.get(0);
+            questionnaireConfigPO.setVip_level(vipConfigResponse.getVip_level());
+
             if (hasRecommend(userId)) {
                 questionnaireMapper.updateQuestionnaireConfig(questionnaireConfigPO);
             } else {
                 questionnaireMapper.insertQuestionnaireConfig(questionnaireConfigPO);
             }
 
-            return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
+//            QuestionnaireConfigPO questionnaireConfigPO = new QuestionnaireConfigPO(1L, 2, 1, 0.25, 0.25, 0.25, 0.25, 0.2, 0.25, 0.25, 0.25, 0.25, 0.2, 0.11, 2);
+            QuestResVO questResVO = new QuestResVO(questionnaireConfigPO.getVip_level(), questionnaireConfigPO.getInvest_prefer(), questionnaireConfigPO.getTotal_yield(), new QuestResWithInvRateVO(questionnaireConfigPO.getStocks_rate(), questionnaireConfigPO.getQdii_rate(), questionnaireConfigPO.getGold_rate(), questionnaireConfigPO.getBond_rate()));
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, questResVO);
         } catch (Exception e) {
             e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);

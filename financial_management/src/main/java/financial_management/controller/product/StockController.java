@@ -24,13 +24,14 @@ public class StockController {
      * @param request 这还用说
      * @return data恒为null
      */
+    @Deprecated
     @PostMapping("qdii/trans/{transID}")
     public BasicResponse checkQDIITransfer(@PathVariable long transID, @RequestParam boolean accepted, HttpServletRequest request) {
         return stockService.QDIITransferCheck(transID, jwtUtil.getIdFromRequest(request), accepted);
     }
 
     /**
-     * 确认股票调仓操作
+     * 确认股票/股指调仓操作
      * @param transID 调仓记录序号
      * @param accepted 是否接受调仓
      * @param request 这还用说
@@ -38,7 +39,7 @@ public class StockController {
      */
     @PostMapping("stock/trans/{transID}")
     public BasicResponse checkStockTransfer(@PathVariable long transID, @RequestParam boolean accepted, HttpServletRequest request) {
-        return stockService.StockTransCheck(transID, jwtUtil.getIdFromRequest(request), accepted);
+        return stockService.transferCheck(transID, jwtUtil.getIdFromRequest(request), accepted);
     }
 
     /**

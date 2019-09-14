@@ -19,6 +19,12 @@ public class OrderController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     *
+     * @param request
+     * @param userID 非必须，如果是普通用户获取
+     * @return
+     */
     @GetMapping("trade")
     public BasicResponse getTradeRecordsByUserID(HttpServletRequest request, @RequestParam(required = false) Long userID) {
         //TODO 权限判断，现在先这样丑陋的做

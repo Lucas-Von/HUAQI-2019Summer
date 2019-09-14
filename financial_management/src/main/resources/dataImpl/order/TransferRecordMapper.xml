@@ -7,6 +7,7 @@
         <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime"/>
         <result column="user_id" jdbcType="BIGINT" property="userID"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="is_qdii" jdbcType="BIT" property="isQDII"/>
         <result column="is_checked" jdbcType="BIT" property="isChecked"/>
         <result column="is_denied" jdbcType="BIT" property="isDenied"/>
         <result column="is_customize" jdbcType="BIT" property="isCustomize"/>
@@ -38,8 +39,59 @@
 
     <insert id="insert" parameterType="financial_management.entity.TransferRecordPO" keyColumn="id" keyProperty="ID"
             useGeneratedKeys="true">
-        insert into transfer_record (create_time, complete_time, user_id, is_checked, is_denied, is_customize, status)
-        values (#{createTime}, #{completeTime}, #{userID}, #{isChecked}, #{isDenied}, #{isCustomized}, #{status});
+        insert into transfer_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="completeTime != null">
+                complete_time,
+            </if>
+            <if test="userID != null">
+                user_id,
+            </if>
+            <if test="isQDII != null">
+                is_qdii,
+            </if>
+            <if test="isChecked != null">
+                is_checked,
+            </if>
+            <if test="isDenied != null">
+                is_denied,
+            </if>
+            <if test="isCustomize != null">
+                is_customize,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="completeTime != null">
+                #{completeTime},
+            </if>
+            <if test="userID != null">
+                #{userID},
+            </if>
+            <if test="isQDII != null">
+                #{isQDII},
+            </if>
+            <if test="isChecked != null">
+                #{isChecked},
+            </if>
+            <if test="isDenied != null">
+                #{isDenied},
+            </if>
+            <if test="isCustomize != null">
+                #{isCustomize},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+        </trim>
     </insert>
 
     <update id="update" parameterType="financial_management.entity.TransferRecordPO">

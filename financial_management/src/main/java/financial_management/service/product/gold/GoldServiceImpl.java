@@ -6,6 +6,8 @@ import financial_management.data.product.GoldMapper;
 import financial_management.entity.GoldHistoryConfigPO;
 import financial_management.entity.MyGoldPO;
 import financial_management.service.order.impl.OrderServiceImpl;
+import financial_management.service.property.income.IncomeServiceForBl;
+import financial_management.service.user.UserServiceForBl;
 import financial_management.util.PyInvoke.PyFunc;
 import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.GoldConfigParam;
@@ -35,6 +37,12 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
 
     @Autowired
     private OrderServiceImpl orderService;
+
+    @Autowired
+    private IncomeServiceForBl incomeServiceForBl;
+
+    @Autowired
+    private UserServiceForBl userServiceForBl;
 
     @Override
     public BasicResponse buyGold(Double money, Long userId){
@@ -105,6 +113,9 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
             personalTradeVO.setTotal((float) nowSum);
             personalTradeVO.setUserID(userId);
             orderService.addPersonalTradeRecord(personalTradeVO, true);
+
+            double profit = incomeServiceForBl.getTotalGoldIncome(userId);
+            goldMapper.updateGoldProfit(userId,profit);
 
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }catch (Exception e) {
@@ -243,6 +254,16 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
             return total;
         }else {
             return 0;
+        }
+    }
+
+    @Override
+    public void updateProfit(){
+        List<Long> userIds = userServiceForBl.getUserIdList();
+        for(int i=0;i<userIds.size();i++) {
+            Long userId = userIds.get(i);
+            double profit = incomeServiceForBl.getTotalGoldIncome(userId);
+            goldMapper.updateGoldProfit(userId, profit);
         }
     }
 }

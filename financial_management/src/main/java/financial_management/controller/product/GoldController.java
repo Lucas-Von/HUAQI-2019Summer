@@ -4,6 +4,7 @@ import financial_management.bl.product.GoldService;
 import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,5 +41,10 @@ public class GoldController {
     @GetMapping(value = "/now/get")
     public BasicResponse getNowConfig(HttpServletRequest request){
         return goldService.getNowConfig(jwtUtil.getIdFromRequest(request));
+    }
+
+    @Scheduled(cron = "30 30 23 * * ?")
+    public void updateProfit(){
+        goldService.updateProfit();
     }
 }

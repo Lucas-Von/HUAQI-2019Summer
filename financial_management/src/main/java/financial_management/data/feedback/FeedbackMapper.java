@@ -12,6 +12,8 @@ import java.util.List;
 public interface FeedbackMapper {
     List<FeedBackPO> selectAll();
 
+    List<FeedBackPO> selectAllByUserID(@Param("userID") long userID);
+
     FeedBackPO selectByID(@Param("ID") Long ID);
 
     Integer selectAmountOfUnsolve();

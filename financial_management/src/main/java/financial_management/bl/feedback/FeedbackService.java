@@ -8,11 +8,13 @@ import financial_management.vo.feedback.FeedbackVO;
 import java.util.List;
 
 public interface FeedbackService {
-    BasicResponse<?> postFeedback(FeedbackParam feedbackParam);
+    BasicResponse<?> postFeedback(FeedbackParam feedbackParam, long userID);
 
     BasicResponse<?> solveFeedback(long ID, SolveParam solveParam);
 
     BasicResponse<List<FeedbackVO>> getAllFeedback();
+
+    BasicResponse<List<FeedbackVO>> getAllFeedback(long userID);
 
     BasicResponse<FeedbackVO> getFeedbackBy(long ID);
 

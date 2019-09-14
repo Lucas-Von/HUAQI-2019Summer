@@ -24,12 +24,12 @@ public class FeedbackServiceImpl implements FeedbackService {
     private MessageInterface messageInterface;
 
     @Override
-    public BasicResponse<?> postFeedback(FeedbackParam feedbackParam) {
+    public BasicResponse<?> postFeedback(FeedbackParam feedbackParam, long userID) {
         FeedBackPO po = new FeedBackPO();
         po.setTitle(feedbackParam.getTitle());
         po.setType(feedbackParam.getType());
         po.setDetail(feedbackParam.getDetail());
-        po.setUserID(feedbackParam.getUserID());
+        po.setUserID(userID);
         po.setPhone(feedbackParam.getPhone());
         po.setQQ(feedbackParam.getQq());
         po.setEmail(feedbackParam.getEmail());
@@ -76,6 +76,18 @@ public class FeedbackServiceImpl implements FeedbackService {
         List<FeedbackVO> vos = new ArrayList<>(pos.size());
         for (FeedBackPO po : pos) {
             vos.add(new FeedbackVO(po));
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
+    }
+
+    @Override
+    public BasicResponse<List<FeedbackVO>> getAllFeedback(long userID) {
+        List<FeedBackPO> pos = feedbackMapper.selectAllByUserID(userID);
+        List<FeedbackVO> vos = new ArrayList<>(pos.size());
+        for (FeedBackPO po : pos) {
+            FeedbackVO feedbackVO = new FeedbackVO(po);
+            feedbackVO.setSolverID(null);
+            vos.add(feedbackVO);
         }
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, vos);
     }

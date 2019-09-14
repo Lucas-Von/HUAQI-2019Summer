@@ -14,6 +14,7 @@ import financial_management.util.PyInvoke.PyFunc;
 import financial_management.util.PyInvoke.PyInvoke;
 import financial_management.util.PyInvoke.PyParam.stock.QDII_CustomizeTrade;
 import financial_management.util.PyInvoke.PyParam.stock.QDII_UniversalParam;
+import financial_management.util.PyInvoke.PyParam.stock.StockParam;
 import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
 import financial_management.util.PyInvoke.PyResponse.stock.StockAdjustment;
 import financial_management.vo.BasicResponse;
@@ -29,8 +30,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -82,9 +81,9 @@ public class StockServiceImpl implements StockService {
     public void stockEstablish(Long userId) {
         final PyFunc func = PyFunc.STOCK;
         double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
-//        StockParam param = new StockParam(sdf.format(new Date()));
-//        List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
-        List<Object> result = getStubData();
+        StockParam param = new StockParam(sdf.format(new Date()));
+        List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
+//        List<Object> result = getStubData();
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
@@ -105,9 +104,9 @@ public class StockServiceImpl implements StockService {
         final PyFunc func = PyFunc.STOCK;
         double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
-        //StockParam param = new StockParam(sdf.format(new Date()));
-        //List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
-        List<Object> result = getStubData();
+        StockParam param = new StockParam(sdf.format(new Date()));
+        List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
+//        List<Object> result = getStubData();
         if (result != null) {
             List<StockAdjustment> adjustments = new ArrayList<>(result.size());
             for (Object object : result) {
@@ -163,7 +162,7 @@ public class StockServiceImpl implements StockService {
         List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);
 //        List<Object> result = getStubData();
         if (result != null) {
-            handlePythonResult_QDII(userId, func, result);
+            handlePythonResult_QDII(userId, result);
         } else {
             logger.error("Invoke Python function " + func.name() + " return null result.");
         }
@@ -190,7 +189,7 @@ public class StockServiceImpl implements StockService {
 //        List<Object> result = getStubData();
 
         if (result != null) {
-            handlePythonResult_QDII(userId, func, result);
+            handlePythonResult_QDII(userId, result);
         } else {
             logger.error("Invoke Python function " + func.name() + " return null result.");
         }
@@ -225,7 +224,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Transactional
-    void handlePythonResult_QDII(Long userId, PyFunc func, List<Object> result) {
+    void handlePythonResult_QDII(Long userId, List<Object> result) {
         Date createTime = new Date();
         TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userId, false));
         if (transferRecordPO != null) {
@@ -278,11 +277,11 @@ public class StockServiceImpl implements StockService {
             proportionalReadjust(Math.abs(money), holdTotal, adjustment);
             adjustments.add(adjustment);
         }
-        List<PersonalTradeVO> personalTradeVOS = domAdjust(adjustments,myStockPOS,userID);
-        if (personalTradeVOS.size()>0){
-            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,personalTradeVOS);
+        List<PersonalTradeVO> personalTradeVOS = domAdjust(adjustments, myStockPOS, userID);
+        if (personalTradeVOS.size() > 0) {
+            response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeVOS);
         } else {
-            response = new BasicResponse<>(ResponseStatus.SERVER_ERROR,null);
+            response = new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
         }
         return response;
     }
@@ -479,11 +478,7 @@ public class StockServiceImpl implements StockService {
                     myQDIIPO = po;
 
                     float newTotal = po.getHoldTotal() + total;
-                    float newAmount = ArithmeticUtil.formatFloat2Float(
-                            new BigDecimal(po.getHoldTotal())
-                                    .divide(new BigDecimal(po.getHoldPrice()), RoundingMode.HALF_UP)
-                                    .floatValue()
-                    ) + amount;
+                    float newAmount = ArithmeticUtil.divide(po.getHoldTotal(), po.getHoldPrice()) + amount;
                     myQDIIPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
                     myQDIIPO.setHoldNum(po.getHoldNum() + num);
                     myQDIIPO.setHoldTotal(newTotal);

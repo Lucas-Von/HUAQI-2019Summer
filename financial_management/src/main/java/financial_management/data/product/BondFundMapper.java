@@ -75,4 +75,7 @@ public interface BondFundMapper {
 
     RateList selectRateList();
 
+    int updateUserInject(@Param("userId")Long userId,@Param("inject")Float inject,@Param("name")String name);
+
+    int updateTime (Date time);
 }

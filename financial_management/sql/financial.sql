@@ -819,9 +819,9 @@ CREATE TABLE `platform_bond_fund` (
   `return_rate_seven` float DEFAULT '0',
   `return_rate_thirty` float DEFAULT '0',
   `return_rate_ninety` float DEFAULT '0',
-  `commission_rate_one` float DEFAULT '0',
-  `commission_rate_two` float default '0',
-  `commission_rate_three` float default '0'
+  `commission_rate_one` float DEFAULT '0.03',
+  `commission_rate_two` float default '0.03',
+  `commission_rate_three` float default '0.03'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -1079,6 +1079,9 @@ CREATE TABLE `user_bond_fund` (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `inject` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `user_bond_fund` (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time, inject) values (1,"national",0.75,34,50,"2019-03-10",100);
+insert into `user_bond_fund` (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time, inject) values (1,"corporate",0.75,34,50,"2019-03-10",100);
 
 -- ----------------------------
 -- Records of user_bond_fund

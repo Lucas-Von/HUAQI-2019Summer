@@ -10,7 +10,7 @@ import java.util.Date;
  **/
 public class ReturnRateVO {
     Date date;
-    Float value;
+    Double value;
 
     public Date getDate() {
         return date;
@@ -20,15 +20,15 @@ public class ReturnRateVO {
         this.date = date;
     }
 
-    public Float getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Float value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
-    public ReturnRateVO(Date date, Float value) {
+    public ReturnRateVO(Date date, Double value) {
         this.date = date;
         this.value = value;
     }

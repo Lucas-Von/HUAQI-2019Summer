@@ -4,23 +4,23 @@
 
 
     <update id="updateInvestRateByName">
-        update user_bond_fund set bond_proportion = #{rate} where fund_name = #{product} and user_id = #{userId}
+        update user_bond_fund set bond_proportion = #{rate} where fund_name = #{name} and user_id = #{userId}
     </update>
 
     <insert id="insertvestRateByName">
-        insert into user_bond_fund (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time) values (#{userId},#{product},#{rate},0.0,0.0,#{time})
+        insert into user_bond_fund (user_id, fund_name, bond_proportion, fund_share, net_worth, update_time,inject) values (#{userId},#{product},#{rate},0.0,0.0,#{time},0)
     </insert>
 
     <select id="selectUserBond" resultMap="UserBond">
-        select * from user_bond_fund where user_id = #{userId} and fund_name = #{product} limit 1
+        select * from user_bond_fund where user_id = #{userId} and fund_name = #{name} limit 1
     </select>
 
     <select id="selectBondFundByName" resultMap="BondFund">
-        select * from bond_foundation where fund_name = #{product}
+        select * from bond_foundation where fund_name = #{name}
     </select>
 
     <update id="updateSumPurchaseByName">
-        update bond_foundation set debt_sum = #{sum} where fund_name = #{product}
+        update bond_foundation set debt_sum = #{sum} where fund_name = #{name}
     </update>
 
     <select id="selectAllBond" resultMap="BondProduct">
@@ -42,12 +42,12 @@
 
 
     <update id="updateBondFundNetWorthy">
-        update bond_foundation set fund_unit_value = #{price} where fund_name = #{product}
+        update bond_foundation set fund_unit_value = #{price} where fund_name = #{name}
     </update>
 
 
     <update id="updateFundScale">
-        update bond_foundation set fund_scale = #{sum} where fund_name = #{product}
+        update bond_foundation set fund_scale = #{sum} where fund_name = #{name}
     </update>
 
     <select id="selectBondPlatform" resultType="financial_management.entity.bond.BondPlatformPO">
@@ -86,11 +86,11 @@
     </insert>
 
     <update id="updateUserFundShare">
-        update user_bond_fund set fund_share = #{amount} where user_id = #{id} and fund_name = #{product}
+        update user_bond_fund set fund_share = #{amount} where user_id = #{id} and fund_name = #{name}
     </update>
 
     <insert id="insertRateLog">
-        insert  into bond_rate_log (fund_id, net_worth, "time") values (#{id},#{netWorth},#{time})
+        insert  into bond_rate_log (fund_id, net_worth, `time`) values (#{id},#{netWorth},#{time})
     </insert>
 
     <select id="getRateLogs" resultType="financial_management.entity.bond.NetWorthPO">
@@ -114,12 +114,20 @@
         insert into bond (code, latest_price) values (#{code},#{price})
     </insert>
 
+    <update id="updateUserInject">
+        update user_bond_fund set inject = #{inject} where user_id = #{userId} and fund_name = #{name}
+    </update>
+
     <select id="selectRateList" resultType="financial_management.entity.bond.RateList">
         select commission_rate_one rate1,
         commission_rate_two rate2,
         commission_rate_three rate3
         from platform_bond_fund limit 1
     </select>
+
+    <update id="updateTime">
+        update bond_foundation set `update_time` = {time}
+    </update>
 
     <resultMap id="UserBond" type="financial_management.entity.bond.UserBondPO">
         <result property="userId" column="user_id"/>
@@ -128,6 +136,7 @@
         <result property="fundShare" column="fund_share"/>
         <result property="netWorth" column="net_worth"/>
         <result property="updateTime" column="update_time"/>
+        <result property="inject" column="inject"/>
     </resultMap>
 
     <resultMap id="BondFund" type="financial_management.entity.bond.BondFoundationPO">
@@ -143,7 +152,7 @@
 
     <resultMap id="BondProduct" type="financial_management.entity.bond.BondPO">
         <id property="id" column="id"/>
-        <result property="name" column="product"/>
+        <result property="name" column="name"/>
         <result property="code" column="code"/>
         <result property="latestPrice" column="latest_price"/>
     </resultMap>

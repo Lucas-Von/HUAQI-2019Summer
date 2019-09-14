@@ -6,6 +6,7 @@ import financial_management.entity.bond.NetWorthPO;
 import financial_management.entity.bond.RateList;
 import financial_management.vo.order.PlatformTradeVO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
  * @Version 1.0
  **/
 public class BondFundInfoVO {
+    Date time;
     String exponent;
     Float fundScale;
     Float fundShare;
@@ -24,6 +26,14 @@ public class BondFundInfoVO {
     List<NetWorthPO> netWorths;
     List<PlatformTradeVO> trades;
     List<Float> rateList;
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
     public List<Float> getRateList() {
         return rateList;

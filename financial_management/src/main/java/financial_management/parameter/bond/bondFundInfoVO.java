@@ -15,7 +15,7 @@ public class bondFundInfoVO {
     List<ReturnRateVO> sevenNetWorth;
     List<ReturnRateVO> monthNetWorth;
     List<ReturnRateVO> threeMonthNetWorth;
-    List<Float> returnRate;
+    List<Double> returnRate;
     Date startDate;
     Float fundScale;
     String manager;
@@ -47,11 +47,11 @@ public class bondFundInfoVO {
         this.threeMonthNetWorth = threeMonthNetWorth;
     }
 
-    public List<Float> getReturnRate() {
+    public List<Double> getReturnRate() {
         return returnRate;
     }
 
-    public void setReturnRate(List<Float> returnRate) {
+    public void setReturnRate(List<Double> returnRate) {
         this.returnRate = returnRate;
     }
 
@@ -106,7 +106,7 @@ public class bondFundInfoVO {
         this.fundScale = fundScale;
     }
 
-    public bondFundInfoVO(List<ReturnRateVO> sevenNetWorth, List<ReturnRateVO> monthNetWorth, List<ReturnRateVO> threeMonthNetWorth, List<Float> returnRate, Date startDate, String manager,Float scale, String transactionState, List<Float> commissionRate, List<BondsInfo> bonds) {
+    public bondFundInfoVO(List<ReturnRateVO> sevenNetWorth, List<ReturnRateVO> monthNetWorth, List<ReturnRateVO> threeMonthNetWorth, List<Double> returnRate, Date startDate, String manager,Float scale, String transactionState, List<Float> commissionRate, List<BondsInfo> bonds) {
         this.sevenNetWorth = sevenNetWorth;
         this.monthNetWorth = monthNetWorth;
         this.threeMonthNetWorth = threeMonthNetWorth;

@@ -976,7 +976,7 @@ CREATE TABLE `recommend` (
 -- ----------------------------
 -- Records of recommend
 -- ----------------------------
-INSERT INTO `recommend` VALUES ('1', null, null, null, null, null, null, '保守型', null, null, null, null, null, null);
+INSERT INTO `recommend` VALUES ('1', null, 0.1, null, null, null, null, '保守型', null, null, null, 0.3, null, null);
 
 -- ----------------------------
 -- Table structure for stock_adjustment

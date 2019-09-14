@@ -22,6 +22,12 @@
         from feedback;
     </select>
 
+    <select id="selectAllByUserID" resultMap="original">
+        select *
+        from feedback
+        where user_ID = #{userID}
+    </select>
+
     <select id="selectByID" resultMap="original">
         select *
         from feedback

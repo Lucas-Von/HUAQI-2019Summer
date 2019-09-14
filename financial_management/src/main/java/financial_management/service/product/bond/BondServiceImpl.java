@@ -717,6 +717,7 @@ class BondServiceImpl implements BondServiceForBl, BondService {
             info.setAmount(bond.getAmount());
             info.setProportion(bond.getInvestProportion());
             info.setQuantity(bond.getQuantity().intValue());
+            infos.add(info);
         }
 
         List<ReturnRateVO> sevenNetWorth = new ArrayList<>();

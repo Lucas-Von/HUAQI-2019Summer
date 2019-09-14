@@ -1,7 +1,8 @@
 package financial_management.data.property;
 
 import financial_management.entity.property.QuestionnaireConfigPO;
-import financial_management.parameter.property.QuestionnaireParam;
+import financial_management.parameter.property.NVipQuestionnaireParam;
+import financial_management.parameter.property.VipQuestionnaireParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -33,20 +34,36 @@ public interface QuestionnaireMapper {
     boolean hasRecommend(@Param("userId") Long userId);
 
     /**
-     * 插入用户填写的问卷
+     * 插入VIP用户填写的问卷
      *
-     * @param questionnaireParam
+     * @param vipQuestionnaireParam
      * @return
      */
-    void insertQuest(QuestionnaireParam questionnaireParam);
+    void insertVipQuest(VipQuestionnaireParam vipQuestionnaireParam);
 
     /**
-     * 更新用户填写的问卷
+     * 更新VIP用户填写的问卷
      *
-     * @param questionnaireParam
+     * @param vipQuestionnaireParam
      * @return
      */
-    void updateQuest(QuestionnaireParam questionnaireParam);
+    void updateVipQuest(VipQuestionnaireParam vipQuestionnaireParam);
+
+    /**
+     * 插入非VIP用户填写的问卷
+     *
+     * @param nVipQuestionnaireParam
+     * @return
+     */
+    void insertNVipQuest(NVipQuestionnaireParam nVipQuestionnaireParam);
+
+    /**
+     * 更新非VIP用户填写的问卷
+     *
+     * @param nVipQuestionnaireParam
+     * @return
+     */
+    void updateNVipQuest(NVipQuestionnaireParam nVipQuestionnaireParam);
 
     /**
      * 获取投资偏好

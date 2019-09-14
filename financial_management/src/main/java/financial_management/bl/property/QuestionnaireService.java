@@ -1,6 +1,7 @@
 package financial_management.bl.property;
 
-import financial_management.parameter.property.QuestionnaireParam;
+import financial_management.parameter.property.NVipQuestionnaireParam;
+import financial_management.parameter.property.VipQuestionnaireParam;
 import financial_management.vo.BasicResponse;
 
 /**
@@ -26,12 +27,20 @@ public interface QuestionnaireService {
     BasicResponse viewQuestionnaire();
 
     /**
-     * 增加&更新问卷
+     * 增加&更新VIP用户的问卷
      *
-     * @param questionnaireParam
+     * @param vipQuestionnaireParam
      * @return
      */
-    BasicResponse setQuestionnaire(QuestionnaireParam questionnaireParam);
+    BasicResponse setVipQuestionnaire(VipQuestionnaireParam vipQuestionnaireParam);
+
+    /**
+     * 增加&更新非VIP用户的问卷
+     *
+     * @param nVipQuestionnaireParam
+     * @return
+     */
+    BasicResponse setNVipQuestionnaire(NVipQuestionnaireParam nVipQuestionnaireParam);
 
     /**
      * 获取投资偏好

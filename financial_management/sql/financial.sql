@@ -557,6 +557,8 @@ CREATE TABLE `message` (
 INSERT INTO `message` VALUES ('1', '2019-08-26 23:27:58', '1', '1', '尊敬的用户，您的账户有新的调仓操作，请确认', '\0', '\0');
 INSERT INTO `message` VALUES ('2', '2019-08-27 23:27:58', '1', '3', '尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区', '\0', '\0');
 INSERT INTO `message` VALUES ('3', '2019-08-27 23:56:53', '2', '3', '文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！', '\0', '\0');
+INSERT INTO `message` VALUES (10,CURRENT_TIMESTAMP,1,1,'调仓消息 qdii 123123',0,0),
+                             (20,'2019-09-09 09:09:09',1,1,'调仓消息 qdii 123321 已确认',1,0);
 
 -- ----------------------------
 -- Table structure for my_bond
@@ -884,6 +886,9 @@ CREATE TABLE `qdii_adjustment` (
 -- Records of qdii_adjustment
 -- ----------------------------
 
+INSERT INTO qdii_adjustment VALUES ('123123','阿这',-0.1,-1,-1.2,12,1,1),
+                                   ('123321','啊这',1,10,23,23,1,2);
+
 -- ----------------------------
 -- Table structure for questionnaire
 -- ----------------------------
@@ -1020,6 +1025,8 @@ CREATE TABLE `transfer_record` (
 -- ----------------------------
 -- Records of transfer_record
 -- ----------------------------
+INSERT INTO transfer_record(id,create_time, complete_time, user_id, is_checked, is_denied, is_customize, `status`)
+VALUES (1,CURRENT_TIMESTAMP,null,1,0,0,0,0),(2,'2019-09-09 09:09:09','2019-09-09 19:19:19',1,1,1,0,2);
 
 DROP TABLE IF EXISTS `transfer_message`;
 CREATE TABLE `transfer_message` (
@@ -1030,6 +1037,8 @@ CREATE TABLE `transfer_message` (
     CONSTRAINT `fk_message` FOREIGN KEY (`message_id`) REFERENCES `financial`.`message` (`id`)
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `transfer_message` VALUES (1,10),(2,20);
 
 --
 -- Table structure for table `user`

@@ -32,4 +32,4 @@ server:
 
 # python调用配置 #
 python:
-  dir: ""
+  dir: "~/.jenkins/workspace/HUAQI_2019_backend/financial_management/target/classes/"

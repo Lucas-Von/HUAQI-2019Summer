@@ -2,6 +2,10 @@ package financial_management.bl.product;
 
 import financial_management.parameter.product.QDIICustomizeParam;
 import financial_management.vo.BasicResponse;
+import financial_management.vo.product.MyStockVO;
+
+import java.util.List;
+import java.util.Map;
 
 public interface StockService {
     void stockEstablish(Long userId);
@@ -27,8 +31,6 @@ public interface StockService {
 
     BasicResponse<?> QDIICustomize(QDIICustomizeParam param, long userID);
 
-    //获取股票和股指的总额
-
     BasicResponse<?> QDIITransferCheck(long transID, long userID, boolean accepted);
 
     BasicResponse<?> StockTransCheck(long transID, long userID, boolean accepted);
@@ -37,4 +39,5 @@ public interface StockService {
 
     double getTotalQDIIByUser(long userID);
 
+    BasicResponse<Map<String,List<MyStockVO>>> getHoldStock(long userID);
 }

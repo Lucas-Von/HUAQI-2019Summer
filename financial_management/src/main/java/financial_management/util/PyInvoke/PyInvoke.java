@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class PyInvoke {
         try {
             Process process = runtime.exec(cmd.toString());
             List<Object> res = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
             String input = null;
             while ((input = reader.readLine()) != null) {
                 System.out.println(input);

@@ -43,4 +43,10 @@ public class QDIIAdjustmentPO extends QDIIAdjustment {
                 + " 用户ID:" + userID
                 + " 调仓ID:" + transID;
     }
+
+    public QDIIAdjustmentPO(String qdii_code, String name, Float share_deployed, Integer number_deployed, Float m_already_deployed, Float price_deployed, Long userID, Long transID) {
+        super(qdii_code, name, share_deployed, number_deployed, m_already_deployed, price_deployed);
+        this.userID = userID;
+        this.transID = transID;
+    }
 }

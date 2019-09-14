@@ -27,7 +27,7 @@ def get_fund_netvalue(code: str):
         'referer': 'http://fund.eastmoney.com/' + code + '.html',
     }
     r = requests.get(url=url, headers=headers)
-    r.encoding = 'unicode'
+    r.encoding = 'UTF-8-SIG'
 
     matchObj = re.search(r'基金名称：</span><span class="funCur-FundName">(.*?)</span>', r.text)
     name = matchObj.group(1)

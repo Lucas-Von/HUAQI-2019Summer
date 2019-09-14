@@ -1009,6 +1009,7 @@ CREATE TABLE `transfer_record` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `complete_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `user_id` bigint(255) NOT NULL,
+  `is_qdii` bit(1) NOT NULL,
   `is_checked` bit(1) NOT NULL DEFAULT b'0',
   `is_denied` bit(1) NOT NULL DEFAULT b'0',
   `is_customize` bit(1) NOT NULL DEFAULT b'0',
@@ -1019,8 +1020,8 @@ CREATE TABLE `transfer_record` (
 -- ----------------------------
 -- Records of transfer_record
 -- ----------------------------
-INSERT INTO transfer_record(id,create_time, complete_time, user_id, is_checked, is_denied, is_customize, `status`)
-VALUES (1,CURRENT_TIMESTAMP,null,1,0,0,0,0),(2,'2019-09-09 09:09:09','2019-09-09 19:19:19',1,1,1,0,2);
+INSERT INTO transfer_record(id,create_time, complete_time, user_id, is_qdii, is_checked, is_denied, is_customize, `status`)
+VALUES (1,CURRENT_TIMESTAMP,null,1,1,0,0,0,0),(2,'2019-09-09 09:09:09','2019-09-09 19:19:19',1,1,1,1,0,2);
 
 DROP TABLE IF EXISTS `transfer_message`;
 CREATE TABLE `transfer_message` (

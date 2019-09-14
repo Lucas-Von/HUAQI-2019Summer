@@ -56,9 +56,9 @@
     </select>
 
     <insert id="insert" parameterType="financial_management.entity.PersonalTradePO" keyColumn="id" keyProperty="ID" useGeneratedKeys="true">
-        insert into personal_trade (id, trans_id, create_time, complete_time, type, product_id, amount, price, fee, total,
+        insert into personal_trade (trans_id, create_time, complete_time, type, product_id, amount, price, fee, total,
                                   user_id, status, is_customize)
-        values (#{ID},#{transID},#{createTime},#{completeTime},#{type},#{productID},#{amount},#{price},#{fee},#{total},#{userID},#{status},#{isCustomize})
+        values (#{transID},#{createTime},#{completeTime},#{type},#{productID},#{amount},#{price},#{fee},#{total},#{userID},#{status},#{isCustomize})
     </insert>
 
     <update id="update" parameterType="financial_management.entity.PersonalTradePO">

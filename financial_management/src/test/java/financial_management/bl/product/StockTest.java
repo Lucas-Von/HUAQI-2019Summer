@@ -1,6 +1,8 @@
 package financial_management.bl.product;
 
 import financial_management.FinancialManagementApplication;
+import financial_management.data.order.TransferRecordMapper;
+import financial_management.data.product.StockAdjustmentMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,5 +27,13 @@ public class StockTest {
     public void QDIIEstablish_normal(){
         long userID = 1L;
         stockService.firstQDII(userID);
+    }
+
+    @Test
+    public void transferCheck_normal(){
+        long transID = 1L;
+        long userID = 1L;
+        boolean accepted = true;
+        stockService.transferCheck(transID,userID,accepted);
     }
 }

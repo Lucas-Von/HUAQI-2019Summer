@@ -133,7 +133,7 @@ public class StockServiceImpl implements StockService {
     @Override
     public void firstQDII(Long userId) {
         final PyFunc func = PyFunc.QDII_FIRST_PURCHASE;
-        float whereCanIGetTargetAmount = 0;
+        float whereCanIGetTargetAmount = (float) questionnaireService.getRecQdii(userId);
         QDII_UniversalParam param = new QDII_UniversalParam(whereCanIGetTargetAmount, 0, 0, new ArrayList<>());
         List<Object> result = PyInvoke.invoke(func, param, QDIIAdjustment.class);
 //        List<Object> result = getStubData();
@@ -206,7 +206,6 @@ public class StockServiceImpl implements StockService {
         if (transferRecordPO != null) {
             StringBuilder message = new StringBuilder("尊敬的用户，您有新的股指调仓计划需要确认，请在24小时之内选择是否需要进行这次调仓:");
             for (Object object : result) {
-                //adjustments.add((QDIIAdjustment) object);
                 QDIIAdjustment raw = (QDIIAdjustment) object;
                 QDIIAdjustmentPO adjustment = new QDIIAdjustmentPO(raw);
                 adjustment.setTransID(transferRecordPO.getID());
@@ -294,6 +293,7 @@ public class StockServiceImpl implements StockService {
         return response;
     }
 
+    @Override
     public BasicResponse<?> StockTransCheck(long transID, long userID, boolean accepted) {
         TransferRecordPO trans = orderService.getTransferRecordByID(transID);
         BasicResponse<?> response;

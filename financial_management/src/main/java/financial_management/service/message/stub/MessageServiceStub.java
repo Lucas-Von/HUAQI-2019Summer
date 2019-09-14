@@ -28,8 +28,8 @@ public class MessageServiceStub implements MessageService {
     }
 
     @Override
-    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID) {
-        BasicResponse<List<MessageVO>> response;
+    public BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID) {
+        BasicResponse<List<? extends MessageVO>> response;
         if (ID == 1) {
             List<MessageVO> list = new ArrayList<>(Arrays.asList(m1, m2, m3));
             response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, list);
@@ -40,8 +40,8 @@ public class MessageServiceStub implements MessageService {
     }
 
     @Override
-    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type) {
-        BasicResponse<List<MessageVO>> response;
+    public BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID, int type) {
+        BasicResponse<List<? extends MessageVO>> response;
         if (ID == 1) {
             if (type == 1) {
                 response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, Collections.singletonList(m1));
@@ -59,7 +59,7 @@ public class MessageServiceStub implements MessageService {
     }
 
     @Override
-    public BasicResponse<List<MessageVO>> getMessagesByUser(Long ID, int type, int page) {
+    public BasicResponse<List<? extends MessageVO>> getMessagesByUser(Long ID, int type, int page) {
         return getMessagesByUser(ID, type);
     }
 

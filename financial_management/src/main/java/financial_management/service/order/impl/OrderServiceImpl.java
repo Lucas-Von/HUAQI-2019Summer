@@ -1,5 +1,6 @@
 package financial_management.service.order.impl;
 
+import financial_management.bl.message.ITransferMessage;
 import financial_management.bl.message.MessageService;
 import financial_management.bl.order.OrderService;
 import financial_management.bl.product.ProductService4Order;
@@ -13,6 +14,7 @@ import financial_management.entity.PlatformTradePO;
 import financial_management.entity.TransferRecordPO;
 import financial_management.vo.BasicResponse;
 import financial_management.vo.ResponseStatus;
+import financial_management.vo.message.TransMessageVO;
 import financial_management.vo.order.PersonalTradeVO;
 import financial_management.vo.order.PlatformTradeVO;
 import financial_management.vo.order.ProductVO4Order;
@@ -28,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService, ITransferMessage {
     @Autowired
     private PersonalTradeMapper personalTradeMapper;
     @Autowired
@@ -188,7 +190,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             int update = transferRecordMapper.update(po);
             if (update == 1) {
-                if (po.getChecked()){
+                if (po.getChecked()) {
                     messageService.readTransferMessage(po.getID());
                 }
                 return po;
@@ -317,5 +319,22 @@ public class OrderServiceImpl implements OrderService {
         po.setUserID(vo.getUserID());
         po.setStatus(vo.getStatus());
         return po;
+    }
+
+    @Override
+    public TransMessageVO getTransMessageInfoByID(TransMessageVO transMessageVO) {
+        if (transMessageVO == null) {
+            return null;
+        } else {
+            long messageID = transMessageVO.getID();
+            TransferRecordPO transferRecordPO = transferRecordMapper.selectByMessageID(messageID);
+            if (transferRecordMapper.hasTransferRecord(messageID) == 1) {
+                transMessageVO.setTransID(transferRecordPO.getID());
+                transMessageVO.setAccepted(!transferRecordPO.getDenied());
+            } else {
+                logger.warn("Missing transfer message record. messageID is " + messageID);
+            }
+        }
+        return transMessageVO;
     }
 }

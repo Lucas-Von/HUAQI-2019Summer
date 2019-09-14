@@ -12,6 +12,7 @@ File Encoding         : 65001
 
 Date: 2019-09-08 21:22:03
 */
+USE financial;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -115,10 +116,10 @@ CREATE TABLE `bond_rate_log` (
   `time` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (1, 'national', 30, '2019-09-10');
-INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (1, 'national', 35 '2019-09-11');
+INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (1, 'national', 35, '2019-09-11');
 INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (1, 'national', 40, '2019-09-12');
 INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (2, 'corporate', 30, '2019-09-10');
-INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (2, 'corporate', 35 '2019-09-11');
+INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (2, 'corporate', 35, '2019-09-11');
 INSERT INTO `financial`.`bond_rate_log` (`fund_id`, `fund_name`, `net_worth`, `time`) VALUES (2, 'corporate', 40, '2019-09-12');
 
 -- ----------------------------
@@ -333,7 +334,7 @@ CREATE TABLE `for_stock` (
 -- ----------------------------
 -- Records of for_stock
 -- ----------------------------
-INSERT INTO `for_stock` VALUES ('1', '阿这', '123123', '12');
+INSERT INTO `for_stock` VALUES ('1', '阿这', '123123', '12'),(2,'啊这','123321',23);
 
 -- ----------------------------
 -- Table structure for fund

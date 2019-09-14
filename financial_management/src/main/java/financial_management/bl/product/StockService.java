@@ -31,6 +31,8 @@ public interface StockService {
 
     BasicResponse<?> QDIITransferCheck(long transID, long userID, boolean accepted);
 
+    BasicResponse<?> StockTransCheck(long transID, long userID, boolean accepted);
+
     double getTotalStockByUser(long userID);
 
     double getTotalQDIIByUser(long userID);

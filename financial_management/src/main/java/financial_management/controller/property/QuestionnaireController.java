@@ -37,13 +37,15 @@ public class QuestionnaireController {
     }
 
     @PostMapping(value = "/questionnaire/set/vip")
-    public BasicResponse setVipQuestionnaire(@RequestBody VipQuestionnaireParam vipQuestionnaireParam) {
-        return questionnaireService.setVipQuestionnaire(vipQuestionnaireParam);
+    public BasicResponse setVipQuestionnaire(HttpServletRequest request, @RequestBody VipQuestionnaireParam vipQuestionnaireParam) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return questionnaireService.setVipQuestionnaire(userId, vipQuestionnaireParam);
     }
 
     @PostMapping(value = "/questionnaire/set/unVip")
-    public BasicResponse setNVipQuestionnaire(@RequestBody NVipQuestionnaireParam nVipQuestionnaireParam) {
-        return questionnaireService.setNVipQuestionnaire(nVipQuestionnaireParam);
+    public BasicResponse setNVipQuestionnaire(HttpServletRequest request, @RequestBody NVipQuestionnaireParam nVipQuestionnaireParam) {
+        Long userId = jwtUtil.getIdFromRequest(request);
+        return questionnaireService.setNVipQuestionnaire(userId, nVipQuestionnaireParam);
     }
 
     @GetMapping(value = "/questionnaire/getInvestPrefer")

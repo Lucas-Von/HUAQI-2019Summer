@@ -29,18 +29,20 @@ public interface QuestionnaireService {
     /**
      * 增加&更新VIP用户的问卷
      *
+     * @param userId
      * @param vipQuestionnaireParam
      * @return
      */
-    BasicResponse setVipQuestionnaire(VipQuestionnaireParam vipQuestionnaireParam);
+    BasicResponse setVipQuestionnaire(Long userId, VipQuestionnaireParam vipQuestionnaireParam);
 
     /**
      * 增加&更新非VIP用户的问卷
      *
+     * @param userId
      * @param nVipQuestionnaireParam
      * @return
      */
-    BasicResponse setNVipQuestionnaire(NVipQuestionnaireParam nVipQuestionnaireParam);
+    BasicResponse setNVipQuestionnaire(Long userId, NVipQuestionnaireParam nVipQuestionnaireParam);
 
     /**
      * 获取投资偏好

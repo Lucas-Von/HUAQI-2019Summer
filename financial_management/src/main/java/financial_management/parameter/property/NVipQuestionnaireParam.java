@@ -11,11 +11,6 @@ import java.util.Date;
 public class NVipQuestionnaireParam {
 
     /**
-     * 用户id
-     */
-    private Long userId;
-
-    /**
      * 更新问卷日期
      */
     private Date recordDate;
@@ -199,14 +194,6 @@ public class NVipQuestionnaireParam {
      * 最低到期付款额
      */
     private double minimumDuePayment;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public Date getRecordDate() {
         return new Date();

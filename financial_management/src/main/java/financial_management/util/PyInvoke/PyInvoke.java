@@ -49,7 +49,7 @@ public class PyInvoke {
         StringBuffer stringBuffer = new StringBuffer(pyInvokeProperties.getSurrounding());
         for (int i = 0; i < rawString.length(); i++) {
             if (rawString.charAt(i) == '\"') {
-                stringBuffer.append(pyInvokeProperties.getQuote());//TODO 平台问题；linux外层需要单引号
+                stringBuffer.append(pyInvokeProperties.getQuote());
             } else {
                 stringBuffer.append(rawString.charAt(i));
             }

@@ -7,6 +7,10 @@ public class StockAdjustmentPO extends StockAdjustment {
 
     private Long transID;
 
+    public StockAdjustmentPO() {
+
+    }
+
     public Long getUserID() {
         return userID;
     }

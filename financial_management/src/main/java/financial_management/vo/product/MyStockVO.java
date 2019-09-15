@@ -62,7 +62,6 @@ public class MyStockVO {
 
     public MyStockVO(MyStockPO po) {
         code = po.getCode();
-        latestPrice = po.getHoldPrice();
         amount = po.getHoldAmount();
         total = po.getHoldTotal();
         profit = po.getProfit();
@@ -70,7 +69,6 @@ public class MyStockVO {
 
     public MyStockVO(MyQDIIPO po){
         code = po.getCode();
-        latestPrice = po.getHoldPrice();
         amount = ArithmeticUtil.divide(po.getHoldTotal(),po.getHoldPrice());
         total = po.getHoldTotal();
         profit = po.getProfit();

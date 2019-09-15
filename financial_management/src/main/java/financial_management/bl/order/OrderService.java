@@ -41,7 +41,7 @@ public interface OrderService {
 
     TransferRecordPO updateTransferRecord(TransferRecordPO po);
 
-    BasicResponse completePersonalTrade(long ID, long userID);
+    BasicResponse<PersonalTradeVO> completePersonalTrade(long ID, long userID);
 
     //获取累计净投入峰值
     double getMaxInvestBy(Long userID, String type);
@@ -66,5 +66,11 @@ public interface OrderService {
         BOND,//债券
         DOMSTOCK,//股票
         FORSTOCK;//股指
+
+
+        @Override
+        public String toString() {
+            return this.name();
+        }
     }
 }

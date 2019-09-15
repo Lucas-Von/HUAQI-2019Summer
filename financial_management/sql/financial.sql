@@ -1733,7 +1733,7 @@ DROP TABLE IF EXISTS `stock_adjustment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stock_adjustment` (
-  `order_time` float NOT NULL,
+  `order_time` float NULL,
   `code` varchar(15) NOT NULL,
   `state_message` varchar(20) NOT NULL,
   `order_amount` int(11) NOT NULL,

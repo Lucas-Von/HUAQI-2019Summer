@@ -5,21 +5,15 @@ Created on Sun Sep  8 20:52:37 2019
 @author: Jason
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Sep  7 00:25:35 2019
-
-@author: Jason
-"""
-
 import pandas as pd
 import numpy as np
 from pandas import Series,DataFrame
 import matplotlib.pyplot as plt 
 import seaborn as sns
-
+import json
+import sys
 datafile = './data/'
-data_train = pd.read_csv(datafile +'cs-train.csv')
+#data_train = pd.read_csv(datafile +'cs-train.csv')
 
 """
 数据说明
@@ -203,22 +197,13 @@ def monoto_bin(Y, X, n = 20):
     woe = list(d4['woe'].round(3))
     return d4,iv,cut,woe
   
-dfx1,ivx1,cutx1,woex1 = monoto_bin(data_train['target'],data_train['unpaid_arrears'],n=10)
-dfx2,ivx2,cutx2,woex2 = monoto_bin(data_train['target'],data_train['previous_arrears_due'],n=10)
-dfx4,ivx4,cutx4,woex4 = monoto_bin(data_train['target'],data_train['line_of_credit'],n=10)
-dfx5,ivx5,cutx5,woex5 = monoto_bin(data_train['target'],data_train['cash_advance'],n=10)
+#dfx1,ivx1,cutx1,woex1 = monoto_bin(data_train['target'],data_train['unpaid_arrears'],n=10)
+#dfx2,ivx2,cutx2,woex2 = monoto_bin(data_train['target'],data_train['previous_arrears_due'],n=10)
+#dfx4,ivx4,cutx4,woex4 = monoto_bin(data_train['target'],data_train['line_of_credit'],n=10)
+#dfx5,ivx5,cutx5,woex5 = monoto_bin(data_train['target'],data_train['cash_advance'],n=10)
 
-plt.bar(range(len(woex1)),woex1)
-plt.show()
 
-plt.bar(range(len(woex2)),woex2)#完全单调，分箱效果不错
-plt.show()
-
-plt.bar(range(len(woex5)),woex5)
-plt.show()
-
-dfx1
-monoto_bin(data_train['target'],data_train['unpaid_arrears'],n=10)
+#monoto_bin(data_train['target'],data_train['unpaid_arrears'],n=10)
 
 def self_bin(Y, X, bin):
     r = 0
@@ -255,25 +240,20 @@ cutx7 = [ninf, 0, 1, 3, 5, pinf]
 cutx8 = [ninf, 0,1,2, 3, pinf]
 cutx9 = [ninf, 0, 1, 3, pinf]
 cutx10 = [ninf, 0, 1, 2, 3, 5, pinf]
-len(cutx5)
-
-dfx3, ivx3,woex3 = self_bin(data_train['target'],data_train['last_payment'],cutx3)
-dfx6, ivx6,woex6 = self_bin(data_train['target'],data_train['minimum_due_payment'],cutx6) 
-dfx7, ivx7,woex7 = self_bin(data_train['target'],data_train['deposit'],cutx7)
 
 
-y=[ivx1,ivx2,ivx3,ivx4,ivx5,ivx6,ivx7]
-index=data_train.columns.drop('target')
-fig= plt.figure(figsize = (16,8))
-ax1 = fig.add_subplot(1, 1, 1)
-ax1.bar(range(1,11), y, width=0.4,color = 'r',alpha = 0.6)#生成柱状图
-ax1.set_xticks(range(1,11))
-ax1.set_xticklabels(index, rotation=0, fontsize=12)
-ax1.set_ylabel('IV', fontsize=14)
+#dfx3, ivx3,woex3 = self_bin(data_train['target'],data_train['last_payment'],cutx3)
+#dfx6, ivx6,woex6 = self_bin(data_train['target'],data_train['minimum_due_payment'],cutx6) 
+#dfx7, ivx7,woex7 = self_bin(data_train['target'],data_train['deposit'],cutx7)
+
+
+#y=[ivx1,ivx2,ivx3,ivx4,ivx5,ivx6,ivx7]
+#index=data_train.columns.drop('target')
+#fig= plt.figure(figsize = (16,8))
 #在柱状图上添加数字标签
-for i, v in enumerate(y):
-    plt.text(i+1, v+0.01, '%.4f' % v, ha='center', va='bottom', fontsize=12)
-plt.show()
+#for i, v in enumerate(y):
+#    plt.text(i+1, v+0.01, '%.4f' % v, ha='center', va='bottom', fontsize=12)
+#plt.show()
 """
 根据IV值判断变量预测能力的标准:
 < 0.02： useless for predition
@@ -303,13 +283,13 @@ def change_woe(d,cut,woe):
 
 
 #训练集转化
-data_train['unpaid_arrears'] = pd.Series(change_woe(data_train['unpaid_arrears'], cutx1, woex1))
-data_train['age'] = pd.Series(change_woe(data_train['previous_arrears_due'], cutx2, woex2))
-data_train['30-59'] = pd.Series(change_woe(data_train['last_payment'], cutx3, woex3))
-data_train['DebtRatio'] = pd.Series(change_woe(data_train['line_of_credit'], cutx4, woex4))
-data_train['MonthlyIncome'] = pd.Series(change_woe(data_train['cash_advance'], cutx5, woex5))
-data_train['open_loan'] = pd.Series(change_woe(data_train['minimum_due_payment'], cutx6, woex6))
-data_train['90-'] = pd.Series(change_woe(data_train['deposit'], cutx7, woex7))
+#data_train['unpaid_arrears'] = pd.Series(change_woe(data_train['unpaid_arrears'], cutx1, woex1))
+#data_train['age'] = pd.Series(change_woe(data_train['previous_arrears_due'], cutx2, woex2))
+#data_train['30-59'] = pd.Series(change_woe(data_train['last_payment'], cutx3, woex3))
+#data_train['DebtRatio'] = pd.Series(change_woe(data_train['line_of_credit'], cutx4, woex4))
+#data_train['MonthlyIncome'] = pd.Series(change_woe(data_train['cash_advance'], cutx5, woex5))
+#data_train['open_loan'] = pd.Series(change_woe(data_train['minimum_due_payment'], cutx6, woex6))
+#data_train['90-'] = pd.Series(change_woe(data_train['deposit'], cutx7, woex7))
 
 
 #删除对target不明显的变量
@@ -319,39 +299,26 @@ data_train['90-'] = pd.Series(change_woe(data_train['deposit'], cutx7, woex7))
 #模型建立
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-x = train_X.drop('target',axis = 1)
-y = train_X['target']
-train_x,test_x,train_y,test_y = train_test_split(x,y,test_size = 0.3,random_state = 0)
-train = pd.concat([train_y,train_x], axis =1)
-test = pd.concat([test_y,test_x], axis =1)
-train = train.reset_index(drop=True)
-test = test.reset_index(drop=True)
-lr = LogisticRegression(penalty= 'l1')
-lr.fit(train_x,train_y)
+#x = train_X.drop('target',axis = 1)
+#y = train_X['target']
+#train_x,test_x,train_y,test_y = train_test_split(x,y,test_size = 0.3,random_state = 0)
+#train = pd.concat([train_y,train_x], axis =1)
+#test = pd.concat([test_y,test_x], axis =1)
+#train = train.reset_index(drop=True)
+#test = test.reset_index(drop=True)
+#lr = LogisticRegression(penalty= 'l1')
+#lr.fit(train_x,train_y)
 
 #绘制roc曲线
 from sklearn.metrics import roc_curve, auc
 # y_pred= lr.predict(train_x)  
-train_predprob = lr.predict_proba(train_x)[:,1]  
-test_predprob = lr.predict_proba(test_x)[:,1] 
-FPR,TPR,threshold =roc_curve(test_y,test_predprob)
-ROC_AUC= auc(FPR,TPR)
-plt.plot(FPR, TPR, 'b', label='AUC = %0.2f' % ROC_AUC)
-plt.legend(loc='lower right')
-plt.plot([0, 1], [0, 1], 'r--')
-plt.xlim([0, 1])
-plt.ylim([0, 1])
-plt.ylabel('TPR')
-plt.xlabel('FPR')
-plt.show()
 
 # 个人总分=基础分+各部分得分
 import math
 B = 20 / math.log(2)
 A = 600 - B / math.log(20)
 # 基础分
-base = round(A+B *lr.intercept_[0], 0)
-base
+#base = round(A+B *lr.intercept_[0], 0)
 
 #计算分数函数
 def compute_score(coe,woe,factor):
@@ -361,10 +328,10 @@ def compute_score(coe,woe,factor):
         scores.append(score)
     return scores
 
-x1_percentage = compute_score(lr.coef_[0][0], woex1, B)
-x2_age = compute_score(lr.coef_[0][1], woex2, B)
-x4_59 = compute_score(lr.coef_[0][2], woex4, B)
-x7_90 = compute_score(lr.coef_[0][3], woex7, B)
+#x1_percentage = compute_score(lr.coef_[0][0], woex1, B)
+#x2_age = compute_score(lr.coef_[0][1], woex2, B)
+#x4_59 = compute_score(lr.coef_[0][2], woex4, B)
+#x7_90 = compute_score(lr.coef_[0][3], woex7, B)
 
 def change_score(series,cut,score):
     list = []
@@ -384,14 +351,47 @@ def change_score(series,cut,score):
     return list
 
 #导入test数据
-test1 = pd.read_csv(datafile + 'cs-test.csv')
+#test1 = pd.read_csv(datafile + 'cs-test.csv')
 test2 = pd.DataFrame()
-test2['x1_unpaid_arrears'] = pd.Series(change_score(test1['unpaid_arrears'], cutx1, x1_percentage))
-test2['x2_previous_arrears_due'] = pd.Series(change_score(test1['previous_arrears_due'], cutx2, x2_age))
-test2['x4_line_of_credit'] = pd.Series(change_score(test1['line_of_credit'], cutx4,x4_59))
-test2['x7_deposit'] = pd.Series(change_score(test1['deposit'], cutx7, x7_90))
+#test2['x1_unpaid_arrears'] = pd.Series(change_score(test1['unpaid_arrears'], cutx1, x1_percentage))
+#test2['x2_previous_arrears_due'] = pd.Series(change_score(test1['previous_arrears_due'], cutx2, x2_age))
+#test2['x4_line_of_credit'] = pd.Series(change_score(test1['line_of_credit'], cutx4,x4_59))
+#test2['x7_deposit'] = pd.Series(change_score(test1['deposit'], cutx7, x7_90))
 
-test2['Score'] = test2['x1_unpaid_arrears'] + test2['x2_previous_arrears_due'] + test2['x4_line_of_credit']+test2['x7_deposit']+ base
-sns.distplot(test2['Score'],bins = 30,color = 'r')#分数分布
-plt.figure(figsize=(14,7))
-plt.show()
+
+def get_json(argv_json):
+    c=json.loads(argv_json)
+    v=list(c.values())
+    # return js(c["unpaid_arrears"],c["previous_arrears_due"],c["line_of_credit"],c["cash_advance"],c["last_payment"],c["minimum_due_payment"],c["deposit"])
+"""
+数据说明
+unpaid_arrears:未付欠款
+previous_arrears_due:上期应还欠款
+line_of_credit:信用额度
+cash_advance:预提现金额度
+last_payment:上次付款额
+minimum_due_payment:最低到期付款额
+deposit:存款额 
+"""
+#x0 = change_score(v[0], cutx1, x1_percentage)
+#x1 = change_score(v[1], cutx2, x2_age)
+#x2 = change_score(v[2], cutx4,x4_59)
+#x3 = change_score(v[3], cutx7, x7_90)
+
+
+#test2['Score'] = test2['x1_unpaid_arrears'] + test2['x2_previous_arrears_due'] + test2['x4_line_of_credit']+test2['x7_deposit']+ base
+
+#以下为模拟训练结果，如果获取真实数据，将根据真实的花旗API进行训练
+
+if __name__ == '__main__':
+    dic = json.loads(sys.argv[1])
+    ans=(dic["deposit"]/10000)*2-((dic["previous_arrears_due"]-dic["last_payment"])/1000*2)+dic["line_of_credit"]/2000-dic["unpaid_arrears"]/10000
+
+    if ans >50:
+        res=2
+    elif ans >30:
+        res=1
+    else:
+        res=0
+    array_json=json.dumps({'vip_level':res})
+    print(array_json)

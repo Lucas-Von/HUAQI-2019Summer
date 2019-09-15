@@ -9,7 +9,7 @@ public class QuestResVO {
     /**
      * 会员等级
      */
-    private int vipLevel;
+    private String vipLevel;
 
     /**
      * 投资偏好
@@ -27,7 +27,20 @@ public class QuestResVO {
     private QuestResWithInvRateVO questResWithInvRateVO;
 
     public QuestResVO(int vipLevel, String investPrefer, double totalYield, QuestResWithInvRateVO questResWithInvRateVO) {
-        this.vipLevel = vipLevel;
+        switch (vipLevel) {
+            case 0:
+                this.vipLevel = "普通会员";
+                break;
+            case 1:
+                this.vipLevel = "中级会员";
+                break;
+            case 2:
+                this.vipLevel = "高级会员";
+                break;
+            default:
+                this.vipLevel = "未知等级";
+                break;
+        }
         this.investPrefer = investPrefer;
         this.totalYield = totalYield;
         this.questResWithInvRateVO = questResWithInvRateVO;
@@ -37,7 +50,7 @@ public class QuestResVO {
 
     }
 
-    public int getVipLevel() {
+    public String getVipLevel() {
         return vipLevel;
     }
 

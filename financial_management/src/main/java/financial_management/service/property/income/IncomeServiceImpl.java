@@ -313,7 +313,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
     public double getTotalStocksIncome(Long userId) {
         try {
             TotalIncomePO totalIncomePO = incomeMapper.getTotalInvestRate(userId);
-            return totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", null);
+            return totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, DOMSTOCK.name(), null);
         } catch (Exception e) {
             // e.printStackTrace();
             return 0;
@@ -330,7 +330,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
     public double getTotalQdiiIncome(Long userId) {
         try {
             TotalIncomePO totalIncomePO = incomeMapper.getTotalInvestRate(userId);
-            return totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", null);
+            return totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, FORSTOCK.name(), null);
         } catch (Exception e) {
             // e.printStackTrace();
             return 0;

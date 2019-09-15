@@ -259,7 +259,7 @@ public class OrderServiceImpl implements OrderService, ITransferMessage {
             response = new BasicResponse<>(ResponseStatus.STATUS_TRADE_CANT_PAY, reason);
         } else {
             float balance = fundService.getFund(userID).getAmount().floatValue();
-            float toPay = personalTradePO.getTotal();
+            float toPay = personalTradePO.getTotal() + personalTradePO.getFee();
             if (balance < toPay) {
                 response = new BasicResponse<>(ResponseStatus.STATUS_BALANCE_LEAK, "余额 ￥" + balance + " 不足以支付交易金额 ￥" + toPay);
             } else {

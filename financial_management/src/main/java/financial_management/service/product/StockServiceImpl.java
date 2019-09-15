@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,6 +61,7 @@ public class StockServiceImpl implements StockService {
         List<MyStockVO> myStockVOS = new ArrayList<>(myStockPOS.size());
         myStockPOS.forEach(myStockPO -> {
             MyStockVO myStockVO = new MyStockVO(myStockPO);
+            myStockVO.setLatestPrice(stockMapper.selectDomStockByCode(myStockPO.getCode()).getLatestPrice());
             myStockVO.setName(stockMapper.selectDomStockByCode(myStockPO.getCode()).getName());
             myStockVOS.add(myStockVO);
         });
@@ -68,6 +70,7 @@ public class StockServiceImpl implements StockService {
         List<MyStockVO> myQDIIVOS = new ArrayList<>(myQDIIPOS.size());
         myQDIIPOS.forEach(myQDIIPO -> {
             MyStockVO myStockVO = new MyStockVO(myQDIIPO);
+            myStockVO.setLatestPrice(stockMapper.selectQDIIByCode(myQDIIPO.getCode()).getLatestPrice());
             myStockVO.setName(stockMapper.selectQDIIByCode(myQDIIPO.getCode()).getName());
             myQDIIVOS.add(myStockVO);
         });
@@ -114,7 +117,7 @@ public class StockServiceImpl implements StockService {
         final PyFunc func = PyFunc.STOCK;
         double whereCanIGetTargetAmount = questionnaireService.getRecStocks(userId);
         List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userId);
-        StockParam param = new StockParam(sdf.format(adjustmentMapper.selectLastStockTransferDate()), false);//TODO
+        StockParam param = new StockParam(sdf.format(adjustmentMapper.selectLastStockTransferDate()), false);
         List<Object> result = PyInvoke.invoke(func, param, StockAdjustment.class);
 //        List<Object> result = getStubData();
         if (result != null) {
@@ -180,7 +183,6 @@ public class StockServiceImpl implements StockService {
     @Override
     public void MonthlyQDIITransfer(Long userId) {
         final PyFunc func = PyFunc.QDII_ADJUST_MONTHLY;
-        //TODO 对接上要改回来
         List<MyQDIIPO> myQDIIs = stockMapper.selectSelfQDII(userId);
         List<List<Object>> hold = new ArrayList<>(myQDIIs.size());
         for (MyQDIIPO po : myQDIIs) {
@@ -266,16 +268,21 @@ public class StockServiceImpl implements StockService {
     @Override
     public BasicResponse<?> StockCustomize(StockCustomizeParam param, long userID) {
         BasicResponse<?> response;
+        Date createTime = new Date();
+        TransferRecordPO transferRecordPO = orderService.addTransferRecord(new TransferRecordPO(createTime, userID, true, false));
+        assert transferRecordPO != null;
+
         List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
         float money = param.getMoney();
         double holdTotal = myStockPOS.stream().mapToDouble(MyStockPO::getHoldTotal).sum();
-        List<StockAdjustment> adjustments = new ArrayList<>(myStockPOS.size());
-        float orderTime = new Date().getTime();
+        List<StockAdjustmentPO> adjustments = new ArrayList<>(myStockPOS.size());
+
         for (MyStockPO myStockPO : myStockPOS) {
             DomStockPO stockPO = stockMapper.selectDomStockByCode(myStockPO.getCode());
-            StockAdjustment adjustment = new StockAdjustment();
+            StockAdjustmentPO adjustment = new StockAdjustmentPO();
 
-            adjustment.setOrder_time(orderTime);
+            adjustment.setTransID(transferRecordPO.getID());
+            adjustment.setUserID(userID);
             adjustment.setCode(myStockPO.getCode());
             adjustment.setState_message("");
 
@@ -291,7 +298,7 @@ public class StockServiceImpl implements StockService {
             proportionalReadjust(Math.abs(money), holdTotal, adjustment);
             adjustments.add(adjustment);
         }
-        List<PersonalTradeVO> personalTradeVOS = domAdjust(adjustments, myStockPOS, userID);
+        List<PersonalTradeVO> personalTradeVOS = domAdjust(adjustments, userID);
         if (personalTradeVOS != null && personalTradeVOS.size() > 0) {
             response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeVOS);
         } else {
@@ -317,17 +324,21 @@ public class StockServiceImpl implements StockService {
                 float holdShare = ArithmeticUtil.divide(hold, myQDIIPO.getHoldPrice());
                 QDII_CustomizeTrade pyparam = new QDII_CustomizeTrade(code, myQDIIPO.getHoldNum(), holdShare, money);
                 List<Object> result = PyInvoke.invoke(func, pyparam, QDIIAdjustment.class);
-//                List<Object> result = getStubData();
                 if (result != null) {
                     List<QDIIAdjustment> adjustments = new ArrayList<>(result.size());
                     for (Object o : result) {
                         adjustments.add((QDIIAdjustment) o);
                     }
-                    List<PersonalTradeVO> personalTradeVOS = qdiiAdjust(adjustments, stockMapper.selectSelfQDII(userID), userID);
-                    response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeVOS);
+
+                    List<PersonalTradeVO> personalTradeVOS = qdiiAdjust(adjustments, userID);
+                    if (personalTradeVOS != null && personalTradeVOS.size() > 0) {
+                        response = new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, personalTradeVOS);
+                    } else {
+                        response = new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+                    }
                 } else {
                     logger.error("Invoke Python function " + func.name() + " return null result.");
-                    return new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
+                    response = new BasicResponse<>(ResponseStatus.SERVER_ERROR, null);
                 }
             }
         }
@@ -363,8 +374,7 @@ public class StockServiceImpl implements StockService {
             if (adjustmentPOS.isEmpty()) {
                 logger.warn("Got an empty list of QDII adjustment? That's INSANE!\nCause transID: " + transID);
             }
-            List<MyQDIIPO> myQDIIs = stockMapper.selectSelfQDII(userID);
-            qdiiAdjust(adjustmentPOS, myQDIIs, userID);
+            qdiiAdjust(adjustmentPOS, userID);
             trans.setCompleteTime(new Date());
         }
         trans.setStatus(accepted ? 1 : 2);
@@ -389,8 +399,7 @@ public class StockServiceImpl implements StockService {
                 logger.warn("Got an empty list of stock adjustment? That's INSANE!\nCause transID: " + transID);
             }
 
-            List<MyStockPO> myStockPOS = stockMapper.selectSelfDomStock(userID);
-            domAdjust(adjustmentPOS, myStockPOS, userID);
+            domAdjust(adjustmentPOS, userID);
             trans.setCompleteTime(new Date());
         }
         trans.setStatus(accepted ? 1 : 2);
@@ -425,39 +434,93 @@ public class StockServiceImpl implements StockService {
         return total;
     }
 
-    private List<PersonalTradeVO> domAdjust(List<? extends StockAdjustment> adjustments, List<MyStockPO> mydoms, Long userID) {
+    @Override
+    public BasicResponse<PersonalTradeVO> completeStockOrder(long orderID, Long userID) {
+        BasicResponse<PersonalTradeVO> response = orderService.completePersonalTrade(orderID, userID);
+        if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
+            PersonalTradeVO personalTradeVO = response.getData();
+            float price = personalTradeVO.getPrice();
+            int amount = new BigDecimal(Math.floor(personalTradeVO.getAmount())).intValue();
+            float total = personalTradeVO.getTotal();
+            String code = personalTradeVO.getProduct().getCode();
+            if (personalTradeVO.getType() == OrderService.Type.DOMSTOCK) {
+                List<MyStockPO> mydoms = stockMapper.selectSelfDomStock(userID);
+
+                MyStockPO myStockPO = null;
+
+                for (MyStockPO po : mydoms) {
+                    if (po.getCode().equals(code)) {
+                        myStockPO = po;
+
+                        if (amount < 0) {
+                            myStockPO.setProfit(myStockPO.getProfit() + Math.abs(amount) * (price - stockMapper.selectDomStockByCode(code).getLatestPrice()));
+                        }
+
+                        float newTotal = myStockPO.getHoldTotal() + total;
+                        float newAmount = myStockPO.getHoldAmount() + amount;
+                        myStockPO.setHoldAmount(myStockPO.getHoldAmount() + amount);
+                        myStockPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
+                        myStockPO.setHoldTotal(myStockPO.getHoldTotal() + total);
+                        stockMapper.updateMyStock(myStockPO);
+                        break;
+                    }
+                }
+
+                if (myStockPO == null) {
+                    myStockPO = new MyStockPO();
+                    myStockPO.setUserId(userID);
+                    myStockPO.setCode(code);
+                    myStockPO.setHoldPrice(price);
+                    myStockPO.setHoldAmount(amount);
+                    myStockPO.setHoldTotal(total - personalTradeVO.getFee());
+                    stockMapper.insertMyStock(myStockPO);
+                }
+            } else {
+                List<MyQDIIPO> myQDIIPOS = stockMapper.selectSelfQDII(userID);
+
+                MyQDIIPO myStockPO = null;
+
+                for (MyQDIIPO po : myQDIIPOS) {
+                    if (po.getCode().equals(code)) {
+                        myStockPO = po;
+
+                        if (amount < 0) {
+                            float share = ArithmeticUtil.divide(total, price);
+                            myStockPO.setProfit(myStockPO.getProfit() + share * (price - stockMapper.selectQDIIByCode(code).getLatestPrice()));
+                        }
+
+                        float newTotal = myStockPO.getHoldTotal() + total;
+                        float newAmount = myStockPO.getHoldNum() + amount;
+                        myStockPO.setHoldNum(myStockPO.getHoldNum() + amount);
+                        myStockPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
+                        myStockPO.setHoldTotal(myStockPO.getHoldTotal() + total);
+                        stockMapper.updateMyQDII(myStockPO);
+                        break;
+                    }
+                }
+
+                if (myStockPO == null) {
+                    myStockPO = new MyQDIIPO();
+                    myStockPO.setUserId(userID);
+                    myStockPO.setCode(code);
+                    myStockPO.setHoldPrice(price);
+                    myStockPO.setHoldNum(amount);
+                    myStockPO.setHoldTotal(total - personalTradeVO.getFee());
+                    stockMapper.insertMyQDII(myStockPO);
+                }
+            }
+        }
+        return response;
+    }
+
+    private List<PersonalTradeVO> domAdjust(List<StockAdjustmentPO> adjustments, Long userID) {
         List<PersonalTradeVO> personalTradeVOS = new ArrayList<>(adjustments.size());
-        for (StockAdjustment adjustment : adjustments) {
+        for (StockAdjustmentPO adjustment : adjustments) {
             float price = adjustment.getPrice();
             int amount = adjustment.getComplete_amount();
             float total = adjustment.getTotal();
+            float fee = adjustment.getFee();
             String code = adjustment.getCode();
-
-            MyStockPO myStockPO = null;
-
-            for (MyStockPO po : mydoms) {
-                if (po.getCode().equals(adjustment.getCode())) {
-                    myStockPO = po;
-
-                    float newTotal = myStockPO.getHoldTotal() + total;
-                    float newAmount = myStockPO.getHoldAmount() + amount;
-                    myStockPO.setHoldAmount(myStockPO.getHoldAmount() + amount);
-                    myStockPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
-                    myStockPO.setHoldTotal(myStockPO.getHoldTotal() + total);
-                    stockMapper.updateMyStock(myStockPO);
-                    break;
-                }
-            }
-
-            if (myStockPO == null) {
-                myStockPO = new MyStockPO();
-                myStockPO.setUserId(userID);
-                myStockPO.setCode(code);
-                myStockPO.setHoldPrice(price);
-                myStockPO.setHoldAmount(amount);
-                myStockPO.setHoldTotal(total - adjustment.getFee());
-                stockMapper.insertMyStock(myStockPO);
-            }
 
             ProductVO4Order productVO4Order = new ProductVO4Order();
             DomStockPO stockPO = stockMapper.selectDomStockByCode(code);
@@ -466,61 +529,34 @@ public class StockServiceImpl implements StockService {
             productVO4Order.setName(stockPO.getName());
 
             PersonalTradeVO vo = new PersonalTradeVO();
+            vo.setTransID(adjustment.getTransID());
             vo.setType(OrderService.Type.DOMSTOCK);
             vo.setUserID(userID);
             vo.setCreateTime(new Date());
             vo.setProduct(productVO4Order);
             vo.setAmount(amount);
             vo.setPrice(price);
-            vo.setTotal(total);
-            vo.setFee(0);
+            vo.setTotal(total - fee);
+            vo.setFee(fee);
             vo.setStatus(0);
             BasicResponse<PersonalTradeVO> response = orderService.addPersonalTradeRecord(vo, false);
             assert response.getStatus() == ResponseStatus.STATUS_SUCCESS;
 
-            if (orderService.completePersonalTrade(response.getData().getID(), userID).getStatus() == ResponseStatus.STATUS_SUCCESS) {
+            response = completeStockOrder(response.getData().getID(), userID);
+            if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
                 personalTradeVOS.add(response.getData());
-            } else {
-                return null;
             }
         }
         return personalTradeVOS;
     }
 
-    private List<PersonalTradeVO> qdiiAdjust(List<? extends QDIIAdjustment> adjustments, List<MyQDIIPO> myfors, Long userID) {
+    private List<PersonalTradeVO> qdiiAdjust(List<? extends QDIIAdjustment> adjustments, Long userID) {
         List<PersonalTradeVO> personalTradeVOS = new ArrayList<>(adjustments.size());
         for (QDIIAdjustment adjustment : adjustments) {
             float price = adjustment.getPrice_deployed();
-            float amount = adjustment.getShare_deployed();
             int num = adjustment.getNumber_deployed();
             float total = adjustment.getM_already_deployed();
             String code = adjustment.getQdii_code();
-
-            MyQDIIPO myQDIIPO = null;
-
-            for (MyQDIIPO po : myfors) {
-                if (po.getCode().equals(adjustment.getQdii_code())) {
-                    myQDIIPO = po;
-
-                    float newTotal = po.getHoldTotal() + total;
-                    float newAmount = ArithmeticUtil.divide(po.getHoldTotal(), po.getHoldPrice()) + amount;
-                    myQDIIPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
-                    myQDIIPO.setHoldNum(po.getHoldNum() + num);
-                    myQDIIPO.setHoldTotal(newTotal);
-                    stockMapper.updateMyQDII(myQDIIPO);
-                    break;
-                }
-            }
-
-            if (myQDIIPO == null) {
-                myQDIIPO = new MyQDIIPO();
-                myQDIIPO.setUserId(userID);
-                myQDIIPO.setCode(code);
-                myQDIIPO.setHoldPrice(price);
-                myQDIIPO.setHoldNum(num);
-                myQDIIPO.setHoldTotal(total);
-                stockMapper.insertMyQDII(myQDIIPO);
-            }
 
             ProductVO4Order productVO4Order = new ProductVO4Order();
             ForStockPO stockPO = stockMapper.selectQDIIByCode(code);
@@ -532,20 +568,18 @@ public class StockServiceImpl implements StockService {
             vo.setType(OrderService.Type.FORSTOCK);
             vo.setCreateTime(new Date());
             vo.setProduct(productVO4Order);
-            vo.setAmount(amount);
+            vo.setAmount(num);
             vo.setPrice(price);
             vo.setTotal(total);
             vo.setFee(0);
             vo.setUserID(userID);
             vo.setStatus(1);
-            //TODO 到时候要真正去扣钱
             BasicResponse<PersonalTradeVO> response = orderService.addPersonalTradeRecord(vo, false);
             assert response.getStatus() == ResponseStatus.STATUS_SUCCESS;
 
-            if (orderService.completePersonalTrade(response.getData().getID(), userID).getStatus() == ResponseStatus.STATUS_SUCCESS) {
+            response = completeStockOrder(response.getData().getID(), userID);
+            if (response.getStatus() == ResponseStatus.STATUS_SUCCESS) {
                 personalTradeVOS.add(response.getData());
-            } else {
-                return null;
             }
         }
         return personalTradeVOS;
@@ -592,7 +626,6 @@ public class StockServiceImpl implements StockService {
         long afterQDII = System.currentTimeMillis();
         logger.info("更新" + forStockPOS.size() + "条股指记录，用时" + (afterQDII - startQDII) + "毫秒");
     }
-
 
     private float computeHoldPrice(float newTotal, float newAmount) {
         return ArithmeticUtil.divide(newTotal, newAmount);

@@ -34,7 +34,7 @@ public class PersonalTradeVO {
 
     private long userID;
 
-    //暂时没用，随便填或不填
+    //0为未成功，1为已成功，2为已失效
     private Integer status;
 
     public Long getID() {

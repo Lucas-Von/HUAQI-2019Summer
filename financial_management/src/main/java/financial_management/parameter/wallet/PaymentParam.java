@@ -7,7 +7,7 @@ package financial_management.parameter.wallet;
  * @Version 1.0
  **/
 public class PaymentParam {
-    Long cost;
+    Double cost;
     String pay_password;
 
     public String getPay_password() {
@@ -18,11 +18,11 @@ public class PaymentParam {
         this.pay_password = pay_password;
     }
 
-    public Long getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 }

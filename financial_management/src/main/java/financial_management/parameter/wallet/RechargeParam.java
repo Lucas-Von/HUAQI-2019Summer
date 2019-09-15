@@ -7,13 +7,13 @@ package financial_management.parameter.wallet;
  * @Version 1.0
  **/
 public class RechargeParam {
-    Long cost;
+    Double cost;
 
-    public Long getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 }

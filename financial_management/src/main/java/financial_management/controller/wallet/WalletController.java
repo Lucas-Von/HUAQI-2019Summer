@@ -1,5 +1,6 @@
 package financial_management.controller.wallet;
 
+import financial_management.bl.wallet.WalletService;
 import financial_management.parameter.wallet.*;
 import financial_management.util.JwtUtil;
 import financial_management.vo.BasicResponse;
@@ -23,53 +24,45 @@ import javax.websocket.RemoteEndpoint;
 @RestController
 @RequestMapping(value = "/account")
 public class WalletController {
+    @Autowired
+    WalletService service;
 
     @Autowired
     JwtUtil jwtUtil;
 
     @PostMapping(value = "/recharge")
     public BasicResponse recharging(@RequestBody RechargeParam param, HttpServletRequest request){
-
+        service.recharge(param.getCost(),jwtUtil.getIdFromRequest(request));
         //逻辑部分
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,true);
     }
 
     @PostMapping(value = "/payment/balance")
     public BasicResponse payment(@RequestBody PaymentParam payment,HttpServletRequest request){
 
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        return service.payByCash(jwtUtil.getIdFromRequest(request),payment.getCost(),payment.getPay_password());
     }
 
     @PostMapping(value = "/withdraw")
-    public BasicResponse withdraw(@RequestBody WithdrawParam withdraw){
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+    public BasicResponse withdraw(@RequestBody WithdrawParam withdraw,HttpServletRequest request){
+        return service.withdraw(jwtUtil.getIdFromRequest(request),withdraw.getCost().doubleValue(),withdraw.getCardid());
     }
 
     @PostMapping(value = "/binding")
-    public BasicResponse cardBinding(@RequestBody BindingParam binding){
-        BindingVO vo = new BindingVO();
-
-        vo.setBound(true);
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
+    public BasicResponse cardBinding(@RequestBody BindingParam binding,HttpServletRequest request){
+        service.binding(jwtUtil.getIdFromRequest(request),binding.getCard_num(),binding.getPay_password());
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
     }
 
     @GetMapping(value = "/balance")
     public BasicResponse checkBalance(HttpServletRequest request){
         //逻辑部分
-        BalanceVO balance = new BalanceVO();
-        balance.setBalance(2000L);
-        balance.setCardid("3211233211233211");
-        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,balance);
+
+        return service.checkBalance(jwtUtil.getIdFromRequest(request));
     }
 
     @PostMapping(value = "/payment/thirdparty")
     public BasicResponse payByCard(HttpServletRequest request, @RequestBody ThirdPartyPaymentParam param) {
-        if (true) {
-            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, null);
-
-        }
-        else {
-            return new BasicResponse<>(ResponseStatus.STATUS_PAYPASSWORD_WRONG,null);
-        }
-    }
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+}
 }

@@ -107,6 +107,11 @@ public class FundServiceImpl implements FundService4Wallet, FundService, Product
 
     @Override
     public BasicResponse getMoreTraceInfo() {
+        try{
+            dailyUpdate();
+        }catch (Exception e){
+
+        }
         FundPO po = mapper.selectFund();
         return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,po);
     }

@@ -61,9 +61,10 @@ public enum PyFunc {
      * @param path 文件名
      */
     PyFunc(String path) {
-        this.path = path;
+
 //
 //        this.path = "D:\\学习资料\\大二下\\花旗杯\\py\\" + path;
+        this.path = "D:\\Codings\\CitiCup\\docs\\问卷相关\\";
 
     }
 

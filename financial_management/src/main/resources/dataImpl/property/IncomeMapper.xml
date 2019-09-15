@@ -53,15 +53,15 @@
     </select>
 
     <select id="ifExistDaysBondLog" resultType="boolean">
-        select (count(fund_id) >= #{days}) from bond_rate_log where time = DATE_SUB(CURDATE(), INTERVAL #{days} DAY) and fund_id = #{bondId}
+        select count(fund_id) from bond_rate_log where time = DATE_SUB(CURDATE(), INTERVAL #{days} DAY) and fund_id = #{bondId}
     </select>
 
     <select id="getBondProfitOfDays" resultMap="BondIncomePO">
         select
-            today.net_worth as todayNetWorth,
+            today.fund_unit_value as todayNetWorth,
             beforeDays.net_worth as beforeDaysNetWorth
         from
-            (select net_worth from bond_rate_log where time = CURDATE() and fund_id = #{bondId}) today,
+            (select fund_unit_value from bond_foundation where id = #{bondId}) today,
             (select net_worth from bond_rate_log where time = DATE_SUB(CURDATE(), INTERVAL #{days} DAY) and fund_id = #{bondId}) beforeDays
     </select>
 

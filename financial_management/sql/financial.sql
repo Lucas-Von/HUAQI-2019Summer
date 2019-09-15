@@ -122,7 +122,7 @@ CREATE TABLE `bond_foundation` (
 
 LOCK TABLES `bond_foundation` WRITE;
 /*!40000 ALTER TABLE `bond_foundation` DISABLE KEYS */;
-INSERT INTO `bond_foundation` VALUES (1,'national',1000,200000,200,0.2,'2019-09-01 08:55:49',1000),(2,'corporate',1000,100000,100,0.2,'2019-09-01 08:55:49',1000);
+INSERT INTO `bond_foundation` VALUES (1,'national',1000,200000,200,0.2,'2019-09-01 08:55:49',1000),(2,'corporate',1000,100000,200,0.2,'2019-09-01 08:55:49',1000);
 /*!40000 ALTER TABLE `bond_foundation` ENABLE KEYS */;
 UNLOCK TABLES;
 

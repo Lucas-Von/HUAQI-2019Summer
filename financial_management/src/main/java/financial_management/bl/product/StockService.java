@@ -44,4 +44,6 @@ public interface StockService {
     double getTotalQDIIByUser(long userID);
 
     BasicResponse<Map<String,List<MyStockVO>>> getHoldStock(long userID);
+
+    void marketDailyUpdate();
 }

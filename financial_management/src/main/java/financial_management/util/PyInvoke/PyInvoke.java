@@ -25,6 +25,9 @@ public class PyInvoke {
         PyInvoke.pyInvokeProperties = pyInvokeProperties;
     }
 
+    public static List<Object> invoke(PyFunc func, PyParam param, Class clazz) {
+        return invoke(func, param, clazz, true);
+    }
 
     /**
      * @param func  需要调用的python函数
@@ -33,7 +36,7 @@ public class PyInvoke {
      * @return
      */
 
-    public static List<Object> invoke(PyFunc func, PyParam param, Class clazz) {
+    public static List<Object> invoke(PyFunc func, PyParam param, Class clazz, boolean log) {
         String path = func.path;
         StringBuffer cmd = new StringBuffer();
         cmd.append(invokeCmd + " ");
@@ -52,7 +55,9 @@ public class PyInvoke {
             }
         }
         cmd.append(stringBuffer.toString());
-        System.out.println(cmd.toString());
+        if (log) {
+            System.out.println(cmd.toString());
+        }
         Runtime runtime = Runtime.getRuntime();
         try {
             Process process = runtime.exec(cmd.toString());
@@ -60,7 +65,9 @@ public class PyInvoke {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
             String input = null;
             while ((input = reader.readLine()) != null) {
-                System.out.println(input);
+                if (log) {
+                    System.out.println(input);
+                }
                 if (input.startsWith("[")) {
                     res = JSON.parseArray(input, clazz);
                 } else {

@@ -34,6 +34,10 @@ public interface StockMapper {
 
     Integer updateMyQDII(MyQDIIPO po);
 
+    Integer updateStock(DomStockPO po);
+
+    Integer updateQDII(ForStockPO po);
+
     DomStockPO selectDomStockByCode(String code);
 
     ForStockPO selectQDIIByCode(String code);

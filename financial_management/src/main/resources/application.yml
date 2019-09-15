@@ -32,7 +32,7 @@ server:
 
 # python调用配置 #
 python:
-  dir: "~/.jenkins/workspace/HUAQI_2019_backend/financial_management/target/classes/"
+  dir: "~/.jenkins/workspace/HUAQI_2019_backend/financial_management/lib/"
 
 exponent:
   update: "D://学习资料/大二下/花旗杯/py/"

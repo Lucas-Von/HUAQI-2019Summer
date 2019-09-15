@@ -1,11 +1,13 @@
 package financial_management.service.product.gold;
 
 import financial_management.bl.order.OrderService;
+import financial_management.bl.product.FundService;
 import financial_management.bl.product.GoldService;
 import financial_management.data.product.GoldMapper;
 import financial_management.entity.GoldHistoryConfigPO;
 import financial_management.entity.MyGoldPO;
 import financial_management.service.order.impl.OrderServiceImpl;
+import financial_management.service.product.FundServiceImpl;
 import financial_management.service.property.income.IncomeServiceForBl;
 import financial_management.service.user.UserServiceForBl;
 import financial_management.util.PyInvoke.PyFunc;
@@ -43,6 +45,9 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
 
     @Autowired
     private UserServiceForBl userServiceForBl;
+
+    @Autowired
+    private FundService fundService;
 
     @Override
     public BasicResponse buyGold(Double money, Long userId){
@@ -113,6 +118,8 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
             personalTradeVO.setTotal((float) nowSum);
             personalTradeVO.setUserID(userId);
             orderService.addPersonalTradeRecord(personalTradeVO, true);
+
+            fundService.DecreaseCapital(userId,money);
 
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }catch (Exception e) {
@@ -196,6 +203,8 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
             personalTradeVO.setTotal((float) nowSum);
             personalTradeVO.setUserID(userId);
             orderService.addPersonalTradeRecord(personalTradeVO, true);
+
+            fundService.IncreaseCapital(userId,money);
 
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }catch (Exception e) {

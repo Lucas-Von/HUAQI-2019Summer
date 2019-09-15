@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="financial_management.data.product.InsuranceMapper">
-    <insert id="insertInsuranceProduct" parameterType="financial_management.entity.insurance.SelfInsuranceProductPO">
+    <insert id="insertInsuranceProduct" parameterType="financial_management.entity.insurance.SelfInsuranceProductPO" useGeneratedKeys="true">
         insert into my_ins (user_id, beneficiary, kind, maturity, amount, premiun, name) values (#{userId},#{beneficiary},#{kind},#{maturity},#{amount},#{premiun},#{name})
     </insert>
 

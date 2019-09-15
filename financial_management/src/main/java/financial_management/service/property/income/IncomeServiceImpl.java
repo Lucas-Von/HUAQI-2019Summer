@@ -179,7 +179,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
         try {
             RecentInvPO recentInvPO = incomeMapper.getNewlyIncome(userId);
             double lastDayInvAsset = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayQdii() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
-            double todayInject = orderService.getInvestBy(userId, "FORSTOCK", new Date()) + orderService.getInvestBy(userId, "DOMSTOCK", new Date()) + orderService.getInvestBy(userId, "GOLD", new Date()) + orderService.getInvestBy(userId, "BOND", new Date());
+            double todayInject = orderService.getInvestBy(userId, "DOMSTOCK", new Date()) + orderService.getInvestBy(userId, "FORSTOCK", new Date()) + orderService.getInvestBy(userId, "GOLD", new Date()) + orderService.getInvestBy(userId, "BOND", new Date());
             double investAssetBothDays = lastDayInvAsset + todayInject;
             double newlyStocksIncome = recentInvPO.getCurrentStocks() - recentInvPO.getYesterdayStocks();
             double newlyQdiiIncome = recentInvPO.getCurrentQdii() - recentInvPO.getYesterdayQdii();
@@ -291,9 +291,9 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
     public double getTotalInvestRate(Long userId) {
         try {
             TotalIncomePO totalIncomePO = incomeMapper.getTotalInvestRate(userId);
-            double sumMaxInvest = orderService.getMaxInvestBy(userId, "FORSTOCK") + orderService.getMaxInvestBy(userId, "DOMSTOCK") + orderService.getMaxInvestBy(userId, "GOLD") + orderService.getMaxInvestBy(userId, "BOND");
-            double totalStocksIncome = totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "FORSTOCK", null);
-            double totalQdiiIncome = totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "DOMSTOCK", null);
+            double sumMaxInvest = orderService.getMaxInvestBy(userId, "DOMSTOCK") + orderService.getMaxInvestBy(userId, "FORSTOCK") + orderService.getMaxInvestBy(userId, "GOLD") + orderService.getMaxInvestBy(userId, "BOND");
+            double totalStocksIncome = totalIncomePO.getTotalStocks() - orderService.getInvestBy(userId, "DOMSTOCK", null);
+            double totalQdiiIncome = totalIncomePO.getTotalQdii() - orderService.getInvestBy(userId, "FORSTOCK", null);
             double totalGoldIncome = totalIncomePO.getTotalGold() - orderService.getInvestBy(userId, "GOLD", null);
             double totalBondIncome = totalIncomePO.getTotalBond() - orderService.getInvestBy(userId, "BOND", null);
             return (totalStocksIncome + totalQdiiIncome + totalGoldIncome + totalBondIncome) / sumMaxInvest;

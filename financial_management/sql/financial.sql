@@ -122,7 +122,7 @@ CREATE TABLE `bond_foundation` (
 
 LOCK TABLES `bond_foundation` WRITE;
 /*!40000 ALTER TABLE `bond_foundation` DISABLE KEYS */;
-INSERT INTO `bond_foundation` VALUES (1,'national',1000,200000,200,0.2,'2019-09-01 08:55:49',1000),(2,'corporate',1000,100000,100,0.2,'2019-09-01 08:55:49',1000);
+INSERT INTO `bond_foundation` VALUES (1,'national',1000,200000,200,0.2,'2019-09-01 08:55:49',1000),(2,'corporate',1000,100000,200,0.2,'2019-09-01 08:55:49',1000);
 /*!40000 ALTER TABLE `bond_foundation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1362,13 +1362,15 @@ DROP TABLE IF EXISTS `my_ins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_ins` (
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
   `beneficiary` varchar(255) DEFAULT NULL,
   `kind` varchar(255) DEFAULT NULL,
   `maturity` date DEFAULT NULL,
   `amount` float DEFAULT NULL,
   `premiun` float DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL
+  `name` varchar(255) DEFAULT NULL,
+  primary key (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

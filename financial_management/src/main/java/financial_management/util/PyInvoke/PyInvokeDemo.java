@@ -7,29 +7,17 @@ import financial_management.entity.insurance.RecommandInsuranceResponse;
 import financial_management.entity.insurance.RecommandWrapperResponse;
 import financial_management.util.PyInvoke.PyParam.PyParam;
 import financial_management.util.PyInvoke.PyParam.questionnaire.AssetConfigParam;
-import financial_management.util.PyInvoke.PyParam.questionnaire.VipConfigParam;
 import financial_management.util.PyInvoke.PyResponse.questionnaire.AssetConfigResponse;
 import financial_management.util.PyInvoke.PyParam.PyParamDemo;
 import financial_management.util.PyInvoke.PyParam.bond.*;
 import financial_management.util.PyInvoke.PyParam.stock.QDII_UniversalParam;
-import financial_management.util.PyInvoke.PyResponse.questionnaire.VipConfigResponse;
 import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
-import financial_management.vo.BasicResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PyInvokeDemo {
     public static void main(String[] args) {
-
-        PyParam pyParam = new VipConfigParam(500, 500, 500, 500, 500, 500, 5000);
-        List<Object> invokeResult = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_VIP_LEVEL, pyParam, VipConfigResponse.class);
-        List<VipConfigResponse> list = new ArrayList<>();
-        for (Object object : Objects.requireNonNull(invokeResult)) {
-//            list.add((VipConfigResponse) object);
-        }
-        System.out.println(list.size());
 /**
         List<Float> liest = new ArrayList<>();
         liest.add(0.03F);

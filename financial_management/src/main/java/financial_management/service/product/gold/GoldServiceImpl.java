@@ -114,9 +114,6 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
             personalTradeVO.setUserID(userId);
             orderService.addPersonalTradeRecord(personalTradeVO, true);
 
-            double profit = incomeServiceForBl.getTotalGoldIncome(userId);
-            goldMapper.updateGoldProfit(userId,profit);
-
             return new BasicResponse(ResponseStatus.STATUS_SUCCESS);
         }catch (Exception e) {
             e.printStackTrace();
@@ -135,8 +132,8 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
                 MyGoldPO myGoldPO = myGoldPOS.get(0);
                 account_already_deployed += myGoldPO.getAmount();
                 diff_already_deployed += myGoldPO.getDiff();
-                if (money <= myGoldPO.getSum()) {
-                    money_expected_deployed = myGoldPO.getSum() - money_expected_deployed;
+                if (money <= myGoldPO.getSum() + myGoldPO.getDiff()) {
+                    money_expected_deployed = myGoldPO.getSum() + myGoldPO.getDiff() - money_expected_deployed;
                 } else {
                     return new BasicResponse(ResponseStatus.STATUS_GOLD_NOT_ENOUGH);
                 }
@@ -259,11 +256,15 @@ public class GoldServiceImpl implements GoldService, GoldServiceForBl {
 
     @Override
     public void updateProfit(){
-        List<Long> userIds = userServiceForBl.getUserIdList();
-        for(int i=0;i<userIds.size();i++) {
-            Long userId = userIds.get(i);
-            double profit = incomeServiceForBl.getTotalGoldIncome(userId);
-            goldMapper.updateGoldProfit(userId, profit);
+        try {
+            List<Long> userIds = userServiceForBl.getUserIdList();
+            for (int i = 0; i < userIds.size(); i++) {
+                Long userId = userIds.get(i);
+                double profit = incomeServiceForBl.getTotalGoldIncome(userId);
+                goldMapper.updateGoldProfit(userId, profit);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

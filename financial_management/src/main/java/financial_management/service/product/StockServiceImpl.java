@@ -12,9 +12,11 @@ import financial_management.service.property.questionnaire.QuestionnaireServiceF
 import financial_management.util.ArithmeticUtil;
 import financial_management.util.PyInvoke.PyFunc;
 import financial_management.util.PyInvoke.PyInvoke;
+import financial_management.util.PyInvoke.PyParam.SingletonStringParam;
 import financial_management.util.PyInvoke.PyParam.stock.QDII_CustomizeTrade;
 import financial_management.util.PyInvoke.PyParam.stock.QDII_UniversalParam;
 import financial_management.util.PyInvoke.PyParam.stock.StockParam;
+import financial_management.util.PyInvoke.PyResponse.SingletonFloat;
 import financial_management.util.PyInvoke.PyResponse.stock.QDIIAdjustment;
 import financial_management.util.PyInvoke.PyResponse.stock.StockAdjustment;
 import financial_management.vo.BasicResponse;
@@ -549,8 +551,50 @@ public class StockServiceImpl implements StockService {
         return personalTradeVOS;
     }
 
+    @Override
+    public void marketDailyUpdate() {
+        final PyFunc qdiiFunc = PyFunc.QDII_DAILY_UPDATE;
+        final PyFunc stockFunc = PyFunc.STOCK_DAILY_UPDATE;
+
+        long startStock = System.currentTimeMillis();
+
+        List<DomStockPO> domStockPOS = stockMapper.selectAllDomStock();
+        for (DomStockPO domStockPO : domStockPOS) {
+            List<Object> result = PyInvoke.invoke(stockFunc, new SingletonStringParam(domStockPO.getCode()), SingletonFloat.class, true);
+            if (result != null && !result.isEmpty()) {
+                float price = ((SingletonFloat) result.get(0)).getaFloat();
+                domStockPO.setLatestPrice(price);
+                assert stockMapper.updateStock(domStockPO) == 1;
+                //TODO 更新持有用户收益
+            } else {
+                logger.warn("更新股票数据时" + stockFunc + "返回空的结果，股票代码：" + domStockPO.getCode());
+            }
+        }
+
+        long afterStock = System.currentTimeMillis();
+        logger.info("更新" + domStockPOS.size() + "条股票记录，用时" + (afterStock - startStock) + "毫秒");
+
+        long startQDII = System.currentTimeMillis();
+
+        List<ForStockPO> forStockPOS = stockMapper.selectAllQDII();
+        for (ForStockPO forStockPO : forStockPOS) {
+            List<Object> result = PyInvoke.invoke(qdiiFunc, new SingletonStringParam(forStockPO.getCode()), SingletonFloat.class, false);
+            if (result != null && !result.isEmpty()) {
+                float price = ((SingletonFloat) result.get(0)).getaFloat();
+                forStockPO.setLatestPrice(price);
+                assert stockMapper.updateQDII(forStockPO) == 1;
+                //TODO 同上
+            } else {
+                logger.warn("更新股指数据时" + stockFunc + "返回空的结果，股指代码：" + forStockPO.getCode());
+            }
+        }
+
+        long afterQDII = System.currentTimeMillis();
+        logger.info("更新" + forStockPOS.size() + "条股指记录，用时" + (afterQDII - startQDII) + "毫秒");
+    }
+
+
     private float computeHoldPrice(float newTotal, float newAmount) {
-        //舍入模式？
         return ArithmeticUtil.divide(newTotal, newAmount);
     }
 

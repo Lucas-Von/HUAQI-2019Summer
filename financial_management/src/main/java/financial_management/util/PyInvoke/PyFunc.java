@@ -9,14 +9,18 @@ public enum PyFunc {
 //      每周调仓
 //        STOCK_ADJUST_WEEKLY("Stock_Adjust_Weekly.py"),
 //        股票全都用一个函数了
-    STOCK("uqer_spider.py"),
+        STOCK("uqer_spider.py"),
+    //股票和黄金日更新
+        STOCK_DAILY_UPDATE("Stock_Daily_Update.py"),
     //    股指
 //      首次购买/持有额调整
-    QDII_FIRST_PURCHASE("QDII_First_Purchase.py"),
+        QDII_FIRST_PURCHASE("QDII_First_Purchase.py"),
     //      每月调仓
-    QDII_ADJUST_MONTHLY("QDII_Adjust_Monthly.py"),
+        QDII_ADJUST_MONTHLY("QDII_Adjust_Monthly.py"),
     //用户手动买卖
-    QDII_CUSTOMIZE("QDII_User_Purchase.py"),
+        QDII_CUSTOMIZE("QDII_User_Purchase.py"),
+    //股指日更新
+        QDII_DAILY_UPDATE("QDII_Daily_Update.py"),
     //    债券
 //      首次购买
 
@@ -29,10 +33,10 @@ public enum PyFunc {
         BOND_INDEX_MAINTENANCE("Index_Maintenance.py"),
 //    黄金
 //      持有额调整
-    GOLD_INVEST("Invest_Gold.py"),
+        GOLD_INVEST("Invest_Gold.py"),
     //    现金
 //      每日更新
-    CASH_DAILY_ADJUSTMENT("Info.py"),
+        CASH_DAILY_ADJUSTMENT("Info.py"),
     //    保险
 //      推荐
         INSURANCE_RECOMMEND("insurance_recommand.py"),
@@ -43,7 +47,9 @@ public enum PyFunc {
 //    资产配置
         QUESTIONNAIRE_ASSET_ALLOCATION("asset/asset.py"),
 //    VIP等级计算
-        QUESTIONNAIRE_VIP_LEVEL("lib/my_score_card.py");
+        QUESTIONNAIRE_VIP_LEVEL("my_score_card.py"),
+    //客服问答
+        QA("QA.py");
 
     public String path;
 

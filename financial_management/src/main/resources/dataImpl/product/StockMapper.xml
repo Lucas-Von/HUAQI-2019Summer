@@ -64,6 +64,18 @@
           and `code` = #{code,jdbcType=VARCHAR};
     </update>
 
+    <update id="updateStock" parameterType="financial_management.entity.stock.DomStockPO">
+        update dom_stock
+        set latest_price = #{latestPrice}
+        where id = #{id};
+    </update>
+
+    <update id="updateQDII" parameterType="financial_management.entity.stock.ForStockPO">
+        update for_stock
+        set latest_price = #{latestPrice}
+        where id = #{id};
+    </update>
+
     <select id="selectDomStockByCode" resultMap="DomProduct">
         select *
         from dom_stock

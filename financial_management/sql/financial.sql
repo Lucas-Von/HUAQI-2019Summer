@@ -1362,13 +1362,15 @@ DROP TABLE IF EXISTS `my_ins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `my_ins` (
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
   `beneficiary` varchar(255) DEFAULT NULL,
   `kind` varchar(255) DEFAULT NULL,
   `maturity` date DEFAULT NULL,
   `amount` float DEFAULT NULL,
   `premiun` float DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL
+  `name` varchar(255) DEFAULT NULL,
+  primary key (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

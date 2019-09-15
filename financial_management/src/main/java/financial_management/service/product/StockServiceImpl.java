@@ -458,6 +458,10 @@ public class StockServiceImpl implements StockService {
 
                         float newTotal = myStockPO.getHoldTotal() + total;
                         float newAmount = myStockPO.getHoldAmount() + amount;
+                        if (newAmount <= 0) {
+                            int delete = stockMapper.deleteMyStock(po);
+                            assert delete == 1;
+                        }
                         myStockPO.setHoldAmount(myStockPO.getHoldAmount() + amount);
                         myStockPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
                         myStockPO.setHoldTotal(myStockPO.getHoldTotal() + total);
@@ -491,6 +495,10 @@ public class StockServiceImpl implements StockService {
 
                         float newTotal = myStockPO.getHoldTotal() + total;
                         float newAmount = myStockPO.getHoldNum() + amount;
+                        if (newAmount <= 0) {
+                            int delete = stockMapper.deleteMyQDII(po);
+                            assert delete == 1;
+                        }
                         myStockPO.setHoldNum(myStockPO.getHoldNum() + amount);
                         myStockPO.setHoldPrice(computeHoldPrice(newTotal, newAmount));
                         myStockPO.setHoldTotal(myStockPO.getHoldTotal() + total);
@@ -597,9 +605,14 @@ public class StockServiceImpl implements StockService {
             List<Object> result = PyInvoke.invoke(stockFunc, new SingletonStringParam(domStockPO.getCode()), SingletonFloat.class, true);
             if (result != null && !result.isEmpty()) {
                 float price = ((SingletonFloat) result.get(0)).getaFloat();
+                float oldPrice = domStockPO.getLatestPrice();
                 domStockPO.setLatestPrice(price);
                 assert stockMapper.updateStock(domStockPO) == 1;
                 //TODO 更新持有用户收益
+                for (MyStockPO myStockPO : stockMapper.selectMyStock(domStockPO.getCode())) {
+                    myStockPO.setProfit(myStockPO.getProfit() + myStockPO.getHoldAmount() * (price - oldPrice));
+                    assert stockMapper.updateMyStock(myStockPO) == 1;
+                }
             } else {
                 logger.warn("更新股票数据时" + stockFunc + "返回空的结果，股票代码：" + domStockPO.getCode());
             }
@@ -614,9 +627,15 @@ public class StockServiceImpl implements StockService {
         for (ForStockPO forStockPO : forStockPOS) {
             List<Object> result = PyInvoke.invoke(qdiiFunc, new SingletonStringParam(forStockPO.getCode()), SingletonFloat.class, false);
             if (result != null && !result.isEmpty()) {
+                float oldPrice = forStockPO.getLatestPrice();
                 float price = ((SingletonFloat) result.get(0)).getaFloat();
                 forStockPO.setLatestPrice(price);
                 assert stockMapper.updateQDII(forStockPO) == 1;
+                for (MyQDIIPO myStockPO : stockMapper.selectMyQDII(forStockPO.getCode())) {
+                    float share = ArithmeticUtil.divide(myStockPO.getHoldTotal(), myStockPO.getHoldPrice());
+                    myStockPO.setProfit(myStockPO.getProfit() + share * (price - oldPrice));
+                    assert stockMapper.updateMyQDII(myStockPO) == 1;
+                }
                 //TODO 同上
             } else {
                 logger.warn("更新股指数据时" + stockFunc + "返回空的结果，股指代码：" + forStockPO.getCode());

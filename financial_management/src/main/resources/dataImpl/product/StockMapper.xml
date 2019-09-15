@@ -100,6 +100,37 @@
         where id = #{Id}
     </select>
 
+    <delete id="deleteMyStock" parameterType="financial_management.entity.stock.MyStockPO">
+        delete
+        from my_stock
+        where user_id = #{userId}
+          and code = #{code}
+    </delete>
+
+    <delete id="deleteMyQDII" parameterType="financial_management.entity.stock.MyQDIIPO">
+        delete
+        from my_qdii
+        where user_id = #{userId}
+          and code = #{code}
+    </delete>
+
+    <select id="selectMyStock" resultMap="MyStockProduct" parameterType="java.lang.String">
+        select *
+        from my_stock
+        <if test="code != null">
+            where code = #{code}
+        </if>
+    </select>
+
+
+    <select id="selectMyQDII" resultMap="qdii" parameterType="java.lang.String">
+        select *
+        from my_qdii
+        <if test="code != null">
+            where code = #{code}
+        </if>
+    </select>
+
     <resultMap id="MyStockProduct" type="financial_management.entity.stock.MyStockPO">
         <result property="code" column="code"/>
         <result property="userId" column="user_id"/>

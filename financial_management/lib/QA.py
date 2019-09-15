@@ -6,8 +6,9 @@
 import json
 import sys
 import jieba
+import os
 
-path = '客服问答.txt'
+path = os.path.dirname(__file__) + '/客服问答.txt'
 textlst = open(path, 'r', encoding='utf8').read().split('\n')
 
 

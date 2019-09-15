@@ -37,4 +37,4 @@ python:
   quote: "\""
 
 exponent:
-  update: "D://学习资料/大二下/花旗杯/py/"
+  update: "~/.jenkins/workspace/HUAQI_2019_backend/financial_management/lib/"

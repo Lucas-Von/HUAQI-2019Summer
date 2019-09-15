@@ -45,4 +45,12 @@ public interface StockMapper {
     ForStockPO selectQDIIById(Long id);
 
     DomStockPO selectDomStockById(Long id);
+
+    Integer deleteMyStock(MyStockPO po);
+
+    Integer deleteMyQDII(MyQDIIPO po);
+
+    List<MyStockPO> selectMyStock(String code);
+
+    List<MyQDIIPO> selectMyQDII(String code);
 }

@@ -554,13 +554,13 @@ public class StockServiceImpl implements StockService {
     @Override
     public void marketDailyUpdate() {
         final PyFunc qdiiFunc = PyFunc.QDII_DAILY_UPDATE;
-        final PyFunc stockFunc = PyFunc.STOCK_GOLD_UPDATE;
+        final PyFunc stockFunc = PyFunc.STOCK_DAILY_UPDATE;
 
         long startStock = System.currentTimeMillis();
 
         List<DomStockPO> domStockPOS = stockMapper.selectAllDomStock();
         for (DomStockPO domStockPO : domStockPOS) {
-            List<Object> result = PyInvoke.invoke(stockFunc, new SingletonStringParam(domStockPO.getCode()), SingletonFloat.class, false);
+            List<Object> result = PyInvoke.invoke(stockFunc, new SingletonStringParam(domStockPO.getCode()), SingletonFloat.class, true);
             if (result != null && !result.isEmpty()) {
                 float price = ((SingletonFloat) result.get(0)).getaFloat();
                 domStockPO.setLatestPrice(price);

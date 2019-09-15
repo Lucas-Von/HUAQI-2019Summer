@@ -11,7 +11,7 @@ public enum PyFunc {
 //        股票全都用一个函数了
         STOCK("uqer_spider.py"),
     //股票和黄金日更新
-        STOCK_GOLD_UPDATE("Stock_Gold_Daily_Update.py"),
+        STOCK_DAILY_UPDATE("Stock_Daily_Update.py"),
     //    股指
 //      首次购买/持有额调整
         QDII_FIRST_PURCHASE("QDII_First_Purchase.py"),

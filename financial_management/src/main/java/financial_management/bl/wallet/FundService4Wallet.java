@@ -16,5 +16,7 @@ public interface FundService4Wallet {
 
     public void setPayPassword(Long userId, String password);
 
-    public boolean checkPayPassword(Long userId,String paypassword);
+    public boolean checkPayPassword(Long userId, String paypassword);
+
+    boolean generateFund(Long userId);
 }

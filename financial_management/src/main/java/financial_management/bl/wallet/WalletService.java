@@ -1,5 +1,6 @@
 package financial_management.bl.wallet;
 
+import financial_management.vo.BasicResponse;
 import financial_management.vo.wallet.BalanceVO;
 
 /**
@@ -25,7 +26,7 @@ public interface WalletService {
      * @Param [cost, password]
      * @return void
      **/
-    public void payByCash(Long userId,Double cost,String password);
+    public BasicResponse payByCash(Long userId, Double cost, String password);
 
     /**
      * @Author jyh
@@ -34,7 +35,7 @@ public interface WalletService {
      * @Param [cost, cardId]
      * @return void
      **/
-    public void withdraw(Long userId,Double cost,String cardId);
+    public BasicResponse withdraw(Long userId,Double cost,String cardId);
 
     /**
      * @Author jyh
@@ -45,7 +46,7 @@ public interface WalletService {
      **/
     public boolean binding(Long userId,String cardId,String password);
 
-    public BalanceVO checkBalance(Long userId);
+    public BasicResponse checkBalance(Long userId);
 
     public void payByThird(Long cost,String password,Long userId,String cardId);
 }

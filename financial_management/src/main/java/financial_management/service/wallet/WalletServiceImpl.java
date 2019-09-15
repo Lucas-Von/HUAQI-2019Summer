@@ -4,6 +4,8 @@ import financial_management.bl.wallet.FundService4Wallet;
 import financial_management.bl.wallet.WalletService;
 import financial_management.data.wallet.WalletMapper;
 import financial_management.entity.CardPO;
+import financial_management.vo.BasicResponse;
+import financial_management.vo.ResponseStatus;
 import financial_management.vo.wallet.BalanceVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,49 +32,60 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public void payByCash(Long userId,Double cost, String password) {
-        wallet.DecreaseCapital(userId,cost);
+    public BasicResponse payByCash(Long userId, Double cost, String password) {
+        if(wallet.checkBalance(userId)>=cost) {
+            wallet.DecreaseCapital(userId, cost);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_BALANCE_LEAK,null);
 
     }
 
     @Override
-    public void withdraw(Long userId,Double cost, String cardId) {
-        //第三方接口
-        wallet.DecreaseCapital(userId,cost);
+    public BasicResponse withdraw(Long userId,Double cost, String cardId) {
+        if(wallet.checkBalance(userId)>=cost) {
+            wallet.DecreaseCapital(userId, cost);
+            return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,null);
+        }
+        return new BasicResponse<>(ResponseStatus.STATUS_BALANCE_LEAK,null);
     }
 
     @Override
     public boolean binding(Long userId, String cardId, String password) {
         //防止Null
-        Optional<Integer> bindNum = Optional.ofNullable(mapper.exist(userId));
-        Integer num = bindNum.orElse(0);
-        if (num == 0){
-            return true;
-        }
-        else{
-            CardPO po = new CardPO();
-            po.setCardnum(cardId);
-            po.setUserId(userId);
+        CardPO po = new CardPO();
+        po.setCardnum(cardId);
+        po.setUserId(userId);
 
-            wallet.setPayPassword(userId,password);
-            mapper.insertCard(po);
-            return false;
-        }
+        wallet.setPayPassword(userId,password);
+        mapper.insertCard(po);
+        return true;
     }
 
     @Override
-    public BalanceVO checkBalance(Long userId) {
+    public BasicResponse checkBalance(Long userId) {
         Double balance = wallet.checkBalance(userId);
         BalanceVO vo = new BalanceVO();
-        Optional<String> cardId = Optional.ofNullable(mapper.selectCardId(userId));
-        vo.setCardid(cardId.orElse(""));
+        try {
+            Optional<String> cardId = Optional.ofNullable(mapper.selectCardId(userId));
+            vo.setCardid(cardId.orElse(""));
+        }catch (Exception e ){
+            vo.setCardid("");
+        }
         vo.setBalance(new Double(balance).longValue());
-        return vo;
+
+        return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS,vo);
     }
 
     @Override
     public void payByThird(Long cost, String password, Long userId, String cardId) {
         //校验密码，其他无
 
+    }
+
+    public void checkAccount(Long userId){
+        if(mapper.exist(userId)==0){
+            wallet.generateFund(userId);
+        }
     }
 }

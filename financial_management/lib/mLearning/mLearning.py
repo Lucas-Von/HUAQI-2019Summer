@@ -3,6 +3,8 @@ import sys
 import json
 import warnings
 import joblib
+import os
+
 
 warnings.filterwarnings('ignore')
 #样例：
@@ -16,7 +18,7 @@ def outputPrefer(parameter):
     parameter.append(parameter[0]/(parameter[8]+0.0001)*1000)
     parameter.append(parameter[1]/(parameter[15]+0.0001))
 
-    clf = joblib.load('C:\\Users\\S.W.R\\Desktop\\mLearning\\g_model.pkl')
+    clf = joblib.load(os.path.dirname(__file__) + '/g_model.pkl')
     p=pd.DataFrame([parameter])
     #print(p.as_matrix())
     y_pred = clf.predict_proba(p.as_matrix())

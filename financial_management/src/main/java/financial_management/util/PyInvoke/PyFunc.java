@@ -41,11 +41,11 @@ public enum PyFunc {
 //      推荐
         INSURANCE_RECOMMEND("insurance_recommand.py"),
 //    机器学习
-        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning/mLearning.py"),
+        QUESTIONNAIRE_INVEST_PREFERENCE("mLearning\\mLearning.py"),
 //    财务脆弱性
-        QUESTIONNAIRE_VULNERABILITY("vulnerability/vulnerability.py"),
+        QUESTIONNAIRE_VULNERABILITY("vulnerability\\vulnerability.py"),
 //    资产配置
-        QUESTIONNAIRE_ASSET_ALLOCATION("asset/asset.py"),
+        QUESTIONNAIRE_ASSET_ALLOCATION("asset\\asset.py"),
 //    VIP等级计算
         QUESTIONNAIRE_VIP_LEVEL("my_score_card.py"),
     //客服问答

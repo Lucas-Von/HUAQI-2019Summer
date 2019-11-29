@@ -46,15 +46,15 @@ public class PyInvoke {
 //        cmd.append(path + " ");
         String rawString = JSON.toJSONString(param);
 //        处理双引号转义
-        StringBuffer stringBuffer = new StringBuffer(pyInvokeProperties.getSurrounding());
+        StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < rawString.length(); i++) {
             if (rawString.charAt(i) == '\"') {
-                stringBuffer.append(pyInvokeProperties.getQuote());
+                stringBuffer.append("\"\"\"");
             } else {
                 stringBuffer.append(rawString.charAt(i));
             }
         }
-        stringBuffer.append(pyInvokeProperties.getSurrounding());
+        // stringBuffer.append(pyInvokeProperties.getSurrounding());
         cmd.append(stringBuffer.toString());
         if (log) {
             System.out.println(cmd.toString());

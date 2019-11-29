@@ -139,6 +139,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             questionnaireConfigPO.setInvest_prefer(mLearningConfigResponse.getPreferLabel());
 
             String[] childrenBornYears = vipQuestionnaireParam.getChildBornYear().split("&");
+            childrenBornYears = replaceNull(childrenBornYears);
             PyParam pyParam2 = new VulnerabilityConfigParam(vipQuestionnaireParam.getWifeInbornYear(), vipQuestionnaireParam.getHusInbornYear(), vipQuestionnaireParam.getChildNum(), vipQuestionnaireParam.getOldNum(), vipQuestionnaireParam.getHusIncome(), vipQuestionnaireParam.getWifeIncome(), vipQuestionnaireParam.getCarValue(), vipQuestionnaireParam.getLifeCost(), vipQuestionnaireParam.getAsset(), vipQuestionnaireParam.getAge(), vipQuestionnaireParam.getMarriage(), mLearningConfigResponse.getPreferLabel(), Arrays.asList(childrenBornYears).stream().map(Integer::parseInt).collect(Collectors.toList()));
             List<Object> invokeResult2 = PyInvoke.invoke(PyFunc.QUESTIONNAIRE_VULNERABILITY, pyParam2, VulnerabilityConfigResponse.class);
             List<VulnerabilityConfigResponse> list2 = new ArrayList<>();
@@ -547,6 +548,23 @@ public class QuestionnaireServiceImpl implements QuestionnaireService, Questionn
             e.printStackTrace();
             return 0;
         }
+    }
+
+    private String[] replaceNull(String[] str){
+        //用StringBuffer来存放数组中的非空元素，用“;”分隔
+        StringBuffer sb = new StringBuffer();
+        for(int i=0; i<str.length; i++) {
+            if("".equals(str[i])) {
+                sb.append(0);
+            }
+            sb.append(str[i]);
+            if(i != str.length - 1) {
+                sb.append(";");
+            }
+        }
+        //用String的split方法分割，得到数组
+        str = sb.toString().split(";");
+        return str;
     }
 
 }

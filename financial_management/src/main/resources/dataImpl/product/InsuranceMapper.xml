@@ -14,7 +14,7 @@
     </select>
 
     <insert id="insertInsuranceRecommand" parameterType="financial_management.entity.insurance.InsuranceRecommandPO">
-        insert into insurance (user_id, person_role, kind, amount, permiun) values (#{userId},#{role},#{kind},#{insurance_amount},#{insurance_premiun})
+        insert into insurance (user_id, person_role, kind, amount, premiun) values (#{userId},#{role},#{kind},#{insurance_amount},#{insurance_premiun})
     </insert>
 
     <delete id="deleteInsuranceRecommnad">

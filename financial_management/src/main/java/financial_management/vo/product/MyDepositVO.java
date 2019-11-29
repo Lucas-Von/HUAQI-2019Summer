@@ -14,7 +14,7 @@ public class MyDepositVO {
     private String type;
     private Double amount;
     private Double rate;
-    private Date endtime;
+    private String endtime;
     private Double proportion;
 
     public Long getId() {
@@ -57,11 +57,11 @@ public class MyDepositVO {
         this.rate = rate;
     }
 
-    public Date getEndtime() {
+    public String getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(Date endtime) {
+    public void setEndtime(String endtime) {
         this.endtime = endtime;
     }
 
@@ -81,7 +81,7 @@ public class MyDepositVO {
                        String type,
                        Double amount,
                        Double rate,
-                       Date endtime,
+                       String endtime,
                        Double proportion) {
         this.id = id;
         this.name = name;

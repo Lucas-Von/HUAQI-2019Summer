@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: financial
 -- ------------------------------------------------------
--- Server version	5.7.25-log
+-- Server version	5.7.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -139,36 +139,6 @@ CREATE TABLE `bond_rate_log` (
   `net_worth` double DEFAULT NULL,
   `time` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",100,"2019-09-01");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",130,"2019-09-02");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-03");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-04");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",120,"2019-09-05");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",130,"2019-09-06");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-07");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-08");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",160,"2019-09-09");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",150,"2019-09-10");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",170,"2019-09-11");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",190,"2019-09-12");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",140,"2019-09-13");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (1,"national",180,"2019-09-14");
-
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",100,"2019-09-01");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",130,"2019-09-02");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-03");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-04");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",120,"2019-09-05");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",130,"2019-09-06");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-07");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-08");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",160,"2019-09-09");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",150,"2019-09-10");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",170,"2019-09-11");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",190,"2019-09-12");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",140,"2019-09-13");
-insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"corporate",180,"2019-09-14");
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +147,7 @@ insert into `bond_rate_log` (fund_id, fund_name, net_worth, `time`)  values (2,"
 
 LOCK TABLES `bond_rate_log` WRITE;
 /*!40000 ALTER TABLE `bond_rate_log` DISABLE KEYS */;
-
+INSERT INTO `bond_rate_log` VALUES (1,'national',100,'2019-09-01'),(1,'national',130,'2019-09-02'),(1,'national',140,'2019-09-03'),(1,'national',140,'2019-09-04'),(1,'national',120,'2019-09-05'),(1,'national',130,'2019-09-06'),(1,'national',140,'2019-09-07'),(1,'national',140,'2019-09-08'),(1,'national',160,'2019-09-09'),(1,'national',150,'2019-09-10'),(1,'national',170,'2019-09-11'),(1,'national',190,'2019-09-12'),(1,'national',140,'2019-09-13'),(1,'national',180,'2019-09-14'),(2,'corporate',100,'2019-09-01'),(2,'corporate',130,'2019-09-02'),(2,'corporate',140,'2019-09-03'),(2,'corporate',140,'2019-09-04'),(2,'corporate',120,'2019-09-05'),(2,'corporate',130,'2019-09-06'),(2,'corporate',140,'2019-09-07'),(2,'corporate',140,'2019-09-08'),(2,'corporate',160,'2019-09-09'),(2,'corporate',150,'2019-09-10'),(2,'corporate',170,'2019-09-11'),(2,'corporate',190,'2019-09-12'),(2,'corporate',140,'2019-09-13'),(2,'corporate',180,'2019-09-14');
 /*!40000 ALTER TABLE `bond_rate_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +256,8 @@ DROP TABLE IF EXISTS `deposit`;
 CREATE TABLE `deposit` (
   `user_id` bigint(255) NOT NULL,
   `amount` float DEFAULT NULL,
-  `percentage` float DEFAULT NULL
+  `percentage` float DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -296,6 +267,7 @@ CREATE TABLE `deposit` (
 
 LOCK TABLES `deposit` WRITE;
 /*!40000 ALTER TABLE `deposit` DISABLE KEYS */;
+INSERT INTO `deposit` VALUES (9,80,0.03);
 /*!40000 ALTER TABLE `deposit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,7 +341,7 @@ CREATE TABLE `dom_stock` (
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2996 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -378,306 +350,7 @@ CREATE TABLE `dom_stock` (
 
 LOCK TABLES `dom_stock` WRITE;
 /*!40000 ALTER TABLE `dom_stock` DISABLE KEYS */;
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (1, '000001', '平安银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (2, '000002', '万科Ａ', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (3, '000063', '中兴通讯', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (4, '000069', '华侨城Ａ', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (5, '000100', 'TCL集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (6, '000157', '中联重科', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (7, '000166', '申万宏源', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (8, '000333', '美的集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (9, '000338', '潍柴动力', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (10, '000402', '金融街', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (11, '000408', '藏格控股', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (12, '000413', '东旭光电', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (13, '000415', '渤海租赁', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (14, '000423', '东阿阿胶', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (15, '000425', '徐工机械', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (16, '000538', '云南白药', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (17, '000553', '安道麦A', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (18, '000568', '泸州老窖', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (19, '000596', '古井贡酒', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (20, '000625', '长安汽车', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (21, '000627', '天茂集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (22, '000629', '攀钢钒钛', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (23, '000630', '铜陵有色', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (24, '000651', '格力电器', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (25, '000656', '金科股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (26, '000661', '长春高新', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (27, '000671', '阳光城', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (28, '000703', '恒逸石化', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (29, '000709', '河钢股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (30, '000725', '京东方A', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (31, '000728', '国元证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (32, '000768', '中航飞机', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (33, '000776', '广发证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (34, '000783', '长江证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (35, '000786', '北新建材', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (36, '000858', '五 粮 液', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (37, '000876', '新 希 望', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (38, '000895', '双汇发展', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (39, '000898', '鞍钢股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (40, '000938', '紫光股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (41, '000961', '中南建设', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (42, '000963', '华东医药', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (43, '001979', '招商蛇口', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (44, '002001', '新和成', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (45, '002007', '华兰生物', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (46, '002008', '大族激光', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (47, '002010', '传化智联', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (48, '002024', '苏宁易购', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (49, '002027', '分众传媒', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (50, '002032', '苏泊尔', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (51, '002044', '美年健康', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (52, '002050', '三花智控', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (53, '002065', '东华软件', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (54, '002081', '金螳螂', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (55, '002120', '韵达股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (56, '002142', '宁波银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (57, '002146', '荣盛发展', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (58, '002153', '石基信息', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (59, '002179', '中航光电', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (60, '002202', '金风科技', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (61, '002230', '科大讯飞', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (62, '002236', '大华股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (63, '002241', '歌尔股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (64, '002252', '上海莱士', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (65, '002271', '东方雨虹', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (66, '002294', '信立泰', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (67, '002304', '洋河股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (68, '002310', '东方园林', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (69, '002311', '海大集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (70, '002352', '顺丰控股', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (71, '002410', '广联达', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (72, '002411', '延安必康', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (73, '002415', '海康威视', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (74, '002422', '科伦药业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (75, '002456', '欧菲光', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (76, '002460', '赣锋锂业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (77, '002466', '天齐锂业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (78, '002468', '申通快递', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (79, '002475', '立讯精密', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (80, '002493', '荣盛石化', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (81, '002508', '老板电器', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (82, '002555', '三七互娱', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (83, '002558', '巨人网络', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (84, '002594', '比亚迪', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (85, '002601', '龙蟒佰利', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (86, '002602', '世纪华通', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (87, '002624', '完美世界', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (88, '002625', '光启技术', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (89, '002673', '西部证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (90, '002714', '牧原股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (91, '002736', '国信证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (92, '002739', '万达电影', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (93, '002773', '康弘药业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (94, '002925', '盈趣科技', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (95, '002938', '鹏鼎控股', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (96, '002939', '长城证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (97, '002945', '华林证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (98, '300003', '乐普医疗', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (99, '300015', '爱尔眼科', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (100, '300017', '网宿科技', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (101, '300024', '机器人', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (102, '300033', '同花顺', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (103, '300059', '东方财富', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (104, '300070', '碧水源', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (105, '300072', '三聚环保', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (106, '300122', '智飞生物', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (107, '300124', '汇川技术', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (108, '300136', '信维通信', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (109, '300142', '沃森生物', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (110, '300144', '宋城演艺', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (111, '300251', '光线传媒', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (112, '300296', '利亚德', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (113, '300408', '三环集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (114, '300413', '芒果超媒', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (115, '300433', '蓝思科技', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (116, '300498', '温氏股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (117, '600000', '浦发银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (118, '600004', '白云机场', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (119, '600009', '上海机场', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (120, '600010', '包钢股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (121, '600011', '华能国际', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (122, '600015', '华夏银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (123, '600016', '民生银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (124, '600018', '上港集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (125, '600019', '宝钢股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (126, '600023', '浙能电力', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (127, '600025', '华能水电', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (128, '600027', '华电国际', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (129, '600028', '中国石化', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (130, '600029', '南方航空', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (131, '600030', '中信证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (132, '600031', '三一重工', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (133, '600036', '招商银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (134, '600038', '中直股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (135, '600048', '保利地产', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (136, '600050', '中国联通', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (137, '600061', '国投资本', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (138, '600066', '宇通客车', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (139, '600068', '葛洲坝', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (140, '600085', '同仁堂', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (141, '600089', '特变电工', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (142, '600100', '同方股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (143, '600104', '上汽集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (144, '600109', '国金证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (145, '600111', '北方稀土', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (146, '600115', '东方航空', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (147, '600118', '中国卫星', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (148, '600153', '建发股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (149, '600170', '上海建工', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (150, '600176', '中国巨石', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (151, '600177', '雅戈尔', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (152, '600188', '兖州煤业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (153, '600196', '复星医药', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (154, '600208', '新湖中宝', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (155, '600219', '南山铝业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (156, '600221', '海航控股', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (157, '600233', '圆通速递', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (158, '600271', '航天信息', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (159, '600276', '恒瑞医药', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (160, '600297', '广汇汽车', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (161, '600299', '安迪苏', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (162, '600309', '万华化学', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (163, '600332', '白云山', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (164, '600339', '中油工程', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (165, '600340', '华夏幸福', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (166, '600346', '恒力石化', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (167, '600352', '浙江龙盛', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (168, '600362', '江西铜业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (169, '600369', '西南证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (170, '600372', '中航电子', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (171, '600383', '金地集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (172, '600390', '五矿资本', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (173, '600398', '海澜之家', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (174, '600406', '国电南瑞', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (175, '600415', '小商品城', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (176, '600436', '片仔癀', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (177, '600438', '通威股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (178, '600482', '中国动力', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (179, '600487', '亨通光电', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (180, '600489', '中金黄金', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (181, '600498', '烽火通信', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (182, '600516', '方大炭素', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (183, '600519', '贵州茅台', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (184, '600522', '中天科技', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (185, '600535', '天士力', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (186, '600547', '山东黄金', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (187, '600566', '济川药业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (188, '600570', '恒生电子', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (189, '600583', '海油工程', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (190, '600585', '海螺水泥', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (191, '600588', '用友网络', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (192, '600606', '绿地控股', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (193, '600637', '东方明珠', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (194, '600660', '福耀玻璃', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (195, '600663', '陆家嘴', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (196, '600674', '川投能源', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (197, '600688', '上海石化', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (198, '600690', '海尔智家', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (199, '600703', '三安光电', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (200, '600704', '物产中大', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (201, '600705', '中航资本', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (202, '600733', '北汽蓝谷', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (203, '600741', '华域汽车', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (204, '600760', '中航沈飞', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (205, '600795', '国电电力', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (206, '600809', '山西汾酒', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (207, '600816', '安信信托', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (208, '600837', '海通证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (209, '600867', '通化东宝', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (210, '600886', '国投电力', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (211, '600887', '伊利股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (212, '600893', '航发动力', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (213, '600900', '长江电力', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (214, '600919', '江苏银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (215, '600926', '杭州银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (216, '600958', '东方证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (217, '600977', '中国电影', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (218, '600998', '九州通', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (219, '600999', '招商证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (220, '601006', '大秦铁路', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (221, '601009', '南京银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (222, '601012', '隆基股份', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (223, '601018', '宁波港', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (224, '601021', '春秋航空', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (225, '601066', '中信建投', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (226, '601088', '中国神华', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (227, '601108', '财通证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (228, '601111', '中国国航', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (229, '601117', '中国化学', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (230, '601138', '工业富联', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (231, '601155', '新城控股', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (232, '601162', '天风证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (233, '601166', '兴业银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (234, '601169', '北京银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (235, '601186', '中国铁建', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (236, '601198', '东兴证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (237, '601211', '国泰君安', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (238, '601212', '白银有色', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (239, '601216', '君正集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (240, '601225', '陕西煤业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (241, '601228', '广州港', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (242, '601229', '上海银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (243, '601238', '广汽集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (244, '601288', '农业银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (245, '601298', '青岛港', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (246, '601318', '中国平安', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (247, '601319', '中国人保', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (248, '601328', '交通银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (249, '601336', '新华保险', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (250, '601360', '三六零', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (251, '601377', '兴业证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (252, '601390', '中国中铁', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (253, '601398', '工商银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (254, '601555', '东吴证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (255, '601577', '长沙银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (256, '601600', '中国铝业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (257, '601601', '中国太保', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (258, '601607', '上海医药', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (259, '601618', '中国中冶', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (260, '601628', '中国人寿', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (261, '601633', '长城汽车', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (262, '601668', '中国建筑', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (263, '601669', '中国电建', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (264, '601688', '华泰证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (265, '601727', '上海电气', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (266, '601766', '中国中车', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (267, '601788', '光大证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (268, '601800', '中国交建', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (269, '601808', '中海油服', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (270, '601818', '光大银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (271, '601828', '美凯龙', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (272, '601838', '成都银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (273, '601857', '中国石油', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (274, '601877', '正泰电器', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (275, '601878', '浙商证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (276, '601881', '中国银河', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (277, '601888', '中国国旅', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (278, '601898', '中煤能源', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (279, '601899', '紫金矿业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (280, '601901', '方正证券', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (281, '601919', '中远海控', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (282, '601933', '永辉超市', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (283, '601939', '建设银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (284, '601985', '中国核电', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (285, '601988', '中国银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (286, '601989', '中国重工', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (287, '601992', '金隅集团', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (288, '601997', '贵阳银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (289, '601998', '中信银行', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (290, '603019', '中科曙光', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (291, '603156', '养元饮品', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (292, '603160', '汇顶科技', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (293, '603259', '药明康德', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (294, '603260', '合盛硅业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (295, '603288', '海天味业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (296, '603799', '华友钴业', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (297, '603833', '欧派家居', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (298, '603858', '步长制药', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (299, '603986', '兆易创新', 0);
-INSERT INTO financial.dom_stock (id, code, name, latest_price) VALUES (300, '603993', '洛阳钼业', 0);
+INSERT INTO `dom_stock` VALUES (1,'000001','平安银行',0),(2,'000002','万科Ａ',0),(3,'000063','中兴通讯',0),(4,'000069','华侨城Ａ',0),(5,'000100','TCL集团',0),(6,'000157','中联重科',0),(7,'000166','申万宏源',0),(8,'000333','美的集团',0),(9,'000338','潍柴动力',0),(10,'000402','金融街',0),(11,'000408','藏格控股',0),(12,'000413','东旭光电',0),(13,'000415','渤海租赁',0),(14,'000423','东阿阿胶',0),(15,'000425','徐工机械',0),(16,'000538','云南白药',0),(17,'000553','安道麦A',0),(18,'000568','泸州老窖',0),(19,'000596','古井贡酒',0),(20,'000625','长安汽车',0),(21,'000627','天茂集团',0),(22,'000629','攀钢钒钛',0),(23,'000630','铜陵有色',0),(24,'000651','格力电器',0),(25,'000656','金科股份',0),(26,'000661','长春高新',0),(27,'000671','阳光城',0),(28,'000703','恒逸石化',0),(29,'000709','河钢股份',0),(30,'000725','京东方A',0),(31,'000728','国元证券',0),(32,'000768','中航飞机',0),(33,'000776','广发证券',0),(34,'000783','长江证券',0),(35,'000786','北新建材',0),(36,'000858','五 粮 液',0),(37,'000876','新 希 望',0),(38,'000895','双汇发展',0),(39,'000898','鞍钢股份',0),(40,'000938','紫光股份',0),(41,'000961','中南建设',0),(42,'000963','华东医药',0),(43,'001979','招商蛇口',0),(44,'002001','新和成',0),(45,'002007','华兰生物',0),(46,'002008','大族激光',0),(47,'002010','传化智联',0),(48,'002024','苏宁易购',0),(49,'002027','分众传媒',0),(50,'002032','苏泊尔',0),(51,'002044','美年健康',0),(52,'002050','三花智控',0),(53,'002065','东华软件',0),(54,'002081','金螳螂',0),(55,'002120','韵达股份',0),(56,'002142','宁波银行',0),(57,'002146','荣盛发展',0),(58,'002153','石基信息',0),(59,'002179','中航光电',0),(60,'002202','金风科技',0),(61,'002230','科大讯飞',0),(62,'002236','大华股份',0),(63,'002241','歌尔股份',0),(64,'002252','上海莱士',0),(65,'002271','东方雨虹',0),(66,'002294','信立泰',0),(67,'002304','洋河股份',0),(68,'002310','东方园林',0),(69,'002311','海大集团',0),(70,'002352','顺丰控股',0),(71,'002410','广联达',0),(72,'002411','延安必康',0),(73,'002415','海康威视',0),(74,'002422','科伦药业',0),(75,'002456','欧菲光',0),(76,'002460','赣锋锂业',0),(77,'002466','天齐锂业',0),(78,'002468','申通快递',0),(79,'002475','立讯精密',0),(80,'002493','荣盛石化',0),(81,'002508','老板电器',0),(82,'002555','三七互娱',0),(83,'002558','巨人网络',0),(84,'002594','比亚迪',0),(85,'002601','龙蟒佰利',0),(86,'002602','世纪华通',0),(87,'002624','完美世界',0),(88,'002625','光启技术',0),(89,'002673','西部证券',0),(90,'002714','牧原股份',0),(91,'002736','国信证券',0),(92,'002739','万达电影',0),(93,'002773','康弘药业',0),(94,'002925','盈趣科技',0),(95,'002938','鹏鼎控股',0),(96,'002939','长城证券',0),(97,'002945','华林证券',0),(98,'300003','乐普医疗',0),(99,'300015','爱尔眼科',0),(100,'300017','网宿科技',0),(101,'300024','机器人',0),(102,'300033','同花顺',0),(103,'300059','东方财富',0),(104,'300070','碧水源',0),(105,'300072','三聚环保',0),(106,'300122','智飞生物',0),(107,'300124','汇川技术',0),(108,'300136','信维通信',0),(109,'300142','沃森生物',0),(110,'300144','宋城演艺',0),(111,'300251','光线传媒',0),(112,'300296','利亚德',0),(113,'300408','三环集团',0),(114,'300413','芒果超媒',0),(115,'300433','蓝思科技',0),(116,'300498','温氏股份',0),(117,'600000','浦发银行',0),(118,'600004','白云机场',0),(119,'600009','上海机场',0),(120,'600010','包钢股份',0),(121,'600011','华能国际',0),(122,'600015','华夏银行',0),(123,'600016','民生银行',0),(124,'600018','上港集团',0),(125,'600019','宝钢股份',0),(126,'600023','浙能电力',0),(127,'600025','华能水电',0),(128,'600027','华电国际',0),(129,'600028','中国石化',0),(130,'600029','南方航空',0),(131,'600030','中信证券',0),(132,'600031','三一重工',0),(133,'600036','招商银行',0),(134,'600038','中直股份',0),(135,'600048','保利地产',0),(136,'600050','中国联通',0),(137,'600061','国投资本',0),(138,'600066','宇通客车',0),(139,'600068','葛洲坝',0),(140,'600085','同仁堂',0),(141,'600089','特变电工',0),(142,'600100','同方股份',0),(143,'600104','上汽集团',0),(144,'600109','国金证券',0),(145,'600111','北方稀土',0),(146,'600115','东方航空',0),(147,'600118','中国卫星',0),(148,'600153','建发股份',0),(149,'600170','上海建工',0),(150,'600176','中国巨石',0),(151,'600177','雅戈尔',0),(152,'600188','兖州煤业',0),(153,'600196','复星医药',0),(154,'600208','新湖中宝',0),(155,'600219','南山铝业',0),(156,'600221','海航控股',0),(157,'600233','圆通速递',0),(158,'600271','航天信息',0),(159,'600276','恒瑞医药',0),(160,'600297','广汇汽车',0),(161,'600299','安迪苏',0),(162,'600309','万华化学',0),(163,'600332','白云山',0),(164,'600339','中油工程',0),(165,'600340','华夏幸福',0),(166,'600346','恒力石化',0),(167,'600352','浙江龙盛',0),(168,'600362','江西铜业',0),(169,'600369','西南证券',0),(170,'600372','中航电子',0),(171,'600383','金地集团',0),(172,'600390','五矿资本',0),(173,'600398','海澜之家',0),(174,'600406','国电南瑞',0),(175,'600415','小商品城',0),(176,'600436','片仔癀',0),(177,'600438','通威股份',0),(178,'600482','中国动力',0),(179,'600487','亨通光电',0),(180,'600489','中金黄金',0),(181,'600498','烽火通信',0),(182,'600516','方大炭素',0),(183,'600519','贵州茅台',0),(184,'600522','中天科技',0),(185,'600535','天士力',0),(186,'600547','山东黄金',0),(187,'600566','济川药业',0),(188,'600570','恒生电子',0),(189,'600583','海油工程',0),(190,'600585','海螺水泥',0),(191,'600588','用友网络',0),(192,'600606','绿地控股',0),(193,'600637','东方明珠',0),(194,'600660','福耀玻璃',0),(195,'600663','陆家嘴',0),(196,'600674','川投能源',0),(197,'600688','上海石化',0),(198,'600690','海尔智家',0),(199,'600703','三安光电',0),(200,'600704','物产中大',0),(201,'600705','中航资本',0),(202,'600733','北汽蓝谷',0),(203,'600741','华域汽车',0),(204,'600760','中航沈飞',0),(205,'600795','国电电力',0),(206,'600809','山西汾酒',0),(207,'600816','安信信托',0),(208,'600837','海通证券',0),(209,'600867','通化东宝',0),(210,'600886','国投电力',0),(211,'600887','伊利股份',0),(212,'600893','航发动力',0),(213,'600900','长江电力',0),(214,'600919','江苏银行',0),(215,'600926','杭州银行',0),(216,'600958','东方证券',0),(217,'600977','中国电影',0),(218,'600998','九州通',0),(219,'600999','招商证券',0),(220,'601006','大秦铁路',0),(221,'601009','南京银行',0),(222,'601012','隆基股份',0),(223,'601018','宁波港',0),(224,'601021','春秋航空',0),(225,'601066','中信建投',0),(226,'601088','中国神华',0),(227,'601108','财通证券',0),(228,'601111','中国国航',0),(229,'601117','中国化学',0),(230,'601138','工业富联',0),(231,'601155','新城控股',0),(232,'601162','天风证券',0),(233,'601166','兴业银行',0),(234,'601169','北京银行',0),(235,'601186','中国铁建',0),(236,'601198','东兴证券',0),(237,'601211','国泰君安',0),(238,'601212','白银有色',0),(239,'601216','君正集团',0),(240,'601225','陕西煤业',0),(241,'601228','广州港',0),(242,'601229','上海银行',0),(243,'601238','广汽集团',0),(244,'601288','农业银行',0),(245,'601298','青岛港',0),(246,'601318','中国平安',0),(247,'601319','中国人保',0),(248,'601328','交通银行',0),(249,'601336','新华保险',0),(250,'601360','三六零',0),(251,'601377','兴业证券',0),(252,'601390','中国中铁',0),(253,'601398','工商银行',0),(254,'601555','东吴证券',0),(255,'601577','长沙银行',0),(256,'601600','中国铝业',0),(257,'601601','中国太保',0),(258,'601607','上海医药',0),(259,'601618','中国中冶',0),(260,'601628','中国人寿',0),(261,'601633','长城汽车',0),(262,'601668','中国建筑',0),(263,'601669','中国电建',0),(264,'601688','华泰证券',0),(265,'601727','上海电气',0),(266,'601766','中国中车',0),(267,'601788','光大证券',0),(268,'601800','中国交建',0),(269,'601808','中海油服',0),(270,'601818','光大银行',0),(271,'601828','美凯龙',0),(272,'601838','成都银行',0),(273,'601857','中国石油',0),(274,'601877','正泰电器',0),(275,'601878','浙商证券',0),(276,'601881','中国银河',0),(277,'601888','中国国旅',0),(278,'601898','中煤能源',0),(279,'601899','紫金矿业',0),(280,'601901','方正证券',0),(281,'601919','中远海控',0),(282,'601933','永辉超市',0),(283,'601939','建设银行',0),(284,'601985','中国核电',0),(285,'601988','中国银行',0),(286,'601989','中国重工',0),(287,'601992','金隅集团',0),(288,'601997','贵阳银行',0),(289,'601998','中信银行',0),(290,'603019','中科曙光',0),(291,'603156','养元饮品',0),(292,'603160','汇顶科技',0),(293,'603259','药明康德',0),(294,'603260','合盛硅业',0),(295,'603288','海天味业',0),(296,'603799','华友钴业',0),(297,'603833','欧派家居',0),(298,'603858','步长制药',0),(299,'603986','兆易创新',0),(300,'603993','洛阳钼业',0);
 /*!40000 ALTER TABLE `dom_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -703,7 +376,7 @@ CREATE TABLE `feedback` (
   `solve_time` timestamp NULL DEFAULT NULL,
   `solve_text` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -712,7 +385,7 @@ CREATE TABLE `feedback` (
 
 LOCK TABLES `feedback` WRITE;
 /*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-INSERT INTO `feedback` VALUES (1,'为什么不开大？',1,'喂，老板，他刚才又没开大；我没骂他，我上局就没骂他；这个人应该是思想出了问题','2019-08-27 15:27:58',1,NULL,NULL,'123456@789.com',_binary '',7,'2019-08-27 15:27:58','对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区'),(2,'一个数学问题',1,'1+1=?','2019-08-27 15:27:58',1,NULL,NULL,'123456@789.com',_binary '\0',0,NULL,NULL);
+INSERT INTO `feedback` VALUES (1,'为什么不开大？',1,'喂，老板，他刚才又没开大；我没骂他，我上局就没骂他；这个人应该是思想出了问题','2019-08-27 15:27:58',1,NULL,NULL,'123456@789.com',_binary '',7,'2019-08-27 15:27:58','对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区'),(2,'一个数学问题',1,'1+1=?','2019-08-27 15:27:58',1,NULL,NULL,'123456@789.com',_binary '',NULL,'2019-11-25 12:16:35','yes'),(3,'dsf',0,'dsfvds','2019-11-25 12:11:33',9,NULL,NULL,'1710024068@qq.com',_binary '\0',NULL,NULL,NULL),(4,'问题很大啊朋友',0,'建议拿前端祭天','2019-11-25 12:13:19',9,NULL,NULL,'171250027@qq.com',_binary '\0',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -730,7 +403,7 @@ CREATE TABLE `for_stock` (
   `latest_price` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=488 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -739,170 +412,7 @@ CREATE TABLE `for_stock` (
 
 LOCK TABLES `for_stock` WRITE;
 /*!40000 ALTER TABLE `for_stock` DISABLE KEYS */;
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (1, '123123', '阿这', 12);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (2, '123321', '啊这', 23);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (4, '001092', '广发生物科技指数(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (7, '161127', '易标普生物科技人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (10, '160719', '嘉实黄金', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (13, '161116', '易方达黄金主题', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (16, '164701', '汇添富黄金及贵金属', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (19, '320013', '诺安全球黄金', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (22, '000179', '广发美国房地产指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (25, '003463', '泰达宏利亚洲债券(QDII)A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (28, '003464', '泰达宏利亚洲债券(QDII)C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (31, '005440', '华安全球稳健配置(QDII-FOF)A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (34, '270027', '广发全球农业指数(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (37, '005441', '华安全球稳健配置(QDII-FOF)C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (40, '007361', '易方达中短期美元债(QDII)C人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (43, '007360', '易方达中短期美元债(QDII)A人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (46, '002286', '中银美元债债券人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (49, '320017', '诺安全球收益不动产', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (52, '004420', '汇添富美元债债券人民币C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (55, '004419', '汇添富美元债债券人民币A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (58, '000103', '国泰中国企业境外高收益债', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (61, '003387', '工银全球美元债C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (64, '005243', '融通中国概念债券', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (67, '002393', '华安全球美元收益债C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (70, '004161', '国泰企业信用精选A人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (73, '002391', '华安全球美元收益债人民币A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (76, '004164', '国泰企业信用精选C人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (79, '161126', '易方达标普医疗保健人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (82, '160140', '南方道琼斯美国精选A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (85, '160141', '南方道琼斯美国精选C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (88, '002880', '华夏大中华信用债C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (91, '002877', '华夏大中华信用债A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (94, '000342', '嘉实新兴市场A1(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (97, '002429', '华安全球美元票息债C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (100, '002426', '华安全球美元票息债人民币A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (103, '002400', '南方亚洲美元债人民币A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (106, '050030', '博时亚洲票息收益债券', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (109, '002401', '南方亚洲美元债人民币C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (112, '001063', '华夏收益债券(QDII)C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (115, '001061', '华夏收益债券(QDII)A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (118, '004998', '长信全球债券人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (121, '000369', '广发全球医疗保健(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (124, '001936', '国泰全球绝对收益人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (127, '006448', '华夏全球聚享C人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (130, '006445', '华夏全球聚享A人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (133, '100050', '富国全球债券人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (136, '007205', '银华美元债精选(QDII)C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (139, '007204', '银华美元债精选(QDII)A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (142, '000290', '鹏华全球高收益债(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (145, '000274', '广发亚太中高收益债券', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (148, '005912', '广发全球收益(QDII)人民币A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (151, '001984', '上投摩根中国生物医药(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (154, '005913', '广发全球收益(QDII)人民币C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (157, '070031', '嘉实全球房地产(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (160, '003629', '上投摩根全球多元配置人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (163, '002891', '华夏移动互联混合人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (166, '004877', '汇添富全球医疗混合人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (169, '005613', '上投富时发达市场REITs', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (172, '005698', '华夏全球科技先锋混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (175, '161815', '银华抗通胀主题', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (178, '050020', '博时抗通胀增强回报', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (181, '001691', '南方香港成长(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (184, '486002', '工银全球精选股票(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (187, '163813', '中银全球策略', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (190, '161129', '易方达原油A类人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (193, '003321', '易方达原油C类人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (196, '202801', '南方全球精选配置', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (199, '000043', '嘉实美国成长股票人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (202, '519981', '长信标普100等权重指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (205, '501018', '南方原油A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (208, '006476', '南方原油C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (211, '000614', '华安德国30(DAX)联接', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (214, '040046', '华安纳斯达克100指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (217, '005557', '广发海外多元配置人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (220, '183001', '银华全球优选', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (223, '000834', '大成纳斯达克100', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (226, '000041', '华夏全球股票(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (229, '161130', '易方达纳斯达克100人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (232, '160723', '嘉实原油(QDII-LOF)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (235, '006282', '上投欧洲动力(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (238, '486001', '工银全球股票(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (241, '050025', '博时标普500ETF联接A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (244, '006075', '博时标普500ETF联接C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (247, '003243', '上投摩根中国世纪人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (250, '161125', '易方达标普500指数人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (253, '270042', '广发纳斯达克100指数A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (256, '006479', '广发纳斯达克100指数C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (259, '160213', '国泰纳斯达克100指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (262, '519696', '交银环球精选混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (265, '460010', '华泰柏瑞亚洲领导企业混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (268, '519601', '海富通中国海外混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (271, '096001', '大成标普500等权重指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (274, '270023', '广发全球精选股票(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (277, '519602', '海富通大中华混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (280, '161620', '融通核心价值混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (283, '161128', '易标普信息科技人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (286, '005534', '华夏新时代混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (289, '006308', '汇添富全球消费混合人民币A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (292, '160416', '华安标普全球石油指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (295, '006309', '汇添富全球消费混合人民币C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (298, '262001', '景顺长城大中华混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (301, '006373', '国富全球科技互联混合人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (304, '206006', '鹏华环球发现', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (307, '040018', '华安香港精选股票(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (310, '161229', '国投瑞银中国价值发现股票', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (313, '118002', '易方达标普消费品指数A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (316, '005676', '易方达标普消费品指数C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (319, '001668', '汇添富全球互联混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (322, '160125', '南方香港优选股票', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (325, '162719', '广发道琼斯石油指数人民币A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (328, '004243', '广发道琼斯石油指数人民币C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (331, '378006', '上投摩根全球新兴市场混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (334, '206011', '鹏华美国房地产(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (337, '006555', '浦银安盛全球智能科技(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (340, '163208', '诺安油气能源', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (343, '002379', '工银香港中小盘人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (346, '377016', '上投摩根亚太优势混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (349, '165513', '信诚全球商品主题', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (352, '006779', '广发恒生中国企业(QDII)C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (355, '006778', '广发恒生中国企业(QDII)A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (358, '040021', '华安大中华升级股票', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (361, '070012', '嘉实海外中国股票混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (364, '160216', '国泰大宗商品', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (367, '000988', '嘉实全球互联网股票人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (370, '006105', '泰达宏利印度(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (373, '161714', '招商标普金砖四国指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (376, '160644', '鹏华港美互联股票人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (379, '005699', '工银新经济人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (382, '100061', '富国中国中小盘混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (385, '470888', '汇添富香港混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (388, '002230', '华夏大中华混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (391, '160121', '南方金砖四国指数(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (394, '050015', '博时大中华亚太精选', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (397, '118001', '易方达亚洲精选股票', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (400, '160923', '大成海外中国机会混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (403, '162411', '华宝标普油气上游股票', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (406, '378546', '上投摩根全球天然资源混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (409, '000934', '国富大中华精选混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (412, '006327', '易方达中证海外联接人民币A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (415, '457001', '国富亚洲机会股票(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (418, '006328', '易方达中证海外联接人民币C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (421, '100055', '富国全球科技互联网(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (424, '539001', '建信全球机遇混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (427, '165510', '信诚四国配置', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (430, '162415', '华宝标普美国消费人民币', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (433, '241001', '华宝海外中国成长混合', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (436, '164906', '交银中证海外中国互联网指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (439, '110031', '易方达恒生国企ETF联接A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (442, '005675', '易方达恒生国企ETF联接C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (445, '539002', '建信新兴市场混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (448, '160717', '嘉实恒生中国企业', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (451, '006263', '易方达香港小型股指数C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (454, '161124', '易方达香港小型股指数A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (457, '080006', '长盛环球行业混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (460, '539003', '建信全球资源混合(QDII)', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (463, '160922', '大成恒生综合中小型股指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (466, '501021', '华宝香港中小(QDII-LOF)A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (469, '161831', '银华恒生国企指数分级', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (472, '501302', '南方恒指ETF联接A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (475, '160924', '大成恒生指数', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (478, '005659', '南方恒指ETF联接C', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (481, '164705', '汇添富恒生指数分级', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (484, '000071', '华夏恒生ETF联接A', 0);
-INSERT INTO financial.for_stock (id, code, name, latest_price) VALUES (487, '000948', '华夏沪港通恒生ETF联接A', 0);
+INSERT INTO `for_stock` VALUES (1,'123123','阿这',12),(2,'123321','啊这',23),(4,'001092','广发生物科技指数(QDII)',0),(7,'161127','易标普生物科技人民币',0),(10,'160719','嘉实黄金',0),(13,'161116','易方达黄金主题',0),(16,'164701','汇添富黄金及贵金属',0),(19,'320013','诺安全球黄金',0),(22,'000179','广发美国房地产指数',0),(25,'003463','泰达宏利亚洲债券(QDII)A',0),(28,'003464','泰达宏利亚洲债券(QDII)C',0),(31,'005440','华安全球稳健配置(QDII-FOF)A',0),(34,'270027','广发全球农业指数(QDII)',0),(37,'005441','华安全球稳健配置(QDII-FOF)C',0),(40,'007361','易方达中短期美元债(QDII)C人民币',0),(43,'007360','易方达中短期美元债(QDII)A人民币',0),(46,'002286','中银美元债债券人民币',0),(49,'320017','诺安全球收益不动产',0),(52,'004420','汇添富美元债债券人民币C',0),(55,'004419','汇添富美元债债券人民币A',0),(58,'000103','国泰中国企业境外高收益债',0),(61,'003387','工银全球美元债C',0),(64,'005243','融通中国概念债券',0),(67,'002393','华安全球美元收益债C',0),(70,'004161','国泰企业信用精选A人民币',0),(73,'002391','华安全球美元收益债人民币A',0),(76,'004164','国泰企业信用精选C人民币',0),(79,'161126','易方达标普医疗保健人民币',0),(82,'160140','南方道琼斯美国精选A',0),(85,'160141','南方道琼斯美国精选C',0),(88,'002880','华夏大中华信用债C',0),(91,'002877','华夏大中华信用债A',0),(94,'000342','嘉实新兴市场A1(QDII)',0),(97,'002429','华安全球美元票息债C',0),(100,'002426','华安全球美元票息债人民币A',0),(103,'002400','南方亚洲美元债人民币A',0),(106,'050030','博时亚洲票息收益债券',0),(109,'002401','南方亚洲美元债人民币C',0),(112,'001063','华夏收益债券(QDII)C',0),(115,'001061','华夏收益债券(QDII)A',0),(118,'004998','长信全球债券人民币',0),(121,'000369','广发全球医疗保健(QDII)',0),(124,'001936','国泰全球绝对收益人民币',0),(127,'006448','华夏全球聚享C人民币',0),(130,'006445','华夏全球聚享A人民币',0),(133,'100050','富国全球债券人民币',0),(136,'007205','银华美元债精选(QDII)C',0),(139,'007204','银华美元债精选(QDII)A',0),(142,'000290','鹏华全球高收益债(QDII)',0),(145,'000274','广发亚太中高收益债券',0),(148,'005912','广发全球收益(QDII)人民币A',0),(151,'001984','上投摩根中国生物医药(QDII)',0),(154,'005913','广发全球收益(QDII)人民币C',0),(157,'070031','嘉实全球房地产(QDII)',0),(160,'003629','上投摩根全球多元配置人民币',0),(163,'002891','华夏移动互联混合人民币',0),(166,'004877','汇添富全球医疗混合人民币',0),(169,'005613','上投富时发达市场REITs',0),(172,'005698','华夏全球科技先锋混合',0),(175,'161815','银华抗通胀主题',0),(178,'050020','博时抗通胀增强回报',0),(181,'001691','南方香港成长(QDII)',0),(184,'486002','工银全球精选股票(QDII)',0),(187,'163813','中银全球策略',0),(190,'161129','易方达原油A类人民币',0),(193,'003321','易方达原油C类人民币',0),(196,'202801','南方全球精选配置',0),(199,'000043','嘉实美国成长股票人民币',0),(202,'519981','长信标普100等权重指数',0),(205,'501018','南方原油A',0),(208,'006476','南方原油C',0),(211,'000614','华安德国30(DAX)联接',0),(214,'040046','华安纳斯达克100指数',0),(217,'005557','广发海外多元配置人民币',0),(220,'183001','银华全球优选',0),(223,'000834','大成纳斯达克100',0),(226,'000041','华夏全球股票(QDII)',0),(229,'161130','易方达纳斯达克100人民币',0),(232,'160723','嘉实原油(QDII-LOF)',0),(235,'006282','上投欧洲动力(QDII)',0),(238,'486001','工银全球股票(QDII)',0),(241,'050025','博时标普500ETF联接A',0),(244,'006075','博时标普500ETF联接C',0),(247,'003243','上投摩根中国世纪人民币',0),(250,'161125','易方达标普500指数人民币',0),(253,'270042','广发纳斯达克100指数A',0),(256,'006479','广发纳斯达克100指数C',0),(259,'160213','国泰纳斯达克100指数',0),(262,'519696','交银环球精选混合(QDII)',0),(265,'460010','华泰柏瑞亚洲领导企业混合',0),(268,'519601','海富通中国海外混合',0),(271,'096001','大成标普500等权重指数',0),(274,'270023','广发全球精选股票(QDII)',0),(277,'519602','海富通大中华混合(QDII)',0),(280,'161620','融通核心价值混合',0),(283,'161128','易标普信息科技人民币',0),(286,'005534','华夏新时代混合(QDII)',0),(289,'006308','汇添富全球消费混合人民币A',0),(292,'160416','华安标普全球石油指数',0),(295,'006309','汇添富全球消费混合人民币C',0),(298,'262001','景顺长城大中华混合',0),(301,'006373','国富全球科技互联混合人民币',0),(304,'206006','鹏华环球发现',0),(307,'040018','华安香港精选股票(QDII)',0),(310,'161229','国投瑞银中国价值发现股票',0),(313,'118002','易方达标普消费品指数A',0),(316,'005676','易方达标普消费品指数C',0),(319,'001668','汇添富全球互联混合',0),(322,'160125','南方香港优选股票',0),(325,'162719','广发道琼斯石油指数人民币A',0),(328,'004243','广发道琼斯石油指数人民币C',0),(331,'378006','上投摩根全球新兴市场混合',0),(334,'206011','鹏华美国房地产(QDII)',0),(337,'006555','浦银安盛全球智能科技(QDII)',0),(340,'163208','诺安油气能源',0),(343,'002379','工银香港中小盘人民币',0),(346,'377016','上投摩根亚太优势混合',0),(349,'165513','信诚全球商品主题',0),(352,'006779','广发恒生中国企业(QDII)C',0),(355,'006778','广发恒生中国企业(QDII)A',0),(358,'040021','华安大中华升级股票',0),(361,'070012','嘉实海外中国股票混合',0),(364,'160216','国泰大宗商品',0),(367,'000988','嘉实全球互联网股票人民币',0),(370,'006105','泰达宏利印度(QDII)',0),(373,'161714','招商标普金砖四国指数',0),(376,'160644','鹏华港美互联股票人民币',0),(379,'005699','工银新经济人民币',0),(382,'100061','富国中国中小盘混合',0),(385,'470888','汇添富香港混合(QDII)',0),(388,'002230','华夏大中华混合(QDII)',0),(391,'160121','南方金砖四国指数(QDII)',0),(394,'050015','博时大中华亚太精选',0),(397,'118001','易方达亚洲精选股票',0),(400,'160923','大成海外中国机会混合',0),(403,'162411','华宝标普油气上游股票',0),(406,'378546','上投摩根全球天然资源混合',0),(409,'000934','国富大中华精选混合',0),(412,'006327','易方达中证海外联接人民币A',0),(415,'457001','国富亚洲机会股票(QDII)',0),(418,'006328','易方达中证海外联接人民币C',0),(421,'100055','富国全球科技互联网(QDII)',0),(424,'539001','建信全球机遇混合(QDII)',0),(427,'165510','信诚四国配置',0),(430,'162415','华宝标普美国消费人民币',0),(433,'241001','华宝海外中国成长混合',0),(436,'164906','交银中证海外中国互联网指数',0),(439,'110031','易方达恒生国企ETF联接A',0),(442,'005675','易方达恒生国企ETF联接C',0),(445,'539002','建信新兴市场混合(QDII)',0),(448,'160717','嘉实恒生中国企业',0),(451,'006263','易方达香港小型股指数C',0),(454,'161124','易方达香港小型股指数A',0),(457,'080006','长盛环球行业混合(QDII)',0),(460,'539003','建信全球资源混合(QDII)',0),(463,'160922','大成恒生综合中小型股指数',0),(466,'501021','华宝香港中小(QDII-LOF)A',0),(469,'161831','银华恒生国企指数分级',0),(472,'501302','南方恒指ETF联接A',0),(475,'160924','大成恒生指数',0),(478,'005659','南方恒指ETF联接C',0),(481,'164705','汇添富恒生指数分级',0),(484,'000071','华夏恒生ETF联接A',0),(487,'000948','华夏沪港通恒生ETF联接A',0);
 /*!40000 ALTER TABLE `for_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -932,7 +442,7 @@ CREATE TABLE `fortune` (
 
 LOCK TABLES `fortune` WRITE;
 /*!40000 ALTER TABLE `fortune` DISABLE KEYS */;
-INSERT INTO `fortune` VALUES (1,'2019-08-21',2500,2600,2400,2500,200,500,1500),(1,'2019-08-22',2600,2600,2400,2500,400,500,1500),(1,'2019-08-28',8000,2600,2400,2500,1600,500,1500),(1,'2019-08-29',2600,9600,2400,2500,3200,500,1500),(1,'2019-08-30',2600,9800,2400,2800,3200,500,1500),(1,'2019-08-31',2600,9800,2400,2800,3200,500,1500),(1,'2019-09-01',2600,9800,2400,2800,3300,500,1500),(2,'2019-09-01',2600,9800,2400,2800,3300,500,1500),(1,'2019-09-02',200,50,30,999,999,66,0),(2,'2019-09-02',0,0,0,0,0,0,0),(3,'2019-09-02',0,0,0,0,0,0,0),(1,'2019-09-05',200,50,30,999,999,66,0),(2,'2019-09-05',0,0,0,0,0,0,0),(3,'2019-09-05',0,0,0,0,0,0,0);
+INSERT INTO `fortune` VALUES (9,'2019-01-01',2500,2600,2400,2500,200,500,1500),(9,'2019-02-01',2600,2600,2400,2500,400,500,1500),(9,'2019-03-01',8000,2600,2400,2500,1600,500,1500),(9,'2019-04-01',2600,9600,2400,2500,3200,500,1500),(9,'2019-05-01',2600,9800,2400,2800,3200,500,1500),(9,'2019-06-01',2600,9800,2400,2800,3200,500,1500),(9,'2019-07-01',200,50,30,999,999,66,0),(9,'2019-08-01',2500,2600,2400,2500,200,500,1500),(9,'2019-09-01',2600,2600,2400,2500,400,500,1500),(9,'2019-10-01',8000,2600,2400,2500,1600,500,1500),(9,'2019-11-01',8000,2600,2400,2500,1600,500,1500),(1,'2019-11-23',400,100,0,1998,1998,132,3400),(2,'2019-11-23',0,0,0,0,0,0,0),(3,'2019-11-23',0,0,0,0,0,0,0),(9,'2019-11-27',8000,2600,2400,2500,1600,500,1500),(9,'2019-11-28',8500,3000,2400,2500,1600,500,1500),(9,'2019-11-29',8500,3000,2400,2500,1800,500,1500),(9,'2019-11-30',8500,3000,2400,2300,1600,500,1500),(9,'2019-12-01',8500,3000,2500,2500,1600,500,1500);
 /*!40000 ALTER TABLE `fortune` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -944,14 +454,15 @@ DROP TABLE IF EXISTS `fund`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fund` (
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   `time` date DEFAULT NULL,
   `seven_annualized` float DEFAULT '0',
   `fourteen_annualized` float DEFAULT '0',
   `twentyeight_annualized` float DEFAULT '0',
   `thirty_yield_rate` float DEFAULT '0',
   `ninty_yield_rate` float DEFAULT '0',
-  `since_yield_rate` float DEFAULT '0'
+  `since_yield_rate` float DEFAULT '0',
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -961,7 +472,7 @@ CREATE TABLE `fund` (
 
 LOCK TABLES `fund` WRITE;
 /*!40000 ALTER TABLE `fund` DISABLE KEYS */;
-INSERT INTO `fund` VALUES ('国投瑞银钱多宝货币A','2019-09-08',0,0,0,0,0,0);
+INSERT INTO `fund` VALUES ('国投瑞银钱多宝货币B','2019-09-09',0.023,0.03,0.05,0.06,0.07,0.075);
 /*!40000 ALTER TABLE `fund` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -985,7 +496,7 @@ CREATE TABLE `funds_and_invest_out_platform` (
 
 LOCK TABLES `funds_and_invest_out_platform` WRITE;
 /*!40000 ALTER TABLE `funds_and_invest_out_platform` DISABLE KEYS */;
-INSERT INTO `funds_and_invest_out_platform` VALUES (1,800,500);
+INSERT INTO `funds_and_invest_out_platform` VALUES (1,800,500),(9,800,500);
 /*!40000 ALTER TABLE `funds_and_invest_out_platform` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1037,7 +548,7 @@ CREATE TABLE `gold_history_config` (
 
 LOCK TABLES `gold_history_config` WRITE;
 /*!40000 ALTER TABLE `gold_history_config` DISABLE KEYS */;
-INSERT INTO `gold_history_config` VALUES (1,20,4,80,'2019-08-30 07:00:57',0),(1,20,4,80,'2019-08-30 13:12:40',0),(1,20,4,80,'2019-08-30 13:14:04',0),(1,20,4,80,'2019-08-30 13:17:01',0),(1,20,20,20,'2019-08-30 16:03:03',0);
+INSERT INTO `gold_history_config` VALUES (1,20,4,80,'2019-08-30 07:00:57',0),(1,20,4,80,'2019-08-30 13:12:40',0),(1,20,4,80,'2019-08-30 13:14:04',0),(1,20,4,80,'2019-08-30 13:17:01',0),(1,20,20,20,'2019-08-30 16:03:03',0),(9,20,20,20,'2019-11-25 11:15:13',0);
 /*!40000 ALTER TABLE `gold_history_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1061,6 +572,7 @@ CREATE TABLE `if_changed_email` (
 
 LOCK TABLES `if_changed_email` WRITE;
 /*!40000 ALTER TABLE `if_changed_email` DISABLE KEYS */;
+INSERT INTO `if_changed_email` VALUES ('2508743897@qq.com',3,'2019-11-25 11:12:20');
 /*!40000 ALTER TABLE `if_changed_email` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1125,7 +637,7 @@ CREATE TABLE `insurance` (
   `user_id` bigint(255) NOT NULL,
   `person_role` varchar(255) DEFAULT NULL,
   `kind` varchar(255) DEFAULT NULL,
-  `permiun` float DEFAULT NULL,
+  `premiun` float DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1136,7 +648,7 @@ CREATE TABLE `insurance` (
 
 LOCK TABLES `insurance` WRITE;
 /*!40000 ALTER TABLE `insurance` DISABLE KEYS */;
-INSERT INTO `insurance` VALUES (1,'husband','寿险',100000,251),(1,'wife','寿险',100000,251),(1,'husband','重疾险',500000,251),(1,'wife','重疾险',50000,251),(1,'child_1','寿险',50000,251),(1,'child_2','寿险',50000,251),(1,'old_1','寿险',50000,251),(1,'old_2','寿险',150000,251),(1,'whole family','车险',50000,251);
+INSERT INTO `insurance` VALUES (1,'husband','寿险',100000,251),(1,'wife','寿险',100000,251),(1,'husband','重疾险',500000,251),(1,'wife','重疾险',50000,251),(1,'child_1','寿险',50000,251),(1,'child_2','寿险',50000,251),(1,'old_1','寿险',50000,251),(1,'old_2','寿险',150000,251),(1,'whole family','车险',50000,251),(9,'husband','寿险',100000,251),(9,'wife','寿险',100000,251),(9,'husband','重疾险',500000,251),(9,'wife','重疾险',50000,251),(9,'child_1','寿险',50000,251);
 /*!40000 ALTER TABLE `insurance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1194,11 +706,11 @@ DROP TABLE IF EXISTS `max_invest`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `max_invest` (
-  `user_id` bigint(255) NOT NULL,
+  `user_id` bigint(255) DEFAULT NULL,
   `type` varchar(45) NOT NULL,
   `max` float NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`,`type`)
+  `id` bigint(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1208,6 +720,7 @@ CREATE TABLE `max_invest` (
 
 LOCK TABLES `max_invest` WRITE;
 /*!40000 ALTER TABLE `max_invest` DISABLE KEYS */;
+INSERT INTO `max_invest` VALUES (9,'DOMSTOCK',0,'2019-11-09 10:03:57',1),(9,'DOMSTOCK',300,'2019-11-10 10:03:58',2),(9,'DOMSTOCK',500,'2019-11-11 10:03:58',3),(9,'DOMSTOCK',300,'2019-11-12 10:03:58',4),(9,'DOMSTOCK',700,'2019-11-13 10:03:58',5),(9,'DOMSTOCK',750,'2019-11-14 10:03:58',6),(9,'DOMSTOCK',800,'2019-11-15 10:03:58',7),(9,'DOMSTOCK',765,'2019-11-16 10:03:58',8),(9,'DOMSTOCK',835,'2019-11-17 10:03:58',9),(9,'DOMSTOCK',850,'2019-11-18 10:03:58',10),(9,'DOMSTOCK',756,'2019-11-19 10:03:58',11),(9,'DOMSTOCK',850,'2019-11-20 10:03:58',12),(9,'DOMSTOCK',823,'2019-11-21 10:03:58',13),(9,'DOMSTOCK',800,'2019-11-22 10:03:58',14),(9,'DOMSTOCK',832,'2019-11-23 10:03:58',15),(9,'DOMSTOCK',806,'2019-11-24 10:03:58',16),(9,'DOMSTOCK',851,'2019-11-25 10:03:58',17),(9,'DOMSTOCK',890,'2019-11-26 10:03:58',18),(9,'DOMSTOCK',872,'2019-11-27 10:03:58',19),(9,'DOMSTOCK',889,'2019-11-28 10:03:58',20),(9,'DOMSTOCK',900,'2019-11-29 10:03:58',21),(9,'DOMSTOCK',900,'2019-11-30 10:03:58',22),(9,'DOMSTOCK',900,'2019-12-01 10:03:58',23);
 /*!40000 ALTER TABLE `max_invest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1227,21 +740,18 @@ CREATE TABLE `message` (
   `is_read` bit(1) DEFAULT NULL,
   `is_delete` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `message`
 --
 
--- ----------------------------
--- Records of message
--- ----------------------------
-
-INSERT INTO `message` VALUES ('2', '2019-08-27 23:27:58', '1', '3', '尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区', '\0', '\0');
-INSERT INTO `message` VALUES ('3', '2019-08-27 23:56:53', '2', '3', '文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！', '\0', '\0');
-INSERT INTO `message` VALUES (10,CURRENT_TIMESTAMP,1,1,'调仓消息 qdii 123123',0,0),
-                             (20,'2019-09-09 09:09:09',1,1,'调仓消息 qdii 123321 已确认',1,0);
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (2,'2019-08-27 23:27:58',1,3,'尊敬的用户，您的问题反馈有新的答复：对面酒桶一直进我野区，他为什么要去塔里啊？下路一直叫我去，我怎么去啊？对面打野一直进我野区',_binary '\0',_binary '\0'),(3,'2019-08-27 23:56:53',2,3,'文章：《标题1》下的评论：“评论？？？”被一举报，请去确认情况是否属实！',_binary '\0',_binary '\0'),(5,'2019-11-17 09:00:22',7,1,'调仓消息 qdii 123123',_binary '',_binary '\0'),(6,'2019-09-09 09:09:09',7,1,'调仓消息 qdii 123321 已确认',_binary '\0',_binary '\0'),(10,'2019-11-17 09:00:22',9,1,'推荐您买入 【股票】603555  1000股',_binary '\0',_binary '\0'),(20,'2019-09-09 09:09:09',9,1,'推荐您卖出 【黄金】  ￥1000',_binary '',_binary '\0'),(21,'2019-11-25 12:16:35',1,3,'尊敬的用户，您的问题反馈有了新的答复: yes',_binary '\0',_binary '\0');
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `my_bond`
@@ -1267,7 +777,7 @@ CREATE TABLE `my_bond` (
 
 LOCK TABLES `my_bond` WRITE;
 /*!40000 ALTER TABLE `my_bond` DISABLE KEYS */;
-INSERT INTO `my_bond` VALUES (1,'8888',200,300,1.5,500,6);
+INSERT INTO `my_bond` VALUES (1,'8888',200,300,1.5,500,6),(9,'019320',200,300,1.5,500,6);
 /*!40000 ALTER TABLE `my_bond` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1288,7 +798,7 @@ CREATE TABLE `my_depo` (
   `endtime` date DEFAULT NULL,
   `proportion` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1297,7 +807,7 @@ CREATE TABLE `my_depo` (
 
 LOCK TABLES `my_depo` WRITE;
 /*!40000 ALTER TABLE `my_depo` DISABLE KEYS */;
-INSERT INTO `my_depo` VALUES (1,1,1,50,'长实储蓄',0.56000,'2020-08-30',2);
+INSERT INTO `my_depo` VALUES (1,1,1,50,'长实储蓄',0.56000,'2020-08-30',2),(2,9,1,50,'长实储蓄',0.60000,'2020-08-30',2);
 /*!40000 ALTER TABLE `my_depo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1324,7 +834,7 @@ CREATE TABLE `my_fund` (
 
 LOCK TABLES `my_fund` WRITE;
 /*!40000 ALTER TABLE `my_fund` DISABLE KEYS */;
-INSERT INTO `my_fund` VALUES (1,200,'2019-08-30','888888',0,0);
+INSERT INTO `my_fund` VALUES (1,200,'2019-08-30','888888',0,0),(6,0,NULL,NULL,0,0),(8,2000,'2019-08-30','888888',0,0),(9,2000,'2019-08-30','888888',0,0);
 /*!40000 ALTER TABLE `my_fund` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1350,7 +860,7 @@ CREATE TABLE `my_gold` (
 
 LOCK TABLES `my_gold` WRITE;
 /*!40000 ALTER TABLE `my_gold` DISABLE KEYS */;
-INSERT INTO `my_gold` VALUES (1,50,2,66,300);
+INSERT INTO `my_gold` VALUES (1,50,2,66,300),(9,50,2,66,300),(9,666,2,66,300);
 /*!40000 ALTER TABLE `my_gold` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1370,8 +880,8 @@ CREATE TABLE `my_ins` (
   `amount` float DEFAULT NULL,
   `premiun` float DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  primary key (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1380,6 +890,7 @@ CREATE TABLE `my_ins` (
 
 LOCK TABLES `my_ins` WRITE;
 /*!40000 ALTER TABLE `my_ins` DISABLE KEYS */;
+INSERT INTO `my_ins` VALUES (1,9,'0.5','人寿保险','2020-11-21',20,30,'中国人寿');
 /*!40000 ALTER TABLE `my_ins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1408,7 +919,7 @@ CREATE TABLE `my_qdii` (
 
 LOCK TABLES `my_qdii` WRITE;
 /*!40000 ALTER TABLE `my_qdii` DISABLE KEYS */;
-INSERT INTO `my_qdii` VALUES (1,'123123',99.9,100,999,-1,-0.001);
+INSERT INTO `my_qdii` VALUES (1,'123123',99.9,100,999,-1,-0.001),(9,'457001',99.9,100,999,-1,-0.001);
 /*!40000 ALTER TABLE `my_qdii` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1437,7 +948,7 @@ CREATE TABLE `my_stock` (
 
 LOCK TABLES `my_stock` WRITE;
 /*!40000 ALTER TABLE `my_stock` DISABLE KEYS */;
-INSERT INTO `my_stock` VALUES (1,'601991',99.9,100,999,-1,-0.001);
+INSERT INTO `my_stock` VALUES (1,'601991',99.9,100,999,-1,-0.001),(9,'001979',99.9,100,999,-1,-0.001);
 /*!40000 ALTER TABLE `my_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1500,7 +1011,7 @@ CREATE TABLE `personal_trade` (
   `status` int(11) NOT NULL DEFAULT '0',
   `is_customize` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1509,7 +1020,7 @@ CREATE TABLE `personal_trade` (
 
 LOCK TABLES `personal_trade` WRITE;
 /*!40000 ALTER TABLE `personal_trade` DISABLE KEYS */;
-INSERT INTO `personal_trade` VALUES (1,NULL,'2019-09-01 09:09:09','2019-09-01 09:09:20','DOMSTOCK',1,100,12.3,0,1230,1,1,_binary '\0'),(2,NULL,'2019-09-01 09:09:09','2019-09-01 09:09:20','GOLD',1,1,100,1,101,1,1,_binary '\0');
+INSERT INTO `personal_trade` VALUES (1,NULL,'2019-09-01 09:09:09','2019-09-01 09:09:20','DOMSTOCK',1,100,12.3,0,1230,9,1,_binary '\0'),(2,NULL,'2019-09-01 09:09:09','2019-09-01 09:09:20','GOLD',1,1,100,1,101,9,1,_binary '\0'),(3,NULL,'2019-09-01 09:09:09','2019-09-01 09:09:20','DOMSTOCK',1,100,12.3,0,1230,9,1,_binary '\0'),(4,NULL,'2019-11-21 10:03:57',NULL,'DOMSTOCK',43,123,0,0,0,9,0,_binary '\0'),(5,NULL,'2019-11-21 10:04:00',NULL,'DOMSTOCK',43,12,0,0,0,9,0,_binary '\0');
 /*!40000 ALTER TABLE `personal_trade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1572,32 +1083,6 @@ LOCK TABLES `platform_trade` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `property`
---
-
-DROP TABLE IF EXISTS `property`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `property` (
-  `user_id` bigint(255) NOT NULL,
-  `admin_id` bigint(255) NOT NULL,
-  `view_type` varchar(45) DEFAULT NULL,
-  `pro_or_invest` varchar(45) DEFAULT NULL,
-  `asset_type` varchar(45) DEFAULT NULL,
-  `prefers` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `property`
---
-
-LOCK TABLES `property` WRITE;
-/*!40000 ALTER TABLE `property` DISABLE KEYS */;
-/*!40000 ALTER TABLE `property` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `qdii_adjustment`
 --
 
@@ -1623,7 +1108,7 @@ CREATE TABLE `qdii_adjustment` (
 
 LOCK TABLES `qdii_adjustment` WRITE;
 /*!40000 ALTER TABLE `qdii_adjustment` DISABLE KEYS */;
-INSERT INTO `qdii_adjustment` VALUES ('123123','阿这',-0.1,-1,-1.2,12,1,1),('123321','啊这',1,10,23,23,1,2);
+INSERT INTO `qdii_adjustment` VALUES ('123123','阿这',-0.1,-1,-1.2,12,9,1),('123321','啊这',1,10,23,23,9,2);
 /*!40000 ALTER TABLE `qdii_adjustment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1685,7 +1170,7 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,'2019-09-14',1,1,2,5,230,2300,1,2,3500,3000,300,200,20,50,300,200,100,200000,100000,1973,1966,4,0,25000,25000,50000,50000,55,1,'2000',2,50,50,50,30,20,50);
+INSERT INTO `questionnaire` VALUES (1,'2019-09-14',1,1,2,5,230,2300,1,2,3500,3000,300,200,20,50,300,200,100,200000,100000,1973,1966,4,0,25000,25000,50000,50000,55,1,'2000',2,50,50,50,30,20,50),(6,'2019-11-17',2,2,1,25,50000,5000000,1,1,3000,1000,10000,1000,500,1000,10000,10000,3500,6000000,5000000,2000,0,0,0,0,500000,100000,100000,20,1,'',5,0,0,0,0,0,0),(7,'2019-11-21',3,3,1,2,123123,123000,1,2,1500,800,500,150,100,300,1000,2000,500,2000000,600000,1999,0,0,0,0,60000,0,5000,21,1,'',2,NULL,NULL,NULL,NULL,NULL,NULL),(8,'2019-11-23',2,2,1,20,200000,2000000,2,1,5000,2000,2000,1000,500,200,5000,1000,2000,5000000,3000000,1999,0,0,1,0,300000,200000,10000,21,1,'',5,NULL,NULL,NULL,NULL,NULL,NULL),(9,'2019-11-25',1,3,1,2,10000,15000,1,1,2000,999,499,200,198,300,3000,6000,500,60000,1500000,1998,0,0,2,0,150000,200000,40000,22,1,'',3,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1723,7 +1208,7 @@ CREATE TABLE `recommend` (
 
 LOCK TABLES `recommend` WRITE;
 /*!40000 ALTER TABLE `recommend` DISABLE KEYS */;
-INSERT INTO `recommend` VALUES (1,0.2,0.1,NULL,NULL,NULL,NULL,'保守型',NULL,NULL,NULL,0.3,NULL,NULL,NULL);
+INSERT INTO `recommend` VALUES (1,0.2,0.1,NULL,NULL,NULL,NULL,'保守型',NULL,NULL,NULL,0.3,NULL,NULL,NULL),(6,0.23005251198171067,0.3,0.25,0.21994748801828923,0.02300000002405727,0.07132669392403992,'稳健型',0.11097062962962963,0.0012643333333333332,0.3329118888888889,0.5548531481481481,0.3336877286113531,3,5),(7,0.09999999999999998,0.050000000000001044,0.1559878215917976,0.6940121784082023,0.009999999868841192,0.059394419654126396,'保守型',0.11072744444444443,0.003453,0.4705916388888889,0.4152279166666667,0.12915083656065765,1,2),(8,0.23005251198171067,0.3,0.25,0.22,0.023,0.0713,'稳健型',0.111,0.003,0.332,0.554,0.307,3,5),(9,0.406184815889971,0.2938151841100287,0.25,0.04999999999999999,0.03400000007186748,0.0852743300508319,'稳健进取型',0.0757361111111111,0.318375,0.19880729166666666,0.40708159722222226,0.5898540184601906,4,3);
 /*!40000 ALTER TABLE `recommend` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1735,7 +1220,7 @@ DROP TABLE IF EXISTS `stock_adjustment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stock_adjustment` (
-  `order_time` float NULL,
+  `order_time` float DEFAULT NULL,
   `code` varchar(15) NOT NULL,
   `state_message` varchar(20) NOT NULL,
   `order_amount` int(11) NOT NULL,
@@ -1803,7 +1288,7 @@ CREATE TABLE `transfer_record` (
   `is_customize` bit(1) NOT NULL DEFAULT b'0',
   `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1812,7 +1297,7 @@ CREATE TABLE `transfer_record` (
 
 LOCK TABLES `transfer_record` WRITE;
 /*!40000 ALTER TABLE `transfer_record` DISABLE KEYS */;
-INSERT INTO `transfer_record` VALUES (1,'2019-09-14 11:32:03',NULL,1,_binary '',_binary '\0',_binary '\0',_binary '\0',0),(2,'2019-09-09 01:09:09','2019-09-09 11:19:19',1,_binary '',_binary '',_binary '',_binary '\0',2);
+INSERT INTO `transfer_record` VALUES (1,'2019-09-14 11:32:03',NULL,1,_binary '',_binary '\0',_binary '\0',_binary '\0',0),(2,'2019-09-09 01:09:09','2019-09-09 11:19:19',1,_binary '',_binary '',_binary '',_binary '\0',2),(3,'2019-09-09 01:09:09','2019-11-25 11:18:08',9,_binary '',_binary '',_binary '',_binary '\0',2);
 /*!40000 ALTER TABLE `transfer_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1836,7 +1321,7 @@ CREATE TABLE `user` (
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `profile_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1845,7 +1330,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (0,NULL,'admin','admin',NULL,'9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc',NULL,'admin',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-26 23:28:19','https://i.loli.net/2019/08/14/mUZcISHpWrx1aPM.jpg'),(1,'320684199809070018','xyh','153604998@qq.com','18951899427','9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc',NULL,'xyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-17 01:58:08','xxx'),(2,'320684199809070019','xxyh','153604998@qq.comm',NULL,NULL,NULL,'xxyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 06:46:34',NULL),(3,'320684199809070020','xyh','153604998@qq.commm',NULL,NULL,NULL,'xyhhhhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 06:47:10',NULL);
+INSERT INTO `user` VALUES (0,NULL,'admin','admin',NULL,'9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc',NULL,'admin',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-26 23:28:19','https://i.loli.net/2019/08/14/mUZcISHpWrx1aPM.jpg'),(1,'320684199809070018','xyh','153604998@qq.com','18951899427','9276cb69284bd987716dec93e9e26235e37a2d444934f16bc45baf8991490652a57f5adbbb5d07cabaf86a970528db6470a1604ccc0dd3d5c004cca9dc417bdc',NULL,'xyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-17 01:58:08','xxx'),(2,'320684199809070019','xxyh','153604998@qq.comm',NULL,NULL,NULL,'xxyhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 06:46:34',NULL),(3,'320684199809070020','xyh','153604998@qq.commm',NULL,NULL,NULL,'xyhhhhhh',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-08-20 06:47:10',NULL),(9,'320229199901011234','丁玲燕','2508743897@qq.com',NULL,'b64da8b434f44f56fb6d4bc95a43faeb41ff52805e6b327cdd0eda14bbe2cd79ed28f1f17c93f3d595f4478158cde740f480fe122d624c0d3519b0c2efb30cce',NULL,'JFD',000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,'2019-11-23 13:53:52','https://i.loli.net/2019/08/14/mUZcISHpWrx1aPM.jpg');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1859,11 +1344,11 @@ DROP TABLE IF EXISTS `user_bond_fund`;
 CREATE TABLE `user_bond_fund` (
   `user_id` bigint(255) DEFAULT NULL,
   `fund_name` varchar(255) DEFAULT NULL,
-  `bond_proportion` double DEFAULT NULL,
-  `fund_share` double DEFAULT NULL,
-  `net_worth` double DEFAULT NULL,
+  `bond_proportion` float DEFAULT NULL,
+  `fund_share` float DEFAULT NULL,
+  `net_worth` float DEFAULT NULL,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `inject` double DEFAULT NULL
+  `inject` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1873,7 +1358,7 @@ CREATE TABLE `user_bond_fund` (
 
 LOCK TABLES `user_bond_fund` WRITE;
 /*!40000 ALTER TABLE `user_bond_fund` DISABLE KEYS */;
-INSERT INTO `user_bond_fund` VALUES (1,'national',0.75,34,50,'2019-03-09 16:00:00',100),(1,'corporate',0.75,34,50,'2019-03-09 16:00:00',100);
+INSERT INTO `user_bond_fund` VALUES (1,'national',0.75,34,50,'2019-03-09 16:00:00',100),(1,'corporate',0.75,34,50,'2019-03-09 16:00:00',100),(9,'corporate',0.75,34,50,'2019-11-25 11:18:15',100),(9,'national',0.75,34,50,'2019-11-25 11:18:15',100);
 /*!40000 ALTER TABLE `user_bond_fund` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1894,4 +1379,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-14 19:35:20
+-- Dump completed on 2019-11-29  9:39:13

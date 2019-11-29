@@ -2,6 +2,7 @@ package financial_management.entity;
 
 import financial_management.vo.product.MyDepositVO;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -115,7 +116,8 @@ public class MyDepoPO {
         }else {
             stringType = "平台外持有";
         }
-        return new MyDepositVO(id, name, stringType, amount, rate, endtime, proportion);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return new MyDepositVO(id, name, stringType, amount, rate, sdf.format(endtime), proportion);
     }
 
     public MyDepoPO() {

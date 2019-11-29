@@ -54,7 +54,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             double yesterday = recentInvPO.getYesterdayStocks() + recentInvPO.getYesterdayQdii() + recentInvPO.getYesterdayGold() + recentInvPO.getYesterdayBond();
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, current - yesterday);
         } catch (Exception e) {
-            // e.printStackTrace();
+            e.printStackTrace();
             return new BasicResponse(ResponseStatus.STATUS_NEWLY_RECORD_NOT_EXIST);
         }
     }
@@ -71,7 +71,7 @@ public class IncomeServiceImpl implements IncomeService, IncomeServiceForBl {
             double totalIncome = incomeMapper.getTotalIncome(userId);
             return new BasicResponse<>(ResponseStatus.STATUS_SUCCESS, totalIncome);
         } catch (Exception e) {
-            // e.printStackTrace();
+            e.printStackTrace();
             return new BasicResponse(ResponseStatus.SERVER_ERROR);
         }
     }

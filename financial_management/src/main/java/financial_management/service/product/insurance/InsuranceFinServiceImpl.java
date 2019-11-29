@@ -37,6 +37,7 @@ public class InsuranceFinServiceImpl  implements InsuranceService,InsuranceForBl
     }
 
     //首次推荐
+    @Override
     public void Recommand(Long userId, Integer aWifeBirthday, Integer bHusbandBirthdat, Float cChildNumber, Float dElderNumber, Float eHusIncome, Float fWiftIncome, Float gCarprice, Float hConsumption){
         //首先要删除上次推荐结果
         mapper.deleteInsuranceRecommnad(userId);
@@ -59,6 +60,7 @@ public class InsuranceFinServiceImpl  implements InsuranceService,InsuranceForBl
         }
     }
     //查看推荐保险建议
+    @Override
     public BasicResponse getRecommands(Long userId){
         List<InsuranceRecommandPO> husband = new ArrayList<>();
         List<InsuranceRecommandPO> wife  = new ArrayList<>();

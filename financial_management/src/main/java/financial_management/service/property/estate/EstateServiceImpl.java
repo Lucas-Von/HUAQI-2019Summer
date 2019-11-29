@@ -81,6 +81,7 @@ public class EstateServiceImpl implements EstateService, EstateServiceForBl {
      * @param userId
      * @return
      */
+    @Override
     public BasicResponse getFortuneUpdateTimeByUser(Long userId) {
         try {
             if (ifExistFortuneRecord(userId)) {
